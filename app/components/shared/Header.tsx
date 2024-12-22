@@ -1,7 +1,7 @@
 import type { FC } from "react";
 
 interface IHeaderProps {
-    text: string
+	text: string;
 }
 
 const Header: FC<IHeaderProps> = ({ text }: IHeaderProps) => {
