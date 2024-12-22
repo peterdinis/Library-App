@@ -63,7 +63,7 @@ const Navigation: FC = () => {
 						Prihlásenie
 					</Button>
 				</NavbarItem>
-				<NavbarItem>
+				<NavbarItem className="hidden lg:flex">
 					<Button as={Link} color="secondary" href="#" variant="flat">
 						Registrácia
 					</Button>

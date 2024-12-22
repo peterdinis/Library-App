@@ -40,7 +40,7 @@ const Hero: FC = () => {
 						>
 							<Link href="/books">Zobraziť všekty knihy</Link>
 						</Button>
-						<Button className="ml-4" size="lg" variant="flat" color="secondary">
+						<Button className="ml-4 bg-orange-600" size="lg" variant="flat">
 							<Link href="https://www.spsbj.sk/">Školská stránka</Link>
 						</Button>
 					</div>
