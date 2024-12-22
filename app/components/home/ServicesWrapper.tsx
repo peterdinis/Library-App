@@ -66,11 +66,7 @@ const ServicesWrapper: FC = () => {
 							className="flex items-center flex-col px-6 py-6 focus:outline-none w-full sm:w-1/2 md:w-1/3 lg:w-1/4 md:py-0"
 							variants={servicesVariant}
 						>
-							<span
-								role="img"
-								aria-label="eyes"
-								className="text-2xl"
-							>
+							<span role="img" aria-label="eyes" className="text-2xl">
 								👀
 							</span>
 							<h4

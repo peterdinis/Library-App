@@ -1,11 +1,11 @@
 "use client";
 
+import { Button } from "@nextui-org/react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import type { FC } from "react";
 import schollImage from "../../../public/img/main.png";
-import { Button } from "@nextui-org/react";
 
 const Hero: FC = () => {
 	const homepageVariants = {
@@ -33,16 +33,15 @@ const Hero: FC = () => {
 						<q>Knihy sú jedinečne prenosné kúzlo</q> - Stephen King
 					</h2>
 					<div className="flex justify-center sm:block md:block">
-						<Button size="lg" variant="flat" className="bg-green-700 text-blue-50">
+						<Button
+							size="lg"
+							variant="flat"
+							className="bg-green-700 text-blue-50"
+						>
 							<Link href="/books">Zobraziť všekty knihy</Link>
 						</Button>
-						<Button
-							className="ml-4"
-							size="lg" variant="flat" color="secondary"
-						>
-							<Link href="https://www.spsbj.sk/">
-								Školská stránka
-							</Link>
+						<Button className="ml-4" size="lg" variant="flat" color="secondary">
+							<Link href="https://www.spsbj.sk/">Školská stránka</Link>
 						</Button>
 					</div>
 				</div>
