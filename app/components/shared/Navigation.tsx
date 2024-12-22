@@ -41,7 +41,7 @@ const Navigation: FC = () => {
 					</Link>
 				</NavbarItem>
 				<NavbarItem>
-					<Link color="foreground" href="#">
+					<Link color="foreground" href="/categories">
 						Kategórie
 					</Link>
 				</NavbarItem>
