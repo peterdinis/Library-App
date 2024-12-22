@@ -36,7 +36,7 @@ const Navigation: FC = () => {
 					<p className="font-bold text-inherit text-xl">SPŠT Knižnica</p>
 				</NavbarBrand>
 				<NavbarItem className="ml-4">
-					<Link color="foreground" href="#">
+					<Link color="foreground" href="/books">
 						Knihy
 					</Link>
 				</NavbarItem>
