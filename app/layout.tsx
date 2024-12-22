@@ -2,10 +2,13 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { NextUiProvider } from "./components/shared/providers/NextUiProvider";
 import { Toaster } from "react-hot-toast";
+import Navigation from "./components/shared/Navigation";
+import { ThemeProvider } from "./context/ThemeContext";
 
 export const metadata: Metadata = {
   title: "SPŠT Knižnica",
-  description: "Applikácia na správu knižnice na strednej priemyselnej škole technickej v Bardejove",
+  description:
+    "Applikácia na správu knižnice na strednej priemyselnej škole technickej v Bardejove",
 };
 
 export default function RootLayout({
@@ -15,12 +18,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`antialiased`}
-      >
+      <body className={`antialiased`}>
         <NextUiProvider>
-          {children}
-          <Toaster />
+          <ThemeProvider>
+            <Navigation />
+            {children}
+            <Toaster />
+          </ThemeProvider>
         </NextUiProvider>
       </body>
     </html>
