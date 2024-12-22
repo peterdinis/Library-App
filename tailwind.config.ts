@@ -17,5 +17,5 @@ export default {
 		},
 	},
 	darkMode: "class",
-	plugins: [nextui()],
+	plugins: [nextui(), require('@tailwindcss/forms'), require('@tailwindcss/typography'), require("tailwindcss-animate")],
 } satisfies Config;
