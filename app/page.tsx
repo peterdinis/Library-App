@@ -6,8 +6,8 @@ import Footer from "./components/shared/Footer";
 const Homepage: NextPage = () => {
 	return (
 		<>
-			{/* <Hero />
-			<ServicesWrapper /> */}
+			<Hero />
+			<ServicesWrapper />
 			<Footer />
 		</>
 	);
