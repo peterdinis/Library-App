@@ -1,9 +1,13 @@
+
 import { FC } from "react";
+import CategoriesSearch from "./CategoriesSearch";
+import Header from "../shared/Header";
 
 const AllCategoriesWrapper: FC = () => {
     return (
         <>
-            Categories
+            <Header text="Všetky kategórie" />
+            <CategoriesSearch />
         </>
     )
 }
