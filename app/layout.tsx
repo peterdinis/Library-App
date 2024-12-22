@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { NextUiProvider } from "./components/shared/providers/NextUiProvider";
 import { Toaster } from "react-hot-toast";
+import Navigation from "./components/shared/Navigation";
 
 export const metadata: Metadata = {
   title: "SPŠT Knižnica",
@@ -19,6 +20,7 @@ export default function RootLayout({
         className={`antialiased`}
       >
         <NextUiProvider>
+          <Navigation />
           {children}
           <Toaster />
         </NextUiProvider>
