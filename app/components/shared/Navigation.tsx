@@ -12,6 +12,7 @@ import {
   Link,
   Button,
 } from "@nextui-org/react";
+import ThemeToggle from "./ThemeToggle";
 
 export const AcmeLogo = () => {
   return (
@@ -81,6 +82,9 @@ const Navigation: FC = () => {
           <Button as={Link} color="secondary" href="#" variant="flat">
             Registrácia
           </Button>
+        </NavbarItem>
+        <NavbarItem>
+          <ThemeToggle />
         </NavbarItem>
       </NavbarContent>
 
