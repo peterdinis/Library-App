@@ -12,7 +12,7 @@ const ThemeToggle: React.FC = () => {
 			checked={theme === "dark"}
 			onChange={toggleTheme}
 			size="lg"
-			color="secondary"
+			color="primary"
 			startContent={<SunIcon />}
 			endContent={<MoonIcon />}
 		/>

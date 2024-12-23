@@ -1,8 +1,8 @@
-import { NextPage } from "next";
+import type { NextPage } from "next";
 import AllCategoriesWrapper from "../components/categories/AllCategoriesWrapper";
 
 const CategoriesPage: NextPage = () => {
-    return <AllCategoriesWrapper />
-}
+	return <AllCategoriesWrapper />;
+};
 
 export default CategoriesPage;

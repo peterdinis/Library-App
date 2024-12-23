@@ -63,7 +63,7 @@ const Navigation: FC = () => {
 						Prihlásenie
 					</Button>
 				</NavbarItem>
-				<NavbarItem>
+				<NavbarItem className="hidden lg:flex">
 					<Button as={Link} color="secondary" href="#" variant="flat">
 						Registrácia
 					</Button>
@@ -93,6 +93,19 @@ const Navigation: FC = () => {
 					<Link className="w-full" color="primary" href="#" size="lg">
 						Vydavatelstvá
 					</Link>
+				</NavbarMenuItem>
+				<NavbarMenuItem>
+					<Button as={Link} color="primary" variant="flat" href="#">
+						Prihlásenie
+					</Button>
+				</NavbarMenuItem>
+				<NavbarMenuItem>
+					<Button as={Link} color="secondary" href="#" variant="flat">
+						Registrácia
+					</Button>
+				</NavbarMenuItem>
+				<NavbarMenuItem>
+					<ThemeToggle />
 				</NavbarMenuItem>
 			</NavbarMenu>
 		</Navbar>
