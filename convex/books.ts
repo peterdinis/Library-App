@@ -88,45 +88,45 @@ export const searchBooks = query({
 
 export const getPaginatedBooks = query({
 	args: {
-	  page: v.number(),
-	  pageSize: v.number(),
-	  cursor: v.optional(v.string()), // Optional cursor argument
+		page: v.number(),
+		pageSize: v.number(),
+		cursor: v.optional(v.string()), // Optional cursor argument
 	},
 	handler: async (ctx, args) => {
-	  if (args.page < 1) {
-		throw new Error("Page must be greater than 0");
-	  }
-  
-	  if (args.pageSize < 1) {
-		throw new Error("Page size must be greater than 0");
-	  }
-  
-	  // Get the total number of books (can optimize later with a `count` query)
-	  const allBooks = await ctx.db.query("books").collect();
-	  const totalBooks = allBooks.length;
-	  const totalPages = Math.ceil(totalBooks / args.pageSize);
-  
-	  // Prepare the query, starting from the beginning or from the cursor
-	  let query = ctx.db.query("books").order("desc");
-  
-	  // If a cursor is provided, use it to filter results (e.g., based on the last book's id)
-	 /*  if (args.cursor) {
+		if (args.page < 1) {
+			throw new Error("Page must be greater than 0");
+		}
+
+		if (args.pageSize < 1) {
+			throw new Error("Page size must be greater than 0");
+		}
+
+		// Get the total number of books (can optimize later with a `count` query)
+		const allBooks = await ctx.db.query("books").collect();
+		const totalBooks = allBooks.length;
+		const totalPages = Math.ceil(totalBooks / args.pageSize);
+
+		// Prepare the query, starting from the beginning or from the cursor
+		const query = ctx.db.query("books").order("desc");
+
+		// If a cursor is provided, use it to filter results (e.g., based on the last book's id)
+		/*  if (args.cursor) {
 		query = query.filter({ _id: { $gt: args.cursor } }); // Correct filtering using the _id field
 	  } */
-  
-	  // Perform the paginated query
-	  const books = await query.paginate({
-		numItems: args.pageSize,
-		cursor: args.cursor || null, // Ensure the cursor is passed, even if it's null for the first page
-	  });
-  
-	  // Return the paginated results along with the next cursor (if available)
-	  return {
-		books: books.page,
-		totalPages,
-		currentPage: args.page,
-		cursor: books.page.length > 0 ? books.page[books.page.length - 1].id : null, // Set the cursor to the last book's id for the next page
-	  };
+
+		// Perform the paginated query
+		const books = await query.paginate({
+			numItems: args.pageSize,
+			cursor: args.cursor || null, // Ensure the cursor is passed, even if it's null for the first page
+		});
+
+		// Return the paginated results along with the next cursor (if available)
+		return {
+			books: books.page,
+			totalPages,
+			currentPage: args.page,
+			cursor:
+				books.page.length > 0 ? books.page[books.page.length - 1].id : null, // Set the cursor to the last book's id for the next page
+		};
 	},
-  });
-  
+});
