@@ -44,7 +44,7 @@ const ServicesWrapper: FC = () => {
             <motion.div
               tabIndex={0}
               aria-label="card 1"
-              className="flex flex-col items-center p-6 bg-white dark:bg-foreground-100 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
+              className="flex flex-col items-center p-6  dark:bg-foreground-100 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
               variants={cardVariant}
             >
               <div className="w-12 h-12 flex items-center justify-center rounded-full bg-blue-50 dark:bg-blue-900">
@@ -62,7 +62,7 @@ const ServicesWrapper: FC = () => {
             <motion.div
               tabIndex={0}
               aria-label="card 2"
-              className="flex flex-col items-center p-6 bg-white dark:bg-foreground-100 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
+              className="flex flex-col items-center p-6  dark:bg-foreground-100 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
               variants={cardVariant}
             >
               <div className="w-12 h-12 flex items-center justify-center rounded-full bg-blue-50 dark:bg-blue-900">
@@ -80,7 +80,7 @@ const ServicesWrapper: FC = () => {
             <motion.div
               tabIndex={0}
               aria-label="card 3"
-              className="flex flex-col items-center p-6 bg-white dark:bg-foreground-100 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 sm:col-span-2 lg:col-span-1"
+              className="flex flex-col items-center p-6  dark:bg-foreground-100 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 sm:col-span-2 lg:col-span-1"
               variants={cardVariant}
             >
               <div className="w-12 h-12 flex items-center justify-center rounded-full bg-blue-50 dark:bg-blue-900">
