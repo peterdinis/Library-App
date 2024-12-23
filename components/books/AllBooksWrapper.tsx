@@ -10,6 +10,7 @@ import { CircularProgress } from "@nextui-org/react";
 import { Book } from "@/types/BookTypes";
 import AppPagination from "../shared/AppPagination";
 import Link from "next/link";
+import Empty from "../shared/Empty";
 
 const AllBooksWrapper: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -28,12 +29,13 @@ const AllBooksWrapper: FC = () => {
   };
 
   if (status === "LoadingFirstPage")
-    return <CircularProgress label="Loading..." />;
+    return <CircularProgress label="Načítavam." />;
 
   return (
     <>
       <Header text="Všetky knihy" />
       <BooksSearch />
+      {results && results.length === 0 && <Empty text="Žiadne knihy sa nenašli" />}
       <div className="max-w-full mx-auto mt-8 gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 px-8">
         {results &&
           results.map((book: Book) => {
