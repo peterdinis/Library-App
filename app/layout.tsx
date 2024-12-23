@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import Navigation from "../components/shared/Navigation";
 import { NextUiProvider } from "../components/shared/providers/NextUiProvider";
 import { ThemeProvider } from "../context/ThemeContext";
+import ScrollToTop from "@/components/shared/ScrollToTop";
 
 export const metadata: Metadata = {
 	title: "SPŠT Knižnica",
@@ -25,6 +26,7 @@ export default function RootLayout({
 						<ThemeProvider>
 							<Navigation />
 							{children}
+							<ScrollToTop />
 							<Toaster />
 						</ThemeProvider>
 					</AppConvexProvider>

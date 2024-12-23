@@ -1,27 +1,32 @@
-"use client"
+"use client";
 
 import { api } from "@/convex/_generated/api";
-import { Id } from "@/convex/_generated/dataModel";
 import { useQuery } from "convex/react";
 import { useParams } from "next/navigation";
 import { FC } from "react";
-
+import {CircularProgress} from "@nextui-org/react";
 
 const BookDetail: FC = () => {
-    const { id } = useParams();
-    const bookId = id![0] as unknown as Id<'books'>;
+  const { id } = useParams();
 
-    const data = useQuery(api.books.getBookById, {
-        id: bookId
-    })
+  const bookID = id as unknown as string;
 
-    console.log("D", data)
+  const data = useQuery(api.books.getBookById, {
+    id: bookID,
+  });
 
-    return (
-        <>
-            prpr
-        </>
-    )
-}
+  if (!id) {
+    return <p>Error: Missing or invalid book ID.</p>;
+  }
 
-export default BookDetail
+  if (!data) {
+    return <CircularProgress label="Loading..." />
+  }
+
+  return (
+    <div>
+    </div>
+  );
+};
+
+export default BookDetail;
