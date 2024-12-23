@@ -1,103 +1,138 @@
 import { mutation, query } from "./_generated/server";
 import { Id } from "./_generated/dataModel";
+import { v } from "convex/values";
 
 type Book = {
-    id: string;
-    name: string;
-    description: string;
-    year: number;
-    image: string;
-    pages: number;
-    isAvailable: boolean;
-    categoryId: string;
+  id: string;
+  name: string;
+  description: string;
+  year: number;
+  image: string;
+  pages: number;
+  isAvailable: boolean;
+  categoryId: string;
 };
 
 type BookUpdates = Partial<Omit<Book, "id">>; // Allow partial updates, except for the ID
 
 // Create a new book
 export const createBook = mutation(async ({ db }, book: Book) => {
-    const { id, name, description, image, year, pages, isAvailable, categoryId } = book;
+  const { id, name, description, image, year, pages, isAvailable, categoryId } =
+    book;
 
-    if (!id || !name || !categoryId) {
-        throw new Error("Missing required fields: id, name, or categoryId.");
-    }
+  if (!id || !name || !categoryId) {
+    throw new Error("Missing required fields: id, name, or categoryId.");
+  }
 
-    await db.insert("books", {
-        id,
-        name,
-        description,
-        image,
-        year,
-        pages,
-        isAvailable,
-        categoryId,
-    });
+  await db.insert("books", {
+    id,
+    name,
+    description,
+    image,
+    year,
+    pages,
+    isAvailable,
+    categoryId,
+  });
 
-    return { message: "Book created successfully!" };
+  return { message: "Book created successfully!" };
 });
 
 // Retrieve a book by ID
-export const getBookById = query(async ({ db }, { id }: { id: string }) => {
+export const getBookById = query(
+  async ({ db }, { id }: { id: Id<"books"> }) => {
     if (!id) {
-        throw new Error("Missing book ID.");
+      throw new Error("Missing book ID.");
     }
 
-    return await db.get(new Id("books", id));
-});
+    return await db.get(id);
+  }
+);
+
 // Update a book by ID
-export const updateBook = mutation(async ({ db }, { id, updates }: { id: string; updates: BookUpdates }) => {
+export const updateBook = mutation(
+  async (
+    { db },
+    { id, updates }: { id: Id<"books">; updates: BookUpdates }
+  ) => {
     if (!id || !updates) {
-        throw new Error("Missing book ID or updates.");
+      throw new Error("Missing book ID or updates.");
     }
 
-    const book = await db.get("books", new Id("books", id));
+    const book = await db.get(id);
     if (!book) {
-        throw new Error("Book not found.");
+      throw new Error("Book not found.");
     }
 
-    await db.patch("books", new Id("books", id), updates);
+    await db.patch(id, updates);
     return { message: "Book updated successfully!" };
-});
+  }
+);
 
 // Delete a book by ID
-export const deleteBook = mutation(async ({ db }, { id }: { id: string }) => {
+export const deleteBook = mutation(
+  async ({ db }, { id }: { id: Id<"books"> }) => {
     if (!id) {
-        throw new Error("Missing book ID.");
+      throw new Error("Missing book ID.");
     }
 
-    await db.delete("books", new Id("books", id));
+    await db.delete(id);
     return { message: "Book deleted successfully!" };
-});
+  }
+);
 
 // Search books by name or description
-export const searchBooks = query(async ({ db }, { searchTerm }: { searchTerm: string }) => {
-    if (!searchTerm) {
-        throw new Error("Missing search term.");
+export const searchBooks = query({
+  args: {
+    searchTerm: v.string(),
+  },
+  handler: async (ctx, args) => {
+    if (!args.searchTerm.trim()) {
+      throw new Error("Missing search term.");
     }
 
-    return await db.query("books")
-        .filter((book: Book) =>
-            book.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            book.description.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-        .collect();
+    return await ctx.db
+      .query("books")
+      .withSearchIndex("search_idx", (q) => q.search("name", args.searchTerm))
+      .collect();
+  },
 });
 
-// Get paginated books
-export const getPaginatedBooks = query(async ({ db }, { page, pageSize }: { page: number; pageSize: number }) => {
-    const skip = (page - 1) * pageSize;
+export const getPaginatedBooks = query({
+  args: {
+    page: v.number(),
+    pageSize: v.number(),
+  },
+  handler: async (ctx, args) => {
+    if (args.page < 1) {
+      throw new Error("Page must be greater than 0");
+    }
+    
+    if (args.pageSize < 1) {
+      throw new Error("Page size must be greater than 0");
+    }
 
-    const books = await db.query("books")
-        .skip(skip)
-        .take(pageSize)
-        .collect();
+    // Get total count first
+    const allBooks = await ctx.db
+      .query("books")
+      .collect();
+    
+    const totalBooks = allBooks.length;
+    const totalPages = Math.ceil(totalBooks / args.pageSize);
 
-    const totalBooks = await db.query("books").count();
-    const totalPages = Math.ceil(totalBooks / pageSize);
+    // Get paginated results
+    const startIndex = (args.page - 1) * args.pageSize;
+    
+    // Ensure the cursor is a string
+    const books = await ctx.db
+      .query("books")
+      .order("desc")
+      .paginate({ numItems: args.pageSize, cursor: String(startIndex) });
 
     return {
-        books,
-        totalPages,
-        currentPage: page,
+      books: books.page,
+      totalPages,
+      currentPage: args.page,
     };
+  },
 });
