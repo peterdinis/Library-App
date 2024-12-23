@@ -7,11 +7,16 @@ import Navigation from "../components/shared/Navigation";
 import { NextUiProvider } from "../components/shared/providers/NextUiProvider";
 import { ThemeProvider } from "../context/ThemeContext";
 
-export const metadata: Metadata = {
-	title: "SPŠT Knižnica",
-	description:
-		"Applikácia na správu knižnice na strednej priemyselnej škole technickej v Bardejove",
-};
+export const metadata = {
+	title: "Spsť Knižnica",
+	description: "Stránka školskej webovej knižnice",
+	icons: [
+		{
+			rel: "icon",
+			url: "https://www.spsbj.sk/wp-content/uploads/cropped-original-32x32.png",
+		},
+	],
+} as Metadata;
 
 export default function RootLayout({
 	children,
