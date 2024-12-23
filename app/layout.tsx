@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import Navigation from "../components/shared/Navigation";
 import { NextUiProvider } from "../components/shared/providers/NextUiProvider";
 import { ThemeProvider } from "../context/ThemeContext";
+import AppConvexProvider from "@/components/shared/providers/AppConvexProvider";
 
 export const metadata: Metadata = {
 	title: "SPŠT Knižnica",
@@ -23,13 +24,13 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={`antialiased`}>
 				<NextUiProvider>
-					<ConvexProvider client={convex}>
+					<AppConvexProvider>
 						<ThemeProvider>
 							<Navigation />
 							{children}
 							<Toaster />
 						</ThemeProvider>
-					</ConvexProvider>
+					</AppConvexProvider>
 				</NextUiProvider>
 			</body>
 		</html>
