@@ -3,18 +3,28 @@
 import { api } from "@/convex/_generated/api";
 import { Button, Card, CardHeader, Image } from "@nextui-org/react";
 import { usePaginatedQuery } from "convex/react";
-import type { FC } from "react";
+import { FC, useState } from "react";
 import Header from "../shared/Header";
 import BooksSearch from "./BooksSearch";
 import { CircularProgress } from "@nextui-org/react";
 import { Book } from "@/types/BookTypes";
+import AppPagination from "../shared/AppPagination";
 
 const AllBooksWrapper: FC = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 12;
   const { results, status } = usePaginatedQuery(
     api.books.getPaginatedBooks,
-    { paginationOpts: { page: 1, pageSize: 12 } },
-    { initialNumItems: 5 }
+    { paginationOpts: { page: currentPage, pageSize: pageSize } },
+    { initialNumItems: pageSize }
   );
+
+  const books = results ?? [];
+  const totalPages = Math.ceil((books.length * currentPage) / pageSize);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   if (status === "LoadingFirstPage")
     return <CircularProgress label="Loading..." />;
@@ -51,6 +61,13 @@ const AllBooksWrapper: FC = () => {
               </Card>
             );
           })}
+      </div>
+      <div className="flex justify-center items-center mt-20">
+        <AppPagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
       </div>
     </>
   );
