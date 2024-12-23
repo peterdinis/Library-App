@@ -2,23 +2,25 @@
 
 import { api } from "@/convex/_generated/api";
 import type { Book } from "@/types/BookTypes";
-import { Button, Card, CardHeader, Image } from "@nextui-org/react";
+import { Button, Card, CardHeader, Image, Input } from "@nextui-org/react";
 import { CircularProgress } from "@nextui-org/react";
 import { usePaginatedQuery } from "convex/react";
 import Link from "next/link";
-import { type FC, useState } from "react";
+import { type FC, useState, ChangeEvent } from "react";
 import AppPagination from "../shared/AppPagination";
 import Empty from "../shared/Empty";
 import Header from "../shared/Header";
-import BooksSearch from "./BooksSearch";
+import { Search } from "lucide-react";
 
 const AllBooksWrapper: FC = () => {
 	const [currentPage, setCurrentPage] = useState(1);
+	const [searchTerm, setSearchTerm] = useState("");
 	const pageSize = 12;
+
 	const { results, status } = usePaginatedQuery(
 		api.books.getPaginatedBooks,
-		{ paginationOpts: { page: currentPage, pageSize: pageSize } },
-		{ initialNumItems: pageSize },
+		{ paginationOpts: { page: currentPage, pageSize, searchTerm } }, 
+		{ initialNumItems: pageSize }
 	);
 
 	const books = results ?? [];
@@ -28,16 +30,28 @@ const AllBooksWrapper: FC = () => {
 		setCurrentPage(page);
 	};
 
-	if (status === "LoadingFirstPage")
-		return <CircularProgress label="Načítavam..." />;
+	const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+		setSearchTerm(event.target.value);
+		setCurrentPage(1); 
+	};
+
+	if (status === "LoadingFirstPage") return <CircularProgress label="Načítavam..." />;
 
 	return (
 		<>
 			<Header text="Všetky knihy" />
-			<BooksSearch />
-			{results && results.length === 0 && (
-				<Empty text="Žiadne knihy sa nenašli" />
-			)}
+			<div className="border-none outline-none mt-2">
+				<Input
+					startContent={<Search />}
+					variant="underlined"
+					placeholder="Hľadaj knihu..."
+					value={searchTerm}
+					onChange={handleSearchChange} 
+				/>
+			</div>
+
+			{results && results.length === 0 && <Empty text="Žiadne knihy sa nenašli" />}
+
 			<div className="max-w-full mx-auto mt-8 gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 px-8">
 				{results &&
 					results.map((book: Book) => {
@@ -48,7 +62,7 @@ const AllBooksWrapper: FC = () => {
 										{book.name}
 									</h1>
 									<p className="text-white font-medium text-large">
-										{book.description} {/* TODO Author */}
+										{book.description} {/* TODO: Add Author info */}
 									</p>
 									<Button variant="solid" color="success" className="mt-6">
 										<Link href={`/books/${book.id}`}>Detail Knihy</Link>
@@ -67,6 +81,7 @@ const AllBooksWrapper: FC = () => {
 						);
 					})}
 			</div>
+
 			<div className="flex justify-center items-center mt-20">
 				<AppPagination
 					currentPage={currentPage}
