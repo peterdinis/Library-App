@@ -9,15 +9,14 @@ export default defineSchema({
         image: v.string(),
         year: v.number(),
         pages: v.number(),
-        isAvaiable: v.boolean(),
-        authorName: v.string(),
-        publisherName: v.string()
+        isAvailable: v.boolean(),
+        categoryId: v.string(),
     }),
 
     categories: defineTable({
         id: v.string(),
         name: v.string(),
-        description: v.string()
+        description: v.string(),
     }),
 
     authors: defineTable({}),
