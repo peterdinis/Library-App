@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
-import Navigation from "./components/shared/Navigation";
-import { NextUiProvider } from "./components/shared/providers/NextUiProvider";
+import Navigation from "../components/shared/Navigation";
+import { NextUiProvider } from "../components/shared/providers/NextUiProvider";
 import { ThemeProvider } from "./context/ThemeContext";
 
 export const metadata: Metadata = {
