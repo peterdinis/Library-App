@@ -1,19 +1,7 @@
 import { mutation, query } from "./_generated/server";
 import { Id } from "./_generated/dataModel";
 import { v } from "convex/values";
-
-type Book = {
-  id: string;
-  name: string;
-  description: string;
-  year: number;
-  image: string;
-  pages: number;
-  isAvailable: boolean;
-  categoryId: string;
-};
-
-type BookUpdates = Partial<Omit<Book, "id">>; // Allow partial updates, except for the ID
+import { Book, BookUpdates } from "@/types/BookTypes";
 
 // Create a new book
 export const createBook = mutation(async ({ db }, book: Book) => {
