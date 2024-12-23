@@ -9,6 +9,7 @@ import BooksSearch from "./BooksSearch";
 import { CircularProgress } from "@nextui-org/react";
 import { Book } from "@/types/BookTypes";
 import AppPagination from "../shared/AppPagination";
+import Link from "next/link";
 
 const AllBooksWrapper: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -46,7 +47,7 @@ const AllBooksWrapper: FC = () => {
                     {book.description} {/* TODO Author */}
                   </p>
                   <Button variant="solid" color="success" className="mt-6">
-                    DETAIL
+                    <Link href={`/books/${book.id}`}>Detail Knihy</Link>
                   </Button>
                 </CardHeader>
                 <Image

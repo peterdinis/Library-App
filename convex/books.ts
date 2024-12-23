@@ -28,15 +28,17 @@ export const createBook = mutation(async ({ db }, book: Book) => {
 });
 
 // Retrieve a book by ID
-export const getBookById = query(
-  async ({ db }, { id }: { id: Id<"books"> }) => {
-    if (!id) {
-      throw new Error("Missing book ID.");
-    }
-
-    return await db.get(id);
+export const getBookById = query(async ({ db }, { id }: { id: string }) => {
+  if (!id) {
+    throw new Error("Missing book ID.");
   }
-);
+
+  const book = await db.query("books").filter((q) => q.eq(q.field("id"), id)).first();
+  if (!book) {
+    throw new Error("Book not found.");
+  }
+  return book;
+});
 
 // Update a book by ID
 export const updateBook = mutation(
