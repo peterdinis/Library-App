@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import type { FC } from "react";
-import schollImage from "../../../public/img/main.png";
+import schollImage from "../../public/img/main.png";
 
 const Hero: FC = () => {
 	const homepageVariants = {
