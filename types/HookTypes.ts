@@ -13,3 +13,9 @@ export type ControlFunctions = {
     flush: () => void
     isPending: () => boolean
   }
+
+ export type UseMediaQueryOptions = {
+    defaultValue?: boolean
+    initializeWithValue?: boolean
+  }
+  
