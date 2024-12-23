@@ -24,10 +24,7 @@ const ScrollToTop: FC = () => {
 	return (
 		<div className="top-to-btm">
 			{showTopBtn && (
-				<ChevronUp
-					onClick={goToTop}
-					className="icon-position icon-style"
-				/>
+				<ChevronUp onClick={goToTop} className="icon-position icon-style" />
 			)}
 		</div>
 	);
