@@ -94,12 +94,12 @@ const Navigation: FC = () => {
 						Vydavatelstvá
 					</Link>
 				</NavbarMenuItem>
-				<NavbarMenuItem className="hidden lg:flex">
+				<NavbarMenuItem>
 					<Button as={Link} color="primary" variant="flat" href="#">
 						Prihlásenie
 					</Button>
 				</NavbarMenuItem>
-				<NavbarMenuItem className="hidden lg:flex">
+				<NavbarMenuItem>
 					<Button as={Link} color="secondary" href="#" variant="flat">
 						Registrácia
 					</Button>

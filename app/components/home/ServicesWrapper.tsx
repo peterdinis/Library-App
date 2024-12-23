@@ -30,7 +30,7 @@ const ServicesWrapper: FC = () => {
 
   return (
     <div className="w-full overflow-hidden">
-      <div className="bg-gray-100 py-8 md:py-12 dark:bg-foreground-50">
+      <div className="bg-gray-100 shadow-md py-8 md:py-12 dark:bg-foreground-50">
         <div className="container mx-auto px-4 max-w-7xl">
           <motion.div
             tabIndex={0}

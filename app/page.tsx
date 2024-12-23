@@ -6,9 +6,8 @@ import Footer from "./components/shared/Footer";
 const Homepage: NextPage = () => {
 	return (
 		<>
-			<Hero />
-			<div className="mt-6">
-			<ServicesWrapper />
+			<div className="mt-5">
+				<ServicesWrapper />
 			</div>
 			<Footer />
 		</>
