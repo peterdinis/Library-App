@@ -34,7 +34,7 @@ const Navigation: FC = () => {
 			<NavbarContent className="hidden sm:flex gap-4" justify="start">
 				<NavbarBrand>
 					<p className="font-bold text-inherit text-xl">
-						<Link href="/">Spšt Knižnica</Link>
+						<Link className="text-xl" href="/">Spšt Knižnica</Link>
 					</p>
 				</NavbarBrand>
 				<NavbarItem className="ml-4">
