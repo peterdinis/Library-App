@@ -33,7 +33,9 @@ const Navigation: FC = () => {
 
 			<NavbarContent className="hidden sm:flex gap-4" justify="start">
 				<NavbarBrand>
-					<p className="font-bold text-inherit text-xl">SPŠT Knižnica</p>
+					<p className="font-bold text-inherit text-xl">
+						<Link href="/">Spšt Knižnica</Link>
+					</p>
 				</NavbarBrand>
 				<NavbarItem className="ml-4">
 					<Link color="foreground" href="/books">
@@ -46,12 +48,12 @@ const Navigation: FC = () => {
 					</Link>
 				</NavbarItem>
 				<NavbarItem>
-					<Link color="foreground" href="#">
+					<Link color="foreground" href="/authors">
 						Spisovatelia
 					</Link>
 				</NavbarItem>
 				<NavbarItem>
-					<Link color="foreground" href="#">
+					<Link color="foreground" href="/publishers">
 						Vydavateľstvá
 					</Link>
 				</NavbarItem>
@@ -75,22 +77,22 @@ const Navigation: FC = () => {
 
 			<NavbarMenu>
 				<NavbarMenuItem>
-					<Link className="w-full" color="primary" href="#" size="lg">
+					<Link className="w-full" color="primary" href="/books" size="lg">
 						Knihy
 					</Link>
 				</NavbarMenuItem>
 				<NavbarMenuItem className="mt-2">
-					<Link className="w-full" color="primary" href="#" size="lg">
+					<Link className="w-full" color="primary" href="/categories" size="lg">
 						Kategórie
 					</Link>
 				</NavbarMenuItem>
 				<NavbarMenuItem className="mt-2">
-					<Link className="w-full" color="primary" href="#" size="lg">
+					<Link className="w-full" color="primary" href="/authors" size="lg">
 						Spisovatelia
 					</Link>
 				</NavbarMenuItem>
 				<NavbarMenuItem className="mt-2">
-					<Link className="w-full" color="primary" href="#" size="lg">
+					<Link className="w-full" color="primary" href="/publishers" size="lg">
 						Vydavatelstvá
 					</Link>
 				</NavbarMenuItem>
