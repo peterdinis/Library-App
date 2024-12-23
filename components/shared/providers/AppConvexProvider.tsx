@@ -1,18 +1,18 @@
 "use client";
 
 import { ConvexProvider, ConvexReactClient } from "convex/react";
-import { FC, ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 
 type AppConvexProviderProps = {
-  children?: ReactNode;
+	children?: ReactNode;
 };
 
 const AppConvexProvider: FC<AppConvexProviderProps> = ({
-  children,
+	children,
 }: AppConvexProviderProps) => {
-  const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
+	const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
-  return <ConvexProvider client={convex}>{children}</ConvexProvider>;
+	return <ConvexProvider client={convex}>{children}</ConvexProvider>;
 };
 
 export default AppConvexProvider;

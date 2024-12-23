@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import AppConvexProvider from "@/components/shared/providers/AppConvexProvider";
 import { Toaster } from "react-hot-toast";
 import Navigation from "../components/shared/Navigation";
 import { NextUiProvider } from "../components/shared/providers/NextUiProvider";
 import { ThemeProvider } from "../context/ThemeContext";
-import AppConvexProvider from "@/components/shared/providers/AppConvexProvider";
 
 export const metadata: Metadata = {
 	title: "SPŠT Knižnica",
