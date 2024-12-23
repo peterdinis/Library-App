@@ -3,6 +3,7 @@ import { paginationOptsValidator } from "convex/server";
 import { v } from "convex/values";
 import type { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
+import { v7 as uuidv7 } from 'uuid';
 
 // Create a new book
 export const createBook = mutation(async ({ db }, book: Book) => {
@@ -14,7 +15,7 @@ export const createBook = mutation(async ({ db }, book: Book) => {
 	}
 
 	await db.insert("books", {
-		id,
+		id: uuidv7(),
 		name,
 		description,
 		image,
