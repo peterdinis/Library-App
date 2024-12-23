@@ -5,7 +5,6 @@ import type { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
 import { v7 as uuidv7 } from 'uuid';
 
-// Create a new book
 export const createBook = mutation(async ({ db }, book: Book) => {
 	const { id, name, description, image, year, pages, isAvailable, categoryId } =
 		book;
@@ -28,7 +27,6 @@ export const createBook = mutation(async ({ db }, book: Book) => {
 	return { message: "Book created successfully!" };
 });
 
-// Retrieve a book by ID
 export const getBookById = query(async ({ db }, { id }: { id: string }) => {
 	if (!id) {
 		throw new Error("Missing book ID.");
@@ -44,7 +42,6 @@ export const getBookById = query(async ({ db }, { id }: { id: string }) => {
 	return book;
 });
 
-// Update a book by ID
 export const updateBook = mutation(
 	async (
 		{ db },
@@ -64,7 +61,6 @@ export const updateBook = mutation(
 	},
 );
 
-// Delete a book by ID
 export const deleteBook = mutation(
 	async ({ db }, { id }: { id: Id<"books"> }) => {
 		if (!id) {
@@ -76,7 +72,6 @@ export const deleteBook = mutation(
 	},
 );
 
-// Search books by name or description
 export const searchBooks = query({
 	args: {
 		searchTerm: v.string(),
