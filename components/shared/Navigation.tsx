@@ -27,7 +27,9 @@ const Navigation: FC = () => {
 
 			<NavbarContent className="sm:hidden pr-3" justify="center">
 				<NavbarBrand>
-					<p className="font-bold text-inherit">SPŠT Knižnica</p>
+					<p className="font-bold text-inherit">
+						<Link className="text-xl" href="/">SPŠT Knižnica</Link>
+					</p>
 				</NavbarBrand>
 			</NavbarContent>
 
