@@ -9,11 +9,12 @@
  */
 
 import type {
-	ApiFromModules,
-	FilterApi,
-	FunctionReference,
+  ApiFromModules,
+  FilterApi,
+  FunctionReference,
 } from "convex/server";
 import type * as books from "../books.js";
+import type * as categories from "../categories.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -24,13 +25,14 @@ import type * as books from "../books.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
-	books: typeof books;
+  books: typeof books;
+  categories: typeof categories;
 }>;
 export declare const api: FilterApi<
-	typeof fullApi,
-	FunctionReference<any, "public">
+  typeof fullApi,
+  FunctionReference<any, "public">
 >;
 export declare const internal: FilterApi<
-	typeof fullApi,
-	FunctionReference<any, "internal">
+  typeof fullApi,
+  FunctionReference<any, "internal">
 >;
