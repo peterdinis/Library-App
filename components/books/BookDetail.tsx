@@ -46,7 +46,7 @@ const BookDetail: FC = () => {
 					<p>{data && data.year}</p>
 				</div>
 				<div>
-					<p className="mb-4 mt-3 text-2xl font-light dark:text-blue-50 leading-relaxed">
+					<div className="mb-4 mt-3 text-2xl font-light dark:text-blue-50 leading-relaxed">
 						<span className="font-bold">Kniha je:</span>
 						{data && data?.isAvailable ? (
 							<Chip className="ml-4" color="success">
@@ -70,7 +70,7 @@ const BookDetail: FC = () => {
 								></BookingBookModal>
 							</div>
 						</div>
-					</p>
+					</div>
 				</div>
 			</div>
 		);

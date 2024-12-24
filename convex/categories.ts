@@ -1,5 +1,4 @@
 import { paginationOptsValidator } from "convex/server";
-import { v } from "convex/values";
 import type { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
 import { v7 as uuidv7 } from 'uuid';
@@ -63,4 +62,19 @@ export const getPaginatedCategories = query({
 
 		return categories;
 	},
+});
+
+export const getCategoryById = query(async ({ db }, { id }: { id: string }) => {
+	if (!id) {
+		throw new Error("Missing categorie ID.");
+	}
+
+	const categories = await db
+		.query("categories")
+		.filter((q) => q.eq(q.field("id"), id))
+		.first();
+	if (!categories) {
+		throw new Error("Categories not found.");
+	}
+	return categories;
 });
