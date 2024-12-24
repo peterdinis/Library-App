@@ -1,63 +1,106 @@
 "use client";
 
 import {
-	Card,
-	CardBody,
-	CardFooter,
-	CardHeader,
-	Divider,
-	Image,
-	Link,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  CircularProgress,
+  Divider,
+  Image,
+  Input,
+  Link,
 } from "@nextui-org/react";
 import { FC, useState, ChangeEvent } from "react";
 import Header from "../shared/Header";
-import CategoriesSearch from "./CategoriesSearch";
+import { usePaginatedQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { Search } from "lucide-react";
+import Empty from "../shared/Empty";
+import AppPagination from "../shared/AppPagination";
 
 const AllCategoriesWrapper: FC = () => {
-	const [currentPage, setCurrentPage] = useState(1);
-	const [searchTerm, setSearchTerm] = useState("");
-	const pageSize = 12;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+  const pageSize = 12;
 
-	return (
-		<>
-			<Header text="Všetky kategórie" />
-			<CategoriesSearch />
-			<div className="mt-4 max-w-full mx-auto gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 px-8">
-				<Card className="max-w-[400px]">
-					<CardHeader className="flex gap-3">
-						<Image
-							alt="nextui logo"
-							height={40}
-							radius="sm"
-							src="https://avatars.githubusercontent.com/u/86160567?s=200&v=4"
-							width={40}
-						/>
-						<div className="flex flex-col">
-							<p className="text-md">NextUI</p>
-							<p className="text-small text-default-500">nextui.org</p>
-						</div>
-					</CardHeader>
-					<Divider />
-					<CardBody>
-						<p>Make beautiful websites regardless of your design experience.</p>
-					</CardBody>
-					<Divider />
-					<CardFooter>
-						<Link
-							isExternal
-							showAnchorIcon
-							href="https://github.com/nextui-org/nextui"
-						>
-							Visit source code on GitHub.
-						</Link>
-					</CardFooter>
-				</Card>
-			</div>
-			{/* <div className="flex justify-center items-center mt-20">
-				<AppPagination />
-			</div> */}
-		</>
-	);
+  const { results, status } = usePaginatedQuery(
+    api.categories.getPaginatedCategories,
+    { paginationOpts: { page: currentPage, pageSize, searchTerm } },
+    { initialNumItems: pageSize }
+  );
+
+  const categories = results ?? [];
+  const totalPages = Math.ceil((categories.length * currentPage) / pageSize);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+    setCurrentPage(1);
+  };
+
+  if (status === "LoadingFirstPage")
+    return <CircularProgress label="Načítavam..." />;
+
+  return (
+    <>
+      <Header text="Všetky kategórie" />
+      <div className="border-none outline-none mt-2">
+        <Input
+          startContent={<Search />}
+          variant="underlined"
+          placeholder="Hľadaj kategóriu..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+      </div>
+      {results && results.length === 0 && (
+        <Empty text="Žiadne katrgórie sa nenašli" />
+      )}
+
+      <div className="mt-4 max-w-full mx-auto gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 px-8">
+        <Card className="max-w-[400px]">
+          <CardHeader className="flex gap-3">
+            <Image
+              alt="nextui logo"
+              height={40}
+              radius="sm"
+              src="https://avatars.githubusercontent.com/u/86160567?s=200&v=4"
+              width={40}
+            />
+            <div className="flex flex-col">
+              <p className="text-md">NextUI</p>
+              <p className="text-small text-default-500">nextui.org</p>
+            </div>
+          </CardHeader>
+          <Divider />
+          <CardBody>
+            <p>Make beautiful websites regardless of your design experience.</p>
+          </CardBody>
+          <Divider />
+          <CardFooter>
+            <Link
+              isExternal
+              showAnchorIcon
+              href="https://github.com/nextui-org/nextui"
+            >
+              Visit source code on GitHub.
+            </Link>
+          </CardFooter>
+        </Card>
+      </div>
+      <div className="flex justify-center items-center mt-20">
+        <AppPagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      </div>
+    </>
+  );
 };
 
 export default AllCategoriesWrapper;
