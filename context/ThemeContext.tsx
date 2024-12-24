@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { FC, ReactNode, createContext, useEffect, useState } from "react";
 
 type Theme = "light" | "dark";
 
@@ -9,9 +9,9 @@ interface ThemeContextType {
 	toggleTheme: () => void;
 }
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
+export const ThemeProvider: FC<{ children: ReactNode }> = ({
 	children,
 }) => {
 	const [theme, setTheme] = useState<Theme>("light");
@@ -38,12 +38,4 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
 			{children}
 		</ThemeContext.Provider>
 	);
-};
-
-export const useTheme = () => {
-	const context = useContext(ThemeContext);
-	if (context === undefined) {
-		throw new Error("useTheme must be used within a ThemeProvider");
-	}
-	return context;
 };
