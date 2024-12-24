@@ -6,10 +6,9 @@ describe("Header Component", () => {
   it("renders the correct text when provided", () => {
     const testText = "Hello, Vitest!";
     render(<Header text={testText} />);
-
-    // Check if the text is rendered
+    
     const headerElement = screen.getByRole("heading");
-    expect(headerElement).toBeDefined(); // Check if the element exists
-    expect(headerElement).toHaveTextContent(testText); // Check if it contains the correct text
+    expect(headerElement).toBeDefined();
+    expect(headerElement).toHaveTextContent(testText);
   });
 });
