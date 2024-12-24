@@ -72,22 +72,6 @@ export const deleteBook = mutation(
 	},
 );
 
-export const searchBooks = query({
-	args: {
-		searchTerm: v.string(),
-	},
-	handler: async (ctx, args) => {
-		if (!args.searchTerm.trim()) {
-			throw new Error("Missing search term.");
-		}
-
-		return await ctx.db
-			.query("books")
-			.withSearchIndex("search_idx", (q) => q.search("name", args.searchTerm))
-			.collect();
-	},
-});
-
 export const getPaginatedBooks = query({
 	args: { paginationOpts: paginationOptsValidator },
 	handler: async (ctx, args) => {
