@@ -9,12 +9,15 @@ import {
 	Image,
 	Link,
 } from "@nextui-org/react";
-import type { FC } from "react";
-import AppPagination from "../shared/AppPagination";
+import { FC, useState, ChangeEvent } from "react";
 import Header from "../shared/Header";
 import CategoriesSearch from "./CategoriesSearch";
 
 const AllCategoriesWrapper: FC = () => {
+	const [currentPage, setCurrentPage] = useState(1);
+	const [searchTerm, setSearchTerm] = useState("");
+	const pageSize = 12;
+
 	return (
 		<>
 			<Header text="Všetky kategórie" />
@@ -50,9 +53,9 @@ const AllCategoriesWrapper: FC = () => {
 					</CardFooter>
 				</Card>
 			</div>
-			<div className="flex justify-center items-center mt-20">
+			{/* <div className="flex justify-center items-center mt-20">
 				<AppPagination />
-			</div>
+			</div> */}
 		</>
 	);
 };
