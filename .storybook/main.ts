@@ -15,6 +15,13 @@ const config: StorybookConfig = {
     name: "@storybook/nextjs",
     options: {},
   },
-  staticDirs: ["..\\public"],
+  webpackFinal: async (config) => {
+    config.module?.rules?.push({
+      test: /\.css$/,
+      use: ["style-loader", "css-loader"],
+      include: [/app/],
+    });
+    return config;
+  },
 };
 export default config;
