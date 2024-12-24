@@ -26,7 +26,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={`antialiased`}>
-				<NextUiProvider>
+				<NextUiProvider> 
 					<AppConvexProvider>
 						<ThemeProvider>
 							<Navigation />
