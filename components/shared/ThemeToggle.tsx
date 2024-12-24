@@ -1,6 +1,6 @@
 "use client";
 
-import { useTheme } from "@/context/ThemeContext";
+import { useTheme } from "@/hooks/useTheme";
 import { Switch } from "@nextui-org/react";
 import { MoonIcon, SunIcon } from "lucide-react";
 
