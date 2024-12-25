@@ -9,9 +9,7 @@
 		"lint": "next lint",
 		"format": "bunx biome check --write .",
 		"test": "vitest",
-		"convex": "npx convex dev",
-		"storybook": "storybook dev -p 6006",
-		"build-storybook": "storybook build"
+		"convex": "npx convex dev"
 	},
 	"dependencies": {
 		"@nextui-org/react": "^2.6.8",
