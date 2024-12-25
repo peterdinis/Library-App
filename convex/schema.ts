@@ -19,9 +19,30 @@ export default defineSchema({
 		id: v.string(),
 		name: v.string(),
 		description: v.string(),
+	}).searchIndex("search_idx", {
+		searchField: "name",
 	}),
 
-	authors: defineTable({}),
+	authors: defineTable({
+		name: v.string(),
+		description: v.string(),
+		image: v.string(),
+		isActive: v.boolean(),
+		litPeriod: v.string(),
+		bornDate: v.string(),
+		deathDate: v.optional(v.string()),
+	}).searchIndex("search_idx", {
+		searchField: "name",
+	}),
 
-	publishers: defineTable({}),
+	publishers: defineTable({
+		name: v.string(),
+		description: v.string(),
+		image: v.string(),
+		city: v.string(),
+		isActive: v.boolean(),
+		createdDate: v.string(),
+	}).searchIndex("search_idx", {
+		searchField: "name",
+	}),
 });
