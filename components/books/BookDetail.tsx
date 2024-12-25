@@ -47,7 +47,12 @@ const BookDetail: FC = () => {
 				</div>
 				<div className="mb-4 mt-3 text-2xl font-light leading-relaxed dark:text-blue-50 text-gray-800">
 					<div className="font-bold">Kniha patrí pod kategóriu: </div>
-					<Link className="text-black font-bold text-xl" href={`/categories/${data && data?.category?.id}`}>{data && data?.category?.name}</Link>
+					<Link
+						className="text-black font-bold text-xl"
+						href={`/categories/${data && data?.category?.id}`}
+					>
+						{data && data?.category?.name}
+					</Link>
 				</div>
 				<div>
 					<div className="mb-4 mt-3 text-2xl font-light dark:text-blue-50 leading-relaxed">

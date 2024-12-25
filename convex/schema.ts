@@ -11,7 +11,8 @@ export default defineSchema({
 		pages: v.number(),
 		isAvailable: v.boolean(),
 		categoryId: v.string(),
-		authorId: v.string()
+		authorId: v.string(),
+		publisherId: v.string(),
 	}).searchIndex("search_idx", {
 		searchField: "name",
 	}),

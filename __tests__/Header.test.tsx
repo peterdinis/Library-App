@@ -18,6 +18,6 @@ describe("Header Component", () => {
 
 		const headerElement = screen.getByRole("heading");
 		expect(headerElement).toBeDefined();
-		expect(headerElement).not.toHaveTextContent("Hello Vite")
+		expect(headerElement).not.toHaveTextContent("Hello Vite");
 	});
 });
