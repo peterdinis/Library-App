@@ -1,8 +1,8 @@
 import CategoryDetail from "@/components/categories/CategoryDetail";
-import { NextPage } from "next";
+import type { NextPage } from "next";
 
 const CategoryDetailPage: NextPage = () => {
-    return <CategoryDetail />
-}
+	return <CategoryDetail />;
+};
 
-export default CategoryDetailPage
+export default CategoryDetailPage;
