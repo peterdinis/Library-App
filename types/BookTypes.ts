@@ -7,6 +7,7 @@ export type Book = {
 	pages: number;
 	isAvailable: boolean;
 	categoryId: string;
+	authorId: string;
 };
 
 export type BookUpdates = Partial<Omit<Book, "id">>;
