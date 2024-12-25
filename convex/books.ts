@@ -5,7 +5,7 @@ import type { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
 
 export const createBook = mutation(async ({ db }, book: Book) => {
-  const { id, name, description, image, year, pages, isAvailable, categoryId } =
+  const { id, name, description, image, year, authorId, pages, isAvailable, categoryId } =
     book;
 
   if (!id || !name || !categoryId) {
@@ -17,6 +17,7 @@ export const createBook = mutation(async ({ db }, book: Book) => {
     name,
     description,
     image,
+    authorId,
     year,
     pages,
     isAvailable,
