@@ -27,28 +27,28 @@ const BookDetail: FC = () => {
 				<div>
 					<h1 className="title-font mb-1 text-4xl font-medium dark:text-blue-50 text-gray-900">
 						<span className="font-bold">Názov</span>:{" "}
-						<span>{data && data.name}</span>
+						<span>{data?.book && data?.book.name}</span>
 					</h1>
 				</div>
 
 				<div className="mb-4 mt-3 text-2xl font-light leading-relaxed dark:text-blue-50 text-gray-800">
 					<div className="font-bold">Krátky popis: </div>
-					<span>{data && data.description}</span>
+					<span>{data?.book && data?.book.description}</span>
 				</div>
 
 				<div className="mb-4 mt-3 text-2xl font-light leading-relaxed dark:text-blue-50 text-gray-800">
 					<div className="font-bold">Počet strán: </div>
-					<p>{data && data.pages}</p>
+					<p>{data?.book && data?.book.pages}</p>
 				</div>
 
 				<div className="mb-4 mt-3 text-2xl font-light leading-relaxed dark:text-blue-50 text-gray-800">
 					<div className="font-bold">Rok vydania: </div>
-					<p>{data && data.year}</p>
+					<p>{data?.book && data?.book.year}</p>
 				</div>
 				<div>
 					<div className="mb-4 mt-3 text-2xl font-light dark:text-blue-50 leading-relaxed">
 						<span className="font-bold">Kniha je:</span>
-						{data && data?.isAvailable ? (
+						{data?.book && data?.book.isAvailable ? (
 							<Chip className="ml-4" color="success">
 								Dostupná
 							</Chip>
@@ -94,9 +94,9 @@ const BookDetail: FC = () => {
 							width={400}
 							height={400}
 							priority={true}
-							alt={data?.name}
+							alt={data?.book && data?.book.name}
 							className="w-full rounded-lg border object-cover object-center drop-shadow-md lg:w-1/2"
-							src={data?.image!}
+							src={data?.book && data?.book.image!}
 						/>
 						{bookDetail}
 					</div>
