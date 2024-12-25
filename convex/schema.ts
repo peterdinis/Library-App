@@ -21,7 +21,22 @@ export default defineSchema({
 		description: v.string(),
 	}),
 
-	authors: defineTable({}),
+	authors: defineTable({
+		name: v.string(),
+		description: v.string(),
+		image: v.string(),
+		isActive: v.boolean(),
+		litPeriod: v.string(),
+		bornDate: v.string(),
+		deathDate: v.optional(v.string()),
+	}),
 
-	publishers: defineTable({}),
+	publishers: defineTable({
+		name: v.string(),
+		description: v.string(),
+		image: v.string(),
+		city: v.string(),
+		isActive: v.boolean(),
+		createdDate: v.string(),
+	}),
 });
