@@ -1,11 +1,7 @@
-import { NextPage } from "next";
+import type { NextPage } from "next";
 
 const AllPublishersPage: NextPage = () => {
-    return (
-        <>
-        Publishers
-        </>
-    )
-}
+	return <>Publishers</>;
+};
 
-export default AllPublishersPage
+export default AllPublishersPage;
