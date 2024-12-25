@@ -19,6 +19,8 @@ export default defineSchema({
 		id: v.string(),
 		name: v.string(),
 		description: v.string(),
+	}).searchIndex("search_idx", {
+		searchField: "name",
 	}),
 
 	authors: defineTable({
@@ -29,6 +31,8 @@ export default defineSchema({
 		litPeriod: v.string(),
 		bornDate: v.string(),
 		deathDate: v.optional(v.string()),
+	}).searchIndex("search_idx", {
+		searchField: "name",
 	}),
 
 	publishers: defineTable({
@@ -38,5 +42,7 @@ export default defineSchema({
 		city: v.string(),
 		isActive: v.boolean(),
 		createdDate: v.string(),
+	}).searchIndex("search_idx", {
+		searchField: "name",
 	}),
 });
