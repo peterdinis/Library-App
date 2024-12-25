@@ -11,6 +11,7 @@ export default defineSchema({
 		pages: v.number(),
 		isAvailable: v.boolean(),
 		categoryId: v.string(),
+		authorId: v.string()
 	}).searchIndex("search_idx", {
 		searchField: "name",
 	}),
