@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ScrollToTop from "@/components/shared/ScrollToTop";
 import AppConvexProvider from "@/components/shared/providers/AppConvexProvider";
+import NextUiProvider from "@/components/shared/providers/NextUiProvider";
 import { Toaster } from "react-hot-toast";
 import Navigation from "../components/shared/Navigation";
 import { ThemeProvider } from "../context/ThemeContext";
-import NextUiProvider from "@/components/shared/providers/NextUiProvider"
 
 export const metadata = {
 	title: "Spsť Knižnica",
@@ -26,7 +26,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={`antialiased`}>
-				<NextUiProvider> 
+				<NextUiProvider>
 					<AppConvexProvider>
 						<ThemeProvider>
 							<Navigation />

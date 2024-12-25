@@ -1,16 +1,16 @@
 "use client";
 
 import { NextUIProvider } from "@nextui-org/react";
-import { FC, ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 
 type NextUiProviderProps = {
-  children?: ReactNode;
+	children?: ReactNode;
 };
 
 const NextUiProvider: FC<NextUiProviderProps> = ({
-  children,
+	children,
 }: NextUiProviderProps) => {
-  return <NextUIProvider>{children}</NextUIProvider>;
+	return <NextUIProvider>{children}</NextUIProvider>;
 };
 
 export default NextUiProvider;

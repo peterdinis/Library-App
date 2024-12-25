@@ -1,6 +1,12 @@
 "use client";
 
-import { FC, ReactNode, createContext, useEffect, useState } from "react";
+import {
+	type FC,
+	type ReactNode,
+	createContext,
+	useEffect,
+	useState,
+} from "react";
 
 type Theme = "light" | "dark";
 
@@ -9,11 +15,11 @@ interface ThemeContextType {
 	toggleTheme: () => void;
 }
 
-export const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+export const ThemeContext = createContext<ThemeContextType | undefined>(
+	undefined,
+);
 
-export const ThemeProvider: FC<{ children: ReactNode }> = ({
-	children,
-}) => {
+export const ThemeProvider: FC<{ children: ReactNode }> = ({ children }) => {
 	const [theme, setTheme] = useState<Theme>("light");
 
 	useEffect(() => {

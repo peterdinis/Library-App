@@ -1,44 +1,44 @@
+import type { CategoryUpdates } from "@/types/CategoryTypes";
 import { paginationOptsValidator } from "convex/server";
+import { v7 as uuidv7 } from "uuid";
 import type { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
-import { v7 as uuidv7 } from 'uuid';
-import { CategoryUpdates } from "@/types/CategoryTypes";
 
-export const createCategory = mutation(async({db}, category: any) => {
-    const {id, name, description} = category;
+export const createCategory = mutation(async ({ db }, category: any) => {
+	const { id, name, description } = category;
 
-    if (!id || !name || !description) {
+	if (!id || !name || !description) {
 		throw new Error("Missing required fields: id, name, or description.");
 	}
 
-    await db.insert("categories", {
-        id: uuidv7(),
-        name,
-        description
-    })
+	await db.insert("categories", {
+		id: uuidv7(),
+		name,
+		description,
+	});
 
-    return {
-        message: "Category was created successfully"
-    }
-})
+	return {
+		message: "Category was created successfully",
+	};
+});
 
 export const updateCategory = mutation(
-    async (
-        { db },
-        { id, updates }: { id: Id<"categories">; updates: CategoryUpdates },
-    ) => {
-        if (!id || !updates) {
-            throw new Error("Missing category ID or updates.");
-        }
+	async (
+		{ db },
+		{ id, updates }: { id: Id<"categories">; updates: CategoryUpdates },
+	) => {
+		if (!id || !updates) {
+			throw new Error("Missing category ID or updates.");
+		}
 
-        const category = await db.get(id);
-        if (!category) {
-            throw new Error("Category not found.");
-        }
+		const category = await db.get(id);
+		if (!category) {
+			throw new Error("Category not found.");
+		}
 
-        await db.patch(id, updates);
-        return { message: "Category updated successfully!" };
-    },
+		await db.patch(id, updates);
+		return { message: "Category updated successfully!" };
+	},
 );
 
 export const deleteCategory = mutation(
@@ -69,12 +69,21 @@ export const getCategoryById = query(async ({ db }, { id }: { id: string }) => {
 		throw new Error("Missing categorie ID.");
 	}
 
-	const categories = await db
+	const categoryInfo = await db
 		.query("categories")
 		.filter((q) => q.eq(q.field("id"), id))
 		.first();
-	if (!categories) {
-		throw new Error("Categories not found.");
+	if (!categoryInfo) {
+		throw new Error("Category does not exists.");
 	}
-	return categories;
+
+	const books = await db
+		.query("books")
+		.filter((q) => q.eq(q.field("categoryId"), id))
+		.collect();
+
+	return {
+		categoryInfo,
+		books,
+	};
 });

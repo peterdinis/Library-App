@@ -1,11 +1,7 @@
-import { NextPage } from "next";
+import type { NextPage } from "next";
 
-const AllAuthorsPage: NextPage =() => {
-    return (
-        <>
-            AUTHORS
-        </>
-    )
-}
+const AllAuthorsPage: NextPage = () => {
+	return <>AUTHORS</>;
+};
 
-export default AllAuthorsPage
+export default AllAuthorsPage;
