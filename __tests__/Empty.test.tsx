@@ -18,6 +18,6 @@ describe("Empty Component", () => {
 
 		const emptyComponentElement = screen.getByRole("div");
 		expect(emptyComponentElement).toBeDefined();
-		expect(emptyComponentElement).not.toHaveTextContent("Hello Vite")
+		expect(emptyComponentElement).not.toHaveTextContent("Hello Vite");
 	});
 });

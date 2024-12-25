@@ -55,7 +55,7 @@ const AllBooksWrapper: FC = () => {
 	if (status === "LoadingFirstPage")
 		return <CircularProgress label="Načítavam..." />;
 
-return (
+	return (
 		<>
 			<Header text="Všetky knihy" />
 			<div className="border-none outline-none mt-2">
