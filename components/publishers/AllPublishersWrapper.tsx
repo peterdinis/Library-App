@@ -1,7 +1,6 @@
 "use client";
 
 import { api } from "@/convex/_generated/api";
-import { AuthorType } from "@/types/AuthorTypes";
 import type { PublisherType } from "@/types/PublisherTypes";
 import { Button, Card, CardHeader, Image, Input } from "@nextui-org/react";
 import { CircularProgress } from "@nextui-org/react";
