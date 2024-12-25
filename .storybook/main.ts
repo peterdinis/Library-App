@@ -17,7 +17,7 @@ const config: StorybookConfig = {
 	webpackFinal: async (config) => {
 		config.module?.rules?.push({
 			test: /\.css$/,
-			use: ["style-loader", "css-loader"],
+			use: ['style-loader', 'css-loader', 'postcss-loader'],
 			include: [/app/],
 		});
 		return config;
