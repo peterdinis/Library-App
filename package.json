@@ -12,6 +12,7 @@
 		"convex": "npx convex dev"
 	},
 	"dependencies": {
+		"@clerk/nextjs": "^6.9.6",
 		"@nextui-org/react": "^2.6.8",
 		"@testing-library/dom": "^10.4.0",
 		"@testing-library/react": "^16.1.0",
