@@ -67,12 +67,12 @@ const Navigation: FC = () => {
 
 			<NavbarContent justify="end">
 				<NavbarItem className="hidden lg:flex">
-					<Button as={Link} color="primary" variant="flat" href="#">
+					<Button as={Link} color="primary" variant="flat" href="/sign-in">
 						Prihlásenie
 					</Button>
 				</NavbarItem>
 				<NavbarItem className="hidden lg:flex">
-					<Button as={Link} color="secondary" href="#" variant="flat">
+					<Button as={Link} color="secondary" href="/sign-up" variant="flat">
 						Registrácia
 					</Button>
 				</NavbarItem>
