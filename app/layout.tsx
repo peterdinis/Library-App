@@ -3,9 +3,9 @@ import "./globals.css";
 import ScrollToTop from "@/components/shared/ScrollToTop";
 import AppConvexProvider from "@/components/shared/providers/AppConvexProvider";
 import NextUiProvider from "@/components/shared/providers/NextUiProvider";
-import { Toaster } from "react-hot-toast";
 import Navigation from "../components/shared/Navigation";
 import { ThemeProvider } from "../context/ThemeContext";
+import { Toaster } from "@/components/shared/Toaster";
 
 export const metadata = {
 	title: "Spsť Knižnica",
