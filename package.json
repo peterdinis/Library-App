@@ -13,9 +13,11 @@
 	},
 	"dependencies": {
 		"@nextui-org/react": "^2.6.8",
+		"@radix-ui/react-toast": "^1.2.4",
 		"@testing-library/dom": "^10.4.0",
 		"@testing-library/react": "^16.1.0",
 		"@vitejs/plugin-react": "^4.3.4",
+		"class-variance-authority": "^0.7.1",
 		"convex": "^1.17.4",
 		"date-fns": "^4.1.0",
 		"framer-motion": "^11.15.0",
@@ -24,7 +26,6 @@
 		"next": "15.1.2",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0",
-		"react-hot-toast": "^2.4.1",
 		"uuid": "^11.0.3",
 		"vite-tsconfig-paths": "^5.1.4",
 		"vitest": "^2.1.8"
