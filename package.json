@@ -6,8 +6,7 @@
 		"dev": "next dev --turbopack",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint",
-		"format": "bunx biome check --write .",
+		"lint": "bunx biome check --write .",
 		"test": "vitest",
 		"convex": "npx convex dev"
 	},

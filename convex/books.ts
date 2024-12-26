@@ -1,5 +1,5 @@
-import type { Book, BookUpdates } from "@/types/BookTypes";
 import { paginationOptsValidator } from "convex/server";
+import type {Book, BookUpdates} from "../types/BookTypes"
 import { v7 as uuidv7 } from "uuid";
 import type { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
