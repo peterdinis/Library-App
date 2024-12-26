@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ScrollToTop from "@/components/shared/ScrollToTop";
+import { Toaster } from "@/components/shared/Toaster";
 import AppConvexProvider from "@/components/shared/providers/AppConvexProvider";
 import NextUiProvider from "@/components/shared/providers/NextUiProvider";
 import Navigation from "../components/shared/Navigation";
 import { ThemeProvider } from "../context/ThemeContext";
-import { Toaster } from "@/components/shared/Toaster";
 
 export const metadata = {
 	title: "Spsť Knižnica",
