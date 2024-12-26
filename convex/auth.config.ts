@@ -1,7 +1,7 @@
 export default {
     providers: [
       {
-        domain: "https://handy-oyster-39.clerk.accounts.dev",
+        domain: process.env.CLERK_AUTH_DOMAIN,
         applicationID: "convex",
       },
     ]
