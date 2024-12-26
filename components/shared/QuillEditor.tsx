@@ -23,7 +23,7 @@ interface QuillEditorProps {
     onChange: (content: string) => void;
 }
 
-const QuillEditor: FC<QuillEditorProps> = ({ value, readOnly, onChange }) => {
+const QuillEditor: FC<QuillEditorProps> = ({ value, readOnly, onChange }: QuillEditorProps) => {
     const ReactQuill = useMemo(
         () =>
             dynamic(() => import('react-quill'), {
