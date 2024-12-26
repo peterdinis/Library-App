@@ -11,6 +11,7 @@ import 'highlight.js/styles/monokai.css';
 import { SnowTheme } from 'quill-color-picker-enhance';
 import 'quill-color-picker-enhance/dist/index.css';
 import { CircularProgress } from '@nextui-org/react';
+
 Quill.register('modules/magicUrl', MagicUrl);
 Quill.register('modules/cursors', QuillCursors);
 Quill.register('themes/snow-quill-color-picker-enhance', SnowTheme);
@@ -48,7 +49,6 @@ const QuillEditor: FC<QuillEditorProps> = ({ value, readOnly, onChange }) => {
 
 export default QuillEditor;
 
-// quill-config.js or quill-config.ts
 export const modules = {
   toolbar: [
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
