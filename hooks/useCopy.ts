@@ -2,10 +2,11 @@
 
 import type { CopiedValue, CopyFn } from "@/types/HookTypes";
 import { useCallback, useState } from "react";
+import { useToast } from "./useToast";
 
 export function useCopyToClipboard(): [CopiedValue, CopyFn] {
 	const [copiedText, setCopiedText] = useState<CopiedValue>(null);
-
+	const {toast} = useToast();
 	const copy: CopyFn = useCallback(async (text) => {
 		if (!navigator?.clipboard) {
 			console.warn("Clipboard not supported");
@@ -16,10 +17,18 @@ export function useCopyToClipboard(): [CopiedValue, CopyFn] {
 		try {
 			await navigator.clipboard.writeText(text);
 			setCopiedText(text);
+			toast({
+				title: "Hodnota skopirovaná",
+				className: "bg-green-800 text-white font-bold text-xl"
+			})
 			return true;
 		} catch (error) {
 			console.warn("Copy failed", error);
 			setCopiedText(null);
+			toast({
+				title: "Hodnota nebla skopirovaná",
+				className: "bg-red-800 text-white font-bold text-xl"
+			})
 			return false;
 		}
 	}, []);

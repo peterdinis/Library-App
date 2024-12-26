@@ -1,10 +1,10 @@
-import type { CategoryUpdates } from "@/types/CategoryTypes";
+import type { CategoryUpdates, Category } from "../types/CategoryTypes";
 import { paginationOptsValidator } from "convex/server";
 import { v7 as uuidv7 } from "uuid";
 import type { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
 
-export const createCategory = mutation(async ({ db }, category: any) => {
+export const createCategory = mutation(async ({ db }, category: Category) => {
 	const { id, name, description } = category;
 
 	if (!id || !name || !description) {
