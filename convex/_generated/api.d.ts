@@ -16,6 +16,7 @@ import type {
 import type * as authors from "../authors.js";
 import type * as books from "../books.js";
 import type * as categories from "../categories.js";
+import type * as http from "../http.js";
 import type * as publishers from "../publishers.js";
 
 /**
@@ -30,6 +31,7 @@ declare const fullApi: ApiFromModules<{
   authors: typeof authors;
   books: typeof books;
   categories: typeof categories;
+  http: typeof http;
   publishers: typeof publishers;
 }>;
 export declare const api: FilterApi<
