@@ -33,6 +33,7 @@
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0",
 		"react-quill": "^2.0.0",
+		"svix": "^1.44.0",
 		"uuid": "^11.0.3",
 		"vite-tsconfig-paths": "^5.1.4",
 		"vitest": "^2.1.8"
