@@ -47,4 +47,12 @@ export default defineSchema({
 	}).searchIndex("search_idx", {
 		searchField: "name",
 	}),
+
+	users: defineTable({
+		email: v.string(),
+		imageUrl: v.string(),
+		clerkId: v.string(),
+		name: v.string(),
+		role: v.string(),
+	}),
 });
