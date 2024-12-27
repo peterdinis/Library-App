@@ -10,7 +10,7 @@ import {
 	Divider,
 	Input,
 	Link,
-	Skeleton
+	Skeleton,
 } from "@nextui-org/react";
 import { usePaginatedQuery } from "convex/react";
 import { Search } from "lucide-react";
@@ -61,30 +61,39 @@ const AllCategoriesWrapper: FC = () => {
 				<Empty text="Žiadne katrgórie sa nenašli" />
 			)}
 
-			<Suspense fallback={<><div>
-        <Skeleton className="flex rounded-full w-12 h-12" />
-      </div></>}>
-			<div className="mt-4 max-w-full mx-auto gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 px-8">
-				{results &&
-					results.map((category: Category) => {
-						return (
-							<Card className="max-w-[400px]" key={category._id}>
-								<CardHeader className="flex gap-3">
-									<div className="flex flex-col">
-										<p className="text-md">{category.name}</p>
-										<p className="text-small text-default-500">
-											{category.description}
-										</p>
-									</div>
-								</CardHeader>
-								<Divider />
-								<CardFooter>
-									<Link href={`/categories/${category._id}`}>Detail</Link>
-								</CardFooter>
-							</Card>
-						);
-					})}
-			</div></Suspense>
+			<Suspense
+				fallback={
+					<>
+						<div>
+							<Skeleton className="flex rounded-full w-12 h-12" />
+						</div>
+					</>
+				}
+			>
+				<div className="mt-4 max-w-full mx-auto gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 px-8">
+					{results &&
+						results.map((category: Category) => {
+							return (
+								<Card className="max-w-[400px]" key={category._id}>
+									<CardHeader className="flex gap-3">
+										<div className="flex flex-col">
+											<p className="text-md">{category.name}</p>
+											<p className="text-small text-default-500">
+												{category.description}
+											</p>
+										</div>
+									</CardHeader>
+									<Divider />
+									<CardFooter>
+										<Link href={`/categories/${category._id}`}>
+											Detail kategórie
+										</Link>
+									</CardFooter>
+								</Card>
+							);
+						})}
+				</div>
+			</Suspense>
 			<div className="flex justify-center items-center mt-20">
 				<AppPagination
 					currentPage={currentPage}

@@ -1,6 +1,7 @@
 "use client";
 
 import { api } from "@/convex/_generated/api";
+import type { Id } from "@/convex/_generated/dataModel";
 import { Button, Chip, CircularProgress, Link } from "@nextui-org/react";
 import { useQuery } from "convex/react";
 import Image from "next/image";
@@ -9,15 +10,14 @@ import { type FC, type Key, useMemo } from "react";
 import BookingBookModal from "../booking/BookingBookModal";
 import Empty from "../shared/Empty";
 import Header from "../shared/Header";
-import type { Id } from "@/convex/_generated/dataModel";
 
 const BookDetail: FC = () => {
 	const { id } = useParams();
 
 	const bookID = id as unknown as Id<"books">;
-	
+
 	const data = useQuery(api.books.getBookById, {
-		id: bookID
+		id: bookID,
 	});
 
 	const bookDetail = useMemo(() => {

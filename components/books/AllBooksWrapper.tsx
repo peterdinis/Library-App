@@ -17,8 +17,8 @@ import Link from "next/link";
 import {
 	type ChangeEvent,
 	type FC,
-	useEffect,
 	Suspense,
+	useEffect,
 	useState,
 } from "react";
 import AppPagination from "../shared/AppPagination";

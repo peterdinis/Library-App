@@ -1,8 +1,8 @@
 import CreateCategory from "@/components/categories/CreateCategory";
-import { NextPage } from "next";
+import type { NextPage } from "next";
 
 const CreateCategoryPage: NextPage = () => {
-    return <CreateCategory />
-}
+	return <CreateCategory />;
+};
 
-export default CreateCategoryPage
+export default CreateCategoryPage;

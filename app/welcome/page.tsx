@@ -2,7 +2,7 @@ import WelcomeWrapper from "@/components/auth/WelcomeWrapper";
 import type { NextPage } from "next";
 
 const WelcomePage: NextPage = () => {
-    return <WelcomeWrapper />
-}
+	return <WelcomeWrapper />;
+};
 
-export default WelcomePage
+export default WelcomePage;

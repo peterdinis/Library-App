@@ -1,5 +1,5 @@
 import { paginationOptsValidator } from "convex/server";
-import type {Book, BookUpdates} from "../types/BookTypes"
+import type { Book, BookUpdates } from "../types/BookTypes";
 import type { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
 

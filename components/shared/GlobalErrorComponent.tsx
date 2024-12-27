@@ -2,11 +2,11 @@ import Link from "next/link";
 import type { FC } from "react";
 
 type IGlobalErrorProps = {
-    statusCode: string;
-    message: string;
-    linkHref: string;
-    linkText: string;
-}
+	statusCode: string;
+	message: string;
+	linkHref: string;
+	linkText: string;
+};
 
 const GlobalErrorComponent: FC<IGlobalErrorProps> = ({
 	statusCode,
