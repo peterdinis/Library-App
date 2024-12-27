@@ -2,12 +2,25 @@
 
 import { api } from "@/convex/_generated/api";
 import type { Book } from "@/types/BookTypes";
-import { Button, Card, CardHeader, Image, Input } from "@nextui-org/react";
+import {
+	Button,
+	Card,
+	CardHeader,
+	Image,
+	Input,
+	Skeleton,
+} from "@nextui-org/react";
 import { CircularProgress } from "@nextui-org/react";
 import { usePaginatedQuery } from "convex/react";
 import { Search } from "lucide-react";
 import Link from "next/link";
-import { type ChangeEvent, type FC, useEffect, useState } from "react";
+import {
+	type ChangeEvent,
+	type FC,
+	useEffect,
+	Suspense,
+	useState,
+} from "react";
 import AppPagination from "../shared/AppPagination";
 import Empty from "../shared/Empty";
 import Header from "../shared/Header";
@@ -72,35 +85,45 @@ const AllBooksWrapper: FC = () => {
 				<Empty text="Žiadne knihy sa nenašli" />
 			)}
 
-			<div className="max-w-full mx-auto mt-8 gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 px-8">
-				{results &&
-					results.map((book: Book) => {
-						return (
-							<Card key={book._id} className="h-[300px]">
-								<CardHeader className="absolute z-10 top-1 left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center text-center w-full h-full">
-									<h1 className="text-4xl prose prose-h1: text-white font-bold uppercase">
-										{book.name}
-									</h1>
-									<p className="text-white font-medium text-large">
-										{book.description} {/* TODO: Add Author info */}
-									</p>
-									<Button variant="solid" color="success" className="mt-6">
-										<Link href={`/books/${book._id}`}>Detail Knihy</Link>
-									</Button>
-								</CardHeader>
-								<Image
-									removeWrapper
-									alt="Card background"
-									className="z-0 w-full h-full object-cover"
-									src={
-										book.image ||
-										"https://nextui.org/images/card-example-4.jpeg"
-									}
-								/>
-							</Card>
-						);
-					})}
-			</div>
+			<Suspense
+				fallback={
+					<>
+						<Skeleton className="rounded-lg">
+							<div className="h-24 rounded-lg bg-default-300" />
+						</Skeleton>
+					</>
+				}
+			>
+				<div className="max-w-full mx-auto mt-8 gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 px-8">
+					{results &&
+						results.map((book: Book) => {
+							return (
+								<Card key={book._id} className="h-[300px]">
+									<CardHeader className="absolute z-10 top-1 left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center text-center w-full h-full">
+										<h1 className="text-4xl prose prose-h1: text-white font-bold uppercase">
+											{book.name}
+										</h1>
+										<p className="text-white font-medium text-large">
+											{book.description} {/* TODO: Add Author info */}
+										</p>
+										<Button variant="solid" color="success" className="mt-6">
+											<Link href={`/books/${book._id}`}>Detail Knihy</Link>
+										</Button>
+									</CardHeader>
+									<Image
+										removeWrapper
+										alt="Card background"
+										className="z-0 w-full h-full object-cover"
+										src={
+											book.image ||
+											"https://nextui.org/images/card-example-4.jpeg"
+										}
+									/>
+								</Card>
+							);
+						})}
+				</div>
+			</Suspense>
 
 			<div className="flex justify-center items-center mt-20">
 				<AppPagination

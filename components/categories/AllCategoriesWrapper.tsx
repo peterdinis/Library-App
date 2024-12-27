@@ -10,10 +10,11 @@ import {
 	Divider,
 	Input,
 	Link,
+	Skeleton
 } from "@nextui-org/react";
 import { usePaginatedQuery } from "convex/react";
 import { Search } from "lucide-react";
-import { type ChangeEvent, type FC, useState } from "react";
+import { type ChangeEvent, type FC, Suspense, useState } from "react";
 import AppPagination from "../shared/AppPagination";
 import Empty from "../shared/Empty";
 import Header from "../shared/Header";
@@ -60,6 +61,9 @@ const AllCategoriesWrapper: FC = () => {
 				<Empty text="Žiadne katrgórie sa nenašli" />
 			)}
 
+			<Suspense fallback={<><div>
+        <Skeleton className="flex rounded-full w-12 h-12" />
+      </div></>}>
 			<div className="mt-4 max-w-full mx-auto gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 px-8">
 				{results &&
 					results.map((category: Category) => {
@@ -80,7 +84,7 @@ const AllCategoriesWrapper: FC = () => {
 							</Card>
 						);
 					})}
-			</div>
+			</div></Suspense>
 			<div className="flex justify-center items-center mt-20">
 				<AppPagination
 					currentPage={currentPage}
