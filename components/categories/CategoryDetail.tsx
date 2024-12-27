@@ -7,10 +7,11 @@ import { useParams } from "next/navigation";
 import { type FC, type Key, useMemo } from "react";
 import Empty from "../shared/Empty";
 import Header from "../shared/Header";
+import type { Id } from "@/convex/_generated/dataModel";
 
 const CategoryDetail: FC = () => {
 	const { id } = useParams();
-	const categoryID = id as unknown as string;
+	const categoryID = id as unknown as Id<"categories">;
 
 	const data = useQuery(api.categories.getCategoryById, {
 		id: categoryID,
@@ -56,7 +57,7 @@ const CategoryDetail: FC = () => {
 				</div>
 			</div>
 		);
-	}, [data]);
+	}, [data, id]);
 
 	if (!id) {
 		return <Empty text="Kniha neexistuje" />;

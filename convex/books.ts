@@ -1,12 +1,10 @@
 import { paginationOptsValidator } from "convex/server";
 import type {Book, BookUpdates} from "../types/BookTypes"
-import { v7 as uuidv7 } from "uuid";
 import type { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
 
 export const createBook = mutation(async ({ db }, book: Book) => {
 	const {
-		id,
 		name,
 		description,
 		image,
@@ -18,12 +16,11 @@ export const createBook = mutation(async ({ db }, book: Book) => {
 		categoryId,
 	} = book;
 
-	if (!id || !name || !categoryId) {
-		throw new Error("Missing required fields: id, name, or categoryId.");
+	if (!name || !categoryId) {
+		throw new Error("Missing required fields: name, or categoryId.");
 	}
 
 	await db.insert("books", {
-		id: uuidv7(),
 		name,
 		description,
 		image,
@@ -45,12 +42,12 @@ export const getBookById = query(async ({ db }, { id }: { id: string }) => {
 
 	const book = await db
 		.query("books")
-		.filter((q) => q.eq(q.field("id"), id))
+		.filter((q) => q.eq(q.field("_id"), id))
 		.first();
 
 	const category = await db
 		.query("categories")
-		.filter((q) => q.eq(q.field("id"), book?.categoryId))
+		.filter((q) => q.eq(q.field("_id"), book?.categoryId))
 		.first();
 
 	if (!book) {

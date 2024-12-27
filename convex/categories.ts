@@ -1,18 +1,16 @@
 import type { CategoryUpdates, Category } from "../types/CategoryTypes";
 import { paginationOptsValidator } from "convex/server";
-import { v7 as uuidv7 } from "uuid";
 import type { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
 
 export const createCategory = mutation(async ({ db }, category: Category) => {
-	const { id, name, description } = category;
+	const { name, description } = category;
 
-	if (!id || !name || !description) {
-		throw new Error("Missing required fields: id, name, or description.");
+	if (!name || !description) {
+		throw new Error("Missing required fields: name, or description.");
 	}
 
 	await db.insert("categories", {
-		id: uuidv7(),
 		name,
 		description,
 	});
@@ -71,7 +69,7 @@ export const getCategoryById = query(async ({ db }, { id }: { id: string }) => {
 
 	const categoryInfo = await db
 		.query("categories")
-		.filter((q) => q.eq(q.field("id"), id))
+		.filter((q) => q.eq(q.field("_id"), id))
 		.first();
 	if (!categoryInfo) {
 		throw new Error("Category does not exists.");

@@ -64,7 +64,7 @@ const AllCategoriesWrapper: FC = () => {
 				{results &&
 					results.map((category: Category) => {
 						return (
-							<Card className="max-w-[400px]" key={category.id}>
+							<Card className="max-w-[400px]" key={category._id}>
 								<CardHeader className="flex gap-3">
 									<div className="flex flex-col">
 										<p className="text-md">{category.name}</p>
@@ -75,7 +75,7 @@ const AllCategoriesWrapper: FC = () => {
 								</CardHeader>
 								<Divider />
 								<CardFooter>
-									<Link href={`/categories/${category.id}`}>Detail</Link>
+									<Link href={`/categories/${category._id}`}>Detail</Link>
 								</CardFooter>
 							</Card>
 						);

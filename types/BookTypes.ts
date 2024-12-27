@@ -1,5 +1,5 @@
 export type Book = {
-	id: string;
+	_id?: string;
 	name: string;
 	description: string;
 	year: number;
@@ -11,4 +11,4 @@ export type Book = {
 	publisherId: string;
 };
 
-export type BookUpdates = Partial<Omit<Book, "id">>;
+export type BookUpdates = Partial<Omit<Book, "_id">>;

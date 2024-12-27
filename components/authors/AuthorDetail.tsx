@@ -48,7 +48,7 @@ const AuthorDetail: FC = () => {
 				</div>
 			</div>
 		);
-	}, [data]);
+	}, [data, id]);
 
 	if (!id) {
 		return <Empty text="Kniha neexistuje" />;
