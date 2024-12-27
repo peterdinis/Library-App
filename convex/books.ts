@@ -1,6 +1,5 @@
 import { paginationOptsValidator } from "convex/server";
 import type {Book, BookUpdates} from "../types/BookTypes"
-import { v7 as uuidv7 } from "uuid";
 import type { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
 
@@ -18,7 +17,7 @@ export const createBook = mutation(async ({ db }, book: Book) => {
 	} = book;
 
 	if (!name || !categoryId) {
-		throw new Error("Missing required fields: id, name, or categoryId.");
+		throw new Error("Missing required fields: name, or categoryId.");
 	}
 
 	await db.insert("books", {
