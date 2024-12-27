@@ -3,6 +3,7 @@
 import type { FC } from "react";
 import { Input, Checkbox, Button } from "@nextui-org/react";
 import Header from "../shared/Header";
+import Editor from "../shared/Editor";
 
 const CreateAuthorForm: FC = () => {
   return (
@@ -31,6 +32,7 @@ const CreateAuthorForm: FC = () => {
           >
             Popis
           </label>
+          <Editor />
         </div>
 
         {/* Image */}
