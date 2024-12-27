@@ -16,7 +16,7 @@ const Editor: FC = () => {
     initialContent: [
       {
         type: "paragraph",
-        content: "Začnite písať...!",
+        content: "Začnite písať",
       },
     ],
   });
@@ -26,7 +26,7 @@ const Editor: FC = () => {
     if (blockNoteRef.current) {
       const editorElement = blockNoteRef.current.querySelector('.bn-editor') as HTMLElement;
       if (editorElement) {
-        editorElement.style.backgroundColor = theme === "dark" ? "#121212" : "#ffffff";
+        editorElement.style.backgroundColor = theme === "dark" ? "#121212" : "#f2f2f2";
         editorElement.style.color = theme === "dark" ? "#ffffff" : "#000000";
       }
     }
@@ -37,6 +37,7 @@ const Editor: FC = () => {
       <BlockNoteView
         onChange={() => setBlocks(editor.document)}
         editor={editor}
+        
       />
     </div>
   );
