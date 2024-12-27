@@ -84,3 +84,7 @@ html::-webkit-scrollbar-thumb {
 .cl-internal-kyvqj0 {
 	display: none !important;
 }
+
+.bn-editor {
+	background-color: gainsboro !important;
+}
