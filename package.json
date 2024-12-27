@@ -19,6 +19,7 @@
 		"@testing-library/react": "^16.1.0",
 		"@vitejs/plugin-react": "^4.3.4",
 		"class-variance-authority": "^0.7.1",
+		"clsx": "^2.1.1",
 		"convex": "^1.17.4",
 		"date-fns": "^4.1.0",
 		"framer-motion": "^11.15.0",
@@ -68,6 +69,8 @@
 		"typescript": "^5"
 	},
 	"eslintConfig": {
-		"extends": ["plugin:storybook/recommended"]
+		"extends": [
+			"plugin:storybook/recommended"
+		]
 	}
 }
