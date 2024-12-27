@@ -15,7 +15,7 @@ const BookDetail: FC = () => {
 
 	const bookID = id as unknown as string;
 	const data = useQuery(api.books.getBookById, {
-		id: bookID,
+		id: bookID
 	});
 
 	const bookDetail = useMemo(() => {
@@ -76,14 +76,14 @@ const BookDetail: FC = () => {
 								<BookingBookModal
 									modalTitle="Požičat knihu"
 									btnName="Požičat knihu"
-								></BookingBookModal>
+								/>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		);
-	}, [data]);
+	}, [data, id]);
 
 	if (!id) {
 		return <Empty text="Kniha neexistuje" />;
