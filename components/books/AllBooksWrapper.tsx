@@ -76,7 +76,7 @@ const AllBooksWrapper: FC = () => {
 				{results &&
 					results.map((book: Book) => {
 						return (
-							<Card key={book.id} className="h-[300px]">
+							<Card key={book._id} className="h-[300px]">
 								<CardHeader className="absolute z-10 top-1 left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center text-center w-full h-full">
 									<h1 className="text-4xl prose prose-h1: text-white font-bold uppercase">
 										{book.name}
@@ -85,7 +85,7 @@ const AllBooksWrapper: FC = () => {
 										{book.description} {/* TODO: Add Author info */}
 									</p>
 									<Button variant="solid" color="success" className="mt-6">
-										<Link href={`/books/${book.id}`}>Detail Knihy</Link>
+										<Link href={`/books/${book._id}`}>Detail Knihy</Link>
 									</Button>
 								</CardHeader>
 								<Image

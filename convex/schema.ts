@@ -3,7 +3,6 @@ import { v } from "convex/values";
 
 export default defineSchema({
 	books: defineTable({
-		id: v.string(),
 		name: v.string(),
 		description: v.string(),
 		image: v.string(),
@@ -18,7 +17,6 @@ export default defineSchema({
 	}),
 
 	categories: defineTable({
-		id: v.string(),
 		name: v.string(),
 		description: v.string(),
 	}).searchIndex("search_idx", {
