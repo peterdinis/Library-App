@@ -9,13 +9,15 @@ import { type FC, type Key, useMemo } from "react";
 import BookingBookModal from "../booking/BookingBookModal";
 import Empty from "../shared/Empty";
 import Header from "../shared/Header";
+import type { Id } from "@/convex/_generated/dataModel";
 
 const BookDetail: FC = () => {
 	const { id } = useParams();
 
-	const bookID = id as unknown as string;
+	const bookID = id as unknown as Id<"books">;
+	
 	const data = useQuery(api.books.getBookById, {
-		id: bookID,
+		id: bookID
 	});
 
 	const bookDetail = useMemo(() => {
@@ -76,14 +78,14 @@ const BookDetail: FC = () => {
 								<BookingBookModal
 									modalTitle="Požičat knihu"
 									btnName="Požičat knihu"
-								></BookingBookModal>
+								/>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		);
-	}, [data]);
+	}, [data, id]);
 
 	if (!id) {
 		return <Empty text="Kniha neexistuje" />;
