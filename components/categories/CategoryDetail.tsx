@@ -1,13 +1,13 @@
 "use client";
 
 import { api } from "@/convex/_generated/api";
+import type { Id } from "@/convex/_generated/dataModel";
 import { Button, CircularProgress, Link } from "@nextui-org/react";
 import { useQuery } from "convex/react";
 import { useParams } from "next/navigation";
 import { type FC, type Key, useMemo } from "react";
 import Empty from "../shared/Empty";
 import Header from "../shared/Header";
-import type { Id } from "@/convex/_generated/dataModel";
 
 const CategoryDetail: FC = () => {
 	const { id } = useParams();

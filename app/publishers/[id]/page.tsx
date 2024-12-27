@@ -1,8 +1,8 @@
 import PublisherDetail from "@/components/publishers/PublisherDetail";
-import { NextPage } from "next";
+import type { NextPage } from "next";
 
 const PublisherDetailPage: NextPage = () => {
-    return <PublisherDetail />
-}
+	return <PublisherDetail />;
+};
 
-export default PublisherDetailPage
+export default PublisherDetailPage;

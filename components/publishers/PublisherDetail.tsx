@@ -47,7 +47,7 @@ const PublisherDetail: FC = () => {
 					<p>{data && data?.isActive}</p>
 				</div>
 
-                <div className="mb-4 mt-3 text-2xl font-light leading-relaxed dark:text-blue-50 text-gray-800">
+				<div className="mb-4 mt-3 text-2xl font-light leading-relaxed dark:text-blue-50 text-gray-800">
 					<div className="font-bold">Rok vytvorenia: </div>
 					<p>{data && data?.createdDate}</p>
 				</div>

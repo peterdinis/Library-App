@@ -12,4 +12,4 @@ const NotFoundPage: NextPage = () => {
 	);
 };
 
-export default NotFoundPage
+export default NotFoundPage;

@@ -1,5 +1,5 @@
-import type { CategoryUpdates, Category } from "../types/CategoryTypes";
 import { paginationOptsValidator } from "convex/server";
+import type { Category, CategoryUpdates } from "../types/CategoryTypes";
 import type { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
 
