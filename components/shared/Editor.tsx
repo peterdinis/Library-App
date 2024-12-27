@@ -16,7 +16,7 @@ const Editor: FC = () => {
     initialContent: [
       {
         type: "paragraph",
-        content: "Začnite písať...!",
+        content: "Začnite písať",
       },
     ],
   });
@@ -37,6 +37,7 @@ const Editor: FC = () => {
       <BlockNoteView
         onChange={() => setBlocks(editor.document)}
         editor={editor}
+        
       />
     </div>
   );
