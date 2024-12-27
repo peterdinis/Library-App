@@ -10,10 +10,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
-import { v7 as uuidv7 } from "uuid";
 
 const formSchema = z.object({
-  id: z.string(),
   name: z.string().min(1, "Názov kategórie je povinný"),
   description: z.string().min(1, "Popis kategórie je povinný"),
 });
@@ -27,14 +25,12 @@ const CreateCategory: FC = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      id: uuidv7(),
       name: "",
       description: "",
     },
   });
 
   const onCategorySubmit = async (data: z.infer<typeof formSchema>) => {
-    console.log("Form Data Submitted:", data); // Debugging
     setIsSubmitting(true);
     try {
       await createCategoryMutation(data);
@@ -46,10 +42,8 @@ const CreateCategory: FC = () => {
       form.reset();
       router.push("/categories");
     } catch (error) {
-      console.error("Error Creating Category:", error); // Debugging
       toast({
         title: "Kategóriu sa nepodarilo vytvoriť",
-        description: error.message || "Neočakávaná chyba",
         className: "bg-red-800 text-white font-bold text-xl",
         duration: 2000,
       });
