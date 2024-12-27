@@ -3,7 +3,6 @@
 import type { FC } from "react";
 import { Input, Checkbox, Button } from "@nextui-org/react";
 import Header from "../shared/Header";
-import QuillEditor from "../shared/QuillEditor";
 
 const CreateAuthorForm: FC = () => {
   return (
@@ -32,13 +31,6 @@ const CreateAuthorForm: FC = () => {
           >
             Popis
           </label>
-          <QuillEditor 
-             onChange={() => {
-                console.log("DO NOTHING")
-             }}
-             readOnly={false}
-             value=""
-          />
         </div>
 
         {/* Image */}
