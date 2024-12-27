@@ -76,3 +76,7 @@ html::-webkit-scrollbar-thumb {
 		transform: translateY(0px);
 	}
 }
+
+.bn-editor {
+	background-color: gainsboro !important;
+}
