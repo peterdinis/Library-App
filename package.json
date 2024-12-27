@@ -12,6 +12,7 @@
 	},
 	"dependencies": {
 		"@clerk/nextjs": "^6.9.6",
+		"@hookform/resolvers": "^3.9.1",
 		"@nextui-org/react": "^2.6.8",
 		"@radix-ui/react-toast": "^1.2.4",
 		"@testing-library/dom": "^10.4.0",
@@ -32,10 +33,12 @@
 		"quill-table-ui": "^1.0.7",
 		"react": "^19.0.0",
 		"react-dom": "^19.0.0",
+		"react-hook-form": "^7.54.2",
 		"react-quill": "^2.0.0",
 		"uuid": "^11.0.3",
 		"vite-tsconfig-paths": "^5.1.4",
-		"vitest": "^2.1.8"
+		"vitest": "^2.1.8",
+		"zod": "^3.24.1"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
