@@ -7,7 +7,6 @@ import { type FC, useMemo } from "react";
 import { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "quill-paste-smart";
-import "highlight.js/styles/monokai.css";
 import { SnowTheme } from "quill-color-picker-enhance";
 import "quill-color-picker-enhance/dist/index.css";
 import { CircularProgress } from "@nextui-org/react";

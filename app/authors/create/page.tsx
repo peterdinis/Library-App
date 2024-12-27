@@ -1,5 +1,5 @@
 import CreateAuthorForm from "@/components/authors/CreateAuthorForm";
-import { NextPage } from "next";
+import type { NextPage } from "next";
 
 const CreateNewAuthorPage: NextPage = () => {
     return <CreateAuthorForm />
