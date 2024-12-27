@@ -1,10 +1,33 @@
 "use client";
 
-import type { FC } from "react";
+import type { FC, useState } from "react";
 import Header from "../shared/Header";
 import { Button, Input } from "@nextui-org/react";
+import { useToast } from "@/hooks/useToast";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { useRouter } from "next/navigation";
+import { z } from 'zod';
+
+const formSchema = z.object({
+    name: z.string(),
+    description: z.string()
+})
 
 const CreateCategory: FC = () => {
+    const router = useRouter();
+    const {toast} = useToast()
+
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            name: "",
+            description: ""
+        },
+    });
+
 	return (
 		<>
 			<Header text="Nová kategória" />
