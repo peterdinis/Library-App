@@ -7,10 +7,12 @@ const Homepage: NextPage = () => {
 	return (
 		<>
 			<Hero />
-			<div className="mt-5">
+			<div className="mt-10">
 				<ServicesWrapper />
 			</div>
-			<Footer />
+			<div className="mt-10">
+				<Footer />
+			</div>
 		</>
 	);
 };
