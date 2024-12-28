@@ -1,7 +1,6 @@
 import { paginationOptsValidator } from "convex/server";
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
-import { generateUploadUrl } from "./files";
 
 export const getPaginatedAuthors = query({
 	args: { paginationOpts: paginationOptsValidator },
@@ -36,7 +35,7 @@ export const createAuthor = mutation({
 	args: {
 	  name: v.string(),
 	  description: v.string(),
-	  storageId: v.optional(v.string()), // For uploaded file ID
+	  storageId: v.optional(v.id("_storage")), // Properly typed optional storage ID
 	  isActive: v.boolean(),
 	  litPeriod: v.string(),
 	  bornDate: v.string(),
@@ -46,11 +45,17 @@ export const createAuthor = mutation({
 	  let imageUrl = "";
   
 	  if (args.storageId) {
-		// Get the URL for the uploaded file
-		imageUrl = await ctx.storage.getUrl(args.storageId as StorageId);
+		// Get the URL for the uploaded file using properly typed ID
+		const storedImageUrl = await ctx.storage.getUrl(args.storageId);
+		
+		if (!storedImageUrl) {
+		  throw new Error("Failed to get image URL from storage");
+		}
+		
+		imageUrl = storedImageUrl;
 	  }
   
-	  const author = await ctx.db.insert("authors", {
+	  const authorId = await ctx.db.insert("authors", {
 		name: args.name,
 		description: args.description,
 		image: imageUrl,
@@ -60,42 +65,18 @@ export const createAuthor = mutation({
 		deathDate: args.deathDate,
 	  });
   
-	  return author;
+	  return authorId;
 	},
   });
   
-  // Client-side upload function (in your React component)
-  export async function uploadAuthorImage(
-	file: File,
-	generateUploadUrl: any, // Replace with proper type from your generated client
-	createAuthor: any // Replace with proper type from your generated client
-  ) {
-	try {
-	  // Step 1: Generate upload URL
-	  const uploadUrl = await generateUploadUrl({
-		contentType: file.type,
-		maxSize: file.size,
-	  });
-  
-	  // Step 2: Upload file to storage
-	  const result = await fetch(uploadUrl, {
-		method: "POST",
-		headers: {
-		  "Content-Type": file.type,
-		},
-		body: file,
-	  });
-  
-	  if (!result.ok) {
-		throw new Error("Failed to upload image");
-	  }
-  
-	  // Step 3: Get the storage ID from the response
-	  const storageId = await result.text();
-  
-	  return storageId;
-	} catch (error) {
-	  console.error("Error uploading file:", error);
-	  throw error;
+  // Separate mutation for image upload
+  export const uploadAuthorImage = mutation(async (ctx, file) => {
+	if (!file || !file.fileName) {
+	  throw new Error("No file uploaded");
 	}
-  }
+  
+	// Generate upload URL from Convex storage
+	const storageId = await ctx.storage.generateUploadUrl();
+  
+	return storageId;
+  });

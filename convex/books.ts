@@ -1,102 +1,124 @@
-import { paginationOptsValidator } from "convex/server";
-import type { Book, BookUpdates } from "../types/BookTypes";
-import type { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
+import { v } from "convex/values";
+import { paginationOptsValidator } from "convex/server";
+import type { Id } from "./_generated/dataModel";
 
-export const createBook = mutation(async ({ db }, book: Book) => {
-	const {
-		name,
-		description,
-		image,
-		year,
-		publisherId,
-		authorId,
-		pages,
-		isAvailable,
-		categoryId,
-	} = book;
+// Create book with optional image upload
+export const createBook = mutation({
+  args: {
+    name: v.string(),
+    description: v.string(),
+    storageId: v.optional(v.id("_storage")),
+    year: v.string(),
+    publisherId: v.id("publishers"),
+    authorId: v.id("authors"),
+    pages: v.number(),
+    isAvailable: v.boolean(),
+    categoryId: v.id("categories"),
+  },
+  handler: async (ctx, args) => {
+    let imageUrl = "";
 
-	if (!name || !categoryId) {
-		throw new Error("Missing required fields: name, or categoryId.");
-	}
+    if (args.storageId) {
+      const storedImageUrl = await ctx.storage.getUrl(args.storageId);
+      
+      if (!storedImageUrl) {
+        throw new Error("Failed to get image URL from storage");
+      }
+      
+      imageUrl = storedImageUrl;
+    }
 
-	await db.insert("books", {
-		name,
-		description,
-		image,
-		authorId,
-		year,
-		pages,
-		isAvailable,
-		categoryId,
-		publisherId,
-	});
+    const bookId = await ctx.db.insert("books", {
+      name: args.name,
+      description: args.description,
+      image: imageUrl,
+      year: Number(args.year),
+      publisherId: args.publisherId,
+      authorId: args.authorId,
+      pages: args.pages,
+      isAvailable: args.isAvailable,
+      categoryId: args.categoryId,
+    });
 
-	return { message: "Book created successfully!" };
+    return { bookId, message: "Book created successfully!" };
+  },
 });
 
-export const getBookById = query(async ({ db }, { id }: { id: string }) => {
-	if (!id) {
-		throw new Error("Missing book ID.");
-	}
+// Upload book image
+export const uploadBookImage = mutation(async (ctx, file) => {
+  if (!file || !file.fileName) {
+    throw new Error("No file uploaded");
+  }
 
-	const book = await db
-		.query("books")
-		.filter((q) => q.eq(q.field("_id"), id))
-		.first();
-
-	const category = await db
-		.query("categories")
-		.filter((q) => q.eq(q.field("_id"), book?.categoryId))
-		.first();
-
-	if (!book) {
-		throw new Error("Book not found.");
-	}
-	return {
-		book,
-		category,
-	};
+  const storageId = await ctx.storage.generateUploadUrl();
+  return storageId;
 });
 
-export const updateBook = mutation(
-	async (
-		{ db },
-		{ id, updates }: { id: Id<"books">; updates: BookUpdates },
-	) => {
-		if (!id || !updates) {
-			throw new Error("Missing book ID or updates.");
-		}
+// Get book by ID with related data
+export const getBookById = query(async ({ db }, { id }: { id: Id<"books"> }) => {
+  if (!id) {
+    throw new Error("Missing book ID.");
+  }
 
-		const book = await db.get(id);
-		if (!book) {
-			throw new Error("Book not found.");
-		}
+  const book = await db
+    .query("books")
+    .filter((q) => q.eq(q.field("_id"), id))
+    .first();
 
-		await db.patch(id, updates);
-		return { message: "Book updated successfully!" };
-	},
-);
+  if (!book) {
+    throw new Error("Book not found.");
+  }
 
-export const deleteBook = mutation(
-	async ({ db }, { id }: { id: Id<"books"> }) => {
-		if (!id) {
-			throw new Error("Missing book ID.");
-		}
+  // Get related category
+  const category = await db
+    .query("categories")
+    .filter((q) => q.eq(q.field("_id"), book.categoryId))
+    .first();
 
-		await db.delete(id);
-		return { message: "Book deleted successfully!" };
-	},
-);
+  // Get related author
+  const author = await db
+    .query("authors")
+    .filter((q) => q.eq(q.field("_id"), book.authorId))
+    .first();
 
+  // Get related publisher
+  const publisher = await db
+    .query("publishers")
+    .filter((q) => q.eq(q.field("_id"), book.publisherId))
+    .first();
+
+  return {
+    book,
+    category,
+    author,
+    publisher,
+  };
+});
+
+// Delete book
+export const deleteBook = mutation({
+  args: { id: v.id("books") },
+  handler: async (ctx, args) => {
+    const book = await ctx.db.get(args.id);
+    if (!book) {
+      throw new Error("Book not found.");
+    }
+
+    await ctx.db.delete(args.id);
+    return { message: "Book deleted successfully!" };
+  },
+});
+
+// Get paginated books
 export const getPaginatedBooks = query({
-	args: { paginationOpts: paginationOptsValidator },
-	handler: async (ctx, args) => {
-		const books = await ctx.db
-			.query("books")
-			.order("desc")
-			.paginate(args.paginationOpts);
+  args: { paginationOpts: paginationOptsValidator },
+  handler: async (ctx, args) => {
+    const books = await ctx.db
+      .query("books")
+      .order("desc")
+      .paginate(args.paginationOpts);
 
-		return books;
-	},
+    return books;
+  },
 });
