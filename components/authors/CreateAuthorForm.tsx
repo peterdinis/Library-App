@@ -1,11 +1,12 @@
 "use client";
 
 import { api } from "@/convex/_generated/api";
-import { Button, Checkbox, Input } from "@nextui-org/react";
+import { Button, Checkbox, Input, Select, SelectItem } from "@nextui-org/react";
 import { useMutation } from "convex/react";
 import { type FC, type FormEvent, useState } from "react";
 import Editor from "../shared/Editor";
 import Header from "../shared/Header";
+import { literaryPeriods } from "@/data/litPeriodData";
 
 const CreateAuthorForm: FC = () => {
 	const generateUploadUrl = useMutation(api.files.generateUploadUrl);
@@ -34,12 +35,10 @@ const CreateAuthorForm: FC = () => {
 	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
 		if (file) {
-			// Validate file type
 			if (!file.type.startsWith("image/")) {
 				setError("Please upload an image file");
 				return;
 			}
-			// Validate file size (5MB limit)
 			if (file.size > 5 * 1024 * 1024) {
 				setError("File size must be less than 5MB");
 				return;
@@ -53,54 +52,6 @@ const CreateAuthorForm: FC = () => {
 		e.preventDefault();
 		setIsLoading(true);
 		setError(null);
-
-		try {
-			let storageId = null;
-
-			if (imageFile) {
-				// Get upload URL
-				const uploadUrl = await generateUploadUrl({
-					contentType: imageFile.type,
-					maxSize: imageFile.size,
-				});
-
-				// Upload the file
-				const uploadResult = await fetch(uploadUrl, {
-					method: "POST",
-					headers: {
-						"Content-Type": imageFile.type,
-					},
-					body: imageFile,
-				});
-
-				if (!uploadResult.ok) {
-					throw new Error("Failed to upload image");
-				}
-
-				storageId = await uploadResult.text();
-			}
-
-			// Create author with the uploaded image
-			await createAuthor({
-				...formData,
-				storageId: storageId || undefined,
-			});
-
-			// Reset form after successful submission
-			setFormData({
-				name: "",
-				description: "",
-				isActive: false,
-				litPeriod: "",
-				bornDate: "",
-				deathDate: "",
-			});
-			setImageFile(null);
-		} catch (err) {
-			setError(err instanceof Error ? err.message : "An error occurred");
-		} finally {
-			setIsLoading(false);
-		}
 	};
 
 	return (
@@ -136,7 +87,7 @@ const CreateAuthorForm: FC = () => {
 					>
 						Popis
 					</label>
-					<Editor value={formData.description} onChange={handleEditorChange} />
+					<Editor />
 				</div>
 
 				{/* Image Upload */}
@@ -174,7 +125,7 @@ const CreateAuthorForm: FC = () => {
 					</label>
 				</div>
 
-				{/* Literary Period */}
+				{/* Literary Period Select */}
 				<div className="flex flex-col">
 					<label
 						htmlFor="litPeriod"
@@ -182,17 +133,23 @@ const CreateAuthorForm: FC = () => {
 					>
 						Literárne obdobie
 					</label>
-					<Input
+					<Select
 						id="litPeriod"
 						value={formData.litPeriod}
 						onChange={(e) =>
 							setFormData((prev) => ({ ...prev, litPeriod: e.target.value }))
 						}
-						placeholder="Zadajte literárne obdobie"
+						placeholder="Vyberte literárne obdobie"
 						className="mt-1"
 						fullWidth
 						required
-					/>
+					>
+						{literaryPeriods.map((period) => (
+							<SelectItem key={period.value} value={period.value}>
+								{period.label}
+							</SelectItem>
+						))}
+					</Select>
 				</div>
 
 				{/* Born Date */}
