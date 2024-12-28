@@ -3,6 +3,13 @@ import { v } from "convex/values";
 import type { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
 
+export const allSelectBooks = query({
+	args: {},
+	handler: async(ctx) => {
+		return await ctx.db.query("books").collect();
+	}
+})
+
 // Create book with optional image upload
 export const createBook = mutation({
 	args: {
