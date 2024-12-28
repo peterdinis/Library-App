@@ -35,10 +35,6 @@ declare const fullApi: ApiFromModules<{
   files: typeof files;
   http: typeof http;
   publishers: typeof publishers;
-<<<<<<< HEAD
-  users: typeof users;
-=======
->>>>>>> main
 }>;
 export declare const api: FilterApi<
   typeof fullApi,
