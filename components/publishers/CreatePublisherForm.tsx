@@ -1,9 +1,10 @@
-import { FC } from "react";
+import type { FC } from "react";
+import Header from "../shared/Header";
 
 const CreatePublisherForm: FC = () => {
     return (
         <>
-            aaaa
+            <Header text="Nové vydavateľstvo" />
         </>
     )
 }
