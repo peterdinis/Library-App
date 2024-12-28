@@ -1,7 +1,7 @@
 import { paginationOptsValidator } from "convex/server";
+import { v } from "convex/values";
+import { format } from "date-fns";
 import { mutation, query } from "./_generated/server";
-import { v } from "convex/values"
-import { format } from "date-fns"
 
 export const uploadPublisherImage = mutation(async (ctx, file) => {
 	// Validate the file (optional)
@@ -10,7 +10,7 @@ export const uploadPublisherImage = mutation(async (ctx, file) => {
 	}
 
 	// Upload the image to Convex storage and get the file ID
-	const fileId = await ctx.storage.generateUploadUrl()
+	const fileId = await ctx.storage.generateUploadUrl();
 
 	return fileId; // Return the file ID which can be used to store the image URL in your table
 });

@@ -1,88 +1,88 @@
-"use client"
+"use client";
 
-import { FC, FormEvent, useState } from "react";
-import { Input, Button, Spacer, Switch } from "@nextui-org/react";
-import Header from "../shared/Header";
+import { Button, Input, Spacer, Switch } from "@nextui-org/react";
+import { type FC, type FormEvent, useState } from "react";
 import Editor from "../shared/Editor";
+import Header from "../shared/Header";
 
 const CreatePublisherForm: FC = () => {
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [image, setImage] = useState("");
-    const [city, setCity] = useState("");
-    const [isActive, setIsActive] = useState(true);
-    const [createdDate, setCreatedDate] = useState("");
+	const [name, setName] = useState("");
+	const [description, setDescription] = useState("");
+	const [image, setImage] = useState("");
+	const [city, setCity] = useState("");
+	const [isActive, setIsActive] = useState(true);
+	const [createdDate, setCreatedDate] = useState("");
 
-    const handleSubmit = (e: FormEvent) => {
-        e.preventDefault();
-        // Form submission logic here
-    };
+	const handleSubmit = (e: FormEvent) => {
+		e.preventDefault();
+		// Form submission logic here
+	};
 
-    return (
-        <div className="max-w-4xl mx-auto p-6">
-            <Header text="Nové vydavateľstvo" />
-            <form onSubmit={handleSubmit} className="space-y-4 mt-6">
-                {/* Form Inputs */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <Input
-                            fullWidth
-                            label="Názov"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div>
-                        <Input
-                            fullWidth
-                            label="Mesto"
-                            value={city}
-                            onChange={(e) => setCity(e.target.value)}
-                            required
-                        />
-                    </div>
-                </div>
+	return (
+		<div className="max-w-4xl mx-auto p-6">
+			<Header text="Nové vydavateľstvo" />
+			<form onSubmit={handleSubmit} className="space-y-4 mt-6">
+				{/* Form Inputs */}
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+					<div>
+						<Input
+							fullWidth
+							label="Názov"
+							value={name}
+							onChange={(e) => setName(e.target.value)}
+							required
+						/>
+					</div>
+					<div>
+						<Input
+							fullWidth
+							label="Mesto"
+							value={city}
+							onChange={(e) => setCity(e.target.value)}
+							required
+						/>
+					</div>
+				</div>
 
-                <Editor />
-                
-                <Input
-                    label="Obrázok URL"
-                    value={image}
-                    onChange={(e) => setImage(e.target.value)}
-                    fullWidth
-                    required
-                />
+				<Editor />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <Input
-                            label="Dátum vytvorenia"
-                            value={createdDate}
-                            onChange={(e) => setCreatedDate(e.target.value)}
-                            fullWidth
-                            required
-                        />
-                    </div>
-                    <div>
-                        <span>Je aktívne vydavateľstvo</span>
-                        <br />
-                        <Switch
-                            className="mt-5"
-                            checked={isActive}
-                            onChange={(e) => setIsActive(e.target.checked)}
-                        />
-                    </div>
-                </div>
+				<Input
+					label="Obrázok URL"
+					value={image}
+					onChange={(e) => setImage(e.target.value)}
+					fullWidth
+					required
+				/>
 
-                <Spacer y={1} />
-                
-                <Button type="submit" color="primary" fullWidth>
-                    Vytvoriť vydavateľstvo
-                </Button>
-            </form>
-        </div>
-    );
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+					<div>
+						<Input
+							label="Dátum vytvorenia"
+							value={createdDate}
+							onChange={(e) => setCreatedDate(e.target.value)}
+							fullWidth
+							required
+						/>
+					</div>
+					<div>
+						<span>Je aktívne vydavateľstvo</span>
+						<br />
+						<Switch
+							className="mt-5"
+							checked={isActive}
+							onChange={(e) => setIsActive(e.target.checked)}
+						/>
+					</div>
+				</div>
+
+				<Spacer y={1} />
+
+				<Button type="submit" color="primary" fullWidth>
+					Vytvoriť vydavateľstvo
+				</Button>
+			</form>
+		</div>
+	);
 };
 
 export default CreatePublisherForm;

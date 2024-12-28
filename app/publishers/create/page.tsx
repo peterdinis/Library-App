@@ -2,7 +2,7 @@ import CreatePublisherForm from "@/components/publishers/CreatePublisherForm";
 import type { NextPage } from "next";
 
 const CreatePublisherPage: NextPage = () => {
-    return <CreatePublisherForm />
-}
+	return <CreatePublisherForm />;
+};
 
-export default CreatePublisherPage
+export default CreatePublisherPage;
