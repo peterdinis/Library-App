@@ -1,5 +1,6 @@
 import { paginationOptsValidator } from "convex/server";
-import { query } from "./_generated/server";
+import { query, mutation } from "./_generated/server";
+import { v } from "convex/values";
 
 export const getPaginatedAuthors = query({
 	args: { paginationOpts: paginationOptsValidator },
@@ -29,3 +30,53 @@ export const getAuthorById = query(async ({ db }, { id }: { id: string }) => {
 
 	return author;
 });
+
+export const createAuthor = mutation({
+	args: {
+	  name: v.string(),
+	  description: v.string(),
+	  storageId: v.optional(v.id("_storage")), // Properly typed optional storage ID
+	  isActive: v.boolean(),
+	  litPeriod: v.string(),
+	  bornDate: v.string(),
+	  deathDate: v.optional(v.string()),
+	},
+	handler: async (ctx, args) => {
+	  let imageUrl = "";
+  
+	  if (args.storageId) {
+		// Get the URL for the uploaded file using properly typed ID
+		const storedImageUrl = await ctx.storage.getUrl(args.storageId);
+		
+		if (!storedImageUrl) {
+		  throw new Error("Failed to get image URL from storage");
+		}
+		
+		imageUrl = storedImageUrl;
+	  }
+  
+	  const authorId = await ctx.db.insert("authors", {
+		name: args.name,
+		description: args.description,
+		image: imageUrl,
+		isActive: args.isActive,
+		litPeriod: args.litPeriod,
+		bornDate: args.bornDate,
+		deathDate: args.deathDate,
+	  });
+  
+	  return authorId;
+	},
+  });
+  
+  // Separate mutation for image upload
+  export const uploadAuthorImage = mutation(async (ctx, file) => {
+	if (!file || !file.fileName) {
+	  throw new Error("No file uploaded");
+	}
+  
+	// Generate upload URL from Convex storage
+	const storageId = await ctx.storage.generateUploadUrl();
+  
+	return storageId;
+  });
