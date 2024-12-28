@@ -2,6 +2,13 @@ import { paginationOptsValidator } from "convex/server";
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
+export const allAuthorsSelect = query({
+	args: {},
+	handler: async(ctx) => {
+		return await ctx.db.query("authors").collect();
+	}
+});	
+
 export const getPaginatedAuthors = query({
 	args: { paginationOpts: paginationOptsValidator },
 	handler: async (ctx, args) => {

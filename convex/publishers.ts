@@ -3,6 +3,13 @@ import { v } from "convex/values";
 import { format } from "date-fns";
 import { mutation, query } from "./_generated/server";
 
+export const allSelectPublishers = query({
+	args: {},
+	handler: async(ctx) => {
+		return await ctx.db.query("publishers").collect();
+	}
+});
+
 export const uploadPublisherImage = mutation(async (ctx, file) => {
 	// Validate the file (optional)
 	if (!file || !file.fileName) {
