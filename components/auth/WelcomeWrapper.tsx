@@ -1,6 +1,6 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
+import { SignOutButton, useUser } from "@clerk/nextjs";
 import type { FC } from "react";
 
 const WelcomeWrapper: FC = () => {
@@ -11,7 +11,6 @@ const WelcomeWrapper: FC = () => {
 	console.log(isLoaded);
 
 	if (!isLoaded) {
-		// Handle loading state
 		return null;
 	}
 
@@ -19,7 +18,9 @@ const WelcomeWrapper: FC = () => {
 		return <div>Hello {user.fullName}!</div>;
 	}
 
-	return <>Welcome</>;
+	return <>
+		<SignOutButton redirectUrl="http:localhost:3000/">Logout</SignOutButton>
+	</>;
 };
 
 export default WelcomeWrapper;

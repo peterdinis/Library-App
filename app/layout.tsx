@@ -16,6 +16,7 @@ export const metadata = {
 			url: "https://www.spsbj.sk/wp-content/uploads/cropped-original-32x32.png",
 		},
 	],
+	
 } as Metadata;
 
 export default function RootLayout({
@@ -24,8 +25,8 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
-			<body className={`antialiased`}>
+		<html suppressHydrationWarning lang="en">
+			<body>
 				<NextUiProvider>
 					<AppConvexProvider>
 						<ThemeProvider>
