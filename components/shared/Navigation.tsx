@@ -2,6 +2,7 @@
 
 import {
 	Button,
+	CircularProgress,
 	Link,
 	Navbar,
 	NavbarBrand,
@@ -13,10 +14,15 @@ import {
 } from "@nextui-org/react";
 import { type FC, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
+import { UserButton, useUser } from "@clerk/nextjs"
 
 const Navigation: FC = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const { isSignedIn, user, isLoaded } = useUser();
 
+	if (!isLoaded) {
+		return <CircularProgress />
+	}
 	return (
 		<Navbar
 			shouldHideOnScroll
@@ -71,7 +77,11 @@ const Navigation: FC = () => {
 			</NavbarContent>
 
 			<NavbarContent justify="end">
-				<NavbarItem className="hidden lg:flex">
+				{!isSignedIn ? (
+					<UserButton />
+				): (
+					<>
+					<NavbarItem className="hidden lg:flex">
 					<Button as={Link} color="primary" variant="flat" href="/sign-in">
 						Prihlásenie
 					</Button>
@@ -81,6 +91,8 @@ const Navigation: FC = () => {
 						Registrácia
 					</Button>
 				</NavbarItem>
+					</>
+				)}
 				<NavbarItem>
 					<ThemeToggle />
 				</NavbarItem>
@@ -107,16 +119,22 @@ const Navigation: FC = () => {
 						Vydavatelstvá
 					</Link>
 				</NavbarMenuItem>
-				<NavbarMenuItem>
-					<Button as={Link} color="primary" variant="flat" href="#">
+				{!isSignedIn ? (
+					<UserButton />
+				): (
+					<>
+					<NavbarMenuItem className="hidden lg:flex">
+					<Button as={Link} color="primary" variant="flat" href="/sign-in">
 						Prihlásenie
 					</Button>
 				</NavbarMenuItem>
-				<NavbarMenuItem>
-					<Button as={Link} color="secondary" href="#" variant="flat">
+				<NavbarMenuItem className="hidden lg:flex">
+					<Button as={Link} color="secondary" href="/sign-up" variant="flat">
 						Registrácia
 					</Button>
 				</NavbarMenuItem>
+					</>
+				)}
 				<NavbarMenuItem>
 					<ThemeToggle />
 				</NavbarMenuItem>
