@@ -1,8 +1,9 @@
 "use client"
 
 import { FC, FormEvent, useState } from "react";
-import { Input, Button, Spacer, Textarea, Switch } from "@nextui-org/react";
+import { Input, Button, Spacer, Switch } from "@nextui-org/react";
 import Header from "../shared/Header";
+import Editor from "../shared/Editor";
 
 const CreatePublisherForm: FC = () => {
     const [name, setName] = useState("");
@@ -43,14 +44,7 @@ const CreatePublisherForm: FC = () => {
                     </div>
                 </div>
 
-                <Textarea
-                    label="Popis"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    fullWidth
-                    required
-                    rows={4}
-                />
+                <Editor />
                 
                 <Input
                     label="Obrázok URL"
