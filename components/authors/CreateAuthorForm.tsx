@@ -1,12 +1,12 @@
 "use client";
 
 import { api } from "@/convex/_generated/api";
+import { literaryPeriods } from "@/data/litPeriodData";
 import { Button, Checkbox, Input, Select, SelectItem } from "@nextui-org/react";
 import { useMutation } from "convex/react";
 import { type FC, type FormEvent, useState } from "react";
 import Editor from "../shared/Editor";
 import Header from "../shared/Header";
-import { literaryPeriods } from "@/data/litPeriodData";
 
 const CreateAuthorForm: FC = () => {
 	const generateUploadUrl = useMutation(api.files.generateUploadUrl);

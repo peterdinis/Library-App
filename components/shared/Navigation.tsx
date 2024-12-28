@@ -1,5 +1,6 @@
 "use client";
 
+import { UserButton, useUser } from "@clerk/nextjs";
 import {
 	Button,
 	CircularProgress,
@@ -14,14 +15,13 @@ import {
 } from "@nextui-org/react";
 import { type FC, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
-import { UserButton, useUser } from "@clerk/nextjs"
 
 const Navigation: FC = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const { isSignedIn, user, isLoaded } = useUser();
 
 	if (!isLoaded) {
-		return <CircularProgress />
+		return <CircularProgress />;
 	}
 	return (
 		<Navbar
@@ -79,18 +79,23 @@ const Navigation: FC = () => {
 			<NavbarContent justify="end">
 				{!isSignedIn ? (
 					<UserButton />
-				): (
+				) : (
 					<>
-					<NavbarItem className="hidden lg:flex">
-					<Button as={Link} color="primary" variant="flat" href="/sign-in">
-						Prihlásenie
-					</Button>
-				</NavbarItem>
-				<NavbarItem className="hidden lg:flex">
-					<Button as={Link} color="secondary" href="/sign-up" variant="flat">
-						Registrácia
-					</Button>
-				</NavbarItem>
+						<NavbarItem className="hidden lg:flex">
+							<Button as={Link} color="primary" variant="flat" href="/sign-in">
+								Prihlásenie
+							</Button>
+						</NavbarItem>
+						<NavbarItem className="hidden lg:flex">
+							<Button
+								as={Link}
+								color="secondary"
+								href="/sign-up"
+								variant="flat"
+							>
+								Registrácia
+							</Button>
+						</NavbarItem>
 					</>
 				)}
 				<NavbarItem>
@@ -121,18 +126,23 @@ const Navigation: FC = () => {
 				</NavbarMenuItem>
 				{!isSignedIn ? (
 					<UserButton />
-				): (
+				) : (
 					<>
-					<NavbarMenuItem className="hidden lg:flex">
-					<Button as={Link} color="primary" variant="flat" href="/sign-in">
-						Prihlásenie
-					</Button>
-				</NavbarMenuItem>
-				<NavbarMenuItem className="hidden lg:flex">
-					<Button as={Link} color="secondary" href="/sign-up" variant="flat">
-						Registrácia
-					</Button>
-				</NavbarMenuItem>
+						<NavbarMenuItem className="hidden lg:flex">
+							<Button as={Link} color="primary" variant="flat" href="/sign-in">
+								Prihlásenie
+							</Button>
+						</NavbarMenuItem>
+						<NavbarMenuItem className="hidden lg:flex">
+							<Button
+								as={Link}
+								color="secondary"
+								href="/sign-up"
+								variant="flat"
+							>
+								Registrácia
+							</Button>
+						</NavbarMenuItem>
 					</>
 				)}
 				<NavbarMenuItem>

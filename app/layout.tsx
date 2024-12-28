@@ -16,7 +16,6 @@ export const metadata = {
 			url: "https://www.spsbj.sk/wp-content/uploads/cropped-original-32x32.png",
 		},
 	],
-	
 } as Metadata;
 
 export default function RootLayout({

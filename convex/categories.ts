@@ -5,10 +5,10 @@ import { mutation, query } from "./_generated/server";
 
 export const allSelectCategories = query({
 	args: {},
-	handler: async(ctx) => {
-		return await ctx.db.query("categories").collect()
-	}
-})
+	handler: async (ctx) => {
+		return await ctx.db.query("categories").collect();
+	},
+});
 
 export const createCategory = mutation(async ({ db }, category: Category) => {
 	const { name, description } = category;
