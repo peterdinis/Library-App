@@ -1,6 +1,5 @@
 import { paginationOptsValidator } from "convex/server";
 import { v } from "convex/values";
-import type { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
 
 export const allSelectBooking = query({
@@ -10,14 +9,34 @@ export const allSelectBooking = query({
 	},
 });
 
-export const createBooking = mutation({});
+// Mutation to create a new booking
+export const createBooking = mutation({
+	args: {
+		bookName: v.string(),
+		from: v.string(),
+		to: v.string(),
+		userName: v.string(),
+		userLastName: v.string(),
+		userEmail: v.string(),
+		userClass: v.string(),
+	},
+	handler: async (ctx, args) => {
+		const { bookName, from, to, userName, userLastName, userEmail, userClass } = args;
+		// Insert the new booking into the database
+		const newBooking = await ctx.db.insert("bookings", {
+			bookName,
+			from,
+			to,
+			userName,
+			userLastName,
+			userEmail,
+			userClass,
+		});
+		return newBooking;
+	},
+});
 
-export const retrieveBooking = mutation({});
-
-export const updateBooking = mutation({});
-
-export const deleteAllBookings = mutation({});
-
+// Query to get paginated bookings
 export const getPaginatedBookings = query({
 	args: { paginationOpts: paginationOptsValidator },
 	handler: async (ctx, args) => {
@@ -25,7 +44,6 @@ export const getPaginatedBookings = query({
 			.query("bookings")
 			.order("desc")
 			.paginate(args.paginationOpts);
-
 		return bookings;
 	},
 });
