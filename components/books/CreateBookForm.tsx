@@ -2,7 +2,7 @@
 
 import {type FC, useState} from "react";
 import Header from "../shared/Header";
-import { Button, Input, Textarea, Switch } from "@nextui-org/react";
+import { Button, Input, Switch } from "@nextui-org/react";
 import Editor from "../shared/Editor";
 
 interface BookFormData {
