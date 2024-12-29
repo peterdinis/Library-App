@@ -18,6 +18,7 @@ import type * as books from "../books.js";
 import type * as categories from "../categories.js";
 import type * as files from "../files.js";
 import type * as publishers from "../publishers.js";
+import type * as users from "../users.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -33,6 +34,7 @@ declare const fullApi: ApiFromModules<{
   categories: typeof categories;
   files: typeof files;
   publishers: typeof publishers;
+  users: typeof users;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,
