@@ -107,7 +107,7 @@ const AllAuthorsWrapper: FC = () => {
 											{author.litPeriod}
 										</p>
 										<Button variant="solid" color="success" className="mt-6">
-											<Link href={`/books/${author._id}`}>
+											<Link href={`/authors/${author._id}`}>
 												Detail o spisovateľovi
 											</Link>
 										</Button>
