@@ -9,7 +9,8 @@ import { ThemeProvider } from "../context/ThemeContext";
 
 export const metadata = {
 	title: "Spsť Knižnica - Školská webová knižnica",
-	description: "Oficiálna stránka školskej webovej knižnice na SPŠT Bardejov. Nájdite knihy, zdroje a informácie rýchlo a jednoducho.",
+	description:
+		"Oficiálna stránka školskej webovej knižnice na SPŠT Bardejov. Nájdite knihy, zdroje a informácie rýchlo a jednoducho.",
 	icons: [
 		{
 			rel: "icon",
@@ -34,7 +35,8 @@ export const metadata = {
 	},
 	openGraph: {
 		title: "Spsť Knižnica - Školská webová knižnica",
-		description: "Preskúmajte oficiálnu školskú webovú knižnicu SPS Banská Bystrica a získajte prístup k hodnotným študijným materiálom.",
+		description:
+			"Preskúmajte oficiálnu školskú webovú knižnicu SPS Banská Bystrica a získajte prístup k hodnotným študijným materiálom.",
 		url: "https://www.spsbj.sk/kniznica",
 		type: "website",
 		images: [
@@ -53,7 +55,8 @@ export const metadata = {
 		site: "@spsbj",
 		creator: "@PeterDinis",
 		title: "Spsť Knižnica - Školská webová knižnica",
-		description: "Objavte online knižnicu SPŠT Bardejov s modernými nástrojmi pre štúdium a učenie.",
+		description:
+			"Objavte online knižnicu SPŠT Bardejov s modernými nástrojmi pre štúdium a učenie.",
 		images: [
 			{
 				url: "https://www.spsbj.sk/wp-content/uploads/library-cover.jpg",

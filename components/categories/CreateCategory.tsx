@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { type FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import Admin from "../auth/Admin";
 import Header from "../shared/Header";
 
 const formSchema = z.object({
@@ -53,7 +54,7 @@ const CreateCategory: FC = () => {
 	};
 
 	return (
-		<>
+		<Admin>
 			<Header text="Nová kategória" />
 			<div className="flex justify-center items-center mt-10">
 				<form
@@ -91,7 +92,7 @@ const CreateCategory: FC = () => {
 					</Button>
 				</form>
 			</div>
-		</>
+		</Admin>
 	);
 };
 
