@@ -2,7 +2,14 @@
 
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
-import { Button, Chip, CircularProgress, Input, Link, Calendar } from "@nextui-org/react";
+import {
+	Button,
+	Calendar,
+	Chip,
+	CircularProgress,
+	Input,
+	Link,
+} from "@nextui-org/react";
 import { useQuery } from "convex/react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
@@ -78,42 +85,50 @@ const BookDetail: FC = () => {
 								<BookingBookModal
 									modalTitle="Požičat knihu"
 									btnName="Požičat knihu"
-									modalChildren={<>
-										<div className="mt-3">
-											<form>
-												<Input
-													isRequired
-													defaultValue="junior@nextui.org"
-													label="Email"
-													type="email"
-												/>
-												<Input
-													className="mt-4"
-													isRequired
-													defaultValue="junior@nextui.org"
-													label="Názov knihy"
-													type="text"
-												/>
-												<div className="mt-3">
+									modalChildren={
+										<>
+											<div className="mt-3">
+												<form>
 													<Input
-														className="mt-4"
 														isRequired
 														defaultValue="junior@nextui.org"
-														label="Od"
-														type="date"
+														label="Email"
+														type="email"
 													/>
 													<Input
 														className="mt-4"
 														isRequired
 														defaultValue="junior@nextui.org"
-														label="Do"
-														type="date"
+														label="Názov knihy"
+														type="text"
 													/>
-												</div>
-												<Button variant="solid" color="warning" className="mt-4">Požičať knihu</Button>
-											</form>
-										</div>
-									</>}
+													<div className="mt-3">
+														<Input
+															className="mt-4"
+															isRequired
+															defaultValue="junior@nextui.org"
+															label="Od"
+															type="date"
+														/>
+														<Input
+															className="mt-4"
+															isRequired
+															defaultValue="junior@nextui.org"
+															label="Do"
+															type="date"
+														/>
+													</div>
+													<Button
+														variant="solid"
+														color="warning"
+														className="mt-4"
+													>
+														Požičať knihu
+													</Button>
+												</form>
+											</div>
+										</>
+									}
 									closeBtnName="Zatvoriť"
 								/>
 							</div>

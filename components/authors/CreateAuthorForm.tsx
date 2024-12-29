@@ -5,6 +5,7 @@ import { literaryPeriods } from "@/data/litPeriodData";
 import { Button, Checkbox, Input, Select, SelectItem } from "@nextui-org/react";
 import { useMutation } from "convex/react";
 import { type FC, type FormEvent, useState } from "react";
+import Admin from "../auth/Admin";
 import Editor from "../shared/Editor";
 import Header from "../shared/Header";
 
@@ -55,7 +56,7 @@ const CreateAuthorForm: FC = () => {
 	};
 
 	return (
-		<>
+		<Admin>
 			<Header text="Pridaj nového spisovateľa/ku" />
 			<form
 				onSubmit={handleSubmit}
@@ -206,7 +207,7 @@ const CreateAuthorForm: FC = () => {
 					{isLoading ? "Spracovávam..." : "Pridať autora"}
 				</Button>
 			</form>
-		</>
+		</Admin>
 	);
 };
 

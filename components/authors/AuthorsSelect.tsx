@@ -11,15 +11,15 @@ const AuthorsSelect: FC = () => {
 
 	if (!data) return <Empty text="Žiadny spisovatelia neboli nájdení" />;
 
-    return (
-        <Select
-            items={data}
-            label="Vybrať spisovateľa/ku"
-            placeholder="Vybrať spisovateľa/ku"
-        >
-            {(item) => <SelectItem key={item._id}>{item.name}</SelectItem>}
-        </Select>
-    )
-}
+	return (
+		<Select
+			items={data}
+			label="Vybrať spisovateľa/ku"
+			placeholder="Vybrať spisovateľa/ku"
+		>
+			{(item) => <SelectItem key={item._id}>{item.name}</SelectItem>}
+		</Select>
+	);
+};
 
 export default AuthorsSelect;
