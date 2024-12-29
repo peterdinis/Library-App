@@ -104,7 +104,7 @@ const AllPublishersWrapper: FC = () => {
 											{publisher.name}
 										</h1>
 										<Button variant="solid" color="success" className="mt-6">
-											<Link href={`/books/${publisher._id}`}>
+											<Link href={`/publishers/${publisher._id}`}>
 												Detail o vydavateľstve
 											</Link>
 										</Button>
