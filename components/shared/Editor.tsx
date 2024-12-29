@@ -1,28 +1,29 @@
 "use client";
 
 import { useTheme } from "@/hooks/useTheme";
-import type { Block } from "@blocknote/core";
+import type { Block} from "@blocknote/core";
 import { BlockNoteView } from "@blocknote/mantine";
 import { useCreateBlockNote } from "@blocknote/react";
-import { type FC, useEffect, useRef, useState } from "react";
+import { type FC, useEffect, useRef } from "react";
 import "@blocknote/mantine/style.css";
 import "@blocknote/core/fonts/inter.css";
 
-const Editor: FC = () => {
-	const [, setBlocks] = useState<Block[]>([]);
+interface EditorProps {
+	value: Block[];
+	onChange: (value: Block[]) => void;
+}
+
+const Editor: FC<EditorProps> = ({ value, onChange }) => {
 	const { theme } = useTheme();
 
 	const editor = useCreateBlockNote({
-		initialContent: [
-			{
-				type: "paragraph",
-				content: "Začnite písať",
-			},
-		],
+		initialContent: value.length > 0 ? value : [{ type: "paragraph", content: "Začnite písať" }],
 	});
 
 	const blockNoteRef = useRef<HTMLDivElement | null>(null);
+
 	useEffect(() => {
+		// Update the editor's theme styling
 		if (blockNoteRef.current) {
 			const editorElement = blockNoteRef.current.querySelector(
 				".bn-editor",
@@ -37,10 +38,7 @@ const Editor: FC = () => {
 
 	return (
 		<div ref={blockNoteRef}>
-			<BlockNoteView
-				onChange={() => setBlocks(editor.document)}
-				editor={editor}
-			/>
+			<BlockNoteView onChange={onChange} editor={editor} />
 		</div>
 	);
 };

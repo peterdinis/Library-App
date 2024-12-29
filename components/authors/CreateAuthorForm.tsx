@@ -2,11 +2,12 @@
 
 import { api } from "@/convex/_generated/api";
 import { literaryPeriods } from "@/data/litPeriodData";
-import { Button, Checkbox, Input, Select, SelectItem } from "@nextui-org/react";
+import { Button, Checkbox, CircularProgress, Input, Select, SelectItem } from "@nextui-org/react";
 import { useMutation } from "convex/react";
-import { type FC, type FormEvent, useState } from "react";
+import { ChangeEvent, type FC, type FormEvent, useState } from "react";
 import Editor from "../shared/Editor";
 import Header from "../shared/Header";
+import { Id } from "@/convex/_generated/dataModel";
 
 const CreateAuthorForm: FC = () => {
 	const generateUploadUrl = useMutation(api.files.generateUploadUrl);
@@ -32,7 +33,7 @@ const CreateAuthorForm: FC = () => {
 		}));
 	};
 
-	const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
 		if (file) {
 			if (!file.type.startsWith("image/")) {
@@ -52,6 +53,45 @@ const CreateAuthorForm: FC = () => {
 		e.preventDefault();
 		setIsLoading(true);
 		setError(null);
+
+		try {
+			let storageId: Id<"_storage"> = "";
+
+			// Handle image upload if file is selected
+			if (imageFile) {
+				const { url, storageId: generatedStorageId } = await generateUploadUrl();
+				storageId = generatedStorageId;
+
+				await fetch(url, {
+					method: "PUT",
+					body: imageFile,
+					headers: {
+						"Content-Type": imageFile.type,
+					},
+				});
+			}
+
+			// Submit form data
+			await createAuthor({
+				...formData,
+				storageId,
+			});
+
+			// Reset the form on success
+			setFormData({
+				name: "",
+				description: "",
+				isActive: false,
+				litPeriod: "",
+				bornDate: "",
+				deathDate: "",
+			});
+			setImageFile(null);
+		} catch (err) {
+			setError((err as Error).message);
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	return (
@@ -87,7 +127,7 @@ const CreateAuthorForm: FC = () => {
 					>
 						Popis
 					</label>
-					<Editor />
+					<Editor value={formData.description} onChange={handleEditorChange} />
 				</div>
 
 				{/* Image Upload */}
@@ -203,7 +243,7 @@ const CreateAuthorForm: FC = () => {
 					isLoading={isLoading}
 					disabled={isLoading}
 				>
-					{isLoading ? "Spracovávam..." : "Pridať autora"}
+					{isLoading ? <CircularProgress /> : "Pridať autora"}
 				</Button>
 			</form>
 		</>
