@@ -2,6 +2,7 @@
 
 import { Button, Input, Spacer, Switch } from "@nextui-org/react";
 import { type FC, type FormEvent, useState } from "react";
+import Admin from "../auth/Admin";
 import Editor from "../shared/Editor";
 import Header from "../shared/Header";
 
@@ -19,69 +20,71 @@ const CreatePublisherForm: FC = () => {
 	};
 
 	return (
-		<div className="max-w-4xl mx-auto p-6">
-			<Header text="Nové vydavateľstvo" />
-			<form onSubmit={handleSubmit} className="space-y-4 mt-6">
-				{/* Form Inputs */}
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-					<div>
-						<Input
-							fullWidth
-							label="Názov"
-							value={name}
-							onChange={(e) => setName(e.target.value)}
-							required
-						/>
+		<Admin>
+			<div className="max-w-4xl mx-auto p-6">
+				<Header text="Nové vydavateľstvo" />
+				<form onSubmit={handleSubmit} className="space-y-4 mt-6">
+					{/* Form Inputs */}
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+						<div>
+							<Input
+								fullWidth
+								label="Názov"
+								value={name}
+								onChange={(e) => setName(e.target.value)}
+								required
+							/>
+						</div>
+						<div>
+							<Input
+								fullWidth
+								label="Mesto"
+								value={city}
+								onChange={(e) => setCity(e.target.value)}
+								required
+							/>
+						</div>
 					</div>
-					<div>
-						<Input
-							fullWidth
-							label="Mesto"
-							value={city}
-							onChange={(e) => setCity(e.target.value)}
-							required
-						/>
+
+					<Editor />
+
+					<Input
+						label="Obrázok URL"
+						value={image}
+						onChange={(e) => setImage(e.target.value)}
+						fullWidth
+						required
+					/>
+
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+						<div>
+							<Input
+								label="Dátum vytvorenia"
+								value={createdDate}
+								onChange={(e) => setCreatedDate(e.target.value)}
+								fullWidth
+								required
+							/>
+						</div>
+						<div>
+							<span>Je aktívne vydavateľstvo</span>
+							<br />
+							<Switch
+								className="mt-5"
+								checked={isActive}
+								onChange={(e) => setIsActive(e.target.checked)}
+							/>
+						</div>
 					</div>
-				</div>
 
-				<Editor />
+					<Spacer y={1} />
 
-				<Input
-					label="Obrázok URL"
-					value={image}
-					onChange={(e) => setImage(e.target.value)}
-					fullWidth
-					required
-				/>
-
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-					<div>
-						<Input
-							label="Dátum vytvorenia"
-							value={createdDate}
-							onChange={(e) => setCreatedDate(e.target.value)}
-							fullWidth
-							required
-						/>
-					</div>
-					<div>
-						<span>Je aktívne vydavateľstvo</span>
-						<br />
-						<Switch
-							className="mt-5"
-							checked={isActive}
-							onChange={(e) => setIsActive(e.target.checked)}
-						/>
-					</div>
-				</div>
-
-				<Spacer y={1} />
-
-				<Button type="submit" color="primary" fullWidth>
-					Vytvoriť vydavateľstvo
-				</Button>
-			</form>
-		</div>
+					<Button type="submit" color="primary" fullWidth>
+						Vytvoriť vydavateľstvo
+					</Button>
+				</form>
+			</div>
+		</Admin>
 	);
 };
 
