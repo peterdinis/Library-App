@@ -13,12 +13,11 @@ const AuthorsSelect: FC = () => {
 
     return (
         <Select
-            className="max-w-xs"
             items={data}
             label="Vybrať spisovateľa/ku"
             placeholder="Vybrať spisovateľa/ku"
         >
-            {(item) => <SelectItem>{item.name}</SelectItem>}
+            {(item) => <SelectItem key={item._id}>{item.name}</SelectItem>}
         </Select>
     )
 }
