@@ -52,4 +52,14 @@ export default defineSchema({
 		clerkId: v.string(),
 		name: v.string(),
 	}),
+
+	bookings: defineTable({
+		bookName: v.string(),
+		from: v.string(),
+		to: v.string(),
+		userName: v.string(),
+		userLastName: v.string(),
+		userEmail: v.string(),
+		userClass: v.string()
+	})
 });
