@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import { Select, SelectItem } from "@nextui-org/react"
-import { useQuery } from "convex/react"
-import { api } from "@/convex/_generated/api"
-import type { FC } from "react"
-import Empty from "../shared/Empty"
+import { api } from "@/convex/_generated/api";
+import { Select, SelectItem } from "@nextui-org/react";
+import { useQuery } from "convex/react";
+import type { FC } from "react";
+import Empty from "../shared/Empty";
 
 const CategoriesSelect: FC = () => {
-    const data = useQuery(api.categories.allSelectCategories);
+	const data = useQuery(api.categories.allSelectCategories);
 
-    if (!data) return <Empty text="Žiadne kategórie neboli najdené" />
+	if (!data) return <Empty text="Žiadne kategórie neboli najdené" />;
 
     return (
         <Select
@@ -22,4 +22,4 @@ const CategoriesSelect: FC = () => {
     )
 }
 
-export default CategoriesSelect
+export default CategoriesSelect;

@@ -1,7 +1,9 @@
 "use client";
 
+import { UserButton, useUser } from "@clerk/nextjs";
 import {
 	Button,
+	CircularProgress,
 	Link,
 	Navbar,
 	NavbarBrand,
@@ -16,6 +18,11 @@ import ThemeToggle from "./ThemeToggle";
 
 const Navigation: FC = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const { isSignedIn, isLoaded } = useUser();
+
+	if (!isLoaded) {
+		return <CircularProgress />;
+	}
 
 	return (
 		<Navbar
@@ -71,16 +78,17 @@ const Navigation: FC = () => {
 			</NavbarContent>
 
 			<NavbarContent justify="end">
-				<NavbarItem className="hidden lg:flex">
-					<Button as={Link} color="primary" variant="flat" href="/sign-in">
-						Prihlásenie
-					</Button>
-				</NavbarItem>
-				<NavbarItem className="hidden lg:flex">
-					<Button as={Link} color="secondary" href="/sign-up" variant="flat">
-						Registrácia
-					</Button>
-				</NavbarItem>
+				{isSignedIn ? (
+					<UserButton />
+				) : (
+					<>
+						<NavbarItem className="hidden lg:flex">
+							<Button as={Link} color="primary" variant="flat" href="/sign-in">
+								Prihlásenie
+							</Button>
+						</NavbarItem>
+					</>
+				)}
 				<NavbarItem>
 					<ThemeToggle />
 				</NavbarItem>
@@ -107,16 +115,17 @@ const Navigation: FC = () => {
 						Vydavatelstvá
 					</Link>
 				</NavbarMenuItem>
-				<NavbarMenuItem>
-					<Button as={Link} color="primary" variant="flat" href="#">
-						Prihlásenie
-					</Button>
-				</NavbarMenuItem>
-				<NavbarMenuItem>
-					<Button as={Link} color="secondary" href="#" variant="flat">
-						Registrácia
-					</Button>
-				</NavbarMenuItem>
+				{isSignedIn ? (
+					<UserButton />
+				) : (
+					<>
+						<NavbarMenuItem className="hidden lg:flex">
+							<Button as={Link} color="primary" variant="flat" href="/sign-in">
+								Prihlásenie
+							</Button>
+						</NavbarMenuItem>
+					</>
+				)}
 				<NavbarMenuItem>
 					<ThemeToggle />
 				</NavbarMenuItem>

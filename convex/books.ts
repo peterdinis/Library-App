@@ -5,10 +5,10 @@ import { mutation, query } from "./_generated/server";
 
 export const allSelectBooks = query({
 	args: {},
-	handler: async(ctx) => {
+	handler: async (ctx) => {
 		return await ctx.db.query("books").collect();
-	}
-})
+	},
+});
 
 // Create book with optional image upload
 export const createBook = mutation({

@@ -5,9 +5,9 @@ import { mutation, query } from "./_generated/server";
 
 export const allSelectPublishers = query({
 	args: {},
-	handler: async(ctx) => {
+	handler: async (ctx) => {
 		return await ctx.db.query("publishers").collect();
-	}
+	},
 });
 
 export const uploadPublisherImage = mutation(async (ctx, file) => {

@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import { Select, SelectItem } from "@nextui-org/react"
-import { useQuery } from "convex/react"
-import { api } from "@/convex/_generated/api"
-import type { FC } from "react"
-import Empty from "../shared/Empty"
+import { api } from "@/convex/_generated/api";
+import { Select, SelectItem } from "@nextui-org/react";
+import { useQuery } from "convex/react";
+import type { FC } from "react";
+import Empty from "../shared/Empty";
 
 const BookSelect: FC = () => {
-    const data = useQuery(api.books.allSelectBooks);
+	const data = useQuery(api.books.allSelectBooks);
 
-    if (!data) return <Empty text="Žiadne knihy neboli nájdené" />
+	if (!data) return <Empty text="Žiadne knihy neboli nájdené" />;
 
     return (
         <Select
@@ -23,4 +23,4 @@ const BookSelect: FC = () => {
     )
 }
 
-export default BookSelect
+export default BookSelect;
