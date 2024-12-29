@@ -78,7 +78,7 @@ const BookDetail: FC = () => {
 						<br />
 						<hr className="mt-6" />
 						<div className="flex">
-							<Button variant="faded" size="lg" className="mt-5">
+							<Button variant="bordered" size="lg" className="mt-5">
 								<Link href="/books">Návrat na knihy</Link>
 							</Button>
 							<div className="mt-5 ml-3">

@@ -35,7 +35,7 @@ const BookingBookModal: FC<BookingBookModalProps> = ({
 			<Button size="lg" className="bg-sky-600" onPress={() => handleOpen()}>
 				{btnName}
 			</Button>
-			<Modal isOpen={isOpen} size={"4xl"} onClose={onClose}>
+			<Modal isOpen={isOpen} backdrop="blur" size={"5xl"} onClose={onClose}>
 				<ModalContent>
 					{(onClose) => (
 						<>
