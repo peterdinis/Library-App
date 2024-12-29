@@ -47,10 +47,9 @@ export default defineSchema({
 	}),
 
 	users: defineTable({
-		email: v.string(),
-		imageUrl: v.string(),
-		clerkId: v.string(),
-		name: v.string(),
-		role: v.string(),
-	}),
+        email: v.string(),
+        imageUrl: v.string(),
+        clerkId: v.string(),
+        name: v.string(),
+    }),
 });
