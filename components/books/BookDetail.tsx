@@ -91,16 +91,30 @@ const BookDetail: FC = () => {
 												<form>
 													<Input
 														isRequired
-														defaultValue="junior@nextui.org"
-														label="Email"
-														type="email"
+														defaultValue="Random Book 123"
+														label="Meno knihy"
+														type="text"
 													/>
 													<Input
 														className="mt-4"
 														isRequired
-														defaultValue="junior@nextui.org"
-														label="Názov knihy"
+														defaultValue="John"
+														label="Meno"
 														type="text"
+													/>
+													<Input
+														className="mt-4"
+														isRequired
+														defaultValue="Doe"
+														label="Priezvisko"
+														type="text"
+													/>
+													<Input
+														className="mt-4"
+														isRequired
+														defaultValue="doe@gmail.com"
+														label="Email"
+														type="email"
 													/>
 													<div className="mt-3">
 														<Input
