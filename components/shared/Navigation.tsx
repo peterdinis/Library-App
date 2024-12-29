@@ -23,6 +23,7 @@ const Navigation: FC = () => {
 	if (!isLoaded) {
 		return <CircularProgress />;
 	}
+	
 	return (
 		<Navbar
 			shouldHideOnScroll
@@ -77,23 +78,13 @@ const Navigation: FC = () => {
 			</NavbarContent>
 
 			<NavbarContent justify="end">
-				{!isSignedIn ? (
+				{isSignedIn ? (
 					<UserButton />
 				) : (
 					<>
 						<NavbarItem className="hidden lg:flex">
 							<Button as={Link} color="primary" variant="flat" href="/sign-in">
 								Prihlásenie
-							</Button>
-						</NavbarItem>
-						<NavbarItem className="hidden lg:flex">
-							<Button
-								as={Link}
-								color="secondary"
-								href="/sign-up"
-								variant="flat"
-							>
-								Registrácia
 							</Button>
 						</NavbarItem>
 					</>
@@ -124,23 +115,13 @@ const Navigation: FC = () => {
 						Vydavatelstvá
 					</Link>
 				</NavbarMenuItem>
-				{!isSignedIn ? (
+				{isSignedIn ? (
 					<UserButton />
 				) : (
 					<>
 						<NavbarMenuItem className="hidden lg:flex">
 							<Button as={Link} color="primary" variant="flat" href="/sign-in">
 								Prihlásenie
-							</Button>
-						</NavbarMenuItem>
-						<NavbarMenuItem className="hidden lg:flex">
-							<Button
-								as={Link}
-								color="secondary"
-								href="/sign-up"
-								variant="flat"
-							>
-								Registrácia
 							</Button>
 						</NavbarMenuItem>
 					</>
