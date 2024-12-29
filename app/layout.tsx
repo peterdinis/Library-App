@@ -62,7 +62,6 @@ export const metadata = {
 		],
 	},
 	robots: "index, follow",
-	themeColor: "#0056b3",
 	charset: "UTF-8",
 	language: "sk",
 } as Metadata;
