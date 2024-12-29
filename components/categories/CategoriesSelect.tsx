@@ -13,12 +13,11 @@ const CategoriesSelect: FC = () => {
 
     return (
         <Select
-            className="max-w-xs"
             items={data}
             label="Vybrať kategóriu"
             placeholder="Vybrať kategóriu"
         >
-            {(item) => <SelectItem>{item.name}</SelectItem>}
+            {(item) => <SelectItem key={item._id}>{item.name}</SelectItem>}
         </Select>
     )
 }

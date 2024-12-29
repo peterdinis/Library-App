@@ -18,7 +18,7 @@ const BookSelect: FC = () => {
             label="Vybrať knihu"
             placeholder="Vybrať knihu"
         >
-            {(item) => <SelectItem>{item.name}</SelectItem>}
+            {(item) => <SelectItem key={item._id}>{item.name}</SelectItem>}
         </Select>
     )
 }
