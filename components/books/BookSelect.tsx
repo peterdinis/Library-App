@@ -11,16 +11,16 @@ const BookSelect: FC = () => {
 
 	if (!data) return <Empty text="Žiadne knihy neboli nájdené" />;
 
-	return (
-		<Select
-			className="max-w-xs"
-			items={data}
-			label="Vybrať knihu"
-			placeholder="Vybrať knihu"
-		>
-			{(item) => <SelectItem>{item.name}</SelectItem>}
-		</Select>
-	);
-};
+    return (
+        <Select
+            className="max-w-xs"
+            items={data}
+            label="Vybrať knihu"
+            placeholder="Vybrať knihu"
+        >
+            {(item) => <SelectItem key={item._id}>{item.name}</SelectItem>}
+        </Select>
+    )
+}
 
 export default BookSelect;

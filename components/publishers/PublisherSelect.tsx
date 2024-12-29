@@ -11,16 +11,15 @@ const PublisherSelect: FC = () => {
 
 	if (!data) return <Empty text="Žiadne vydavateľstvá neboli nájdené" />;
 
-	return (
-		<Select
-			className="max-w-xs"
-			items={data}
-			label="Vybrať vydavateľstvo"
-			placeholder="Vybrať vydavateľstvo"
-		>
-			{(item) => <SelectItem>{item.name}</SelectItem>}
-		</Select>
-	);
-};
+    return (
+        <Select
+            items={data}
+            label="Vybrať vydavateľstvo"
+            placeholder="Vybrať vydavateľstvo"
+        >
+            {(item) => <SelectItem key={item._id}>{item.name}</SelectItem>}
+        </Select>
+    )
+}
 
 export default PublisherSelect;
