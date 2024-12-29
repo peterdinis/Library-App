@@ -10,7 +10,7 @@ export const allSelectBooking = query({
 	},
 });
 
-// Mutation to create a new booking
+// Mutation to create a new booking 
 export const createBooking = mutation({
 	args: {
 		bookName: v.string(),
