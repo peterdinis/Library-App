@@ -4,6 +4,9 @@ import {type FC, useState} from "react";
 import Header from "../shared/Header";
 import { Button, Input, Switch } from "@nextui-org/react";
 import Editor from "../shared/Editor";
+import CategoriesSelect from "../categories/CategoriesSelect";
+import AuthorsSelect from "../authors/AuthorsSelect";
+import PublisherSelect from "../publishers/PublisherSelect";
 
 interface BookFormData {
   name: string;
@@ -88,33 +91,9 @@ const CreateBookForm: FC = () => {
           required
           fullWidth
         />
-        <Input
-          label="Kategória ID"
-          placeholder="Zadajte ID kategórie"
-          name="categoryId"
-          value={formData.categoryId}
-          onChange={handleInputChange}
-          required
-          fullWidth
-        />
-        <Input
-          label="Autor ID"
-          placeholder="Zadajte ID autora"
-          name="authorId"
-          value={formData.authorId}
-          onChange={handleInputChange}
-          required
-          fullWidth
-        />
-        <Input
-          label="Vydavateľ ID"
-          placeholder="Zadajte ID vydavateľa"
-          name="publisherId"
-          value={formData.publisherId}
-          onChange={handleInputChange}
-          required
-          fullWidth
-        />
+        <CategoriesSelect />
+        <AuthorsSelect />
+        <PublisherSelect />
         <Input
           label="Obrázok knihy"
           type="file"
