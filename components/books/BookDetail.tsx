@@ -2,7 +2,7 @@
 
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
-import { Button, Chip, CircularProgress, Link } from "@nextui-org/react";
+import { Button, Chip, CircularProgress, Input, Link, Calendar } from "@nextui-org/react";
 import { useQuery } from "convex/react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
@@ -50,7 +50,7 @@ const BookDetail: FC = () => {
 				<div className="mb-4 mt-3 text-2xl font-light leading-relaxed dark:text-blue-50 text-gray-800">
 					<div className="font-bold">Kniha patrí pod kategóriu: </div>
 					<Link
-						className="text-black font-bold text-xl"
+						className="text-black dark:text-slate-50 font-bold text-xl"
 						href={`/categories/${data && data?.category?.id}`}
 					>
 						{data && data?.category?.name}
@@ -78,6 +78,43 @@ const BookDetail: FC = () => {
 								<BookingBookModal
 									modalTitle="Požičat knihu"
 									btnName="Požičat knihu"
+									modalChildren={<>
+										<div className="mt-3">
+											<form>
+												<Input
+													isRequired
+													defaultValue="junior@nextui.org"
+													label="Email"
+													type="email"
+												/>
+												<Input
+													className="mt-4"
+													isRequired
+													defaultValue="junior@nextui.org"
+													label="Názov knihy"
+													type="text"
+												/>
+												<div className="mt-3">
+													<Input
+														className="mt-4"
+														isRequired
+														defaultValue="junior@nextui.org"
+														label="Od"
+														type="date"
+													/>
+													<Input
+														className="mt-4"
+														isRequired
+														defaultValue="junior@nextui.org"
+														label="Do"
+														type="date"
+													/>
+												</div>
+												<Button variant="solid" color="warning" className="mt-4">Požičať knihu</Button>
+											</form>
+										</div>
+									</>}
+									closeBtnName="Zatvoriť"
 								/>
 							</div>
 						</div>

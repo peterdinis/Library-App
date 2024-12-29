@@ -10,6 +10,7 @@ import {
 	useDisclosure,
 } from "@nextui-org/react";
 import type { FC, ReactNode } from "react";
+import Header from "../shared/Header";
 
 type BookingBookModalProps = {
 	btnName?: string;
@@ -39,7 +40,7 @@ const BookingBookModal: FC<BookingBookModalProps> = ({
 					{(onClose) => (
 						<>
 							<ModalHeader className="flex flex-col gap-1">
-								{modalTitle}
+								<Header text={modalTitle} />
 							</ModalHeader>
 							<ModalBody>{modalChildren}</ModalBody>
 							<ModalFooter>
