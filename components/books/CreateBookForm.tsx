@@ -2,6 +2,7 @@
 
 import { Button, Input, Switch } from "@nextui-org/react";
 import { type FC, useState } from "react";
+import Admin from "../auth/Admin";
 import AuthorsSelect from "../authors/AuthorsSelect";
 import CategoriesSelect from "../categories/CategoriesSelect";
 import PublisherSelect from "../publishers/PublisherSelect";
@@ -59,7 +60,7 @@ const CreateBookForm: FC = () => {
 	};
 
 	return (
-		<>
+		<Admin>
 			<Header text="Nová kniha" />
 			<form
 				onSubmit={handleSubmit}
@@ -116,7 +117,7 @@ const CreateBookForm: FC = () => {
 					Uložiť knihu
 				</Button>
 			</form>
-		</>
+		</Admin>
 	);
 };
 

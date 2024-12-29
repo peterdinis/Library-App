@@ -24,7 +24,7 @@ const Admin: FC<AdminProps> = ({ children }) => {
 	if (!hasAdminAccess) {
 		return <Empty text="K tejto akcií nemáte prístup" />;
 	}
-    
+
 	return <>{children}</>;
 };
 
