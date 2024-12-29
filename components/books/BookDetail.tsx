@@ -51,7 +51,7 @@ const BookDetail: FC = () => {
 					<div className="font-bold">Kniha patrí pod kategóriu: </div>
 					<Link
 						className="text-black dark:text-slate-50 font-bold text-xl"
-						href={`/categories/${data && data?.category?.id}`}
+						href={`/categories/${data && data?.category?._id}`}
 					>
 						{data && data?.category?.name}
 					</Link>
