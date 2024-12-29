@@ -18,4 +18,14 @@ export const updateBooking = mutation({});
 
 export const deleteAllBookings = mutation({});
 
-export const allPaginatedBooks = query({});
+export const getPaginatedBookings = query({
+	args: { paginationOpts: paginationOptsValidator },
+	handler: async (ctx, args) => {
+		const bookings = await ctx.db
+			.query("bookings")
+			.order("desc")
+			.paginate(args.paginationOpts);
+
+		return bookings;
+	},
+});
