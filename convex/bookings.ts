@@ -9,3 +9,13 @@ export const allSelectBooking = query({
 		return await ctx.db.query("bookings").collect();
 	},
 });
+
+export const createBooking = mutation({});
+
+export const retrieveBooking = mutation({});
+
+export const updateBooking = mutation({});
+
+export const deleteAllBookings = mutation({});
+
+export const allPaginatedBooks = query({});
