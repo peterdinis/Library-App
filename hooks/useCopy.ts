@@ -12,13 +12,11 @@ export function useCopyToClipboard(): [CopiedValue, CopyFn] {
 			console.warn("Clipboard not supported");
 			return false;
 		}
-
-		// Try to save to clipboard then save it in the state if worked
 		try {
 			await navigator.clipboard.writeText(text);
 			setCopiedText(text);
 			toast({
-				title: "Hodnota skopirovaná",
+				title: "Skopirované",
 				className: "bg-green-800 text-white font-bold text-xl",
 			});
 			return true;
@@ -26,7 +24,7 @@ export function useCopyToClipboard(): [CopiedValue, CopyFn] {
 			console.warn("Copy failed", error);
 			setCopiedText(null);
 			toast({
-				title: "Hodnota nebla skopirovaná",
+				title: "Nepodarilo sa skopírovať",
 				className: "bg-red-800 text-white font-bold text-xl",
 			});
 			return false;
