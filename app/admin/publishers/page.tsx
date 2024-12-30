@@ -1,11 +1,8 @@
+import AdminPublishers from "@/components/admin/publishers/AdminPublishers";
 import { NextPage } from "next";
 
 const AdminPublishersPAge: NextPage = () => {
-    return (
-        <>
-        
-        </>
-    )
+    return <AdminPublishers />
 }
 
 export default AdminPublishersPAge
