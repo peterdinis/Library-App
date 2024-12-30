@@ -4,13 +4,13 @@ import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
 import {
 	Button,
-	Calendar,
 	Chip,
 	CircularProgress,
 	Input,
 	Link,
 } from "@nextui-org/react";
 import { useQuery } from "convex/react";
+import { Copy} from "lucide-react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { type FC, type Key, useMemo } from "react";
@@ -28,17 +28,7 @@ const BookDetail: FC = () => {
 		id: bookID,
 	});
 
-	const [copiedText, copy] = useCopyToClipboard()
-
-	const handleCopy = (text: string) => () => {
-		copy(text)
-			.then(() => {
-				console.log('Copied!', { text })
-			})
-			.catch(error => {
-				console.error('Failed to copy!', error)
-			})
-	}
+	const [, copy] = useCopyToClipboard()
 	const bookDetail = useMemo(() => {
 		return (
 			<div
@@ -48,7 +38,7 @@ const BookDetail: FC = () => {
 				<div>
 					<h1 className="title-font mb-1 text-4xl font-medium dark:text-blue-50 text-gray-900">
 						<span className="font-bold">Názov</span>:{" "}
-						<span onClick={() => handleCopy(data?.book?.name!)}>{data && data?.book?.name}</span>
+						<span>{data && data?.book?.name} <Copy className="ml-4" onClick={() => copy(data?.book?.name!)} /></span>
 					</h1>
 				</div>
 
