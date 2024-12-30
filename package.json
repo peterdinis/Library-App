@@ -19,7 +19,7 @@
 		"@hookform/resolvers": "^3.9.1",
 		"@nextui-org/react": "^2.6.8",
 		"@radix-ui/react-toast": "^1.2.4",
-		"@tanstack/react-table": "^8.20.6",
+		"@tanstack/react-table": "8.19.2",
 		"@testing-library/dom": "^10.4.0",
 		"@testing-library/react": "^16.1.0",
 		"@vitejs/plugin-react": "^4.3.4",
