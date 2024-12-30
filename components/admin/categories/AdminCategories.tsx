@@ -9,7 +9,7 @@ import Header from "@/components/shared/Header";
 import { columns } from "./columns";
 import { Category } from "@/types/CategoryTypes";
 
-const AdminBooks: FC = () => {
+const AdminCategories: FC = () => {
 	const data = useQuery(api.categories.allSelectCategories)
 
 	if (!data) {
@@ -31,4 +31,4 @@ const AdminBooks: FC = () => {
 	);
 };
 
-export default AdminBooks;
+export default AdminCategories;

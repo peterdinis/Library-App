@@ -8,7 +8,7 @@ import { DataTable } from "@/components/shared/GlobalTable";
 import Header from "@/components/shared/Header";
 import { Author, columns } from "./columns";
 
-const AdminBooks: FC = () => {
+const AdminAuthors: FC = () => {
 	const data = useQuery(api.authors.allAuthorsSelect)
 
 	if (!data) {
@@ -30,4 +30,4 @@ const AdminBooks: FC = () => {
 	);
 };
 
-export default AdminBooks;
+export default AdminAuthors;
