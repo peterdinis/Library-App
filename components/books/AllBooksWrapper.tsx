@@ -24,6 +24,7 @@ import {
 import AppPagination from "../shared/AppPagination";
 import Empty from "../shared/Empty";
 import Header from "../shared/Header";
+import AuthorName from "./AuthorName";
 
 const AllBooksWrapper: FC = () => {
 	const [currentPage, setCurrentPage] = useState(1);
@@ -103,9 +104,7 @@ const AllBooksWrapper: FC = () => {
 										<h1 className="text-4xl prose prose-h1: text-white font-bold uppercase">
 											{book.name}
 										</h1>
-										<p className="text-white font-medium text-large">
-											{book.description} {/* TODO: Add Author info */}
-										</p>
+										<AuthorName authorId={book.authorId} />
 										<Button variant="solid" color="success" className="mt-6">
 											<Link href={`/books/${book._id}`}>Detail Knihy</Link>
 										</Button>
