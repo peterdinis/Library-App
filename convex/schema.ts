@@ -60,6 +60,6 @@ export default defineSchema({
 		userName: v.string(),
 		userLastName: v.string(),
 		userEmail: v.string(),
-		userClass: v.string()
-	})
+		userClass: v.string(),
+	}),
 });

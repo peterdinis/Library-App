@@ -1,17 +1,25 @@
 "use client";
 
 import { useTheme } from "@/hooks/useTheme";
-import { BlockNoteSchema, defaultStyleSpecs, type Block } from "@blocknote/core";
+import {
+	type Block,
+	BlockNoteSchema,
+	defaultStyleSpecs,
+} from "@blocknote/core";
 import { BlockNoteView } from "@blocknote/mantine";
-import { FormattingToolbar, FormattingToolbarController, useCreateBlockNote } from "@blocknote/react";
+import {
+	FormattingToolbar,
+	FormattingToolbarController,
+	useCreateBlockNote,
+} from "@blocknote/react";
 import { type FC, useEffect, useRef, useState } from "react";
 import "@blocknote/mantine/style.css";
 import "@blocknote/core/fonts/inter.css";
 import {
-	commentStyleSpec,
 	CommentToolbarController,
 	CreateCommentButton,
-  } from "@defensestation/blocknote-comments";
+	commentStyleSpec,
+} from "@defensestation/blocknote-comments";
 
 const Editor: FC = () => {
 	const [, setBlocks] = useState<Block[]>([]);
@@ -19,11 +27,11 @@ const Editor: FC = () => {
 
 	const schema = BlockNoteSchema.create({
 		styleSpecs: {
-		  // Adds all default styles.
-		  ...defaultStyleSpecs,
-		  comment: commentStyleSpec,
+			// Adds all default styles.
+			...defaultStyleSpecs,
+			comment: commentStyleSpec,
 		},
-	  });
+	});
 
 	const editor = useCreateBlockNote({
 		initialContent: [
@@ -34,13 +42,15 @@ const Editor: FC = () => {
 		],
 	});
 
-	const CustomToolbar = () => (<FormattingToolbarController
-		formattingToolbar={() => (
-		  <FormattingToolbar>
-			<CreateCommentButton key={"createCommentButtin"} />
-		  </FormattingToolbar>
-		)}
-	  />)
+	const CustomToolbar = () => (
+		<FormattingToolbarController
+			formattingToolbar={() => (
+				<FormattingToolbar>
+					<CreateCommentButton key={"createCommentButtin"} />
+				</FormattingToolbar>
+			)}
+		/>
+	);
 
 	const blockNoteRef = useRef<HTMLDivElement | null>(null);
 	useEffect(() => {

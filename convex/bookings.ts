@@ -1,7 +1,7 @@
 import { paginationOptsValidator } from "convex/server";
 import { v } from "convex/values";
+import { isBefore, parseISO } from "date-fns";
 import { mutation, query } from "./_generated/server";
-import { parseISO, isBefore } from "date-fns"; 
 
 export const allSelectBooking = query({
 	args: {},
@@ -10,19 +10,20 @@ export const allSelectBooking = query({
 	},
 });
 
-// Mutation to create a new booking 
+// Mutation to create a new booking
 export const createBooking = mutation({
 	args: {
 		bookName: v.string(),
 		from: v.string(), // The 'from' date as a string
-		to: v.string(),   // The 'to' date as a string
+		to: v.string(), // The 'to' date as a string
 		userName: v.string(),
 		userLastName: v.string(),
 		userEmail: v.string(),
 		userClass: v.string(),
 	},
 	handler: async (ctx, args) => {
-		const { bookName, from, to, userName, userLastName, userEmail, userClass } = args;
+		const { bookName, from, to, userName, userLastName, userEmail, userClass } =
+			args;
 
 		// Parse the 'from' and 'to' date strings using date-fns
 		const fromDate = parseISO(from);
