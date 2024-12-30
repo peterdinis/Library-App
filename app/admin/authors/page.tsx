@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 
-const AdminPublishersPAge: NextPage = () => {
+const AdminAuthorsPage: NextPage = () => {
     return (
         <>
         
@@ -8,4 +8,4 @@ const AdminPublishersPAge: NextPage = () => {
     )
 }
 
-export default AdminPublishersPAge
+export default AdminAuthorsPage
