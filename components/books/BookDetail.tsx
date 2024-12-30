@@ -17,6 +17,7 @@ import { type FC, type Key, useMemo } from "react";
 import BookingBookModal from "../booking/BookingBookModal";
 import Empty from "../shared/Empty";
 import Header from "../shared/Header";
+import { useCopyToClipboard } from "@/hooks/useCopy";
 
 const BookDetail: FC = () => {
 	const { id } = useParams();
@@ -27,6 +28,17 @@ const BookDetail: FC = () => {
 		id: bookID,
 	});
 
+	const [copiedText, copy] = useCopyToClipboard()
+
+	const handleCopy = (text: string) => () => {
+		copy(text)
+			.then(() => {
+				console.log('Copied!', { text })
+			})
+			.catch(error => {
+				console.error('Failed to copy!', error)
+			})
+	}
 	const bookDetail = useMemo(() => {
 		return (
 			<div
@@ -36,7 +48,7 @@ const BookDetail: FC = () => {
 				<div>
 					<h1 className="title-font mb-1 text-4xl font-medium dark:text-blue-50 text-gray-900">
 						<span className="font-bold">Názov</span>:{" "}
-						<span>{data && data?.book?.name}</span>
+						<span onClick={() => handleCopy(data?.book?.name!)}>{data && data?.book?.name}</span>
 					</h1>
 				</div>
 
