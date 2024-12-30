@@ -7,22 +7,34 @@ import { Button, Chip, CircularProgress, Input, Link } from "@nextui-org/react";
 import { useQuery } from "convex/react";
 import { Copy } from "lucide-react";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { type FC, type Key, useMemo } from "react";
 import BookingBookModal from "../booking/BookingBookModal";
 import Empty from "../shared/Empty";
 import Header from "../shared/Header";
+import { useToast } from "@/hooks/useToast";
 
 const BookDetail: FC = () => {
 	const { id } = useParams();
-
+	const router = useRouter();
 	const bookID = id as unknown as Id<"books">;
+	const {toast} = useToast();
 
 	const data = useQuery(api.books.getBookById, {
 		id: bookID,
 	});
 
 	const [, copy] = useCopyToClipboard();
+
+	const orderBooking = () => {
+		toast({
+			title: "Objednávka bola vytvorená",
+			duration: 2000,
+			className: "bg-green-800 text-white font-bold text-xl"
+		})
+		router.push("/bookings/me")
+	}
+
 	const bookDetail = useMemo(() => {
 		return (
 			<div
@@ -134,7 +146,8 @@ const BookDetail: FC = () => {
 													<Button
 														variant="solid"
 														color="warning"
-														className="mt-4"
+														onPress={orderBooking}
+														className="mt-6"
 													>
 														Požičať knihu
 													</Button>
