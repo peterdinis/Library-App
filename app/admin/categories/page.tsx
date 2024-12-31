@@ -1,8 +1,8 @@
 import AdminCategories from "@/components/admin/categories/AdminCategories";
-import { NextPage } from "next";
+import type { NextPage } from "next";
 
 const AdminCategoriesPage: NextPage = () => {
-    return <AdminCategories />
-}
+	return <AdminCategories />;
+};
 
-export default AdminCategoriesPage
+export default AdminCategoriesPage;

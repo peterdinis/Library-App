@@ -1,11 +1,7 @@
-import { FC } from "react";
+import type { FC } from "react";
 
 const MyBookings: FC = () => {
-    return (
-        <>
-            Bookings
-        </>
-    )
-}
+	return <>Bookings</>;
+};
 
-export default MyBookings
+export default MyBookings;

@@ -1,8 +1,8 @@
 import AdminPublishers from "@/components/admin/publishers/AdminPublishers";
-import { NextPage } from "next";
+import type { NextPage } from "next";
 
 const AdminPublishersPAge: NextPage = () => {
-    return <AdminPublishers />
-}
+	return <AdminPublishers />;
+};
 
-export default AdminPublishersPAge
+export default AdminPublishersPAge;

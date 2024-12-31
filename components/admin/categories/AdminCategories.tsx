@@ -1,28 +1,31 @@
 "use client";
 
-import { type FC, useMemo, useState } from "react";
-import { useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
 import Header from "@/components/shared/Header";
+import { api } from "@/convex/_generated/api";
 import {
-	Table,
-	TableHeader,
-	TableColumn,
-	TableBody,
-	TableRow,
-	TableCell,
-	Pagination,
-	getKeyValue,
 	Button,
 	CircularProgress,
+	Pagination,
+	Table,
+	TableBody,
+	TableCell,
+	TableColumn,
+	TableHeader,
+	TableRow,
+	getKeyValue,
 } from "@nextui-org/react";
+import { useQuery } from "convex/react";
+import { type FC, useMemo, useState } from "react";
 
 const AdminCategories: FC = () => {
 	const data = useQuery(api.categories.allSelectCategories);
 	const [page, setPage] = useState(1);
 
 	const rowsPerPage = 4;
-	const pages = useMemo(() => (data && data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 1), [data]);
+	const pages = useMemo(
+		() => (data && data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 1),
+		[data],
+	);
 
 	const items = useMemo(() => {
 		const start = (page - 1) * rowsPerPage;
@@ -38,7 +41,7 @@ const AdminCategories: FC = () => {
 		console.log("Delete book with ID:", id);
 	};
 
-	if (!data) return <CircularProgress label="Načitávam" />
+	if (!data) return <CircularProgress label="Načitávam" />;
 
 	return (
 		<div className="mt-10">

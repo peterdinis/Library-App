@@ -1,8 +1,8 @@
 import AdminBooks from "@/components/admin/books/AdminBooks";
-import { NextPage } from "next";
+import type { NextPage } from "next";
 
 const AdminBooksPage: NextPage = () => {
-    return <AdminBooks />
-}
+	return <AdminBooks />;
+};
 
-export default AdminBooksPage
+export default AdminBooksPage;

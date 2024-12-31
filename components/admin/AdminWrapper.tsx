@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import { Book, Info} from "lucide-react";
+import { Button } from "@nextui-org/react";
+import { Book, Info } from "lucide-react";
 import Link from "next/link";
 import type { FC } from "react";
-import Header from "../shared/Header";
-import { Button } from "@nextui-org/react";
 import { BentoGrid, BentoGridItem } from "../shared/BentoGrid";
+import Header from "../shared/Header";
 
 const items = [
 	{

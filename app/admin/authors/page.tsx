@@ -1,8 +1,8 @@
 import AdminAuthors from "@/components/admin/authors/AdminAuthors";
-import { NextPage } from "next";
+import type { NextPage } from "next";
 
 const AdminAuthorsPage: NextPage = () => {
-    return <AdminAuthors />
-}
+	return <AdminAuthors />;
+};
 
-export default AdminAuthorsPage
+export default AdminAuthorsPage;
