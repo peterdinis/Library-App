@@ -18,7 +18,7 @@ import {
 } from "@nextui-org/react";
 
 const AdminCategories: FC = () => {
-	const data = useQuery(api.books.allSelectBooks);
+	const data = useQuery(api.categories.allSelectCategories);
 	const [page, setPage] = useState(1);
 
 	const rowsPerPage = 4;
@@ -42,8 +42,8 @@ const AdminCategories: FC = () => {
 		return (
 			<GlobalErrorComponent
 				statusCode="404"
-				message="Knihy neboli nájdené"
-				linkHref="/admin/books"
+				message="Kategórie neboli nájdené"
+				linkHref="/admin/categories"
 				linkText="Načítať znova"
 			/>
 		);
@@ -75,7 +75,6 @@ const AdminCategories: FC = () => {
 				<TableHeader>
 					<TableColumn key="name">Meno</TableColumn>
 					<TableColumn key="description">Popis</TableColumn>
-					<TableColumn key="isAvailable">Je Dostupná</TableColumn>
 					<TableColumn key="edit">Upraviť</TableColumn>
 					<TableColumn key="delete">Zmazať</TableColumn>
 				</TableHeader>
@@ -84,13 +83,7 @@ const AdminCategories: FC = () => {
 						<TableRow key={item.name}>
 							{(columnKey) => (
 								<TableCell>
-									{columnKey === "isAvailable" ? (
-										item.isAvailable ? (
-											"Áno"
-										) : (
-											"Nie"
-										)
-									) : columnKey === "edit" ? (
+									{columnKey === "edit" ? (
 										<Button
 											variant="faded"
 											color="primary"
