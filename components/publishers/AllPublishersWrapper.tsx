@@ -115,7 +115,7 @@ const AllPublishersWrapper: FC = () => {
 										className="z-0 w-full h-full object-cover"
 										src={
 											publisher.image ||
-											"https://nextui.org/images/card-example-4.jpeg"
+											"https://imgs.search.brave.com/K7TdjciLTAmvqtg6-fqKm20muPAAzRMj1OonJ6HIhME/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzAwLzg5LzU1LzE1/LzM2MF9GXzg5NTUx/NTk2X0xkSEFaUnd6/M2k0RU00SjBOSE5I/eTJoRVVZRGZYYzBq/LmpwZw"
 										}
 									/>
 								</Card>
