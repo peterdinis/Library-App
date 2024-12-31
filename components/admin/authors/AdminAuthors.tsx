@@ -1,31 +1,113 @@
 "use client";
 
-import type { FC } from "react";
+import { type FC, useMemo, useState } from "react";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import GlobalErrorComponent from "@/components/shared/GlobalErrorComponent";
-import { DataTable } from "@/components/shared/GlobalTable";
 import Header from "@/components/shared/Header";
-import { Author, columns } from "./columns";
+import {
+	Table,
+	TableHeader,
+	TableColumn,
+	TableBody,
+	TableRow,
+	TableCell,
+	Pagination,
+	getKeyValue,
+	Button,
+} from "@nextui-org/react";
 
 const AdminAuthors: FC = () => {
-	const data = useQuery(api.authors.allAuthorsSelect)
+	const data = useQuery(api.authors.allAuthorsSelect);
+	const [page, setPage] = useState(1);
+
+	const rowsPerPage = 4;
+	const pages = useMemo(() => (data && data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 1), [data]);
+
+	const items = useMemo(() => {
+		const start = (page - 1) * rowsPerPage;
+		const end = start + rowsPerPage;
+		return data?.slice(start, end);
+	}, [page, data]);
+
+	const handleEdit = (id: string) => {
+		console.log("Edit book with ID:", id);
+	};
+
+	const handleDelete = (id: string) => {
+		console.log("Delete book with ID:", id);
+	};
 
 	if (!data) {
 		return (
 			<GlobalErrorComponent
 				statusCode="404"
 				message="Spisovatelia neboli nájdený"
-				linkHref="/admin"
+				linkHref="/admin/authors"
 				linkText="Načítať znova"
 			/>
 		);
 	}
 
 	return (
-		<div className="mt-4">
+		<div className="mt-10">
 			<Header text="Zoznam všetkých spisovateľov" />
-			<DataTable columns={columns} data={data as unknown as Author[]} />
+			<Table
+				className="mt-10"
+				aria-label="Example table with client side pagination"
+				bottomContent={
+					<div className="flex w-full justify-center">
+						<Pagination
+							isCompact
+							showControls
+							showShadow
+							color="secondary"
+							page={page}
+							total={pages}
+							onChange={(page) => setPage(page)}
+						/>
+					</div>
+				}
+				classNames={{
+					wrapper: "min-h-[222px]",
+				}}
+			>
+				<TableHeader>
+					<TableColumn key="name">Meno</TableColumn>
+					<TableColumn key="description">Popis</TableColumn>
+					<TableColumn key="edit">Upraviť</TableColumn>
+					<TableColumn key="delete">Zmazať</TableColumn>
+				</TableHeader>
+				<TableBody items={items}>
+					{(item) => (
+						<TableRow key={item.name}>
+							{(columnKey) => (
+								<TableCell>
+									{columnKey === "edit" ? (
+										<Button
+											variant="faded"
+											color="primary"
+											onPress={() => handleEdit(item._id)}
+										>
+											Upraviť
+										</Button>
+									) : columnKey === "delete" ? (
+										<Button
+											variant="faded"
+											color="secondary"
+											onPress={() => handleDelete(item._id)}
+										>
+											Zmazať
+										</Button>
+									) : (
+										getKeyValue(item, columnKey)
+									)}
+								</TableCell>
+							)}
+						</TableRow>
+					)}
+				</TableBody>
+			</Table>
 		</div>
 	);
 };

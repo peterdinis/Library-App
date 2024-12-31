@@ -18,7 +18,7 @@ import {
 } from "@nextui-org/react";
 
 const AdminPublishers: FC = () => {
-	const data = useQuery(api.categories.allSelectCategories);
+	const data = useQuery(api.publishers.allSelectPublishers);
 	const [page, setPage] = useState(1);
 
 	const rowsPerPage = 4;
@@ -42,8 +42,8 @@ const AdminPublishers: FC = () => {
 		return (
 			<GlobalErrorComponent
 				statusCode="404"
-				message="Knihy neboli nájdené"
-				linkHref="/admin/books"
+				message="Vydavateľstvá neboli nájdené"
+				linkHref="/admin/publishers"
 				linkText="Načítať znova"
 			/>
 		);
@@ -51,7 +51,7 @@ const AdminPublishers: FC = () => {
 
 	return (
 		<div className="mt-10">
-			<Header text="Zoznam všetkých kategórií" />
+			<Header text="Zoznam všetkých vydavateľstiev" />
 			<Table
 				className="mt-10"
 				aria-label="Example table with client side pagination"
