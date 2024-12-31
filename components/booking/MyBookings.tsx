@@ -2,24 +2,31 @@
 
 import { useUser } from "@clerk/nextjs";
 import type { FC } from "react";
-import Empty from "../shared/Empty";
 import MyBorrowedBooks from "./MyBorrowedBooks";
 import Settings from "./Settings";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const MyBookings: FC = () => {
-	const { user } = useUser();
+  const { user } = useUser();
+  const router = useRouter();
 
-	if (!user) return <Empty text="Najprv sa musíte prihlásiť" />;
-	return (
-		<div className="grid md:grid-cols-2 md:gap-6 ml-4 mr-4">
-			<div className="space-y-6 mt-5">
-				<Settings />
-			</div>
-			<div className="mt-5">
-				<MyBorrowedBooks />
-			</div>
-		</div>
-	);
+  useEffect(() => {
+    if (!user) {
+      router.push("/not-allowed");
+    }
+  }, [user, router]);
+
+  return (
+    <div className="grid md:grid-cols-2 md:gap-6 ml-4 mr-4">
+      <div className="space-y-6 mt-5">
+        <Settings />
+      </div>
+      <div className="mt-5">
+        <MyBorrowedBooks />
+      </div>
+    </div>
+  );
 };
 
 export default MyBookings;
