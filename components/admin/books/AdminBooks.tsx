@@ -31,12 +31,10 @@ const AdminBooks: FC = () => {
 	}, [page, data]);
 
 	const handleEdit = (id: string) => {
-		// Add logic to handle editing the book (e.g., open a modal)
 		console.log("Edit book with ID:", id);
 	};
 
 	const handleDelete = (id: string) => {
-		// Add logic to handle deleting the book (e.g., show confirmation dialog)
 		console.log("Delete book with ID:", id);
 	};
 
