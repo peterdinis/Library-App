@@ -26,7 +26,6 @@ const Navigation: FC = () => {
 
 	return (
 		<Navbar
-			shouldHideOnScroll
 			isBordered
 			isMenuOpen={isMenuOpen}
 			onMenuOpenChange={setIsMenuOpen}
