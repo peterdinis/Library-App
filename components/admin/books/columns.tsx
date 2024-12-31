@@ -1,7 +1,7 @@
 "use client";
 
 import { booleanCellRenderer } from "@/lib/booleanColumn";
-import { Book } from "@/types/BookTypes";
+import type { Book } from "@/types/BookTypes";
 import type { ColumnDef } from "@tanstack/react-table";
 
 export const columns: ColumnDef<Book>[] = [

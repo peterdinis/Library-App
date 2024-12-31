@@ -1,8 +1,8 @@
 import MyBookings from "@/components/booking/MyBookings";
-import { NextPage } from "next";
+import type { NextPage } from "next";
 
 const MyBookingsPage: NextPage = () => {
-    return <MyBookings />
-}
+	return <MyBookings />;
+};
 
-export default MyBookingsPage
+export default MyBookingsPage;

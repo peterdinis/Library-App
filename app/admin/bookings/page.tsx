@@ -1,11 +1,7 @@
-import { NextPage } from "next";
+import type { NextPage } from "next";
 
 const AdminBookingsPage: NextPage = () => {
-    return (
-        <>
-        
-        </>
-    )
-}
+	return <></>;
+};
 
-export default AdminBookingsPage
+export default AdminBookingsPage;

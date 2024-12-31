@@ -3,6 +3,7 @@
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
 import { useCopyToClipboard } from "@/hooks/useCopy";
+import { useToast } from "@/hooks/useToast";
 import { Button, Chip, CircularProgress, Input, Link } from "@nextui-org/react";
 import { useQuery } from "convex/react";
 import { Copy } from "lucide-react";
@@ -12,13 +13,12 @@ import { type FC, type Key, useMemo } from "react";
 import BookingBookModal from "../booking/BookingBookModal";
 import Empty from "../shared/Empty";
 import Header from "../shared/Header";
-import { useToast } from "@/hooks/useToast";
 
 const BookDetail: FC = () => {
 	const { id } = useParams();
 	const router = useRouter();
 	const bookID = id as unknown as Id<"books">;
-	const {toast} = useToast();
+	const { toast } = useToast();
 
 	const data = useQuery(api.books.getBookById, {
 		id: bookID,
@@ -30,10 +30,10 @@ const BookDetail: FC = () => {
 		toast({
 			title: "Objednávka bola vytvorená",
 			duration: 2000,
-			className: "bg-green-800 text-white font-bold text-xl"
-		})
-		router.push("/bookings/me")
-	}
+			className: "bg-green-800 text-white font-bold text-xl",
+		});
+		router.push("/bookings/me");
+	};
 
 	const bookDetail = useMemo(() => {
 		return (

@@ -1,7 +1,7 @@
 "use client";
 
-import { type FC} from "react";
 import Header from "@/components/shared/Header";
+import type { FC } from "react";
 
 const AdminBookings: FC = () => {
 	return (

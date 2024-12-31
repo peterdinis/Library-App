@@ -1,8 +1,8 @@
 import AdminWrapper from "@/components/admin/AdminWrapper";
-import { NextPage } from "next";
+import type { NextPage } from "next";
 
 const AdminPage: NextPage = () => {
-    return <AdminWrapper />
-}
+	return <AdminWrapper />;
+};
 
-export default AdminPage
+export default AdminPage;
