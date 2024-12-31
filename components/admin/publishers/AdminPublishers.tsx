@@ -3,7 +3,6 @@
 import { type FC, useMemo, useState } from "react";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import GlobalErrorComponent from "@/components/shared/GlobalErrorComponent";
 import Header from "@/components/shared/Header";
 import {
 	Table,
@@ -15,6 +14,7 @@ import {
 	Pagination,
 	getKeyValue,
 	Button,
+	CircularProgress,
 } from "@nextui-org/react";
 
 const AdminPublishers: FC = () => {
@@ -38,16 +38,7 @@ const AdminPublishers: FC = () => {
 		console.log("Delete book with ID:", id);
 	};
 
-	if (!data) {
-		return (
-			<GlobalErrorComponent
-				statusCode="404"
-				message="Vydavateľstvá neboli nájdené"
-				linkHref="/admin/publishers"
-				linkText="Načítať znova"
-			/>
-		);
-	}
+	if (!data) return <CircularProgress label="Načitávam" />
 
 	return (
 		<div className="mt-10">
