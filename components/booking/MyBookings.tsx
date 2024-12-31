@@ -5,23 +5,28 @@ import type { FC } from "react";
 import MyBorrowedBooks from "./MyBorrowedBooks";
 import Settings from "./Settings";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const MyBookings: FC = () => {
-	const { user } = useUser();
+  const { user } = useUser();
+  const router = useRouter();
 
-	const router = useRouter();
+  useEffect(() => {
+    if (!user) {
+      router.push("/not-allowed");
+    }
+  }, [user, router]);
 
-	if (!user) router.push("/not-allowed")
-	return (
-		<div className="grid md:grid-cols-2 md:gap-6 ml-4 mr-4">
-			<div className="space-y-6 mt-5">
-				<Settings />
-			</div>
-			<div className="mt-5">
-				<MyBorrowedBooks />
-			</div>
-		</div>
-	);
+  return (
+    <div className="grid md:grid-cols-2 md:gap-6 ml-4 mr-4">
+      <div className="space-y-6 mt-5">
+        <Settings />
+      </div>
+      <div className="mt-5">
+        <MyBorrowedBooks />
+      </div>
+    </div>
+  );
 };
 
 export default MyBookings;
