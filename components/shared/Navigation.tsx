@@ -1,6 +1,6 @@
 "use client";
 
-import { UserButton, useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import {
 	Button,
 	CircularProgress,
@@ -15,6 +15,7 @@ import {
 } from "@nextui-org/react";
 import { type FC, useState } from "react";
 import ThemeToggle from "./ThemeToggle";
+import ProfileDropdown from "./ProfileDropdown";
 
 const Navigation: FC = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -74,7 +75,7 @@ const Navigation: FC = () => {
 
 			<NavbarContent justify="end">
 				{isSignedIn ? (
-					<UserButton />
+					<ProfileDropdown />
 				) : (
 					<>
 						<NavbarItem className="hidden lg:flex">
@@ -111,7 +112,7 @@ const Navigation: FC = () => {
 					</Link>
 				</NavbarMenuItem>
 				{isSignedIn ? (
-					<UserButton />
+					<ProfileDropdown />
 				) : (
 					<>
 						<NavbarMenuItem className="hidden lg:flex">
