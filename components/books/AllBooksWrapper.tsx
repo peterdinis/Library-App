@@ -97,30 +97,32 @@ const AllBooksWrapper: FC = () => {
 			>
 				<div className="max-w-full mx-auto mt-8 gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 px-8">
 					{results &&
-						results.filter((i) => i.isAvailable === true).map((book: Book) => {
-							return (
-								<Card key={book._id} className="h-[300px]">
-									<CardHeader className="absolute z-10 top-1 left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center text-center w-full h-full">
-										<h1 className="text-4xl prose prose-h1: text-white font-bold uppercase">
-											{book.name}
-										</h1>
-										<AuthorName authorId={book.authorId} />
-										<Button variant="solid" color="success" className="mt-6">
-											<Link href={`/books/${book._id}`}>Detail Knihy</Link>
-										</Button>
-									</CardHeader>
-									<Image
-										removeWrapper
-										alt="Card background"
-										className="z-0 w-full h-full object-cover"
-										src={
-											book.image ||
-											"https://imgs.search.brave.com/K7TdjciLTAmvqtg6-fqKm20muPAAzRMj1OonJ6HIhME/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzAwLzg5LzU1LzE1/LzM2MF9GXzg5NTUx/NTk2X0xkSEFaUnd6/M2k0RU00SjBOSE5I/eTJoRVVZRGZYYzBq/LmpwZw"
-										}
-									/>
-								</Card>
-							);
-						})}
+						results
+							.filter((i) => i.isAvailable === true)
+							.map((book: Book) => {
+								return (
+									<Card key={book._id} className="h-[300px]">
+										<CardHeader className="absolute z-10 top-1 left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center text-center w-full h-full">
+											<h1 className="text-4xl prose prose-h1: text-white font-bold uppercase">
+												{book.name}
+											</h1>
+											<AuthorName authorId={book.authorId} />
+											<Button variant="solid" color="success" className="mt-6">
+												<Link href={`/books/${book._id}`}>Detail Knihy</Link>
+											</Button>
+										</CardHeader>
+										<Image
+											removeWrapper
+											alt="Card background"
+											className="z-0 w-full h-full object-cover"
+											src={
+												book.image ||
+												"https://imgs.search.brave.com/K7TdjciLTAmvqtg6-fqKm20muPAAzRMj1OonJ6HIhME/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzAwLzg5LzU1LzE1/LzM2MF9GXzg5NTUx/NTk2X0xkSEFaUnd6/M2k0RU00SjBOSE5I/eTJoRVVZRGZYYzBq/LmpwZw"
+											}
+										/>
+									</Card>
+								);
+							})}
 				</div>
 			</Suspense>
 
