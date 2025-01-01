@@ -8,7 +8,7 @@ import { Button, Chip, CircularProgress, Input, Link } from "@nextui-org/react";
 import { useQuery, useMutation } from "convex/react";
 import { Copy } from "lucide-react";
 import Image from "next/image";
-import { useParams, useRouter } from "next/navigation";
+import { useParams} from "next/navigation";
 import { FC, Key, useMemo } from "react";
 import BookingBookModal from "../booking/BookingBookModal";
 import Empty from "../shared/Empty";
@@ -17,7 +17,6 @@ import { useForm, Controller } from "react-hook-form";
 
 const BookDetail: FC = () => {
   const { id } = useParams();
-  const router = useRouter();
   const bookID = id as unknown as Id<"books">;
   const { toast } = useToast();
   const createBooking = useMutation(api.bookings.createBooking);
@@ -128,10 +127,9 @@ const BookDetail: FC = () => {
 				<Controller
 					name="bookName"
 					control={control}
-					defaultValue={data?.book?.name || ""}
 					rules={{ required: "Názov knihy je povinný." }}
 					render={({ field }) => (
-						<Input {...field} label="Názov knihy" disabled />
+						<Input {...field} label="Názov knihy"/>
 					)}
 				/>
 				{/* Dátum 'Od' */}
