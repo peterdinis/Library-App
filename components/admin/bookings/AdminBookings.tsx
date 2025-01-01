@@ -8,8 +8,8 @@ const AdminBookings: FC = () => {
 	return (
 		<Admin>
 			<div className="mt-10">
-			<Header text="Zoznam všetkých objednávok" />
-		</div>
+				<Header text="Zoznam všetkých objednávok" />
+			</div>
 		</Admin>
 	);
 };
