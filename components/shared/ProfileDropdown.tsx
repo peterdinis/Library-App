@@ -32,7 +32,7 @@ const ProfileDropdown: FC = () => {
                     <Link href={"/bookings/me"}>Moje požičané knihy</Link>
                 </DropdownItem>
                 <DropdownItem key={"logout"}>
-                    <Button onPress={logoutUser} color="primary" variant="flat">Odlhásenie</Button>
+                    <Button size="sm" onPress={logoutUser} color="primary" variant="flat">Odlhásenie</Button>
                 </DropdownItem>
             </DropdownMenu>
         </Dropdown>
