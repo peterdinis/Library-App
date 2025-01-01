@@ -97,7 +97,7 @@ const AllBooksWrapper: FC = () => {
 			>
 				<div className="max-w-full mx-auto mt-8 gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 px-8">
 					{results &&
-						results.map((book: Book) => {
+						results.filter((i) => i.isAvailable === true).map((book: Book) => {
 							return (
 								<Card key={book._id} className="h-[300px]">
 									<CardHeader className="absolute z-10 top-1 left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center text-center w-full h-full">
