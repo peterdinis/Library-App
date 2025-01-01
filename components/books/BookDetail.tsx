@@ -9,7 +9,7 @@ import { Button, Chip, CircularProgress, Input, Link } from "@nextui-org/react";
 import { useMutation, useQuery } from "convex/react";
 import { Copy } from "lucide-react";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { type FC, type Key, useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
 import BookingBookModal from "../booking/BookingBookModal";
@@ -24,6 +24,7 @@ const BookDetail: FC = () => {
 	const data = useQuery(api.books.getBookById, { id: bookID });
 	const [, copy] = useCopyToClipboard();
 	const { user } = useUser();
+	const router = useRouter();
 
 	const { control, handleSubmit, reset } = useForm({
 		defaultValues: {
@@ -45,6 +46,7 @@ const BookDetail: FC = () => {
 				title: "Objednávka bola úspešne vytvorená.",
 				className: "bg-green-800 text-white font-bold",
 			});
+			router.push("/bookings/me")
 			reset();
 		} catch (error: any) {
 			toast({
