@@ -3,14 +3,22 @@
 import { useUser } from "@clerk/nextjs";
 import { Card, CardBody, CardHeader, Input } from "@nextui-org/react";
 import { useMemo, type FC } from "react";
+import { format } from "date-fns"
 
 const Settings: FC = () => {
-	const {user} = useUser();
+	const { user } = useUser();
 
 	const organizationMember = useMemo(() => {
 		return user?.organizationMemberships[0].organization?.name
 	}, [user]);
-	
+
+	const createdDateForAccount = useMemo(() => {
+		if (user?.createdAt) {
+			return format(new Date(user.createdAt), 'dd.MM.yyyy');
+		}
+		return '';
+	}, [user]);
+
 	return (
 		<Card>
 			<CardHeader>
@@ -33,6 +41,10 @@ const Settings: FC = () => {
 					<div className="space-y-2">
 						<span className="text-sm font-medium leading-none">Rola</span>
 						<Input id="priezvisko" value={organizationMember} placeholder="Rola" disabled={true} />
+					</div>
+					<div className="space-y-2">
+						<span className="text-sm font-medium leading-none">Učet bol vytvorený dňa</span>
+						<Input id="priezvisko" value={createdDateForAccount} placeholder="Rola" disabled={true} />
 					</div>
 				</form>
 			</CardBody>

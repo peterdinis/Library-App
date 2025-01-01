@@ -5,10 +5,11 @@ import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
 import type { FC } from "react";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { BookingType } from "@/types/BookingTypes";
 
 const MyBorrowedBooks: FC = () => {
-	const {user} = useUser();
-	
+	const { user } = useUser();
+
 	const data = useQuery(api.bookings.getBookingsByEmail, {
 		userEmail: user?.emailAddresses[0].emailAddress!
 	});
@@ -23,20 +24,24 @@ const MyBorrowedBooks: FC = () => {
 				</CardHeader>
 				<CardBody>
 					<div className="grid gap-4">
-						<div className="flex items-center space-x-4">
-							<div className="grid gap-1.5">
-								<h3 className="text-lg font-bold">aaaa</h3>
-								<p className="text-sm font-medium leading-none">
-									Od: 11.11.2001
-								</p>
-								<p className="text-sm font-medium leading-none">
-									Do: 22.11.2001
-								</p>
-							</div>
-							<Button size="sm" className="ml-5" variant="solid">
-								Vrátiť knihu
-							</Button>
-						</div>
+						{data && data.map((item: BookingType) => {
+							return (
+								<div className="flex items-center space-x-4">
+									<div className="grid gap-1.5">
+										<h3 className="text-lg font-bold">{item.bookName}</h3>
+										<p className="text-sm font-medium leading-none">
+											Od: {item.from}
+										</p>
+										<p className="text-sm font-medium leading-none">
+											Do: {item.to}
+										</p>
+									</div>
+									<Button size="sm" className="ml-5" variant="solid">
+										Vrátiť knihu
+									</Button>
+								</div>
+							)
+						})}
 					</div>
 				</CardBody>
 			</Card>
