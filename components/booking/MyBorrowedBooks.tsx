@@ -1,8 +1,20 @@
 "use client";
 
+import { useUser } from "@clerk/nextjs";
 import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
 import type { FC } from "react";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
+
 const MyBorrowedBooks: FC = () => {
+	const {user} = useUser();
+	
+	const data = useQuery(api.bookings.getBookingsByEmail, {
+		userEmail: user?.emailAddresses[0].emailAddress!
+	});
+
+	console.log("D", data);
+
 	return (
 		<div className="space-y-6">
 			<Card>
