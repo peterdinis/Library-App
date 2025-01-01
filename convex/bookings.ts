@@ -95,7 +95,10 @@ export const returnBook = mutation({
 		const { bookingId, userEmail } = args;
 
 		// Find the booking by ID
-		const booking = await ctx.db.query("bookings").filter((q) => q.eq(q.field("_id"), bookingId)).first();
+		const booking = await ctx.db
+			.query("bookings")
+			.filter((q) => q.eq(q.field("_id"), bookingId))
+			.first();
 
 		if (!booking) {
 			throw new Error("Booking not found.");
@@ -127,7 +130,6 @@ export const returnBook = mutation({
 		return { message: "Book returned and booking deleted successfully." };
 	},
 });
-
 
 // Query to get paginated bookings
 export const getPaginatedBookings = query({

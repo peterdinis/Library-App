@@ -46,7 +46,7 @@ const BookDetail: FC = () => {
 				title: "Objednávka bola úspešne vytvorená.",
 				className: "bg-green-800 text-white font-bold",
 			});
-			router.push("/bookings/me")
+			router.push("/bookings/me");
 			reset();
 		} catch (error: any) {
 			toast({

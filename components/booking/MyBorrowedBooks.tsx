@@ -1,5 +1,7 @@
 "use client";
 
+import { api } from "@/convex/_generated/api";
+import type { BookingType } from "@/types/BookingTypes";
 import { useUser } from "@clerk/nextjs";
 import { Button, Card, CardBody, CardHeader, CircularProgress } from "@nextui-org/react";
 import type { FC, Key } from "react";
@@ -13,7 +15,7 @@ const MyBorrowedBooks: FC = () => {
 	const {toast} = useToast();
 
 	const data = useQuery(api.bookings.getBookingsByEmail, {
-		userEmail: user?.emailAddresses[0].emailAddress!
+		userEmail: user?.emailAddresses[0].emailAddress!,
 	});
 
 	console.log("D", data);
