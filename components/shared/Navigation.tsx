@@ -25,11 +25,7 @@ const Navigation: FC = () => {
 	}
 
 	return (
-		<Navbar
-			isBordered
-			isMenuOpen={isMenuOpen}
-			onMenuOpenChange={setIsMenuOpen}
-		>
+		<Navbar isBordered isMenuOpen={isMenuOpen} onMenuOpenChange={setIsMenuOpen}>
 			<NavbarContent className="sm:hidden" justify="start">
 				<NavbarMenuToggle
 					aria-label={isMenuOpen ? "Close menu" : "Open menu"}

@@ -51,6 +51,20 @@ export const createBooking = mutation({
 			userClass,
 		});
 
+		// Find the book by name
+		const book = await ctx.db
+			.query("books")
+			.filter((q) => q.eq(q.field("name"), bookName))
+			.first();
+
+		if (!book) {
+			throw new Error("Book not found.");
+		}
+
+		await ctx.db.patch(book._id, {
+			isAvailable: false,
+		});
+
 		return newBooking;
 	},
 });
