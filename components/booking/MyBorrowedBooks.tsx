@@ -27,7 +27,7 @@ const MyBorrowedBooks: FC = () => {
 						{data &&
 							data.map((item: BookingType) => {
 								return (
-									<div className="flex items-center space-x-4">
+									<div key={item._id} className="flex items-center space-x-4">
 										<div className="grid gap-1.5">
 											<h3 className="text-lg font-bold">{item.bookName}</h3>
 											<p className="text-sm font-medium leading-none">

@@ -9,7 +9,7 @@ const Settings: FC = () => {
 	const { user } = useUser();
 
 	const organizationMember = useMemo(() => {
-		return user?.organizationMemberships[0].organization?.name;
+		return user?.organizationMemberships[0]?.organization?.name;
 	}, [user]);
 
 	const createdDateForAccount = useMemo(() => {
