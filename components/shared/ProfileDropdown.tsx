@@ -31,7 +31,7 @@ const ProfileDropdown: FC = () => {
 	return (
 		<Dropdown>
 			<DropdownTrigger>
-				<Avatar src={user.imageUrl!} />
+				<Avatar src={user?.imageUrl!} />
 			</DropdownTrigger>
 			<DropdownMenu aria-label="Static Actions">
 				<DropdownItem key="userName">{user?.fullName}</DropdownItem>
