@@ -15,7 +15,6 @@ export enum LiteraryPeriod {
 	CONTEMPORARY = "Súčasná literatúra",
 }
 
-// Pole všetkých období
 export const literaryPeriods: { value: LiteraryPeriod; label: string }[] = [
 	{ value: LiteraryPeriod.ANTIQUITY, label: "Antika" },
 	{ value: LiteraryPeriod.RENAISSANCE, label: "Renesancia" },
@@ -33,7 +32,6 @@ export const literaryPeriods: { value: LiteraryPeriod; label: string }[] = [
 	{ value: LiteraryPeriod.CONTEMPORARY, label: "Súčasná literatúra" },
 ];
 
-// Type pre použitie v komponente select
 export type LiteraryPeriodOption = {
 	value: LiteraryPeriod;
 	label: string;
