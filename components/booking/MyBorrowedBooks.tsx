@@ -2,8 +2,8 @@
 
 import { useUser } from "@clerk/nextjs";
 import { Button, Card, CardBody, CardHeader, CircularProgress } from "@nextui-org/react";
-import type { FC } from "react";
-import { useQuery } from "convex/react";
+import type { FC, Key } from "react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { BookingType } from "@/types/BookingTypes";
 
@@ -14,7 +14,9 @@ const MyBorrowedBooks: FC = () => {
 		userEmail: user?.emailAddresses[0].emailAddress!
 	});
 
-	if(!data) return <CircularProgress />
+	const returnBook = useMutation(api.bookings.returnBook);
+
+	if(!data) return <CircularProgress />;
 
 	return (
 		<div className="space-y-6">
@@ -24,9 +26,9 @@ const MyBorrowedBooks: FC = () => {
 				</CardHeader>
 				<CardBody>
 					<div className="grid gap-4">
-						{data && data.map((item: BookingType) => {
+						{data && data.map((item: BookingType, index: Key) => {
 							return (
-								<div className="flex items-center space-x-4">
+								<div key={index} className="flex items-center space-x-4">
 									<div className="grid gap-1.5">
 										<h3 className="text-lg font-bold">{item.bookName}</h3>
 										<p className="text-sm font-medium leading-none">
