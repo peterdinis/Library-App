@@ -42,6 +42,7 @@ const BookDetail: FC = () => {
   });
 
   const onSubmit = async (formData: any) => {
+	if(!user) return;
     try {
       await createBooking(formData);
       toast({
@@ -123,7 +124,9 @@ const BookDetail: FC = () => {
             modalTitle="Požičat knihu"
             btnName="Požičat knihu"
             modalChildren={
-				<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+				<>
+				<h2 className="font-bold text-xl text-red-800">Pre prihlasenie musíte byť prihlasení</h2>
+				<form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 mt-5">
 				{/* Názov knihy */}
 				<Controller
 					name="bookName"
@@ -201,6 +204,7 @@ const BookDetail: FC = () => {
 					Vytvoriť objednávku
 				</Button>
 			</form>
+				</>
             }
             closeBtnName="Zatvoriť"
           />
