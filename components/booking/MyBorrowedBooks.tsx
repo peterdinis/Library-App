@@ -34,7 +34,7 @@ const MyBorrowedBooks: FC = () => {
 								</p>
 							</div>
 							<Button size="sm" className="ml-5" variant="solid">
-								Return booking modal
+								Vrátiť knihu
 							</Button>
 						</div>
 					</div>

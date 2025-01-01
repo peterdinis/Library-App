@@ -11,12 +11,6 @@ const MyBookings: FC = () => {
 	const { user } = useUser();
 	const router = useRouter();
 
-	useEffect(() => {
-		if (!user) {
-			router.push("/not-allowed");
-		}
-	}, [user, router]);
-
 	return (
 		<div className="grid md:grid-cols-2 md:gap-6 ml-4 mr-4">
 			<div className="space-y-6 mt-5">
