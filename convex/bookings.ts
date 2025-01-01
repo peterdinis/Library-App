@@ -10,6 +10,23 @@ export const allSelectBooking = query({
 	},
 });
 
+export const getBookingsByEmail = query({
+	args: {
+		userEmail: v.string(), // The email to filter bookings by
+	},
+	handler: async (ctx, args) => {
+		const { userEmail } = args;
+
+		// Query the bookings table for records where userEmail matches
+		const bookings = await ctx.db
+			.query("bookings")
+			.filter((q) => q.eq(q.field("userEmail"), userEmail))
+			.collect();
+
+		return bookings;
+	},
+});
+
 // Mutation to create a new booking
 export const createBooking = mutation({
 	args: {
@@ -68,6 +85,40 @@ export const createBooking = mutation({
 		return newBooking;
 	},
 });
+
+export const returnBook = mutation({
+	args: {
+		bookingId: v.string(), // The booking ID to find the booking
+	},
+	handler: async (ctx, args) => {
+		const { bookingId } = args;
+
+		// Find the booking by ID
+		const booking = await ctx.db.query("bookings").filter((q) => q.eq(q.field("_id"), bookingId)).first();
+
+		if (!booking) {
+			throw new Error("Booking not found.");
+		}
+
+		// Find the book by the booking's bookName
+		const book = await ctx.db
+			.query("books")
+			.filter((q) => q.eq(q.field("name"), booking.bookName))
+			.first();
+
+		if (!book) {
+			throw new Error("Book not found.");
+		}
+
+		// Update the availability of the book to 'true' (indicating it's returned)
+		await ctx.db.patch(book._id, {
+			isAvailable: true,
+		});
+
+		return { message: "Book returned successfully." };
+	},
+});
+
 
 // Query to get paginated bookings
 export const getPaginatedBookings = query({
