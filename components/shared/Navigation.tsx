@@ -14,8 +14,8 @@ import {
 	NavbarMenuToggle,
 } from "@nextui-org/react";
 import { type FC, useState } from "react";
-import ThemeToggle from "./ThemeToggle";
 import ProfileDropdown from "./ProfileDropdown";
+import ThemeToggle from "./ThemeToggle";
 
 const Navigation: FC = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
