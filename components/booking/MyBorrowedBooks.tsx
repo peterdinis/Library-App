@@ -16,11 +16,14 @@ const MyBorrowedBooks: FC = () => {
 		userEmail: user?.emailAddresses[0].emailAddress!
 	});
 
+	console.log("D", data);
+
 	const returnBook = useMutation(api.bookings.returnBook);
 
 	const handleReturnBook = async(bookingId: string) => {
 		await returnBook({
-			bookingId
+			bookingId,
+			userEmail: user?.emailAddresses[0]?.emailAddress!
 		})
 		toast({
 			title: "Kniha bola vrátená",
