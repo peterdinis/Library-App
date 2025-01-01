@@ -1,7 +1,7 @@
 "use client"
 
 import { FC } from "react";
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Avatar, Button } from "@nextui-org/react";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Avatar, Button} from "@nextui-org/react";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -24,7 +24,7 @@ const ProfileDropdown: FC = () => {
     return (
         <Dropdown>
             <DropdownTrigger>
-                <Avatar src={user?.imageUrl}/>
+                <Avatar src={user.imageUrl!}/>
             </DropdownTrigger>
             <DropdownMenu aria-label="Static Actions">
                 <DropdownItem key="userName">{user?.fullName}</DropdownItem>
