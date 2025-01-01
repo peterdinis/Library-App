@@ -194,7 +194,7 @@ const BookDetail: FC = () => {
 					name="userClass"
 					control={control}
 					render={({ field }) => (
-						<Input {...field} label="Trieda (voliteľné)" />
+						<Input {...field} label="Trieda" />
 					)}
 				/>
 				{/* Odoslať formulár */}
