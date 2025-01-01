@@ -1,17 +1,17 @@
 "use client";
 
+import { api } from "@/convex/_generated/api";
+import type { BookingType } from "@/types/BookingTypes";
 import { useUser } from "@clerk/nextjs";
 import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
-import type { FC } from "react";
 import { useQuery } from "convex/react";
-import { api } from "@/convex/_generated/api";
-import { BookingType } from "@/types/BookingTypes";
+import type { FC } from "react";
 
 const MyBorrowedBooks: FC = () => {
 	const { user } = useUser();
 
 	const data = useQuery(api.bookings.getBookingsByEmail, {
-		userEmail: user?.emailAddresses[0].emailAddress!
+		userEmail: user?.emailAddresses[0].emailAddress!,
 	});
 
 	console.log("D", data);
@@ -24,24 +24,25 @@ const MyBorrowedBooks: FC = () => {
 				</CardHeader>
 				<CardBody>
 					<div className="grid gap-4">
-						{data && data.map((item: BookingType) => {
-							return (
-								<div className="flex items-center space-x-4">
-									<div className="grid gap-1.5">
-										<h3 className="text-lg font-bold">{item.bookName}</h3>
-										<p className="text-sm font-medium leading-none">
-											Od: {item.from}
-										</p>
-										<p className="text-sm font-medium leading-none">
-											Do: {item.to}
-										</p>
+						{data &&
+							data.map((item: BookingType) => {
+								return (
+									<div className="flex items-center space-x-4">
+										<div className="grid gap-1.5">
+											<h3 className="text-lg font-bold">{item.bookName}</h3>
+											<p className="text-sm font-medium leading-none">
+												Od: {item.from}
+											</p>
+											<p className="text-sm font-medium leading-none">
+												Do: {item.to}
+											</p>
+										</div>
+										<Button size="sm" className="ml-5" variant="solid">
+											Vrátiť knihu
+										</Button>
 									</div>
-									<Button size="sm" className="ml-5" variant="solid">
-										Vrátiť knihu
-									</Button>
-								</div>
-							)
-						})}
+								);
+							})}
 					</div>
 				</CardBody>
 			</Card>

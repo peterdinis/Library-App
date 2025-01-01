@@ -1,5 +1,6 @@
 "use client";
 
+import Admin from "@/components/auth/Admin";
 import Header from "@/components/shared/Header";
 import { api } from "@/convex/_generated/api";
 import {
@@ -44,65 +45,67 @@ const AdminCategories: FC = () => {
 	if (!data) return <CircularProgress label="Načitávam" />;
 
 	return (
-		<div className="mt-10">
-			<Header text="Zoznam všetkých kategórií" />
-			<Table
-				className="mt-10"
-				aria-label="Example table with client side pagination"
-				bottomContent={
-					<div className="flex w-full justify-center">
-						<Pagination
-							isCompact
-							showControls
-							showShadow
-							color="secondary"
-							page={page}
-							total={pages}
-							onChange={(page) => setPage(page)}
-						/>
-					</div>
-				}
-				classNames={{
-					wrapper: "min-h-[222px]",
-				}}
-			>
-				<TableHeader>
-					<TableColumn key="name">Meno</TableColumn>
-					<TableColumn key="description">Popis</TableColumn>
-					<TableColumn key="edit">Upraviť</TableColumn>
-					<TableColumn key="delete">Zmazať</TableColumn>
-				</TableHeader>
-				<TableBody items={items}>
-					{(item) => (
-						<TableRow key={item.name}>
-							{(columnKey) => (
-								<TableCell>
-									{columnKey === "edit" ? (
-										<Button
-											variant="faded"
-											color="primary"
-											onPress={() => handleEdit(item._id)}
-										>
-											Upraviť
-										</Button>
-									) : columnKey === "delete" ? (
-										<Button
-											variant="faded"
-											color="secondary"
-											onPress={() => handleDelete(item._id)}
-										>
-											Zmazať
-										</Button>
-									) : (
-										getKeyValue(item, columnKey)
-									)}
-								</TableCell>
-							)}
-						</TableRow>
-					)}
-				</TableBody>
-			</Table>
-		</div>
+		<Admin>
+			<div className="mt-10">
+				<Header text="Zoznam všetkých kategórií" />
+				<Table
+					className="mt-10"
+					aria-label="Example table with client side pagination"
+					bottomContent={
+						<div className="flex w-full justify-center">
+							<Pagination
+								isCompact
+								showControls
+								showShadow
+								color="secondary"
+								page={page}
+								total={pages}
+								onChange={(page) => setPage(page)}
+							/>
+						</div>
+					}
+					classNames={{
+						wrapper: "min-h-[222px]",
+					}}
+				>
+					<TableHeader>
+						<TableColumn key="name">Meno</TableColumn>
+						<TableColumn key="description">Popis</TableColumn>
+						<TableColumn key="edit">Upraviť</TableColumn>
+						<TableColumn key="delete">Zmazať</TableColumn>
+					</TableHeader>
+					<TableBody items={items}>
+						{(item) => (
+							<TableRow key={item.name}>
+								{(columnKey) => (
+									<TableCell>
+										{columnKey === "edit" ? (
+											<Button
+												variant="faded"
+												color="primary"
+												onPress={() => handleEdit(item._id)}
+											>
+												Upraviť
+											</Button>
+										) : columnKey === "delete" ? (
+											<Button
+												variant="faded"
+												color="secondary"
+												onPress={() => handleDelete(item._id)}
+											>
+												Zmazať
+											</Button>
+										) : (
+											getKeyValue(item, columnKey)
+										)}
+									</TableCell>
+								)}
+							</TableRow>
+						)}
+					</TableBody>
+				</Table>
+			</div>
+		</Admin>
 	);
 };
 

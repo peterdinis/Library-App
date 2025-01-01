@@ -2,21 +2,21 @@
 
 import { useUser } from "@clerk/nextjs";
 import { Card, CardBody, CardHeader, Input } from "@nextui-org/react";
-import { useMemo, type FC } from "react";
-import { format } from "date-fns"
+import { format } from "date-fns";
+import { type FC, useMemo } from "react";
 
 const Settings: FC = () => {
 	const { user } = useUser();
 
 	const organizationMember = useMemo(() => {
-		return user?.organizationMemberships[0].organization?.name
+		return user?.organizationMemberships[0].organization?.name;
 	}, [user]);
 
 	const createdDateForAccount = useMemo(() => {
 		if (user?.createdAt) {
-			return format(new Date(user.createdAt), 'dd.MM.yyyy');
+			return format(new Date(user.createdAt), "dd.MM.yyyy");
 		}
-		return '';
+		return "";
 	}, [user]);
 
 	return (
@@ -28,23 +28,49 @@ const Settings: FC = () => {
 				<form className="space-y-4">
 					<div className="space-y-2">
 						<span className="text-sm font-medium leading-none">Email</span>
-						<Input disabled={true} id="email" value={user?.emailAddresses[0].emailAddress} />
+						<Input
+							disabled={true}
+							id="email"
+							value={user?.emailAddresses[0].emailAddress}
+						/>
 					</div>
 					<div className="space-y-2">
 						<span className="text-sm font-medium leading-none">Meno</span>
-						<Input id="meno" placeholder="Meno" disabled={true} value={user?.firstName!} />
+						<Input
+							id="meno"
+							placeholder="Meno"
+							disabled={true}
+							value={user?.firstName!}
+						/>
 					</div>
 					<div className="space-y-2">
 						<span className="text-sm font-medium leading-none">Priezvisko</span>
-						<Input id="priezvisko" value={user?.lastName!} placeholder="Priezvisko" disabled={true} />
+						<Input
+							id="priezvisko"
+							value={user?.lastName!}
+							placeholder="Priezvisko"
+							disabled={true}
+						/>
 					</div>
 					<div className="space-y-2">
 						<span className="text-sm font-medium leading-none">Rola</span>
-						<Input id="priezvisko" value={organizationMember} placeholder="Rola" disabled={true} />
+						<Input
+							id="priezvisko"
+							value={organizationMember}
+							placeholder="Rola"
+							disabled={true}
+						/>
 					</div>
 					<div className="space-y-2">
-						<span className="text-sm font-medium leading-none">Učet bol vytvorený dňa</span>
-						<Input id="priezvisko" value={createdDateForAccount} placeholder="Rola" disabled={true} />
+						<span className="text-sm font-medium leading-none">
+							Učet bol vytvorený dňa
+						</span>
+						<Input
+							id="priezvisko"
+							value={createdDateForAccount}
+							placeholder="Rola"
+							disabled={true}
+						/>
 					</div>
 				</form>
 			</CardBody>
