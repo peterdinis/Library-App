@@ -4,7 +4,7 @@ import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
 import { useCopyToClipboard } from "@/hooks/useCopy";
 import { useToast } from "@/hooks/useToast";
-import { Button, Chip, CircularProgress, Input, Link } from "@nextui-org/react";
+import { Button, Chip, CircularProgress, Input, Link} from "@nextui-org/react";
 import { useQuery, useMutation } from "convex/react";
 import { Copy } from "lucide-react";
 import Image from "next/image";
@@ -14,6 +14,7 @@ import BookingBookModal from "../booking/BookingBookModal";
 import Empty from "../shared/Empty";
 import Header from "../shared/Header";
 import { useForm, Controller } from "react-hook-form";
+import { useUser } from "@clerk/nextjs";
 
 const BookDetail: FC = () => {
   const { id } = useParams();
@@ -22,12 +23,12 @@ const BookDetail: FC = () => {
   const createBooking = useMutation(api.bookings.createBooking);
   const data = useQuery(api.books.getBookById, { id: bookID });
   const [, copy] = useCopyToClipboard();
+  const {user} = useUser();
 
   const {
     control,
     handleSubmit,
     reset,
-    formState: { errors },
   } = useForm({
     defaultValues: {
       bookName: "",
