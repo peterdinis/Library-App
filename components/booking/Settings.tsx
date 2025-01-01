@@ -1,7 +1,7 @@
 "use client";
 
 import { useUser } from "@clerk/nextjs";
-import { Card, CardBody, CardHeader, Input } from "@nextui-org/react";
+import { Card, CardBody, CardHeader, CircularProgress, Input } from "@nextui-org/react";
 import { useMemo, type FC } from "react";
 import { format } from "date-fns"
 
@@ -18,6 +18,8 @@ const Settings: FC = () => {
 		}
 		return '';
 	}, [user]);
+
+	if(!user) return <CircularProgress />
 
 	return (
 		<Card>
