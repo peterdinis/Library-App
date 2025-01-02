@@ -31,16 +31,18 @@ const AllAuthorsWrapper: FC = () => {
 	const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
 	const pageSize = 12;
 
+	// Debouncing search term for better performance
 	useEffect(() => {
 		const handler = setTimeout(() => {
 			setDebouncedSearchTerm(searchTerm);
-		}, 100);
+		}, 500); // Delay increased to 500ms for a better search experience
 
 		return () => {
 			clearTimeout(handler);
 		};
 	}, [searchTerm]);
 
+	// Fetching paginated authors
 	const { results, status } = usePaginatedQuery(
 		api.authors.getPaginatedAuthors,
 		{
@@ -56,13 +58,15 @@ const AllAuthorsWrapper: FC = () => {
 	const authors = results ?? [];
 	const totalPages = Math.ceil((authors.length * currentPage) / pageSize);
 
+	// Handling page change
 	const handlePageChange = (page: number) => {
 		setCurrentPage(page);
 	};
 
+	// Handling search input change
 	const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setSearchTerm(event.target.value);
-		setCurrentPage(1);
+		setCurrentPage(1); // Reset to first page when search term changes
 	};
 
 	if (status === "LoadingFirstPage")
@@ -81,8 +85,9 @@ const AllAuthorsWrapper: FC = () => {
 				/>
 			</div>
 
+			{/* Show Empty component if no authors found */}
 			{results && results.length === 0 && (
-				<Empty text="Žiadny spisovatelia sa nenašli" />
+				<Empty text="Žiadni spisovatelia sa nenašli" />
 			)}
 
 			<Suspense
@@ -127,6 +132,7 @@ const AllAuthorsWrapper: FC = () => {
 				</div>
 			</Suspense>
 
+			{/* Pagination */}
 			<div className="flex justify-center items-center mt-20">
 				<AppPagination
 					currentPage={currentPage}
