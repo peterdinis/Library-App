@@ -19,7 +19,7 @@ import ThemeToggle from "./ThemeToggle";
 
 const Navigation: FC = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	const { isSignedIn, isLoaded } = useUser();
+	const {user, isLoaded } = useUser();
 
 	if (!isLoaded) {
 		return <CircularProgress />;
@@ -74,7 +74,7 @@ const Navigation: FC = () => {
 			</NavbarContent>
 
 			<NavbarContent justify="end">
-				{isSignedIn ? (
+				{user ? (
 					<ProfileDropdown />
 				) : (
 					<>
@@ -111,7 +111,7 @@ const Navigation: FC = () => {
 						Vydavatelstvá
 					</Link>
 				</NavbarMenuItem>
-				{isSignedIn ? (
+				{user ? (
 					<ProfileDropdown />
 				) : (
 					<>
