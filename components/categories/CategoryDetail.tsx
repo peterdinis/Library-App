@@ -36,7 +36,7 @@ const CategoryDetail: FC = () => {
 				</div>
 
 				<div className="mb-4 mt-3 text-2xl font-light leading-relaxed dark:text-blue-50 text-gray-800">
-					<div className="font-bold">Počet kníh: </div>
+					<div className="font-bold">Knihy ktoré sú pod danou kategóriou: </div>
 					<p>
 						{data && data?.books.length > 0 ? (
 							data.books.map((item) => item.name).join(", ")
