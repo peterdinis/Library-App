@@ -1,20 +1,50 @@
 "use client";
 
 import { api } from "@/convex/_generated/api";
+import { useToast } from "@/hooks/useToast";
 import type { BookingType } from "@/types/BookingTypes";
 import { useUser } from "@clerk/nextjs";
-import { Button, Card, CardBody, CardHeader } from "@nextui-org/react";
-import { useQuery } from "convex/react";
-import type { FC } from "react";
+import {
+	Button,
+	Card,
+	CardBody,
+	CardHeader,
+	CircularProgress,
+} from "@nextui-org/react";
+import { useMutation, useQuery } from "convex/react";
+import type { FC, Key } from "react";
 
 const MyBorrowedBooks: FC = () => {
 	const { user } = useUser();
+	const { toast } = useToast();
 
 	const data = useQuery(api.bookings.getBookingsByEmail, {
 		userEmail: user?.emailAddresses[0].emailAddress!,
 	});
 
-	console.log("D", data);
+	const returnBook = useMutation(api.bookings.returnBook);
+
+	const handleReturnBook = async (bookingId: string) => {
+		try {
+			await returnBook({
+				bookingId,
+				userEmail: user?.emailAddresses[0]?.emailAddress!,
+			});
+			toast({
+				title: "Kniha bola vrátená",
+				duration: 2000,
+				className: "bg-green-800 text-white font-bold text-xl",
+			});
+		} catch (error) {
+			toast({
+				title: "Chyba pri vrátení knihy",
+				duration: 2000,
+				className: "bg-red-800 text-white font-bold text-xl",
+			});
+		}
+	};
+
+	if (!data) return <CircularProgress />;
 
 	return (
 		<div className="space-y-6">
@@ -37,7 +67,12 @@ const MyBorrowedBooks: FC = () => {
 												Do: {item.to}
 											</p>
 										</div>
-										<Button size="sm" className="ml-5" variant="solid">
+										<Button
+											onPress={() => handleReturnBook(item._id)}
+											size="sm"
+											className="ml-5"
+											variant="solid"
+										>
 											Vrátiť knihu
 										</Button>
 									</div>

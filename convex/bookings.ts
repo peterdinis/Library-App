@@ -89,9 +89,10 @@ export const createBooking = mutation({
 export const returnBook = mutation({
 	args: {
 		bookingId: v.string(), // The booking ID to find the booking
+		userEmail: v.string(), // The email of the user to check for ownership
 	},
 	handler: async (ctx, args) => {
-		const { bookingId } = args;
+		const { bookingId, userEmail } = args;
 
 		// Find the booking by ID
 		const booking = await ctx.db
@@ -101,6 +102,11 @@ export const returnBook = mutation({
 
 		if (!booking) {
 			throw new Error("Booking not found.");
+		}
+
+		// Check if the booking belongs to the correct user
+		if (booking.userEmail !== userEmail) {
+			throw new Error("Booking does not belong to the specified user.");
 		}
 
 		// Find the book by the booking's bookName
@@ -118,7 +124,17 @@ export const returnBook = mutation({
 			isAvailable: true,
 		});
 
-		return { message: "Book returned successfully." };
+		// Delete the booking for the user using the document reference
+		const bookingDocument = await ctx.db
+			.query("bookings")
+			.filter((q) => q.eq(q.field("_id"), bookingId))
+			.first();
+
+		if (bookingDocument) {
+			await ctx.db.delete(bookingDocument._id); // Use the delete method on the document reference
+		}
+
+		return { message: "Book returned and booking deleted successfully." };
 	},
 });
 
