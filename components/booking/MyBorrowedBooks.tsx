@@ -19,16 +19,24 @@ const MyBorrowedBooks: FC = () => {
 	const returnBook = useMutation(api.bookings.returnBook);
 
 	const handleReturnBook = async(bookingId: string) => {
-		await returnBook({
+		try {
+		  await returnBook({
 			bookingId,
-			userEmail: user?.emailAddresses[0]?.emailAddress!
-		})
-		toast({
+			userEmail: user?.emailAddresses[0]?.emailAddress!, // Ensure this is not undefined or null
+		  });
+		  toast({
 			title: "Kniha bola vrátená",
 			duration: 2000,
 			className: "bg-green-800 text-white font-bold text-xl"
-		})
-	}
+		  });
+		} catch (error) {
+		  toast({
+			title: "Chyba pri vrátení knihy",
+			duration: 2000,
+			className: "bg-red-800 text-white font-bold text-xl"
+		  });
+		}
+	  };
 
 	if(!data) return <CircularProgress />;
 
