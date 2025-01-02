@@ -55,7 +55,7 @@ const items = [
 		icon: <Book className="h-4 w-4 text-neutral-500" />,
 		button: (
 			<Button color="secondary" variant="solid">
-				<Link href="/admin/booking">Všetky objednávky</Link>
+				<Link href="/admin/bookings">Všetky objednávky</Link>
 			</Button>
 		),
 	},
