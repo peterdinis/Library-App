@@ -9,25 +9,37 @@ import {
 	CircularProgress,
 	Divider,
 	Input,
-	Link,
 	Skeleton,
 } from "@nextui-org/react";
 import { usePaginatedQuery } from "convex/react";
 import { Search } from "lucide-react";
-import { type ChangeEvent, type FC, Suspense, useState } from "react";
+import { type ChangeEvent, type FC, Suspense, useEffect, useState } from "react";
 import AppPagination from "../shared/AppPagination";
 import Empty from "../shared/Empty";
 import Header from "../shared/Header";
+import Link from "next/link";
 
 const AllCategoriesWrapper: FC = () => {
 	const [currentPage, setCurrentPage] = useState(1);
 	const [searchTerm, setSearchTerm] = useState("");
+	const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
 	const pageSize = 12;
+
+	// Debounced search term for better performance
+	useEffect(() => {
+		const handler = setTimeout(() => {
+			setDebouncedSearchTerm(searchTerm);
+		}, 300); // Delay for debouncing search input
+
+		return () => {
+			clearTimeout(handler);
+		};
+	}, [searchTerm]);
 
 	const { results, status } = usePaginatedQuery(
 		api.categories.getPaginatedCategories,
-		{ paginationOpts: { page: currentPage, pageSize, searchTerm } },
-		{ initialNumItems: pageSize },
+		{ paginationOpts: { page: currentPage, pageSize, searchTerm: debouncedSearchTerm } },
+		{ initialNumItems: pageSize }
 	);
 
 	const categories = results ?? [];
@@ -39,7 +51,7 @@ const AllCategoriesWrapper: FC = () => {
 
 	const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setSearchTerm(event.target.value);
-		setCurrentPage(1);
+		setCurrentPage(1); // Reset to first page when search term changes
 	};
 
 	if (status === "LoadingFirstPage")
@@ -58,7 +70,7 @@ const AllCategoriesWrapper: FC = () => {
 				/>
 			</div>
 			{results && results.length === 0 && (
-				<Empty text="Žiadne katrgórie sa nenašli" />
+				<Empty text="Žiadne kategórie sa nenašli" />
 			)}
 
 			<Suspense
