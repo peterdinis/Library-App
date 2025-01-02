@@ -21,13 +21,13 @@ const ProfileDropdown: FC = () => {
 	const { signOut } = useClerk();
 
 	const logoutUser = async () => {
-		await signOut();
 		toast({
 			title: "Odhlásenie bolo úspešné",
 			duration: 2000,
 			className: "bg-green-800 text-white font-bold text-xl",
 		});
 		router.push("/"); // Redirect the user to the homepage
+		await signOut();
 	};
 
 	return (
