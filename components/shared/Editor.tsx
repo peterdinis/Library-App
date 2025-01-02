@@ -3,35 +3,18 @@
 import { useTheme } from "@/hooks/useTheme";
 import {
 	type Block,
-	BlockNoteSchema,
-	defaultStyleSpecs,
 } from "@blocknote/core";
 import { BlockNoteView } from "@blocknote/mantine";
 import {
-	FormattingToolbar,
-	FormattingToolbarController,
 	useCreateBlockNote,
 } from "@blocknote/react";
 import { type FC, useEffect, useRef, useState } from "react";
 import "@blocknote/mantine/style.css";
 import "@blocknote/core/fonts/inter.css";
-import {
-	CommentToolbarController,
-	CreateCommentButton,
-	commentStyleSpec,
-} from "@defensestation/blocknote-comments";
 
 const Editor: FC = () => {
 	const [, setBlocks] = useState<Block[]>([]);
 	const { theme } = useTheme();
-
-	const schema = BlockNoteSchema.create({
-		styleSpecs: {
-			// Adds all default styles.
-			...defaultStyleSpecs,
-			comment: commentStyleSpec,
-		},
-	});
 
 	const editor = useCreateBlockNote({
 		initialContent: [
@@ -41,16 +24,6 @@ const Editor: FC = () => {
 			},
 		],
 	});
-
-	const CustomToolbar = () => (
-		<FormattingToolbarController
-			formattingToolbar={() => (
-				<FormattingToolbar>
-					<CreateCommentButton key={"createCommentButtin"} />
-				</FormattingToolbar>
-			)}
-		/>
-	);
 
 	const blockNoteRef = useRef<HTMLDivElement | null>(null);
 	useEffect(() => {
@@ -72,10 +45,7 @@ const Editor: FC = () => {
 				onChange={() => setBlocks(editor.document)}
 				editor={editor}
 				formattingToolbar={false}
-			>
-				<CustomToolbar />
-				<CommentToolbarController />
-			</BlockNoteView>
+			/>
 		</div>
 	);
 };
