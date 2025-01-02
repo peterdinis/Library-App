@@ -17,6 +17,7 @@ import {
 } from "@nextui-org/react";
 import { useQuery } from "convex/react";
 import { type FC, useMemo, useState } from "react";
+import { jsPDF } from "jspdf";
 
 const AdminPublishers: FC = () => {
 	const data = useQuery(api.publishers.allSelectPublishers);
@@ -35,11 +36,30 @@ const AdminPublishers: FC = () => {
 	}, [page, data]);
 
 	const handleEdit = (id: string) => {
-		console.log("Edit book with ID:", id);
+		console.log("Edit publisher with ID:", id);
 	};
 
 	const handleDelete = (id: string) => {
-		console.log("Delete book with ID:", id);
+		console.log("Delete publisher with ID:", id);
+	};
+
+	const generatePDF = () => {
+		if (!data) return;
+
+		const doc = new jsPDF();
+		doc.text("Zoznam všetkých vydavateľstiev", 10, 10);
+
+		let y = 20;
+		data.forEach((publisher, index) => {
+			doc.text(
+				`${index + 1}. ${publisher.name} - ${publisher.description}`,
+				10,
+				y
+			);
+			y += 10; // Move down for the next line
+		});
+
+		doc.save("publishers.pdf");
 	};
 
 	if (!data) return <CircularProgress label="Načitávam" />;
@@ -48,6 +68,11 @@ const AdminPublishers: FC = () => {
 		<Admin>
 			<div className="mt-10">
 				<Header text="Zoznam všetkých vydavateľstiev" />
+				<div className="flex justify-end mb-4">
+					<Button variant="flat" color="primary" onPress={generatePDF}>
+						Exportovať do PDF
+					</Button>
+				</div>
 				<Table
 					className="mt-10"
 					aria-label="Example table with client side pagination"
