@@ -2,13 +2,14 @@
 
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
-import { CircularProgress } from "@nextui-org/react";
+import { Button, CircularProgress } from "@nextui-org/react";
 import { useQuery } from "convex/react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { type FC, type Key, useMemo } from "react";
 import Empty from "../shared/Empty";
 import Header from "../shared/Header";
+import Link from "next/link";
 
 const PublisherDetail: FC = () => {
 	const { id } = useParams();
@@ -50,6 +51,14 @@ const PublisherDetail: FC = () => {
 				<div className="mb-4 mt-3 text-2xl font-light leading-relaxed dark:text-blue-50 text-gray-800">
 					<div className="font-bold">Rok vytvorenia: </div>
 					<p>{data && data?.createdDate}</p>
+				</div>
+				<hr />
+				<div className="mt-5">
+					<Button variant="faded" color="primary">
+						<Link href="/publishers">
+							Návrat na všetkych vydavateľstvá
+						</Link>
+					</Button>
 				</div>
 			</div>
 		);
