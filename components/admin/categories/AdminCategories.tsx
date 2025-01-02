@@ -17,6 +17,7 @@ import {
 } from "@nextui-org/react";
 import { useQuery } from "convex/react";
 import { type FC, useMemo, useState } from "react";
+import { jsPDF } from "jspdf";
 
 const AdminCategories: FC = () => {
 	const data = useQuery(api.categories.allSelectCategories);
@@ -35,11 +36,26 @@ const AdminCategories: FC = () => {
 	}, [page, data]);
 
 	const handleEdit = (id: string) => {
-		console.log("Edit book with ID:", id);
+		console.log("Edit category with ID:", id);
 	};
 
 	const handleDelete = (id: string) => {
-		console.log("Delete book with ID:", id);
+		console.log("Delete category with ID:", id);
+	};
+
+	const generatePDF = () => {
+		if (!data) return;
+
+		const doc = new jsPDF();
+		doc.text("Zoznam všetkých kategórií", 10, 10);
+
+		let y = 20;
+		data.forEach((category, index) => {
+			doc.text(`${index + 1}. ${category.name} - ${category.description}`, 10, y);
+			y += 10; // Move down for the next line
+		});
+
+		doc.save("categories.pdf");
 	};
 
 	if (!data) return <CircularProgress label="Načitávam" />;
@@ -48,6 +64,11 @@ const AdminCategories: FC = () => {
 		<Admin>
 			<div className="mt-10">
 				<Header text="Zoznam všetkých kategórií" />
+				<div className="flex justify-end mb-4">
+					<Button variant="flat" color="primary" onPress={generatePDF}>
+						Exportovať do PDF
+					</Button>
+				</div>
 				<Table
 					className="mt-10"
 					aria-label="Example table with client side pagination"
