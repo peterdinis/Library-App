@@ -124,8 +124,15 @@ export const returnBook = mutation({
 			isAvailable: true,
 		});
 
-		// Delete the booking for the user
-		await ctx.db.query("bookings").filter((q) => q.eq(q.field("_id"), bookingId));
+		// Delete the booking for the user using the document reference
+		const bookingDocument = await ctx.db
+			.query("bookings")
+			.filter((q) => q.eq(q.field("_id"), bookingId))
+			.first();
+
+		if (bookingDocument) {
+			await ctx.db.delete(bookingDocument._id); // Use the delete method on the document reference
+		}
 
 		return { message: "Book returned and booking deleted successfully." };
 	},

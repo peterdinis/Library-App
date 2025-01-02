@@ -16,9 +16,9 @@ import {
 	getKeyValue,
 } from "@nextui-org/react";
 import { useQuery } from "convex/react";
-import { type FC, useMemo, useState } from "react";
 import { jsPDF } from "jspdf";
 import Link from "next/link";
+import { type FC, useMemo, useState } from "react";
 
 const AdminPublishers: FC = () => {
 	const data = useQuery(api.publishers.allSelectPublishers);
@@ -55,7 +55,7 @@ const AdminPublishers: FC = () => {
 			doc.text(
 				`${index + 1}. ${publisher.name} - ${publisher.description}`,
 				10,
-				y
+				y,
 			);
 			y += 10; // Move down for the next line
 		});
@@ -70,7 +70,9 @@ const AdminPublishers: FC = () => {
 			<div className="mt-10">
 				<Header text="Zoznam všetkých vydavateľstiev" />
 				<div className="mt-10 flex justify-center items-center">
-					<Link className="font-bold text-xl" href="/admin">Naspät na admina</Link>
+					<Link className="font-bold text-xl" href="/admin">
+						Naspät na admina
+					</Link>
 				</div>
 				<div className="flex justify-end mb-4">
 					<Button variant="flat" color="primary" onPress={generatePDF}>

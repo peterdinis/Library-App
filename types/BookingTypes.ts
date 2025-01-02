@@ -1,6 +1,6 @@
 export type BookingType = {
-    _id: string;
-    bookName: string;
-    from: string;
-    to: string;
-}
+	_id: string;
+	bookName: string;
+	from: string;
+	to: string;
+};

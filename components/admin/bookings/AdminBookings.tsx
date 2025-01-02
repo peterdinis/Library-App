@@ -16,9 +16,9 @@ import {
 	getKeyValue,
 } from "@nextui-org/react";
 import { useQuery } from "convex/react";
-import { FC, useMemo, useState } from "react";
 import { jsPDF } from "jspdf";
 import Link from "next/link";
+import { type FC, useMemo, useState } from "react";
 
 const AdminBookings: FC = () => {
 	const data = useQuery(api.bookings.allSelectBooking);

@@ -16,9 +16,9 @@ import {
 	getKeyValue,
 } from "@nextui-org/react";
 import { useQuery } from "convex/react";
-import { type FC, useMemo, useState } from "react";
 import { jsPDF } from "jspdf";
 import Link from "next/link";
+import { type FC, useMemo, useState } from "react";
 
 const AdminCategories: FC = () => {
 	const data = useQuery(api.categories.allSelectCategories);
@@ -52,7 +52,11 @@ const AdminCategories: FC = () => {
 
 		let y = 20;
 		data.forEach((category, index) => {
-			doc.text(`${index + 1}. ${category.name} - ${category.description}`, 10, y);
+			doc.text(
+				`${index + 1}. ${category.name} - ${category.description}`,
+				10,
+				y,
+			);
 			y += 10; // Move down for the next line
 		});
 
@@ -66,7 +70,9 @@ const AdminCategories: FC = () => {
 			<div className="mt-10">
 				<Header text="Zoznam všetkých kategórií" />
 				<div className="mt-10 flex justify-center items-center">
-					<Link className="font-bold text-xl" href="/admin">Naspät na admina</Link>
+					<Link className="font-bold text-xl" href="/admin">
+						Naspät na admina
+					</Link>
 				</div>
 				<div className="flex justify-end mb-4">
 					<Button variant="flat" color="primary" onPress={generatePDF}>
