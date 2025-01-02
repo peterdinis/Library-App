@@ -17,6 +17,7 @@ import {
 import { useQuery } from "convex/react";
 import { type FC, useMemo, useState } from "react";
 import { jsPDF } from "jspdf";
+import Link from "next/link";
 
 const AdminAuthors: FC = () => {
 	const data = useQuery(api.authors.allAuthorsSelect);
@@ -62,6 +63,9 @@ const AdminAuthors: FC = () => {
 	return (
 		<div className="mt-10">
 			<Header text="Zoznam všetkých spisovateľov" />
+			<div className="mt-10 flex justify-center items-center">
+					<Link className="font-bold text-xl" href="/admin">Naspät na admina</Link>
+				</div>
 			<div className="flex justify-end mb-4">
 				<Button variant="flat" color="primary" onPress={generatePDF}>
 					Exportovať do PDF
