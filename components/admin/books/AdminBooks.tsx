@@ -16,7 +16,8 @@ import {
 	getKeyValue,
 } from "@nextui-org/react";
 import { useQuery } from "convex/react";
-import { type FC, useMemo, useState } from "react";
+import { FC, useMemo, useState } from "react";
+import { jsPDF } from "jspdf";
 
 const AdminBooks: FC = () => {
 	const data = useQuery(api.books.allSelectBooks);
@@ -42,12 +43,44 @@ const AdminBooks: FC = () => {
 		console.log("Delete book with ID:", id);
 	};
 
+	const generatePDF = () => {
+		if (!data) return;
+
+		const doc = new jsPDF();
+		doc.setFontSize(12);
+
+		// Add a title
+		doc.text("Zoznam všetkých kníh", 10, 10);
+
+		// Table headers
+		doc.text("Meno", 10, 20);
+		doc.text("Popis", 70, 20);
+		doc.text("Je Dostupná", 130, 20);
+
+		// Table rows
+		let y = 30;
+		data.forEach((book) => {
+			doc.text(book.name || "N/A", 10, y);
+			doc.text(book.description || "N/A", 70, y);
+			doc.text(book.isAvailable ? "Áno" : "Nie", 130, y);
+			y += 10;
+		});
+
+		// Save or open the PDF
+		doc.save("books.pdf");
+	};
+
 	if (!data) return <CircularProgress label="Načitávam" />;
 
 	return (
 		<Admin>
 			<div className="mt-10">
 				<Header text="Zoznam všetkých kníh" />
+				<div className="flex justify-end mb-4">
+					<Button variant="flat" color="success" onPress={generatePDF}>
+						Stiahnuť ako PDF
+					</Button>
+				</div>
 				<Table
 					className="mt-10"
 					aria-label="Example table with client side pagination"
