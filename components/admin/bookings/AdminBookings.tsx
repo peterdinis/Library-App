@@ -74,7 +74,7 @@ const AdminBookings: FC = () => {
 		});
 
 		// Save or open the PDF
-		doc.save("books.pdf");
+		doc.save("bookings.pdf");
 	};
 
 	if (!data) return <CircularProgress label="Načitávam" />;
