@@ -25,7 +25,6 @@ const ProfileDropdown: FC = () => {
 			duration: 2000,
 			className: "bg-green-800 text-white font-bold text-xl",
 		});
-		user?.delete();
 		router.push("/");
 	};
 
@@ -34,7 +33,7 @@ const ProfileDropdown: FC = () => {
 			<DropdownTrigger>
 				<Avatar src={user?.imageUrl!} />
 			</DropdownTrigger>
-			<DropdownMenu aria-label="Static Actions">
+			<DropdownMenu>
 				<DropdownItem key="userName">{user?.fullName}</DropdownItem>
 				<DropdownItem key="myBorrowedBooks">
 					<Link href={"/bookings/me"}>Moje požičané knihy</Link>
