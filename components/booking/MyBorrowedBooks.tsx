@@ -13,6 +13,7 @@ import {
 } from "@nextui-org/react";
 import { useMutation, useQuery } from "convex/react";
 import type { FC, Key } from "react";
+import Empty from "../shared/Empty";
 
 const MyBorrowedBooks: FC = () => {
 	const { user } = useUser();
@@ -54,6 +55,7 @@ const MyBorrowedBooks: FC = () => {
 				</CardHeader>
 				<CardBody>
 					<div className="grid gap-4">
+						{data && data.length === 0 && <Empty text="Prihlasení použivateľ nemá žiadne požičané knihy" />}
 						{data &&
 							data.map((item: BookingType) => {
 								return (
