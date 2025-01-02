@@ -26,7 +26,7 @@ const ProfileDropdown: FC = () => {
 			duration: 2000,
 			className: "bg-green-800 text-white font-bold text-xl",
 		});
-		router.push("/"); // Redirect the user to the homepage
+		router.push("/");
 		await signOut();
 	};
 
