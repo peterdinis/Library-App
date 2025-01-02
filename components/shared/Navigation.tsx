@@ -19,7 +19,7 @@ import ThemeToggle from "./ThemeToggle";
 
 const Navigation: FC = () => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	const {user, isLoaded } = useUser();
+	const { user, isLoaded } = useUser();
 
 	if (!isLoaded) {
 		return <CircularProgress />;
