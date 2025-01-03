@@ -1,5 +1,5 @@
 export type BookingType = {
-	_id: string;
+	_id?: string;
 	bookName: string;
 	from: string;
 	to: string;
