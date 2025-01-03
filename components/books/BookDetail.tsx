@@ -61,7 +61,7 @@ const BookDetail: FC = () => {
 	const bookDetail = useMemo(() => {
 		if (!data) return null;
 
-		const { book, category } = data;
+		const { book, category, author, publisher } = data;
 
 		return (
 			<div
@@ -104,7 +104,35 @@ const BookDetail: FC = () => {
 							{category.name}
 						</Link>
 					) : (
-						"Neznáma kategória"
+						""
+					)}
+				</div>
+
+				<div className="mb-4 mt-3 text-2xl font-light leading-relaxed dark:text-blue-50 text-gray-800">
+					<div className="font-bold">Knihu napísal: </div>
+					{author ? (
+						<Link
+							className="text-black dark:text-slate-50 font-bold text-xl"
+							href={`/authors/${author._id}`}
+						>
+							{author.name}
+						</Link>
+					) : (
+						""
+					)}
+				</div>
+
+				<div className="mb-4 mt-3 text-2xl font-light leading-relaxed dark:text-blue-50 text-gray-800">
+					<div className="font-bold">Kniha patrí pod vydavateľstvo: </div>
+					{publisher ? (
+						<Link
+							className="text-black dark:text-slate-50 font-bold text-xl"
+							href={`/publishers/${publisher._id}`}
+						>
+							{publisher.name}
+						</Link>
+					) : (
+						""
 					)}
 				</div>
 
