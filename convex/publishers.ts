@@ -2,6 +2,8 @@ import { paginationOptsValidator } from "convex/server";
 import { v } from "convex/values";
 import { format } from "date-fns";
 import { mutation, query } from "./_generated/server";
+import { Id } from "./_generated/dataModel";
+import {PublisherUpdates} from "../types/PublisherTypes"
 
 export const allSelectPublishers = query({
 	args: {},
@@ -82,76 +84,32 @@ export const addPublisher = mutation({
 	},
 });
 
-export const updatePublisher = mutation({
-	args: {
-		id: v.string(),
-		name: v.optional(v.string()),
-		description: v.optional(v.string()),
-		image: v.optional(v.string()),
-		city: v.optional(v.string()),
-		isActive: v.optional(v.boolean()),
-		storageId: v.optional(v.id("_storage")),
-	},
-	handler: async (ctx, args: {
-		id: string;
-		name?: string;
-		description?: string;
-		image?: string;
-		city?: string;
-		isActive?: boolean;
-		storageId?: string;
-	}) => {
-		const { id, storageId, ...updateData } = args;
-
-		if (!id) {
-			throw new Error("Missing publisher ID.");
+export const updatePublisher = mutation(
+	async (
+		{ db },
+		{ id, updates }: { id: Id<"publishers">; updates: PublisherUpdates },
+	) => {
+		if (!id || !updates) {
+			throw new Error("Missing publisher ID or updates.");
 		}
 
-		// If a new storage ID is provided, fetch the new image URL
-		if (storageId) {
-			const imageUrl = await ctx.storage.getUrl(storageId);
-			if (!imageUrl) {
-				throw new Error("Failed to get image URL from storage.");
-			}
-			updateData.image = imageUrl;
-		}
-
-		// Filter out undefined fields
-		const filteredUpdateData = Object.fromEntries(
-			Object.entries(updateData).filter(([, value]) => value !== undefined)
-		);
-
-		// Update the publisher
-		const updatedPublisher = await ctx.db.update("publishers", id, filteredUpdateData);
-
-		return updatedPublisher;
-	},
-});
-
-export const deletePublisher = mutation({
-	args: {
-		id: v.string(),
-	},
-	handler: async (ctx, args: { id: string }) => {
-		const { id } = args;
-
-		if (!id) {
-			throw new Error("Missing publisher ID.");
-		}
-
-		// Check if the publisher exists before deletion
-		const publisher = await ctx.db
-			.query("publishers")
-			.filter((q) => q.eq(q.field("_id"), id))
-			.first();
-
+		const publisher = await db.get(id);
 		if (!publisher) {
 			throw new Error("Publisher not found.");
 		}
 
-		// Delete the publisher
-		await ctx.db.delete("publishers", id);
-
-		return { success: true, message: "Publisher deleted successfully." };
+		await db.patch(id, updates);
+		return { message: "Publisher updated successfully!" };
 	},
-});
+);
+
+export const deleteCPublisher = mutation(
+	async ({ db }, { id }: { id: Id<"publishers"> }) => {
+		if (!id) {
+			throw new Error("Missing publisher ID.");
+		}
+
+		await db.delete(id);
+		return { message: "Publisher deleted successfully!" };
+	},
+);

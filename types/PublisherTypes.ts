@@ -7,3 +7,5 @@ export type PublisherType = {
 	isActive: boolean;
 	createdDate: string;
 };
+
+export type PublisherUpdates = Partial<Omit<PublisherType, "_id">>;
