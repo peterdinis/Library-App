@@ -32,7 +32,7 @@ const AdminPublishers: FC = () => {
 	const data = useQuery(api.publishers.allSelectPublishers);
 	const updatePublisher = useMutation(api.publishers.updatePublisher);
 	const deletePublisher = useMutation(api.publishers.deletePublisher);
-	const {toast} = useToast();
+	const { toast } = useToast();
 	const [page, setPage] = useState(1);
 	const [selectedPublisher, setSelectedPublisher] = useState<any | null>(null);
 	const [formData, setFormData] = useState({
@@ -81,8 +81,8 @@ const AdminPublishers: FC = () => {
 			toast({
 				title: "Vydavateľstvo bolo úpravené",
 				duration: 2000,
-				className: "bg-green-800 text-white font-bold text-xl"
-			})
+				className: "bg-green-800 text-white font-bold text-xl",
+			});
 			onClose();
 			setFormData({
 				name: "",
@@ -96,8 +96,8 @@ const AdminPublishers: FC = () => {
 			toast({
 				title: "Vydavateľstvo nebolo úpravené",
 				duration: 2000,
-				className: "bg-red-800 text-white font-bold text-xl"
-			})
+				className: "bg-red-800 text-white font-bold text-xl",
+			});
 		} finally {
 			setLoading(false); // Reset loading state
 		}
@@ -111,15 +111,15 @@ const AdminPublishers: FC = () => {
 			toast({
 				title: "Vydavateľstvo bolo zmazané",
 				duration: 2000,
-				className: "bg-green-800 text-white font-bold text-xl"
-			})
+				className: "bg-green-800 text-white font-bold text-xl",
+			});
 		} catch (error) {
 			setError("Chyba pri mazaní vydavateľa.");
 			toast({
 				title: "Vydavateľstvo nebolo zmazané",
 				duration: 2000,
-				className: "bg-red-800 text-white font-bold text-xl"
-			})
+				className: "bg-red-800 text-white font-bold text-xl",
+			});
 		} finally {
 			setLoading(false); // Reset loading state
 		}
