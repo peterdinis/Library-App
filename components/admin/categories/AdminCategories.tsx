@@ -3,6 +3,7 @@
 import Admin from "@/components/auth/Admin";
 import Header from "@/components/shared/Header";
 import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
 import {
 	Button,
 	CircularProgress,
@@ -15,13 +16,17 @@ import {
 	TableRow,
 	getKeyValue,
 } from "@nextui-org/react";
-import { useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { jsPDF } from "jspdf";
 import Link from "next/link";
 import { type FC, useMemo, useState } from "react";
+import { useToast } from "@/hooks/useToast";
 
 const AdminCategories: FC = () => {
 	const data = useQuery(api.categories.allSelectCategories);
+	const updateCategory = useMutation(api.categories.updateCategory);
+	const deleteCategory = useMutation(api.categories.deleteCategory);
+	const {toast} = useToast();
 	const [page, setPage] = useState(1);
 
 	const rowsPerPage = 4;
@@ -36,12 +41,31 @@ const AdminCategories: FC = () => {
 		return data?.slice(start, end);
 	}, [page, data]);
 
-	const handleEdit = (id: string) => {
-		console.log("Edit category with ID:", id);
+	const handleEdit = async (id: Id<"categories">) => {
+		try {
+			const updates = { name: "Updated Name", description: "Updated Description" };
+			await updateCategory({ id, updates });
+			alert("Category updated successfully!");
+		} catch (error) {
+			alert(`Error updating category: ${error}`);
+		}
 	};
 
-	const handleDelete = (id: string) => {
-		console.log("Delete category with ID:", id);
+	const handleDelete = async (id: Id<"categories">) => {
+		try {
+			await deleteCategory({ id });
+			toast({
+				title: "Kategória bola zmazaná",
+				duration: 2000,
+				className: "bg-green-800 text-xl font-bold text-white"
+			})
+		} catch (error) {
+			toast({
+				title: "Kategória nebola zmazaná",
+				duration: 2000,
+				className: "bg-red-800 text-xl font-bold text-white"
+			})
+		}
 	};
 
 	const generatePDF = () => {
