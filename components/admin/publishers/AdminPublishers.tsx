@@ -4,6 +4,7 @@ import Admin from "@/components/auth/Admin";
 import Header from "@/components/shared/Header";
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
+import { useToast } from "@/hooks/useToast";
 import type { PublisherUpdates } from "@/types/PublisherTypes";
 import {
 	Button,
@@ -31,7 +32,7 @@ const AdminPublishers: FC = () => {
 	const data = useQuery(api.publishers.allSelectPublishers);
 	const updatePublisher = useMutation(api.publishers.updatePublisher);
 	const deletePublisher = useMutation(api.publishers.deletePublisher);
-
+	const {toast} = useToast();
 	const [page, setPage] = useState(1);
 	const [selectedPublisher, setSelectedPublisher] = useState<any | null>(null);
 	const [formData, setFormData] = useState({
@@ -77,6 +78,11 @@ const AdminPublishers: FC = () => {
 				id: selectedPublisher._id as Id<"publishers">,
 				updates: formData as unknown as PublisherUpdates,
 			});
+			toast({
+				title: "Vydavateľstvo bolo úpravené",
+				duration: 2000,
+				className: "bg-green-800 text-white font-bold text-xl"
+			})
 			onClose();
 			setFormData({
 				name: "",
@@ -86,7 +92,12 @@ const AdminPublishers: FC = () => {
 				isActive: false,
 			}); // Reset form
 		} catch (error) {
-			setError("Chyba pri aktualizovaní vydavateľa."); // Set error message
+			setError("Chyba pri aktualizovaní vydavateľa.");
+			toast({
+				title: "Vydavateľstvo nebolo úpravené",
+				duration: 2000,
+				className: "bg-red-800 text-white font-bold text-xl"
+			})
 		} finally {
 			setLoading(false); // Reset loading state
 		}
@@ -97,8 +108,18 @@ const AdminPublishers: FC = () => {
 		setError(null); // Reset any previous error
 		try {
 			await deletePublisher({ id: id as Id<"publishers"> });
+			toast({
+				title: "Vydavateľstvo bolo zmazané",
+				duration: 2000,
+				className: "bg-green-800 text-white font-bold text-xl"
+			})
 		} catch (error) {
-			setError("Chyba pri mazaní vydavateľa."); // Set error message
+			setError("Chyba pri mazaní vydavateľa.");
+			toast({
+				title: "Vydavateľstvo nebolo zmazané",
+				duration: 2000,
+				className: "bg-red-800 text-white font-bold text-xl"
+			})
 		} finally {
 			setLoading(false); // Reset loading state
 		}
