@@ -62,7 +62,6 @@ const CreateAuthorForm: FC = () => {
 				onSubmit={handleSubmit}
 				className="flex flex-col gap-4 max-w-md mx-auto mt-6"
 			>
-				{/* Name */}
 				<div className="flex flex-col">
 					<label htmlFor="name" className="text-sm font-medium text-gray-700">
 						Meno
