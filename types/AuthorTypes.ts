@@ -1,3 +1,5 @@
+import { Author } from "next/dist/lib/metadata/types/metadata-types";
+
 export type AuthorType = {
 	name: string;
 	_id?: string;
@@ -8,3 +10,5 @@ export type AuthorType = {
 	bornDate: string;
 	deathDate?: string;
 };
+
+export type AuthorUpdates = Partial<Omit<Author, "_id">>;
