@@ -229,6 +229,7 @@ const BookDetail: FC = () => {
 						<Image
 							width={400}
 							height={400}
+							loading="lazy"
 							priority={true}
 							alt={data?.book?.name || "Obrázok knihy"}
 							className="w-full rounded-lg border object-cover object-center drop-shadow-md lg:w-1/2"

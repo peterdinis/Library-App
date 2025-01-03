@@ -74,6 +74,7 @@ const AuthorDetail: FC = () => {
 						<Image
 							width={400}
 							height={400}
+							loading="lazy"
 							priority={true}
 							alt={data && data?.name}
 							className="w-full rounded-lg border object-cover object-center drop-shadow-md lg:w-1/2"

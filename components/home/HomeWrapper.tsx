@@ -58,6 +58,7 @@ const Hero: FC = () => {
 						src={schollImage}
 						alt="Scholl homepage"
 						width={1200}
+						loading="lazy"
 						height={1200}
 						priority={true}
 						className="h-auto w-full max-w-xs sm:max-w-md md:max-w-full"

@@ -132,6 +132,7 @@ const AllPublishersWrapper: FC = () => {
 							</CardHeader>
 							<Image
 								removeWrapper
+								loading="lazy"
 								alt="Card background"
 								className="z-0 w-full h-full object-cover"
 								src={
