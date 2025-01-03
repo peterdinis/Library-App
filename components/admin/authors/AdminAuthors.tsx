@@ -1,7 +1,7 @@
-"use client";
-
 import Header from "@/components/shared/Header";
 import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
+import { useToast } from "@/hooks/useToast";
 import {
 	Button,
 	CircularProgress,
@@ -12,9 +12,8 @@ import {
 	TableColumn,
 	TableHeader,
 	TableRow,
-	getKeyValue,
 } from "@nextui-org/react";
-import { useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { jsPDF } from "jspdf";
 import Link from "next/link";
 import { type FC, useMemo, useState } from "react";
@@ -22,7 +21,7 @@ import { type FC, useMemo, useState } from "react";
 const AdminAuthors: FC = () => {
 	const data = useQuery(api.authors.allAuthorsSelect);
 	const [page, setPage] = useState(1);
-
+	const {toast} = useToast()
 	const rowsPerPage = 4;
 	const pages = useMemo(
 		() => (data && data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 1),
@@ -35,12 +34,48 @@ const AdminAuthors: FC = () => {
 		return data?.slice(start, end);
 	}, [page, data]);
 
-	const handleEdit = (id: string) => {
-		console.log("Edit author with ID:", id);
+	const updateAuthor = useMutation(api.authors.updateAuthor);
+	const deleteAuthor = useMutation(api.authors.deleteAuthor);
+
+	const handleEdit = async (id: string) => {
+		// Example: Update the author details
+		try {
+			await updateAuthor({
+				id,
+				updates: {
+					name: "New Name", // Modify based on your form input
+					description: "New description",
+				},
+			});
+			toast({
+				title: "Spisovateľ/ka bol/a upravený/á",
+				duration: 2000,
+				className: "bg-green-800 text-white font-bold text-xl"
+			})
+		} catch (error) {
+			toast({
+				title: "Spisovateľ/ka nebol/a upravený/á",
+				duration: 2000,
+				className: "bg-red-800 text-white font-bold text-xl"
+			})
+		}
 	};
 
-	const handleDelete = (id: string) => {
-		console.log("Delete author with ID:", id);
+	const handleDelete = async (id: Id<"authors">) => {
+		try {
+			await deleteAuthor({ id });
+			toast({
+				title: "Spisovateľ/ka bol/a zmazaný/á",
+				duration: 2000,
+				className: "bg-green-800 text-white font-bold text-xl"
+			})
+		} catch (error) {
+			toast({
+				title: "Spisovateľ/ka nebol/a zmazaný/á",
+				duration: 2000,
+				className: "bg-green-800 text-white font-bold text-xl"
+			})
+		}
 	};
 
 	const generatePDF = () => {
@@ -101,7 +136,7 @@ const AdminAuthors: FC = () => {
 				</TableHeader>
 				<TableBody items={items}>
 					{(item) => (
-						<TableRow key={item.name}>
+						<TableRow key={item._id}>
 							{(columnKey) => (
 								<TableCell>
 									{columnKey === "edit" ? (
@@ -121,13 +156,15 @@ const AdminAuthors: FC = () => {
 											Zmazať
 										</Button>
 									) : (
-										getKeyValue(item, columnKey)
+										// Cast columnKey to a valid key of the item type
+										item[columnKey as keyof typeof item] ?? "N/A"
 									)}
 								</TableCell>
 							)}
 						</TableRow>
 					)}
 				</TableBody>
+
 			</Table>
 		</div>
 	);

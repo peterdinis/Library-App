@@ -1,5 +1,6 @@
 import { paginationOptsValidator } from "convex/server";
 import { v } from "convex/values";
+import type { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
 
 export const allAuthorsSelect = query({
@@ -87,3 +88,67 @@ export const uploadAuthorImage = mutation(async (ctx, file) => {
 
 	return storageId;
 });
+
+export const updateAuthor = mutation({
+	args: {
+		id: v.string(), // ID of the author to update
+		updates: v.object({
+			name: v.optional(v.string()),
+			description: v.optional(v.string()),
+			storageId: v.optional(v.id("_storage")), // Optional image ID for updating the image
+			isActive: v.optional(v.boolean()),
+			litPeriod: v.optional(v.string()),
+			bornDate: v.optional(v.string()),
+			deathDate: v.optional(v.string()),
+		}),
+	},
+	handler: async (ctx, { id, updates }) => {
+		// Fetch the current author data
+		const author = await ctx.db
+			.query("authors")
+			.filter((q) => q.eq(q.field("_id"), id))
+			.first();
+
+		if (!author) {
+			throw new Error("Author not found.");
+		}
+
+		let imageUrl = author.image;
+
+		// If a new image is uploaded, get the new URL
+		if (updates.storageId) {
+			const storedImageUrl = await ctx.storage.getUrl(updates.storageId);
+
+			if (!storedImageUrl) {
+				throw new Error("Failed to get image URL from storage");
+			}
+
+			imageUrl = storedImageUrl;
+		}
+
+		const finalUpdates = {
+			name: updates.name ?? author.name,
+			description: updates.description ?? author.description,
+			image: imageUrl,
+			isActive: updates.isActive ?? author.isActive,
+			litPeriod: updates.litPeriod ?? author.litPeriod,
+			bornDate: updates.bornDate ?? author.bornDate,
+			deathDate: updates.deathDate ?? author.deathDate,
+		};
+
+		await ctx.db.patch(id as unknown as Id<"authors">, finalUpdates);
+
+		return { message: "Author updated successfully!" };
+	},
+});
+
+export const deleteAuthor = mutation(
+	async ({ db }, { id }: { id: Id<"authors"> }) => {
+		if (!id) {
+			throw new Error("Missing author ID.");
+		}
+
+		await db.delete(id);
+		return { message: "Author deleted successfully!" };
+	},
+);
