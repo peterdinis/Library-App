@@ -184,7 +184,7 @@ export const updateBook = mutation({
         };
 
         // Replace the existing book document with the updated fields
-        await ctx.db.replace("books", bookId, updatedBookFields);
+        await ctx.db.replace(bookId as unknown as Id<"books">, updatedBookFields);
 
         return { message: "Book updated successfully!" };
     },
