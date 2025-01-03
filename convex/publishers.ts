@@ -1,6 +1,8 @@
 import { paginationOptsValidator } from "convex/server";
 import { v } from "convex/values";
 import { format } from "date-fns";
+import type { PublisherUpdates } from "../types/PublisherTypes";
+import type { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
 
 export const allSelectPublishers = query({
@@ -81,3 +83,33 @@ export const addPublisher = mutation({
 		return publisherId;
 	},
 });
+
+export const updatePublisher = mutation(
+	async (
+		{ db },
+		{ id, updates }: { id: Id<"publishers">; updates: PublisherUpdates },
+	) => {
+		if (!id || !updates) {
+			throw new Error("Missing publisher ID or updates.");
+		}
+
+		const publisher = await db.get(id);
+		if (!publisher) {
+			throw new Error("Publisher not found.");
+		}
+
+		await db.patch(id, updates);
+		return { message: "Publisher updated successfully!" };
+	},
+);
+
+export const deletePublisher = mutation(
+	async ({ db }, { id }: { id: Id<"publishers"> }) => {
+		if (!id) {
+			throw new Error("Missing publisher ID.");
+		}
+
+		await db.delete(id);
+		return { message: "Publisher deleted successfully!" };
+	},
+);

@@ -3,9 +3,16 @@
 import Admin from "@/components/auth/Admin";
 import Header from "@/components/shared/Header";
 import { api } from "@/convex/_generated/api";
+import type { Id } from "@/convex/_generated/dataModel";
+import { useToast } from "@/hooks/useToast";
 import {
 	Button,
 	CircularProgress,
+	Input,
+	Modal,
+	ModalBody,
+	ModalFooter,
+	ModalHeader,
 	Pagination,
 	Table,
 	TableBody,
@@ -13,16 +20,22 @@ import {
 	TableColumn,
 	TableHeader,
 	TableRow,
-	getKeyValue,
 } from "@nextui-org/react";
-import { useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { jsPDF } from "jspdf";
 import Link from "next/link";
 import { type FC, useMemo, useState } from "react";
 
 const AdminCategories: FC = () => {
 	const data = useQuery(api.categories.allSelectCategories);
+	const updateCategory = useMutation(api.categories.updateCategory);
+	const deleteCategory = useMutation(api.categories.deleteCategory);
+	const { toast } = useToast();
 	const [page, setPage] = useState(1);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [currentCategoryId, setCurrentCategoryId] =
+		useState<Id<"categories"> | null>(null);
+	const [form, setForm] = useState({ name: "", description: "" });
 
 	const rowsPerPage = 4;
 	const pages = useMemo(
@@ -36,12 +49,57 @@ const AdminCategories: FC = () => {
 		return data?.slice(start, end);
 	}, [page, data]);
 
-	const handleEdit = (id: string) => {
-		console.log("Edit category with ID:", id);
+	const openEditModal = (
+		id: Id<"categories">,
+		name: string,
+		description: string,
+	) => {
+		setCurrentCategoryId(id);
+		setForm({ name, description });
+		setIsModalOpen(true);
 	};
 
-	const handleDelete = (id: string) => {
-		console.log("Delete category with ID:", id);
+	const closeEditModal = () => {
+		setIsModalOpen(false);
+		setCurrentCategoryId(null);
+		setForm({ name: "", description: "" });
+	};
+
+	const handleEditSubmit = async () => {
+		if (!currentCategoryId) return;
+
+		try {
+			await updateCategory({ id: currentCategoryId, updates: form });
+			toast({
+				title: "Kategória bola upravená",
+				duration: 2000,
+				className: "bg-green-800 text-xl font-bold text-white",
+			});
+			closeEditModal();
+		} catch (error) {
+			toast({
+				title: "Kategória nebola upravená",
+				duration: 2000,
+				className: "bg-red-800 text-xl font-bold text-white",
+			});
+		}
+	};
+
+	const handleDelete = async (id: Id<"categories">) => {
+		try {
+			await deleteCategory({ id });
+			toast({
+				title: "Kategória bola zmazaná",
+				duration: 2000,
+				className: "bg-green-800 text-xl font-bold text-white",
+			});
+		} catch (error) {
+			toast({
+				title: "Kategória nebola zmazaná",
+				duration: 2000,
+				className: "bg-red-800 text-xl font-bold text-white",
+			});
+		}
 	};
 
 	const generatePDF = () => {
@@ -57,7 +115,7 @@ const AdminCategories: FC = () => {
 				10,
 				y,
 			);
-			y += 10; // Move down for the next line
+			y += 10;
 		});
 
 		doc.save("categories.pdf");
@@ -108,33 +166,62 @@ const AdminCategories: FC = () => {
 					<TableBody items={items}>
 						{(item) => (
 							<TableRow key={item.name}>
-								{(columnKey) => (
-									<TableCell>
-										{columnKey === "edit" ? (
-											<Button
-												variant="faded"
-												color="primary"
-												onPress={() => handleEdit(item._id)}
-											>
-												Upraviť
-											</Button>
-										) : columnKey === "delete" ? (
-											<Button
-												variant="faded"
-												color="secondary"
-												onPress={() => handleDelete(item._id)}
-											>
-												Zmazať
-											</Button>
-										) : (
-											getKeyValue(item, columnKey)
-										)}
-									</TableCell>
-								)}
+								<TableCell>{item.name}</TableCell>
+								<TableCell>{item.description}</TableCell>
+								<TableCell>
+									<Button
+										variant="faded"
+										color="primary"
+										onPress={() =>
+											openEditModal(item._id, item.name, item.description)
+										}
+									>
+										Upraviť
+									</Button>
+								</TableCell>
+								<TableCell>
+									<Button
+										variant="faded"
+										color="secondary"
+										onPress={() => handleDelete(item._id)}
+									>
+										Zmazať
+									</Button>
+								</TableCell>
 							</TableRow>
 						)}
 					</TableBody>
 				</Table>
+
+				<Modal isOpen={isModalOpen} onClose={closeEditModal} closeButton>
+					<ModalHeader>
+						<h3>Upraviť kategóriu</h3>
+					</ModalHeader>
+					<ModalBody>
+						<Input
+							label="Názov"
+							value={form.name}
+							onChange={(e) =>
+								setForm((prev) => ({ ...prev, name: e.target.value }))
+							}
+						/>
+						<Input
+							label="Popis"
+							value={form.description}
+							onChange={(e) =>
+								setForm((prev) => ({ ...prev, description: e.target.value }))
+							}
+						/>
+					</ModalBody>
+					<ModalFooter>
+						<Button onPress={handleEditSubmit} color="primary">
+							Uložiť
+						</Button>
+						<Button onPress={closeEditModal} color="secondary" variant="flat">
+							Zrušiť
+						</Button>
+					</ModalFooter>
+				</Modal>
 			</div>
 		</Admin>
 	);
