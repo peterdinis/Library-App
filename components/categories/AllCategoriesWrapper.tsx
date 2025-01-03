@@ -13,11 +13,17 @@ import {
 } from "@nextui-org/react";
 import { usePaginatedQuery } from "convex/react";
 import { Search } from "lucide-react";
-import { type ChangeEvent, type FC, Suspense, useEffect, useState } from "react";
+import Link from "next/link";
+import {
+	type ChangeEvent,
+	type FC,
+	Suspense,
+	useEffect,
+	useState,
+} from "react";
 import AppPagination from "../shared/AppPagination";
 import Empty from "../shared/Empty";
 import Header from "../shared/Header";
-import Link from "next/link";
 
 const AllCategoriesWrapper: FC = () => {
 	const [currentPage, setCurrentPage] = useState(1);
@@ -38,8 +44,14 @@ const AllCategoriesWrapper: FC = () => {
 
 	const { results, status } = usePaginatedQuery(
 		api.categories.getPaginatedCategories,
-		{ paginationOpts: { page: currentPage, pageSize, searchTerm: debouncedSearchTerm } },
-		{ initialNumItems: pageSize }
+		{
+			paginationOpts: {
+				page: currentPage,
+				pageSize,
+				searchTerm: debouncedSearchTerm,
+			},
+		},
+		{ initialNumItems: pageSize },
 	);
 
 	const categories = results ?? [];

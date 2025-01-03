@@ -3,9 +3,16 @@
 import Admin from "@/components/auth/Admin";
 import Header from "@/components/shared/Header";
 import { api } from "@/convex/_generated/api";
+import type { Id } from "@/convex/_generated/dataModel";
+import type { PublisherUpdates } from "@/types/PublisherTypes";
 import {
 	Button,
 	CircularProgress,
+	Input,
+	Modal,
+	ModalBody,
+	ModalFooter,
+	ModalHeader,
 	Pagination,
 	Table,
 	TableBody,
@@ -13,16 +20,30 @@ import {
 	TableColumn,
 	TableHeader,
 	TableRow,
-	getKeyValue,
+	useDisclosure,
 } from "@nextui-org/react";
-import { useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { jsPDF } from "jspdf";
 import Link from "next/link";
 import { type FC, useMemo, useState } from "react";
 
 const AdminPublishers: FC = () => {
 	const data = useQuery(api.publishers.allSelectPublishers);
+	const updatePublisher = useMutation(api.publishers.updatePublisher);
+	const deletePublisher = useMutation(api.publishers.deletePublisher);
+
 	const [page, setPage] = useState(1);
+	const [selectedPublisher, setSelectedPublisher] = useState<any | null>(null);
+	const [formData, setFormData] = useState({
+		name: "",
+		description: "",
+		image: null as File | null,
+		city: "",
+		isActive: false,
+	});
+	const { isOpen, onOpen, onClose } = useDisclosure();
+	const [loading, setLoading] = useState(false); // Loading state for update and delete actions
+	const [, setError] = useState<string | null>(null); // Error state for handling errors
 
 	const rowsPerPage = 4;
 	const pages = useMemo(
@@ -36,12 +57,51 @@ const AdminPublishers: FC = () => {
 		return data?.slice(start, end);
 	}, [page, data]);
 
-	const handleEdit = (id: string) => {
-		console.log("Edit publisher with ID:", id);
+	const handleEdit = (publisher: any) => {
+		setSelectedPublisher(publisher);
+		setFormData({
+			name: publisher.name || "",
+			description: publisher.description || "",
+			image: publisher.image || "",
+			city: publisher.city || "",
+			isActive: publisher.isActive || false,
+		});
+		onOpen();
 	};
 
-	const handleDelete = (id: string) => {
-		console.log("Delete publisher with ID:", id);
+	const handleUpdate = async () => {
+		setLoading(true);
+		setError(null); // Reset any previous error
+		try {
+			await updatePublisher({
+				id: selectedPublisher._id as Id<"publishers">,
+				updates: formData as unknown as PublisherUpdates,
+			});
+			onClose();
+			setFormData({
+				name: "",
+				description: "",
+				image: null,
+				city: "",
+				isActive: false,
+			}); // Reset form
+		} catch (error) {
+			setError("Chyba pri aktualizovaní vydavateľa."); // Set error message
+		} finally {
+			setLoading(false); // Reset loading state
+		}
+	};
+
+	const handleDelete = async (id: string) => {
+		setLoading(true);
+		setError(null); // Reset any previous error
+		try {
+			await deletePublisher({ id: id as Id<"publishers"> });
+		} catch (error) {
+			setError("Chyba pri mazaní vydavateľa."); // Set error message
+		} finally {
+			setLoading(false); // Reset loading state
+		}
 	};
 
 	const generatePDF = () => {
@@ -107,34 +167,81 @@ const AdminPublishers: FC = () => {
 					</TableHeader>
 					<TableBody items={items}>
 						{(item) => (
-							<TableRow key={item.name}>
-								{(columnKey) => (
-									<TableCell>
-										{columnKey === "edit" ? (
-											<Button
-												variant="faded"
-												color="primary"
-												onPress={() => handleEdit(item._id)}
-											>
-												Upraviť
-											</Button>
-										) : columnKey === "delete" ? (
-											<Button
-												variant="faded"
-												color="secondary"
-												onPress={() => handleDelete(item._id)}
-											>
-												Zmazať
-											</Button>
-										) : (
-											getKeyValue(item, columnKey)
-										)}
-									</TableCell>
-								)}
+							<TableRow key={item._id}>
+								<TableCell>{item.name}</TableCell>
+								<TableCell>{item.description}</TableCell>
+								<TableCell>
+									<Button
+										variant="faded"
+										color="primary"
+										onPress={() => handleEdit(item)}
+									>
+										Upraviť
+									</Button>
+								</TableCell>
+								<TableCell>
+									<Button
+										variant="faded"
+										color="secondary"
+										onPress={() => handleDelete(item._id)}
+										disabled={loading} // Disable delete while loading
+									>
+										Zmazať
+									</Button>
+								</TableCell>
 							</TableRow>
 						)}
 					</TableBody>
 				</Table>
+
+				{/* Update Modal */}
+				<Modal isOpen={isOpen} onClose={onClose}>
+					<ModalHeader>Upraviť vydavateľa</ModalHeader>
+					<ModalBody>
+						<Input
+							label="Meno"
+							value={formData.name}
+							onChange={(e) =>
+								setFormData({ ...formData, name: e.target.value })
+							}
+						/>
+						<Input
+							label="Popis"
+							value={formData.description}
+							onChange={(e) =>
+								setFormData({ ...formData, description: e.target.value })
+							}
+						/>
+						<input
+							type="file"
+							accept="image/*"
+							onChange={(e) => {
+								const file = e.target.files?.[0] || null;
+								setFormData({ ...formData, image: file });
+							}}
+						/>
+						<Input
+							label="Mesto"
+							value={formData.city}
+							onChange={(e) =>
+								setFormData({ ...formData, city: e.target.value })
+							}
+						/>
+					</ModalBody>
+					<ModalFooter>
+						<Button variant="flat" color="secondary" onPress={onClose}>
+							Zrušiť
+						</Button>
+						<Button
+							variant="flat"
+							color="primary"
+							onPress={handleUpdate}
+							disabled={loading} // Disable button while loading
+						>
+							Upraviť
+						</Button>
+					</ModalFooter>
+				</Modal>
 			</div>
 		</Admin>
 	);
