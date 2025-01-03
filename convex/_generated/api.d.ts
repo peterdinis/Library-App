@@ -9,9 +9,9 @@
  */
 
 import type {
-  ApiFromModules,
-  FilterApi,
-  FunctionReference,
+	ApiFromModules,
+	FilterApi,
+	FunctionReference,
 } from "convex/server";
 import type * as authors from "../authors.js";
 import type * as bookings from "../bookings.js";
@@ -31,20 +31,20 @@ import type * as users from "../users.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
-  authors: typeof authors;
-  bookings: typeof bookings;
-  books: typeof books;
-  categories: typeof categories;
-  files: typeof files;
-  http: typeof http;
-  publishers: typeof publishers;
-  users: typeof users;
+	authors: typeof authors;
+	bookings: typeof bookings;
+	books: typeof books;
+	categories: typeof categories;
+	files: typeof files;
+	http: typeof http;
+	publishers: typeof publishers;
+	users: typeof users;
 }>;
 export declare const api: FilterApi<
-  typeof fullApi,
-  FunctionReference<any, "public">
+	typeof fullApi,
+	FunctionReference<any, "public">
 >;
 export declare const internal: FilterApi<
-  typeof fullApi,
-  FunctionReference<any, "internal">
+	typeof fullApi,
+	FunctionReference<any, "internal">
 >;
