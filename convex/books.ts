@@ -12,44 +12,46 @@ export const allSelectBooks = query({
 
 // Create book with optional image upload
 export const createBook = mutation({
-	args: {
-		name: v.string(),
-		description: v.string(),
-		storageId: v.optional(v.id("_storage")),
-		year: v.string(),
-		publisherId: v.id("publishers"),
-		authorId: v.id("authors"),
-		pages: v.number(),
-		isAvailable: v.boolean(),
-		categoryId: v.id("categories"),
-	},
-	handler: async (ctx, args) => {
-		let imageUrl = "";
+    args: {
+        name: v.string(),
+        description: v.string(),
+        storageId: v.optional(v.id("_storage")),
+        year: v.string(),
+        publisherId: v.id("publishers"),
+        authorId: v.id("authors"),
+        pages: v.number(),
+        isAvailable: v.boolean(),
+        categoryId: v.id("categories"),
+    },
+    handler: async (ctx, args) => {
+        let imageUrl = "";
 
-		if (args.storageId) {
-			const storedImageUrl = await ctx.storage.getUrl(args.storageId);
+        // If the image has been uploaded, retrieve its URL
+        if (args.storageId) {
+            const storedImageUrl = await ctx.storage.getUrl(args.storageId);
 
-			if (!storedImageUrl) {
-				throw new Error("Failed to get image URL from storage");
-			}
+            if (!storedImageUrl) {
+                throw new Error("Failed to get image URL from storage");
+            }
 
-			imageUrl = storedImageUrl;
-		}
+            imageUrl = storedImageUrl;
+        }
 
-		const bookId = await ctx.db.insert("books", {
-			name: args.name,
-			description: args.description,
-			image: imageUrl,
-			year: Number(args.year),
-			publisherId: args.publisherId,
-			authorId: args.authorId,
-			pages: args.pages,
-			isAvailable: args.isAvailable,
-			categoryId: args.categoryId,
-		});
+        // Insert the book into the database
+        const bookId = await ctx.db.insert("books", {
+            name: args.name,
+            description: args.description,
+            image: imageUrl,
+            year: Number(args.year),
+            publisherId: args.publisherId,
+            authorId: args.authorId,
+            pages: args.pages,
+            isAvailable: args.isAvailable,
+            categoryId: args.categoryId,
+        });
 
-		return { bookId, message: "Book created successfully!" };
-	},
+        return { bookId, message: "Book created successfully!" };
+    },
 });
 
 // Upload book image

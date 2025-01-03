@@ -140,7 +140,7 @@ export const updateAuthor = mutation({
 
 		return { message: "Author updated successfully!" };
 	},
-});
+}); 
 
 export const deleteAuthor = mutation(
 	async ({ db }, { id }: { id: Id<"authors"> }) => {
