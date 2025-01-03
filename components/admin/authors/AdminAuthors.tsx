@@ -1,6 +1,7 @@
 import Header from "@/components/shared/Header";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import { useToast } from "@/hooks/useToast";
 import {
 	Button,
 	CircularProgress,
@@ -11,7 +12,6 @@ import {
 	TableColumn,
 	TableHeader,
 	TableRow,
-	getKeyValue,
 } from "@nextui-org/react";
 import { useMutation, useQuery } from "convex/react";
 import { jsPDF } from "jspdf";
@@ -21,7 +21,7 @@ import { type FC, useMemo, useState } from "react";
 const AdminAuthors: FC = () => {
 	const data = useQuery(api.authors.allAuthorsSelect);
 	const [page, setPage] = useState(1);
-
+	const {toast} = useToast()
 	const rowsPerPage = 4;
 	const pages = useMemo(
 		() => (data && data.length > 0 ? Math.ceil(data.length / rowsPerPage) : 1),
@@ -38,34 +38,43 @@ const AdminAuthors: FC = () => {
 	const deleteAuthor = useMutation(api.authors.deleteAuthor);
 
 	const handleEdit = async (id: string) => {
-		// This would ideally show a form to edit the author
-		console.log("Edit author with ID:", id);
-
 		// Example: Update the author details
 		try {
-			const updatedAuthor = await updateAuthor({
+			await updateAuthor({
 				id,
 				updates: {
 					name: "New Name", // Modify based on your form input
 					description: "New description",
 				},
 			});
-			console.log(updatedAuthor.message);
+			toast({
+				title: "Spisovateľ/ka bol/a upravený/á",
+				duration: 2000,
+				className: "bg-green-800 text-white font-bold text-xl"
+			})
 		} catch (error) {
-			console.error("Error updating author:", error);
+			toast({
+				title: "Spisovateľ/ka nebol/a upravený/á",
+				duration: 2000,
+				className: "bg-red-800 text-white font-bold text-xl"
+			})
 		}
 	};
 
 	const handleDelete = async (id: Id<"authors">) => {
-		// Confirmation prompt before deleting
-		const confirmDelete = window.confirm("Are you sure you want to delete this author?");
-		if (confirmDelete) {
-			try {
-				const response = await deleteAuthor({ id });
-				console.log(response.message);
-			} catch (error) {
-				console.error("Error deleting author:", error);
-			}
+		try {
+			await deleteAuthor({ id });
+			toast({
+				title: "Spisovateľ/ka bol/a zmazaný/á",
+				duration: 2000,
+				className: "bg-green-800 text-white font-bold text-xl"
+			})
+		} catch (error) {
+			toast({
+				title: "Spisovateľ/ka nebol/a zmazaný/á",
+				duration: 2000,
+				className: "bg-green-800 text-white font-bold text-xl"
+			})
 		}
 	};
 
