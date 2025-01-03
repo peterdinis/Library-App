@@ -1,7 +1,6 @@
-"use client";
-
 import Header from "@/components/shared/Header";
 import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
 import {
 	Button,
 	CircularProgress,
@@ -14,7 +13,7 @@ import {
 	TableRow,
 	getKeyValue,
 } from "@nextui-org/react";
-import { useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { jsPDF } from "jspdf";
 import Link from "next/link";
 import { type FC, useMemo, useState } from "react";
@@ -35,12 +34,39 @@ const AdminAuthors: FC = () => {
 		return data?.slice(start, end);
 	}, [page, data]);
 
-	const handleEdit = (id: string) => {
+	const updateAuthor = useMutation(api.authors.updateAuthor);
+	const deleteAuthor = useMutation(api.authors.deleteAuthor);
+
+	const handleEdit = async (id: string) => {
+		// This would ideally show a form to edit the author
 		console.log("Edit author with ID:", id);
+
+		// Example: Update the author details
+		try {
+			const updatedAuthor = await updateAuthor({
+				id,
+				updates: {
+					name: "New Name", // Modify based on your form input
+					description: "New description",
+				},
+			});
+			console.log(updatedAuthor.message);
+		} catch (error) {
+			console.error("Error updating author:", error);
+		}
 	};
 
-	const handleDelete = (id: string) => {
-		console.log("Delete author with ID:", id);
+	const handleDelete = async (id: Id<"authors">) => {
+		// Confirmation prompt before deleting
+		const confirmDelete = window.confirm("Are you sure you want to delete this author?");
+		if (confirmDelete) {
+			try {
+				const response = await deleteAuthor({ id });
+				console.log(response.message);
+			} catch (error) {
+				console.error("Error deleting author:", error);
+			}
+		}
 	};
 
 	const generatePDF = () => {
@@ -101,7 +127,7 @@ const AdminAuthors: FC = () => {
 				</TableHeader>
 				<TableBody items={items}>
 					{(item) => (
-						<TableRow key={item.name}>
+						<TableRow key={item._id}>
 							{(columnKey) => (
 								<TableCell>
 									{columnKey === "edit" ? (
@@ -121,13 +147,15 @@ const AdminAuthors: FC = () => {
 											Zmazať
 										</Button>
 									) : (
-										getKeyValue(item, columnKey)
+										// Cast columnKey to a valid key of the item type
+										item[columnKey as keyof typeof item] ?? "N/A"
 									)}
 								</TableCell>
 							)}
 						</TableRow>
 					)}
 				</TableBody>
+
 			</Table>
 		</div>
 	);
