@@ -3,10 +3,16 @@
 import Admin from "@/components/auth/Admin";
 import Header from "@/components/shared/Header";
 import { api } from "@/convex/_generated/api";
-import { Id } from "@/convex/_generated/dataModel";
+import type { Id } from "@/convex/_generated/dataModel";
+import { useToast } from "@/hooks/useToast";
 import {
 	Button,
 	CircularProgress,
+	Input,
+	Modal,
+	ModalBody,
+	ModalFooter,
+	ModalHeader,
 	Pagination,
 	Table,
 	TableBody,
@@ -14,17 +20,11 @@ import {
 	TableColumn,
 	TableHeader,
 	TableRow,
-	Modal,
-	Input,
-	ModalHeader,
-	ModalBody,
-	ModalFooter,
 } from "@nextui-org/react";
 import { useMutation, useQuery } from "convex/react";
 import { jsPDF } from "jspdf";
 import Link from "next/link";
 import { type FC, useMemo, useState } from "react";
-import { useToast } from "@/hooks/useToast";
 
 const AdminCategories: FC = () => {
 	const data = useQuery(api.categories.allSelectCategories);
@@ -33,7 +33,8 @@ const AdminCategories: FC = () => {
 	const { toast } = useToast();
 	const [page, setPage] = useState(1);
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [currentCategoryId, setCurrentCategoryId] = useState<Id<"categories"> | null>(null);
+	const [currentCategoryId, setCurrentCategoryId] =
+		useState<Id<"categories"> | null>(null);
 	const [form, setForm] = useState({ name: "", description: "" });
 
 	const rowsPerPage = 4;
@@ -48,7 +49,11 @@ const AdminCategories: FC = () => {
 		return data?.slice(start, end);
 	}, [page, data]);
 
-	const openEditModal = (id: Id<"categories">, name: string, description: string) => {
+	const openEditModal = (
+		id: Id<"categories">,
+		name: string,
+		description: string,
+	) => {
 		setCurrentCategoryId(id);
 		setForm({ name, description });
 		setIsModalOpen(true);
@@ -167,7 +172,9 @@ const AdminCategories: FC = () => {
 									<Button
 										variant="faded"
 										color="primary"
-										onPress={() => openEditModal(item._id, item.name, item.description)}
+										onPress={() =>
+											openEditModal(item._id, item.name, item.description)
+										}
 									>
 										Upraviť
 									</Button>
@@ -194,12 +201,16 @@ const AdminCategories: FC = () => {
 						<Input
 							label="Názov"
 							value={form.name}
-							onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
+							onChange={(e) =>
+								setForm((prev) => ({ ...prev, name: e.target.value }))
+							}
 						/>
 						<Input
 							label="Popis"
 							value={form.description}
-							onChange={(e) => setForm((prev) => ({ ...prev, description: e.target.value }))}
+							onChange={(e) =>
+								setForm((prev) => ({ ...prev, description: e.target.value }))
+							}
 						/>
 					</ModalBody>
 					<ModalFooter>

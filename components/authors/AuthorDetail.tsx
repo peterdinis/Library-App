@@ -5,11 +5,11 @@ import type { Id } from "@/convex/_generated/dataModel";
 import { Button, CircularProgress } from "@nextui-org/react";
 import { useQuery } from "convex/react";
 import Image from "next/image";
+import Link from "next/link";
 import { useParams } from "next/navigation";
 import { type FC, type Key, useMemo } from "react";
 import Empty from "../shared/Empty";
 import Header from "../shared/Header";
-import Link from "next/link";
 
 const AuthorDetail: FC = () => {
 	const { id } = useParams();
@@ -50,9 +50,7 @@ const AuthorDetail: FC = () => {
 				<hr />
 				<div className="mt-5">
 					<Button variant="faded" color="primary">
-						<Link href="/authors">
-							Návrat na všetkych spisovateľov
-						</Link>
+						<Link href="/authors">Návrat na všetkych spisovateľov</Link>
 					</Button>
 				</div>
 			</div>

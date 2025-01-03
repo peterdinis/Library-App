@@ -3,7 +3,8 @@
 import Admin from "@/components/auth/Admin";
 import Header from "@/components/shared/Header";
 import { api } from "@/convex/_generated/api";
-import { Id } from "@/convex/_generated/dataModel";
+import type { Id } from "@/convex/_generated/dataModel";
+import type { PublisherUpdates } from "@/types/PublisherTypes";
 import {
 	Button,
 	CircularProgress,
@@ -24,7 +25,7 @@ import {
 import { useMutation, useQuery } from "convex/react";
 import { jsPDF } from "jspdf";
 import Link from "next/link";
-import { FC, useMemo, useState } from "react";
+import { type FC, useMemo, useState } from "react";
 
 const AdminPublishers: FC = () => {
 	const data = useQuery(api.publishers.allSelectPublishers);
@@ -36,11 +37,13 @@ const AdminPublishers: FC = () => {
 	const [formData, setFormData] = useState({
 		name: "",
 		description: "",
-		image: "",
+		image: null as File | null,
 		city: "",
 		isActive: false,
 	});
 	const { isOpen, onOpen, onClose } = useDisclosure();
+	const [loading, setLoading] = useState(false); // Loading state for update and delete actions
+	const [, setError] = useState<string | null>(null); // Error state for handling errors
 
 	const rowsPerPage = 4;
 	const pages = useMemo(
@@ -67,22 +70,37 @@ const AdminPublishers: FC = () => {
 	};
 
 	const handleUpdate = async () => {
+		setLoading(true);
+		setError(null); // Reset any previous error
 		try {
 			await updatePublisher({
 				id: selectedPublisher._id as Id<"publishers">,
-				updates: formData,
+				updates: formData as unknown as PublisherUpdates,
 			});
 			onClose();
+			setFormData({
+				name: "",
+				description: "",
+				image: null,
+				city: "",
+				isActive: false,
+			}); // Reset form
 		} catch (error) {
-			console.error("Error updating publisher:", error);
+			setError("Chyba pri aktualizovaní vydavateľa."); // Set error message
+		} finally {
+			setLoading(false); // Reset loading state
 		}
 	};
 
 	const handleDelete = async (id: string) => {
+		setLoading(true);
+		setError(null); // Reset any previous error
 		try {
 			await deletePublisher({ id: id as Id<"publishers"> });
 		} catch (error) {
-			console.error("Error deleting publisher:", error);
+			setError("Chyba pri mazaní vydavateľa."); // Set error message
+		} finally {
+			setLoading(false); // Reset loading state
 		}
 	};
 
@@ -166,6 +184,7 @@ const AdminPublishers: FC = () => {
 										variant="faded"
 										color="secondary"
 										onPress={() => handleDelete(item._id)}
+										disabled={loading} // Disable delete while loading
 									>
 										Zmazať
 									</Button>
@@ -182,7 +201,9 @@ const AdminPublishers: FC = () => {
 						<Input
 							label="Meno"
 							value={formData.name}
-							onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+							onChange={(e) =>
+								setFormData({ ...formData, name: e.target.value })
+							}
 						/>
 						<Input
 							label="Popis"
@@ -191,24 +212,32 @@ const AdminPublishers: FC = () => {
 								setFormData({ ...formData, description: e.target.value })
 							}
 						/>
-						<Input
-							label="Obrázok"
-							value={formData.image}
-							onChange={(e) =>
-								setFormData({ ...formData, image: e.target.value })
-							}
+						<input
+							type="file"
+							accept="image/*"
+							onChange={(e) => {
+								const file = e.target.files?.[0] || null;
+								setFormData({ ...formData, image: file });
+							}}
 						/>
 						<Input
 							label="Mesto"
 							value={formData.city}
-							onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+							onChange={(e) =>
+								setFormData({ ...formData, city: e.target.value })
+							}
 						/>
 					</ModalBody>
 					<ModalFooter>
 						<Button variant="flat" color="secondary" onPress={onClose}>
 							Zrušiť
 						</Button>
-						<Button variant="flat" color="primary" onPress={handleUpdate}>
+						<Button
+							variant="flat"
+							color="primary"
+							onPress={handleUpdate}
+							disabled={loading} // Disable button while loading
+						>
 							Upraviť
 						</Button>
 					</ModalFooter>

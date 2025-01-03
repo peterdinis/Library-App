@@ -46,8 +46,8 @@ const MyBorrowedBooks: FC = () => {
 	};
 
 	if (!data) return <CircularProgress />;
- 
-	return ( 
+
+	return (
 		<div className="space-y-6">
 			<Card>
 				<CardHeader>
@@ -55,7 +55,9 @@ const MyBorrowedBooks: FC = () => {
 				</CardHeader>
 				<CardBody>
 					<div className="grid gap-4">
-						{data && data.length === 0 && <Empty text="Prihlasení použivateľ nemá žiadne požičané knihy" />}
+						{data && data.length === 0 && (
+							<Empty text="Prihlasení použivateľ nemá žiadne požičané knihy" />
+						)}
 						{data &&
 							data.map((item: BookingType) => {
 								return (

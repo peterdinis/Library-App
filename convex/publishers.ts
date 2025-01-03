@@ -1,9 +1,9 @@
 import { paginationOptsValidator } from "convex/server";
 import { v } from "convex/values";
 import { format } from "date-fns";
+import type { PublisherUpdates } from "../types/PublisherTypes";
+import type { Id } from "./_generated/dataModel";
 import { mutation, query } from "./_generated/server";
-import { Id } from "./_generated/dataModel";
-import {PublisherUpdates} from "../types/PublisherTypes"
 
 export const allSelectPublishers = query({
 	args: {},

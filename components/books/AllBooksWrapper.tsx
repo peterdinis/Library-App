@@ -72,7 +72,9 @@ const AllBooksWrapper: FC = () => {
 
 	// Filter books based on availability and search term
 	const filteredBooks = results?.filter(
-		(book) => book.isAvailable && book.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+		(book) =>
+			book.isAvailable &&
+			book.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase()),
 	);
 
 	return (
