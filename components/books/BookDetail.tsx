@@ -15,6 +15,7 @@ import { Controller, useForm } from "react-hook-form";
 import BookingBookModal from "../booking/BookingBookModal";
 import Empty from "../shared/Empty";
 import Header from "../shared/Header";
+import LongText from "../shared/LongText";
 
 const BookDetail: FC = () => {
 	const { id } = useParams();
@@ -80,7 +81,7 @@ const BookDetail: FC = () => {
 
 				<div className="mb-4 mt-3 text-2xl font-light leading-relaxed dark:text-blue-50 text-gray-800">
 					<div className="font-bold">Krátky popis: </div>
-					<span>{book?.description || "Neexistujúci popis"}</span>
+					<span><LongText text={data?.book?.description!} maxLength={30} /></span>
 				</div>
 
 				<div className="mb-4 mt-3 text-2xl font-light leading-relaxed dark:text-blue-50 text-gray-800">
@@ -136,7 +137,6 @@ const BookDetail: FC = () => {
 									onSubmit={handleSubmit(onSubmit)}
 									className="flex flex-col gap-4 mt-5"
 								>
-									{/* Názov knihy */}
 									<Controller
 										name="bookName"
 										control={control}
@@ -145,7 +145,6 @@ const BookDetail: FC = () => {
 											<Input {...field} label="Názov knihy" />
 										)}
 									/>
-									{/* Dátum 'Od' */}
 									<Controller
 										name="from"
 										control={control}
@@ -154,7 +153,6 @@ const BookDetail: FC = () => {
 											<Input {...field} label="Od" type="date" />
 										)}
 									/>
-									{/* Dátum 'Do' */}
 									<Controller
 										name="to"
 										control={control}
@@ -163,7 +161,6 @@ const BookDetail: FC = () => {
 											<Input {...field} label="Do" type="date" />
 										)}
 									/>
-									{/* Meno používateľa */}
 									<Controller
 										name="userName"
 										control={control}
@@ -172,7 +169,6 @@ const BookDetail: FC = () => {
 											<Input {...field} label="Meno používateľa" />
 										)}
 									/>
-									{/* Priezvisko používateľa */}
 									<Controller
 										name="userLastName"
 										control={control}
@@ -181,7 +177,6 @@ const BookDetail: FC = () => {
 											<Input {...field} label="Priezvisko používateľa" />
 										)}
 									/>
-									{/* Email používateľa */}
 									<Controller
 										name="userEmail"
 										control={control}
@@ -197,13 +192,11 @@ const BookDetail: FC = () => {
 											<Input {...field} label="Email" type="email" />
 										)}
 									/>
-									{/* Trieda používateľa */}
 									<Controller
 										name="userClass"
 										control={control}
 										render={({ field }) => <Input {...field} label="Trieda" />}
 									/>
-									{/* Odoslať formulár */}
 									<Button type="submit" className="bg-blue-500">
 										Vytvoriť objednávku
 									</Button>
@@ -213,6 +206,7 @@ const BookDetail: FC = () => {
 						closeBtnName="Zatvoriť"
 					/>
 				</div>
+				<hr className="mt-5" />
 			</div>
 		);
 	}, [data, id]);
