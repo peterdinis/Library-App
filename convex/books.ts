@@ -133,3 +133,59 @@ export const getPaginatedBooks = query({
 		return books;
 	},
 });
+// Update book
+export const updateBook = mutation({
+    args: {
+        id: v.id("books"), // The ID of the book to update (Convex expects Id<"books">)
+        name: v.optional(v.string()), // Optional fields to update
+        description: v.optional(v.string()),
+        storageId: v.optional(v.id("_storage")),
+        year: v.optional(v.string()),
+        publisherId: v.optional(v.id("publishers")),
+        authorId: v.optional(v.id("authors")),
+        pages: v.optional(v.number()),
+        isAvailable: v.optional(v.boolean()),
+        categoryId: v.optional(v.id("categories")),
+    },
+    handler: async (ctx, args) => {
+        // Ensure the id is of the correct type (Id<"books">)
+        const bookId: Id<"books"> = args.id;
+
+        // Retrieve the book by ID
+        const book = await ctx.db.query("books").filter(q => q.eq(q.field("_id"), bookId)).first();
+        if (!book) {
+            throw new Error("Book not found.");
+        }
+
+        let imageUrl = book.image; // Retain the existing image URL unless a new one is uploaded
+
+        // If the image has been uploaded, retrieve its URL
+        if (args.storageId) {
+            const storedImageUrl = await ctx.storage.getUrl(args.storageId);
+
+            if (!storedImageUrl) {
+                throw new Error("Failed to get image URL from storage");
+            }
+
+            imageUrl = storedImageUrl; // Update the image URL
+        }
+
+        // Prepare the updated fields, overriding only the fields that were provided
+        const updatedBookFields = {
+            name: args.name ?? book.name,
+            description: args.description ?? book.description,
+            image: imageUrl,
+            year: args.year ? Number(args.year) : book.year,
+            publisherId: args.publisherId ?? book.publisherId,
+            authorId: args.authorId ?? book.authorId,
+            pages: args.pages ?? book.pages,
+            isAvailable: args.isAvailable ?? book.isAvailable,
+            categoryId: args.categoryId ?? book.categoryId,
+        };
+
+        // Replace the existing book document with the updated fields
+        await ctx.db.replace("books", bookId, updatedBookFields);
+
+        return { message: "Book updated successfully!" };
+    },
+});
