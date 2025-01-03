@@ -72,7 +72,7 @@ const PublisherDetail: FC = () => {
 
 	return (
 		<>
-			<Header text="Detail" />
+			<Header text="Detail vydavateľstva" />
 			<section className="body-font mt-2 overflow-hidden dark:bg-background bg-white text-gray-700">
 				<div className="container mx-auto px-5 py-12">
 					<div className="mx-auto flex flex-wrap lg:w-4/5">
