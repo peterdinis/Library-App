@@ -103,7 +103,7 @@ export const updatePublisher = mutation(
 	},
 );
 
-export const deleteCPublisher = mutation(
+export const deletePublisher = mutation(
 	async ({ db }, { id }: { id: Id<"publishers"> }) => {
 		if (!id) {
 			throw new Error("Missing publisher ID.");

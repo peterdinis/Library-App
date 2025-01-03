@@ -3,9 +3,15 @@
 import Admin from "@/components/auth/Admin";
 import Header from "@/components/shared/Header";
 import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
 import {
 	Button,
 	CircularProgress,
+	Input,
+	Modal,
+	ModalBody,
+	ModalFooter,
+	ModalHeader,
 	Pagination,
 	Table,
 	TableBody,
@@ -13,16 +19,28 @@ import {
 	TableColumn,
 	TableHeader,
 	TableRow,
-	getKeyValue,
+	useDisclosure,
 } from "@nextui-org/react";
-import { useQuery } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { jsPDF } from "jspdf";
 import Link from "next/link";
-import { type FC, useMemo, useState } from "react";
+import { FC, useMemo, useState } from "react";
 
 const AdminPublishers: FC = () => {
 	const data = useQuery(api.publishers.allSelectPublishers);
+	const updatePublisher = useMutation(api.publishers.updatePublisher);
+	const deletePublisher = useMutation(api.publishers.deletePublisher);
+
 	const [page, setPage] = useState(1);
+	const [selectedPublisher, setSelectedPublisher] = useState<any | null>(null);
+	const [formData, setFormData] = useState({
+		name: "",
+		description: "",
+		image: "",
+		city: "",
+		isActive: false,
+	});
+	const { isOpen, onOpen, onClose } = useDisclosure();
 
 	const rowsPerPage = 4;
 	const pages = useMemo(
@@ -36,12 +54,36 @@ const AdminPublishers: FC = () => {
 		return data?.slice(start, end);
 	}, [page, data]);
 
-	const handleEdit = (id: string) => {
-		console.log("Edit publisher with ID:", id);
+	const handleEdit = (publisher: any) => {
+		setSelectedPublisher(publisher);
+		setFormData({
+			name: publisher.name || "",
+			description: publisher.description || "",
+			image: publisher.image || "",
+			city: publisher.city || "",
+			isActive: publisher.isActive || false,
+		});
+		onOpen();
 	};
 
-	const handleDelete = (id: string) => {
-		console.log("Delete publisher with ID:", id);
+	const handleUpdate = async () => {
+		try {
+			await updatePublisher({
+				id: selectedPublisher._id as Id<"publishers">,
+				updates: formData,
+			});
+			onClose();
+		} catch (error) {
+			console.error("Error updating publisher:", error);
+		}
+	};
+
+	const handleDelete = async (id: string) => {
+		try {
+			await deletePublisher({ id: id as Id<"publishers"> });
+		} catch (error) {
+			console.error("Error deleting publisher:", error);
+		}
 	};
 
 	const generatePDF = () => {
@@ -107,34 +149,70 @@ const AdminPublishers: FC = () => {
 					</TableHeader>
 					<TableBody items={items}>
 						{(item) => (
-							<TableRow key={item.name}>
-								{(columnKey) => (
-									<TableCell>
-										{columnKey === "edit" ? (
-											<Button
-												variant="faded"
-												color="primary"
-												onPress={() => handleEdit(item._id)}
-											>
-												Upraviť
-											</Button>
-										) : columnKey === "delete" ? (
-											<Button
-												variant="faded"
-												color="secondary"
-												onPress={() => handleDelete(item._id)}
-											>
-												Zmazať
-											</Button>
-										) : (
-											getKeyValue(item, columnKey)
-										)}
-									</TableCell>
-								)}
+							<TableRow key={item._id}>
+								<TableCell>{item.name}</TableCell>
+								<TableCell>{item.description}</TableCell>
+								<TableCell>
+									<Button
+										variant="faded"
+										color="primary"
+										onPress={() => handleEdit(item)}
+									>
+										Upraviť
+									</Button>
+								</TableCell>
+								<TableCell>
+									<Button
+										variant="faded"
+										color="secondary"
+										onPress={() => handleDelete(item._id)}
+									>
+										Zmazať
+									</Button>
+								</TableCell>
 							</TableRow>
 						)}
 					</TableBody>
 				</Table>
+
+				{/* Update Modal */}
+				<Modal isOpen={isOpen} onClose={onClose}>
+					<ModalHeader>Upraviť vydavateľa</ModalHeader>
+					<ModalBody>
+						<Input
+							label="Meno"
+							value={formData.name}
+							onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+						/>
+						<Input
+							label="Popis"
+							value={formData.description}
+							onChange={(e) =>
+								setFormData({ ...formData, description: e.target.value })
+							}
+						/>
+						<Input
+							label="Obrázok"
+							value={formData.image}
+							onChange={(e) =>
+								setFormData({ ...formData, image: e.target.value })
+							}
+						/>
+						<Input
+							label="Mesto"
+							value={formData.city}
+							onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+						/>
+					</ModalBody>
+					<ModalFooter>
+						<Button variant="flat" color="secondary" onPress={onClose}>
+							Zrušiť
+						</Button>
+						<Button variant="flat" color="primary" onPress={handleUpdate}>
+							Upraviť
+						</Button>
+					</ModalFooter>
+				</Modal>
 			</div>
 		</Admin>
 	);
