@@ -1,3 +1,6 @@
+"use client"
+
+import Link from "next/link";
 import { FC } from "react";
 import { Avatar, AvatarFallback } from "~/components/ui/avatar";
 import {
@@ -8,8 +11,20 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
+import { useToast } from "~/hooks/use-toast";
 
 const ProfileDropdown: FC = () => {
+  
+  const {toast} = useToast();
+
+  const logoutFromApp = () => {
+    toast({
+      title: "Odhlásenie bolo úspešné",
+      duration: 2000,
+      className: "bg-green-800 text-white font-bold text-xl"
+    })
+  }
+  
   return (
     <>
       <DropdownMenu>
@@ -21,10 +36,15 @@ const ProfileDropdown: FC = () => {
         <DropdownMenuContent>
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Billing</DropdownMenuItem>
-          <DropdownMenuItem>Team</DropdownMenuItem>
-          <DropdownMenuItem>Subscription</DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href={"/profile"}>Profil</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href="/books/borrowed">Požičané knihy</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={logoutFromApp}>
+            Odhlásenie
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </>
