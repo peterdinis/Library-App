@@ -8,7 +8,6 @@ import {
   Home,
   Info,
   Search,
-  User,
 } from "lucide-react";
 import {
   Sheet,
@@ -30,6 +29,7 @@ import { Input } from "~/components/ui/input";
 import { cn } from "~/lib/utils";
 import ModeToggle from "./ModeToggle";
 import ProfileDropdown from "../auth/ProfileDropdown";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
 
 const navigationItems = [
   {
@@ -129,16 +129,23 @@ const Header: React.FC = () => {
                             : "text-muted-foreground group-hover:text-primary",
                         )}
                       />
-                      <span
-                        className={cn(
-                          "font-medium",
-                          pathname === item.href
-                            ? "text-primary"
-                            : "text-muted-foreground group-hover:text-primary",
-                        )}
-                      >
-                        {item.title}
-                      </span>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger>{item.title}</TooltipTrigger>
+                          <TooltipContent>
+                            <span
+                              className={cn(
+                                "font-medium",
+                                pathname === item.href
+                                  ? "text-primary"
+                                  : "text-muted-foreground group-hover:text-primary",
+                              )}
+                            >
+                              {item.title}
+                            </span>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                     </div>
                     <span className="text-xs text-muted-foreground">
                       {item.description}
@@ -263,7 +270,7 @@ const Header: React.FC = () => {
             <ProfileDropdown />
           </Button>
           <div className="ml-3">
-          <ModeToggle />
+            <ModeToggle />
           </div>
         </div>
       </div>
