@@ -1,12 +1,21 @@
 import { ReactNode } from "react";
+import Header from "../_components/shared/Header";
+import { ThemeProvider } from "../_components/shared/providers/theme-provider";
 
 const Layout = async ({ children }: { children: ReactNode }) => {
-
   return (
-    <main className="root-container">
-      <div className="mx-auto max-w-7xl">
-        <div className="mt-20 pb-20">{children}</div>
-      </div>
+    <main>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        <div>
+          <Header />
+          <div>{children}</div>
+        </div>
+      </ThemeProvider>
     </main>
   );
 };
