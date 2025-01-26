@@ -17,7 +17,7 @@ const Footer: FC = () => {
 
 	return (
 		<motion.footer
-			className="relative mt-4 dark:bg-background"
+			className="relative dark:bg-background mt-3"
 			variants={footerVariants}
 			initial="hidden"
 			animate="visible"

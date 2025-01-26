@@ -2,7 +2,7 @@
 
 import { FC } from "react";
 import { motion } from "framer-motion"
-import { ArrowRight, Search, BookOpen, Users, GraduationCap } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import Features from "./Features";
 import { Card } from "~/components/ui/card";
@@ -10,7 +10,7 @@ import Footer from "./Footer";
 
 const HomeWrapper: FC = () => {
     return (
-        <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-zinc-900 dark:to-stone-800">
+        <div className="min-h-max bg-gradient-to-b from-blue-50 to-white dark:from-zinc-900 dark:to-stone-800">
             <main>
                 <section className="relative overflow-hidden">
                     <div className="absolute inset-0 bg-grid-slate-100 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
@@ -59,7 +59,6 @@ const HomeWrapper: FC = () => {
                 </section>
                 <Features />
             </main>
-            <Footer />
         </div>
     )
 }
