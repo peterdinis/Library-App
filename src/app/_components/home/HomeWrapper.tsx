@@ -2,9 +2,33 @@
 
 import { FC } from "react";
 import { motion } from "framer-motion"
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Search, BookOpen, Users, GraduationCap } from "lucide-react";
 import { Button } from "~/components/ui/button";
+import Features from "./Features";
 import { Card } from "~/components/ui/card";
+
+const features = [
+    {
+        title: "Smart Search",
+        description: "Find any book instantly with our AI-powered search engine.",
+        icon: Search,
+    },
+    {
+        title: "Digital Card",
+        description: "Manage your library account and borrowings digitally.",
+        icon: BookOpen,
+    },
+    {
+        title: "Study Groups",
+        description: "Create or join virtual study groups with classmates.",
+        icon: Users,
+    },
+    {
+        title: "Resources",
+        description: "Access curriculum-aligned educational materials.",
+        icon: GraduationCap,
+    },
+]
 
 const HomeWrapper: FC = () => {
     return (
@@ -25,7 +49,7 @@ const HomeWrapper: FC = () => {
                                     🎉 <span className="ml-2">Vitajte v školskej knižnici</span>
                                 </div>
                                 <h1 className="text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-violet-600">
-                                    SPŠT 
+                                    SPŠT
                                     <br />
                                     Knižnica
                                 </h1>
@@ -56,6 +80,7 @@ const HomeWrapper: FC = () => {
                         </div>
                     </div>
                 </section>
+                <Features />
             </main>
         </div>
     )
