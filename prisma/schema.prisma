@@ -1,78 +1,55 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "sqlite"
-    // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-    // Further reading:
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
-    url      = env("DATABASE_URL")
-}
-
-enum Status {
-  PENDING
-  APPROVED
-  REJECTED
-}
-
-enum Role {
-  USER
-  ADMIN
-}
-
-enum BorrowStatus {
-  BORROWED
-  RETURNED
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id              String   @id @default(uuid()) @unique
-  fullName        String
-  email           String   @unique
-  universityId    Int      @unique
-  password        String
-  universityCard  String
-  status          Status   @default(PENDING)
-  role            Role     @default(USER)
+  id               String   @id @default(uuid()) @unique
+  fullName         String
+  email            String   @unique
+  universityId     Int      @unique
+  password         String
+  universityCard   String
+  status           String   @default("PENDING") // Replaces Status enum
+  role             String   @default("USER") // Replaces Role enum
   lastActivityDate DateTime @default(now())
-  createdAt       DateTime @default(now())
-
-  borrowRecords   BorrowRecord[]
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt()
+  borrowRecords    BorrowRecord[]
 }
 
 model Book {
-  id             String   @id @default(uuid()) @unique
-  title          String
-  author         String
-  genre          String
-  rating         Int
-  coverUrl       String
-  coverColor     String
-  description    String
-  totalCopies    Int      @default(1)
-  availableCopies Int     @default(0)
-  videoUrl       String
-  summary        String
-  createdAt      DateTime @default(now())
-
-  borrowRecords  BorrowRecord[]
+  id              String   @id @default(uuid()) @unique
+  title           String
+  author          String
+  genre           String
+  rating          Int
+  coverUrl        String
+  coverColor      String
+  description     String
+  totalCopies     Int      @default(1)
+  availableCopies Int      @default(0)
+  videoUrl        String
+  summary         String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt()
+  borrowRecords   BorrowRecord[]
 }
 
 model BorrowRecord {
-  id         String      @id @default(uuid()) @unique
+  id         String   @id @default(uuid()) @unique
   userId     String
   bookId     String
-  borrowDate DateTime    @default(now())
+  borrowDate DateTime @default(now())
   dueDate    DateTime
   returnDate DateTime?
-  status     BorrowStatus @default(BORROWED)
-  createdAt  DateTime    @default(now())
-
-  user       User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  book       Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  status     String   @default("BORROWED") // Replaces BorrowStatus enum
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt()
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book       Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
 }
