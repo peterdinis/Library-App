@@ -1,73 +1,65 @@
 "use client";
 
-import { FC } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
-import { Button } from "~/components/ui/button";
-import Features from "./Features";
-import { Card } from "~/components/ui/card";
-import schollImage from "../../../public/img/main.png";
 import Image from "next/image";
+import Link from "next/link";
+import type { FC } from "react";
+import { Button } from "~/components/ui/button";
+import schollImage from "../../../public/img/main.png"
+import Features from "./Features";
 
-const HomeWrapper: FC = () => {
-  return (
-    <div className="min-h-max bg-gradient-to-b from-blue-50 to-white dark:from-zinc-900 dark:to-stone-800">
-      <main>
-        <section className="relative overflow-hidden">
-          <div className="bg-grid-slate-100 absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
-          <div className="container relative pb-32 pt-20 md:pb-40 md:pt-32">
-            <div className="grid items-center gap-10 lg:grid-cols-[1fr_500px]">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="flex flex-col gap-6"
-              >
-                <div className="inline-flex items-center rounded-full border px-3 py-1 text-sm">
-                  🎉 <span className="ml-2">Vitajte v školskej knižnici</span>
-                </div>
-                <h1 className="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-4xl font-bold tracking-tight text-transparent sm:text-6xl lg:text-7xl">
-                  SPŠT
-                  <br />
-                  Knižnica
-                </h1>
-                <p className="max-w-[600px] text-lg text-muted-foreground md:text-xl">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Fugit, eos.
-                </p>
-                <div className="flex flex-col gap-4 sm:flex-row">
-                  <Button size="lg" variant={"default"}>
-                    Všetky knihy
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                  <Button size="lg" variant="outline">
-                    Návrat na školskú stránku
-                  </Button>
-                </div>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.4 }}
-                className="relative mx-auto w-full max-w-[500px] lg:mr-0"
-              >
-                <Card className="relative overflow-hidden border-2">
-                  <Image
-                    src={schollImage}
-                    alt="Scholl homepage"
-                    width={1200}
-                    height={1200}
-                    priority={true}
-                  />
-                </Card>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-        <Features />
-      </main>
-    </div>
-  );
+const Hero: FC = () => {
+	const homepageVariants = {
+		hidden: { opacity: 0, scale: 0.9 },
+		visible: {
+			opacity: 1,
+			scale: 1,
+			transition: {
+				duration: 0.5,
+			},
+		},
+	};
+
+	return (
+		<motion.div
+			variants={homepageVariants}
+			className="container relative z-0 mx-auto px-4 xl:px-0"
+		>
+			<div className="flex flex-col-reverse md:flex-row">
+				<div className="md:w-3/5 md:pt-24 lg:py-32">
+					<h1 className="text-heading-color dark:text-blue-50  text-center text-3xl font-black leading-tight tracking-tighter text-gray-900 md:w-7/12 md:text-left lg:text-6xl xl:text-8xl">
+						SPŠT Knižnica
+					</h1>
+					<h2 className="prose py-4 text-center text-lg dark:text-blue-50  text-gray-700 md:w-8/12 md:py-8 md:text-left lg:text-2xl">
+						<q>Knihy sú jedinečne prenosné kúzlo</q> - Stephen King
+					</h2>
+					<div className="flex justify-center sm:block md:block">
+						<Button size="lg" variant={"default"}>
+							<Link href="/books">Zobraziť všekty knihy</Link>
+						</Button>
+						<Button
+							className="ml-4"
+							size="lg"
+							variant={"destructive"}
+						>
+							<Link href="https://www.spsbj.sk/">
+								Školská stránka
+							</Link>
+						</Button>
+					</div>
+				</div>
+				<div className="m-auto flex h-64 items-center overflow-hidden sm:w-2/5 md:h-auto">
+					<Image
+						src={schollImage}
+						alt="Scholl homepage"
+						width={1200}
+						height={1200}
+						priority={true}
+					/>
+				</div>
+			</div>
+		</motion.div>
+	);
 };
 
-export default HomeWrapper;
+export default Hero;
