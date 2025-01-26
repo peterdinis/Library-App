@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import Header from "../_components/shared/Header";
 import { ThemeProvider } from "../_components/shared/providers/theme-provider";
+import { Toaster } from "~/components/ui/toaster";
 
 const Layout = async ({ children }: { children: ReactNode }) => {
   return (
@@ -11,9 +12,10 @@ const Layout = async ({ children }: { children: ReactNode }) => {
         enableSystem
         disableTransitionOnChange
       >
+        <Header />
         <div>
-          <Header />
-          <div>{children}</div>
+          {children}
+          <Toaster />
         </div>
       </ThemeProvider>
     </main>

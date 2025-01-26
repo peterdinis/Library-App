@@ -3,6 +3,7 @@ import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import { ThemeProvider } from "./_components/shared/providers/theme-provider";
+import { Toaster } from "~/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "SPŠT Knižnica",
@@ -22,8 +23,9 @@ export default function RootLayout({
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
-          >
+          > 
             {children}
+            <Toaster />
           </ThemeProvider>
         </TRPCReactProvider>
       </body>

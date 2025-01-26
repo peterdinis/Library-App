@@ -29,6 +29,7 @@ import { DialogHeader } from "~/components/ui/dialog";
 import { Input } from "~/components/ui/input";
 import { cn } from "~/lib/utils";
 import ModeToggle from "./ModeToggle";
+import ProfileDropdown from "../auth/ProfileDropdown";
 
 const navigationItems = [
   {
@@ -257,12 +258,13 @@ const Header: React.FC = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="h-9 w-9 hover:bg-accent lg:h-10 lg:w-10"
+            className="h-9 w-9 hover:bg-accent lg:h-10 lg:w-10 ml-3"
           >
-            <User className="h-4 w-4" />
-            <span className="sr-only">Account</span>
+            <ProfileDropdown />
           </Button>
+          <div className="ml-3">
           <ModeToggle />
+          </div>
         </div>
       </div>
     </header>
