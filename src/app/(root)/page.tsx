@@ -8,7 +8,7 @@ const Homepage: NextPage = () => {
       <HomeWrapper />
       <Footer />
     </>
-  )
+  );
 };
 
 export default Homepage;

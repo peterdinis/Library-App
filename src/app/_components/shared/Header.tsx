@@ -3,13 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Book,
-  Home,
-  Info,
-  Search,
-  User,
-} from "lucide-react";
+import { Book, Home, Info, Search, User } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -258,12 +252,12 @@ const Header: React.FC = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="h-9 w-9 hover:bg-accent lg:h-10 lg:w-10 ml-3"
+            className="ml-3 h-9 w-9 hover:bg-accent lg:h-10 lg:w-10"
           >
             <ProfileDropdown />
           </Button>
           <div className="ml-3">
-          <ModeToggle />
+            <ModeToggle />
           </div>
         </div>
       </div>
