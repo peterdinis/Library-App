@@ -6,35 +6,12 @@ import { ArrowRight, Search, BookOpen, Users, GraduationCap } from "lucide-react
 import { Button } from "~/components/ui/button";
 import Features from "./Features";
 import { Card } from "~/components/ui/card";
-
-const features = [
-    {
-        title: "Smart Search",
-        description: "Find any book instantly with our AI-powered search engine.",
-        icon: Search,
-    },
-    {
-        title: "Digital Card",
-        description: "Manage your library account and borrowings digitally.",
-        icon: BookOpen,
-    },
-    {
-        title: "Study Groups",
-        description: "Create or join virtual study groups with classmates.",
-        icon: Users,
-    },
-    {
-        title: "Resources",
-        description: "Access curriculum-aligned educational materials.",
-        icon: GraduationCap,
-    },
-]
+import Footer from "./Footer";
 
 const HomeWrapper: FC = () => {
     return (
         <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-zinc-900 dark:to-stone-800">
             <main>
-                {/* Hero Section */}
                 <section className="relative overflow-hidden">
                     <div className="absolute inset-0 bg-grid-slate-100 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
                     <div className="container relative pt-20 pb-32 md:pt-32 md:pb-40">
@@ -82,6 +59,7 @@ const HomeWrapper: FC = () => {
                 </section>
                 <Features />
             </main>
+            <Footer />
         </div>
     )
 }
