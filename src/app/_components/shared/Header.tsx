@@ -5,10 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Book,
-  GraduationCap,
   Home,
   Info,
-  LayoutGrid,
   Search,
   User,
 } from "lucide-react";
@@ -34,34 +32,22 @@ import ModeToggle from "./ModeToggle";
 
 const navigationItems = [
   {
-    title: "Home",
+    title: "Domov",
     href: "/",
     icon: Home,
-    description: "Return to the main page",
+    description: "Hlavná stránka",
   },
   {
-    title: "Books",
+    title: "Všetky knihy",
     href: "/books",
     icon: Book,
-    description: "Browse our collection of books",
+    description: "Zoznam dostupných kníh v knižnici",
   },
   {
-    title: "Resources",
-    href: "/resources",
-    icon: LayoutGrid,
-    description: "Access study materials and resources",
-  },
-  {
-    title: "Academic Support",
-    href: "/academic-support",
-    icon: GraduationCap,
-    description: "Get help with your studies",
-  },
-  {
-    title: "About",
+    title: "O Knižnici",
     href: "/about",
     icon: Info,
-    description: "Learn about our library",
+    description: "Prečo bola applikácia vytvorená",
   },
 ];
 
