@@ -1,9 +1,8 @@
 "use client";
 
-import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Book, Home, Info, Search, User } from "lucide-react";
+import { Book, Home, Info } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -11,19 +10,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "~/components/ui/sheet";
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogTitle,
-} from "~/components/ui/dialog";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Button } from "~/components/ui/button";
-import { DialogHeader } from "~/components/ui/dialog";
-import { Input } from "~/components/ui/input";
 import { cn } from "~/lib/utils";
 import ModeToggle from "./ModeToggle";
 import ProfileDropdown from "../auth/ProfileDropdown";
+import QuickSearch from "./QuickSearch";
+import { FC, useState } from "react";
 
 const navigationItems = [
   {
@@ -46,10 +39,9 @@ const navigationItems = [
   },
 ];
 
-const Header: React.FC = () => {
+const Header: FC = () => {
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [isSearchOpen, setIsSearchOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -192,63 +184,7 @@ const Header: React.FC = () => {
           ))}
         </nav>
         <div className="flex items-center gap-1">
-          <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
-            <DialogTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-9 w-9 hover:bg-accent lg:h-10 lg:w-10"
-              >
-                <Search className="h-4 w-4" />
-                <span className="sr-only">Search</span>
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px]">
-              <DialogHeader>
-                <DialogTitle>Search Library</DialogTitle>
-              </DialogHeader>
-              <div className="flex gap-2 py-4">
-                <Input
-                  placeholder="Search books, resources..."
-                  className="flex-1"
-                />
-                <Button>Search</Button>
-              </div>
-              <div className="space-y-4 divide-y">
-                <div className="space-y-2">
-                  <h4 className="text-sm font-medium">Recent Searches</h4>
-                  <div className="flex flex-wrap gap-2">
-                    <Button variant="secondary" size="sm">
-                      Programming Books
-                    </Button>
-                    <Button variant="secondary" size="sm">
-                      Science Fiction
-                    </Button>
-                    <Button variant="secondary" size="sm">
-                      Research Papers
-                    </Button>
-                  </div>
-                </div>
-                <div className="space-y-2 pt-4">
-                  <h4 className="text-sm font-medium">Popular Categories</h4>
-                  <div className="flex flex-wrap gap-2">
-                    <Button variant="outline" size="sm">
-                      Academic
-                    </Button>
-                    <Button variant="outline" size="sm">
-                      Fiction
-                    </Button>
-                    <Button variant="outline" size="sm">
-                      Non-Fiction
-                    </Button>
-                    <Button variant="outline" size="sm">
-                      Reference
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </DialogContent>
-          </Dialog>
+          <QuickSearch />
           <Button
             variant="ghost"
             size="icon"
