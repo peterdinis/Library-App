@@ -4,13 +4,15 @@ import { FC } from "react";
 import { motion } from "framer-motion"
 import { ArrowRight } from "lucide-react";
 import { Button } from "~/components/ui/button";
+import Features from "./Features";
 import { Card } from "~/components/ui/card";
+import schollImage from "../../../public/img/main.png";
+import Image from "next/image";
 
 const HomeWrapper: FC = () => {
     return (
-        <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-zinc-900 dark:to-stone-800">
+        <div className="min-h-max bg-gradient-to-b from-blue-50 to-white dark:from-zinc-900 dark:to-stone-800">
             <main>
-                {/* Hero Section */}
                 <section className="relative overflow-hidden">
                     <div className="absolute inset-0 bg-grid-slate-100 [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
                     <div className="container relative pt-20 pb-32 md:pt-32 md:pb-40">
@@ -25,7 +27,7 @@ const HomeWrapper: FC = () => {
                                     🎉 <span className="ml-2">Vitajte v školskej knižnici</span>
                                 </div>
                                 <h1 className="text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-violet-600">
-                                    SPŠT 
+                                    SPŠT
                                     <br />
                                     Knižnica
                                 </h1>
@@ -48,14 +50,20 @@ const HomeWrapper: FC = () => {
                                 transition={{ delay: 0.4 }}
                                 className="relative mx-auto lg:mr-0 w-full max-w-[500px]"
                             >
-                                <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 opacity-30 blur" />
                                 <Card className="relative overflow-hidden border-2">
-                                    image
+                                    <Image
+                                        src={schollImage}
+                                        alt="Scholl homepage"
+                                        width={1200}
+                                        height={1200}
+                                        priority={true}
+                                    />
                                 </Card>
                             </motion.div>
                         </div>
                     </div>
                 </section>
+                <Features />
             </main>
         </div>
     )
