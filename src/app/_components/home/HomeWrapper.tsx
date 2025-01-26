@@ -6,7 +6,8 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import Features from "./Features";
 import { Card } from "~/components/ui/card";
-import Footer from "./Footer";
+import schollImage from "../../../public/img/main.png";
+import Image from "next/image";
 
 const HomeWrapper: FC = () => {
     return (
@@ -49,9 +50,14 @@ const HomeWrapper: FC = () => {
                                 transition={{ delay: 0.4 }}
                                 className="relative mx-auto lg:mr-0 w-full max-w-[500px]"
                             >
-                                <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-blue-500 to-violet-500 opacity-30 blur" />
                                 <Card className="relative overflow-hidden border-2">
-                                    image
+                                    <Image
+                                        src={schollImage}
+                                        alt="Scholl homepage"
+                                        width={1200}
+                                        height={1200}
+                                        priority={true}
+                                    />
                                 </Card>
                             </motion.div>
                         </div>
