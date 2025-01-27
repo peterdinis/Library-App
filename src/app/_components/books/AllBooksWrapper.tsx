@@ -1,9 +1,8 @@
 "use client"
 
-import {useState, useMemo, FC } from 'react';
-import { Search, BookOpen, Filter } from 'lucide-react';
+import React, { useState, useMemo, FC } from 'react';
+import { Search, BookOpen, SlidersHorizontal, X } from 'lucide-react';
 
-// Sample book data (in real app, this would come from an API/database)
 const initialBooks = [
   {
     id: 1,
@@ -42,6 +41,7 @@ const AllBooksWrapper: FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedGenre, setSelectedGenre] = useState("All");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const filteredBooks = useMemo(() => {
     return books.filter(book => {
@@ -55,40 +55,52 @@ const AllBooksWrapper: FC = () => {
   }, [books, searchQuery, selectedCategory, selectedGenre]);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
-        {/* Search and Filters */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <div className="flex flex-col md:flex-row md:items-center gap-4">
-            {/* Search */}
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="text"
-                placeholder="Search books by title or author..."
-                className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+      {/* Sidebar Overlay */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <div className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
+        isSidebarOpen ? 'translate-x-0' : 'translate-x-full'
+      }`}>
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-xl font-semibold text-gray-900">Filters</h2>
+            <button
+              onClick={() => setIsSidebarOpen(false)}
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            >
+              <X className="w-5 h-5 text-gray-500" />
+            </button>
+          </div>
+
+          <div className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Category
+              </label>
+              <select
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+              >
+                {categories.map(category => (
+                  <option key={category} value={category}>{category}</option>
+                ))}
+              </select>
             </div>
 
-            {/* Filters */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="relative">
-                <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-                <select
-                  className="pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                >
-                  {categories.map(category => (
-                    <option key={category} value={category}>{category}</option>
-                  ))}
-                </select>
-              </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Genre
+              </label>
               <select
-                className="pl-4 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 value={selectedGenre}
                 onChange={(e) => setSelectedGenre(e.target.value)}
               >
@@ -97,30 +109,105 @@ const AllBooksWrapper: FC = () => {
                 ))}
               </select>
             </div>
+
+            {(selectedCategory !== "All" || selectedGenre !== "All") && (
+              <button
+                onClick={() => {
+                  setSelectedCategory("All");
+                  setSelectedGenre("All");
+                }}
+                className="w-full px-4 py-2 text-sm text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
+              >
+                Clear Filters
+              </button>
+            )}
           </div>
         </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <div className="flex items-center justify-center mb-4">
+            <BookOpen className="w-12 h-12 text-indigo-600" />
+          </div>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">School Library</h1>
+          <p className="text-lg text-gray-600">Discover your next favorite book</p>
+        </div>
+
+        {/* Search and Filter Toggle */}
+        <div className="max-w-3xl mx-auto mb-12 flex gap-4">
+          <div className="flex-1 backdrop-blur-sm bg-white/80 rounded-2xl shadow-xl">
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Search books by title or author..."
+                className="w-full pl-12 pr-4 py-3 bg-transparent border-0 rounded-xl focus:ring-2 focus:ring-indigo-500"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+          </div>
+          
+          <button
+            onClick={() => setIsSidebarOpen(true)}
+            className="flex items-center gap-2 px-4 py-3 bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl hover:bg-white/90 transition-colors"
+          >
+            <SlidersHorizontal className="w-5 h-5" />
+            <span className="hidden sm:inline">Filters</span>
+            {(selectedCategory !== "All" || selectedGenre !== "All") && (
+              <span className="inline-flex items-center justify-center w-5 h-5 text-xs font-medium text-white bg-indigo-600 rounded-full">
+                {(selectedCategory !== "All" ? 1 : 0) + (selectedGenre !== "All" ? 1 : 0)}
+              </span>
+            )}
+          </button>
+        </div>
+
+        {/* Active Filters */}
+        {(selectedCategory !== "All" || selectedGenre !== "All") && (
+          <div className="max-w-3xl mx-auto mb-8 flex flex-wrap gap-2">
+            {selectedCategory !== "All" && (
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-indigo-100 text-indigo-800">
+                {selectedCategory}
+              </span>
+            )}
+            {selectedGenre !== "All" && (
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-indigo-100 text-indigo-800">
+                {selectedGenre}
+              </span>
+            )}
+          </div>
+        )}
 
         {/* Books Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {filteredBooks.map(book => (
-            <div key={book.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-              <img
-                src={book.coverUrl}
-                alt={book.title}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="font-semibold text-lg mb-1">{book.title}</h3>
+            <div key={book.id} className="group">
+              <div className="relative aspect-[3/4] mb-4 rounded-2xl overflow-hidden shadow-lg group-hover:shadow-2xl transition-all duration-300">
+                <img
+                  src={book.coverUrl}
+                  alt={book.title}
+                  className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
+                      book.available 
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}>
+                      {book.available ? 'Available' : 'Checked Out'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="px-2">
+                <h3 className="font-semibold text-lg text-gray-900 mb-1 line-clamp-1">{book.title}</h3>
                 <p className="text-gray-600 text-sm mb-2">by {book.author}</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-500">{book.genre}</span>
-                  <span className={`px-2 py-1 rounded-full text-xs ${
-                    book.available 
-                      ? 'bg-green-100 text-green-800'
-                      : 'bg-red-100 text-red-800'
-                  }`}>
-                    {book.available ? 'Available' : 'Checked Out'}
-                  </span>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-indigo-600 font-medium">{book.genre}</span>
+                  <span className="text-sm text-gray-500">{book.category}</span>
                 </div>
               </div>
             </div>
@@ -128,11 +215,11 @@ const AllBooksWrapper: FC = () => {
         </div>
 
         {filteredBooks.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">No books found matching your criteria</p>
+          <div className="text-center py-16">
+            <p className="text-xl text-gray-500">No books found matching your criteria</p>
           </div>
         )}
-      </main>
+      </div>
     </div>
   );
 }
