@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useMemo, FC } from 'react';
-import { Search, BookOpen, SlidersHorizontal, X } from 'lucide-react';
+import { Search, BookOpen, SlidersHorizontal, X, Ghost } from 'lucide-react';
 
 const initialBooks = [
   {
@@ -55,7 +55,7 @@ const AllBooksWrapper: FC = () => {
   }, [books, searchQuery, selectedCategory, selectedGenre]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+    <div className="min-h-screen dark:bg-background bg-gradient-to-br from-indigo-50 via-white to-purple-50">
       {/* Sidebar Overlay */}
       {isSidebarOpen && (
         <div 
@@ -65,12 +65,12 @@ const AllBooksWrapper: FC = () => {
       )}
 
       {/* Sidebar */}
-      <div className={`fixed top-0 right-0 h-full w-80 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
+      <div className={`fixed top-0 right-0 h-full w-80 bg-white dark:bg-background shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
         isSidebarOpen ? 'translate-x-0' : 'translate-x-full'
       }`}>
         <div className="p-6">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-xl font-semibold text-gray-900">Filters</h2>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-sky-50">Filters</h2>
             <button
               onClick={() => setIsSidebarOpen(false)}
               className="p-2 hover:bg-gray-100 rounded-full transition-colors"
@@ -81,11 +81,11 @@ const AllBooksWrapper: FC = () => {
 
           <div className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium dark:text-sky-50 text-gray-700 mb-2">
                 Category
               </label>
               <select
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-4 py-3 dark:bg-stone-400 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
               >
@@ -96,11 +96,11 @@ const AllBooksWrapper: FC = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-sky-50 mb-2">
                 Genre
               </label>
               <select
-                className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-4 py-3 bg-gray-50 dark:bg-stone-400 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 value={selectedGenre}
                 onChange={(e) => setSelectedGenre(e.target.value)}
               >
@@ -116,7 +116,7 @@ const AllBooksWrapper: FC = () => {
                   setSelectedCategory("All");
                   setSelectedGenre("All");
                 }}
-                className="w-full px-4 py-2 text-sm text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
+                className="w-full px-4 py-2 text-sm dark:text-sky-200 text-indigo-600 rounded-lg transition-colors"
               >
                 Clear Filters
               </button>
@@ -216,7 +216,9 @@ const AllBooksWrapper: FC = () => {
 
         {filteredBooks.length === 0 && (
           <div className="text-center py-16">
-            <p className="text-xl text-gray-500">No books found matching your criteria</p>
+            <p className="text-xl text-gray-500">
+                <Ghost className='animate-bounce w-8 h-8' /> Žiadne knihy neboli nájdené
+            </p>
           </div>
         )}
       </div>
