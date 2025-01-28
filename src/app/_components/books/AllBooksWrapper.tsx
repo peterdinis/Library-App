@@ -73,7 +73,7 @@ const AllBooksWrapper: FC = () => {
             <h2 className="text-xl font-semibold text-gray-900 dark:text-sky-50">Filters</h2>
             <button
               onClick={() => setIsSidebarOpen(false)}
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              className="p-2 rounded-full transition-colors"
             >
               <X className="w-5 h-5 text-gray-500" />
             </button>
