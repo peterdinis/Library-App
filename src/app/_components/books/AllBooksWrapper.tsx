@@ -70,10 +70,10 @@ const AllBooksWrapper: FC = () => {
       }`}>
         <div className="p-6">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-sky-50">Filters</h2>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-sky-50">Filtre</h2>
             <button
               onClick={() => setIsSidebarOpen(false)}
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              className="p-2 rounded-full transition-colors"
             >
               <X className="w-5 h-5 text-gray-500" />
             </button>
@@ -82,7 +82,7 @@ const AllBooksWrapper: FC = () => {
           <div className="space-y-6">
             <div>
               <label className="block text-sm font-medium dark:text-sky-50 text-gray-700 mb-2">
-                Category
+                Kategória
               </label>
               <select
                 className="w-full px-4 py-3 dark:bg-stone-600 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
@@ -97,7 +97,7 @@ const AllBooksWrapper: FC = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-sky-50 mb-2">
-                Genre
+                Žáner
               </label>
               <select
                 className="w-full px-4 py-3 bg-gray-50 dark:bg-stone-600 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
@@ -118,7 +118,7 @@ const AllBooksWrapper: FC = () => {
                 }}
                 className="w-full px-4 py-2 text-sm dark:text-sky-200 text-indigo-600 rounded-lg transition-colors"
               >
-                Clear Filters
+                Vyčistit filtre
               </button>
             )}
           </div>
@@ -141,7 +141,7 @@ const AllBooksWrapper: FC = () => {
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <input
                 type="text"
-                placeholder="Search books by title or author..."
+                placeholder="Hľadať knihu..."
                 className="w-full pl-12 pr-4 py-3 bg-transparent border-0 rounded-xl focus:ring-2 focus:ring-indigo-500"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -154,7 +154,7 @@ const AllBooksWrapper: FC = () => {
             className="flex items-center gap-2 px-4 py-3 bg-white/80 dark:bg-background backdrop-blur-sm rounded-2xl shadow-xl hover:bg-white/90 transition-colors"
           >
             <SlidersHorizontal className="w-5 h-5" />
-            <span className="hidden sm:inline">Filters</span>
+            <span className="hidden sm:inline">Filtre</span>
             {(selectedCategory !== "All" || selectedGenre !== "All") && (
               <span className="inline-flex items-center justify-center w-5 h-5 text-xs font-medium text-white bg-indigo-600 rounded-full">
                 {(selectedCategory !== "All" ? 1 : 0) + (selectedGenre !== "All" ? 1 : 0)}
@@ -215,7 +215,7 @@ const AllBooksWrapper: FC = () => {
 
         {filteredBooks.length === 0 && (
           <div className="text-center py-16">
-            <p className="text-xl text-gray-500 ml-3 flex justify-center items-center">
+            <p className="text-xl text-gray-500 dark:text-white ml-3 flex justify-center items-center">
                 <Ghost className='animate-bounce w-8 h-8 ml-3' /> Žiadne knihy neboli nájdené
             </p>
           </div>
