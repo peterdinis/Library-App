@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useMemo, FC } from 'react';
+import {useState, useMemo, FC } from 'react';
 import { Search, BookOpen, SlidersHorizontal, X, Ghost } from 'lucide-react';
 
 const initialBooks = [
@@ -55,7 +55,7 @@ const AllBooksWrapper: FC = () => {
   }, [books, searchQuery, selectedCategory, selectedGenre]);
 
   return (
-    <div className="min-h-screen dark:bg-background bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+    <div className="min-h-screen dark:bg-background bg-gradient-to-br">
       {/* Sidebar Overlay */}
       {isSidebarOpen && (
         <div 
@@ -131,13 +131,12 @@ const AllBooksWrapper: FC = () => {
           <div className="flex items-center justify-center mb-4">
             <BookOpen className="w-12 h-12 text-indigo-600" />
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">School Library</h1>
-          <p className="text-lg text-gray-600">Discover your next favorite book</p>
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-50 mb-2">Všetky knihy</h1>
         </div>
 
         {/* Search and Filter Toggle */}
         <div className="max-w-3xl mx-auto mb-12 flex gap-4">
-          <div className="flex-1 backdrop-blur-sm bg-white/80 rounded-2xl shadow-xl">
+          <div className="flex-1 backdrop-blur-sm bg-white/80 dark:bg-stone-800 rounded-2xl shadow-xl">
             <div className="relative">
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
               <input
@@ -152,7 +151,7 @@ const AllBooksWrapper: FC = () => {
           
           <button
             onClick={() => setIsSidebarOpen(true)}
-            className="flex items-center gap-2 px-4 py-3 bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl hover:bg-white/90 transition-colors"
+            className="flex items-center gap-2 px-4 py-3 bg-white/80 dark:bg-background backdrop-blur-sm rounded-2xl shadow-xl hover:bg-white/90 transition-colors"
           >
             <SlidersHorizontal className="w-5 h-5" />
             <span className="hidden sm:inline">Filters</span>
@@ -216,8 +215,8 @@ const AllBooksWrapper: FC = () => {
 
         {filteredBooks.length === 0 && (
           <div className="text-center py-16">
-            <p className="text-xl text-gray-500">
-                <Ghost className='animate-bounce w-8 h-8' /> Žiadne knihy neboli nájdené
+            <p className="text-xl text-gray-500 ml-3 flex justify-center items-center">
+                <Ghost className='animate-bounce w-8 h-8 ml-3' /> Žiadne knihy neboli nájdené
             </p>
           </div>
         )}
