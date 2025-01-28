@@ -85,7 +85,7 @@ const AllBooksWrapper: FC = () => {
                 Category
               </label>
               <select
-                className="w-full px-4 py-3 dark:bg-stone-400 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-4 py-3 dark:bg-stone-600 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
               >
@@ -100,7 +100,7 @@ const AllBooksWrapper: FC = () => {
                 Genre
               </label>
               <select
-                className="w-full px-4 py-3 bg-gray-50 dark:bg-stone-400 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full px-4 py-3 bg-gray-50 dark:bg-stone-600 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 value={selectedGenre}
                 onChange={(e) => setSelectedGenre(e.target.value)}
               >
@@ -202,11 +202,11 @@ const AllBooksWrapper: FC = () => {
                 </div>
               </div>
               <div className="px-2">
-                <h3 className="font-semibold text-lg text-gray-900 mb-1 line-clamp-1">{book.title}</h3>
-                <p className="text-gray-600 text-sm mb-2">by {book.author}</p>
+                <h3 className="font-semibold text-lg text-gray-900 dark:text-sky-50 mb-1 line-clamp-1">{book.title}</h3>
+                <p className="text-gray-600 dark:text-sky-50 text-sm mb-2">by {book.author}</p>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-indigo-600 font-medium">{book.genre}</span>
-                  <span className="text-sm text-gray-500">{book.category}</span>
+                  <span className="text-sm text-indigo-600 dark:text-sky-500 font-medium">{book.genre}</span>
+                  <span className="text-sm text-gray-500 dark:text-stone-400">{book.category}</span>
                 </div>
               </div>
             </div>
