@@ -70,7 +70,7 @@ const AllBooksWrapper: FC = () => {
       }`}>
         <div className="p-6">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-sky-50">Filters</h2>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-sky-50">Filtre</h2>
             <button
               onClick={() => setIsSidebarOpen(false)}
               className="p-2 rounded-full transition-colors"
@@ -154,7 +154,7 @@ const AllBooksWrapper: FC = () => {
             className="flex items-center gap-2 px-4 py-3 bg-white/80 dark:bg-background backdrop-blur-sm rounded-2xl shadow-xl hover:bg-white/90 transition-colors"
           >
             <SlidersHorizontal className="w-5 h-5" />
-            <span className="hidden sm:inline">Filters</span>
+            <span className="hidden sm:inline">Filtre</span>
             {(selectedCategory !== "All" || selectedGenre !== "All") && (
               <span className="inline-flex items-center justify-center w-5 h-5 text-xs font-medium text-white bg-indigo-600 rounded-full">
                 {(selectedCategory !== "All" ? 1 : 0) + (selectedGenre !== "All" ? 1 : 0)}
