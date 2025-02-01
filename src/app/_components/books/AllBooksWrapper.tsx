@@ -5,6 +5,7 @@ import { Search, BookOpen, SlidersHorizontal, X, Ghost } from 'lucide-react';
 import { Button } from '~/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
+import { Label } from '~/components/ui/label';
 
 const initialBooks = [
   {
@@ -84,9 +85,9 @@ const AllBooksWrapper: FC = () => {
 
           <div className="space-y-6">
             <div>
-              <label className="block text-sm font-medium dark:text-sky-50 text-gray-700 mb-2">
+              <Label className="block text-sm font-medium dark:text-sky-50 text-gray-700 mb-2">
                 Kategória
-              </label>
+              </Label>
               <select
                 className="w-full px-4 py-3 dark:bg-stone-600 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 value={selectedCategory}
@@ -99,9 +100,9 @@ const AllBooksWrapper: FC = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-sky-50 mb-2">
+              <Label className="block text-sm font-medium text-gray-700 dark:text-sky-50 mb-2">
                 Žáner
-              </label>
+              </Label>
               <select
                 className="w-full px-4 py-3 bg-gray-50 dark:bg-stone-600 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 value={selectedGenre}
