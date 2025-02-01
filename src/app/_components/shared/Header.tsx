@@ -201,14 +201,28 @@ const Header: FC = () => {
           ))}
         </nav>
         <div className="flex items-center gap-1">
-          <QuickSearch />
-          <Button
-            variant="ghost"
-            size="icon"
-            className="ml-3 h-9 w-9 hover:bg-accent lg:h-10 lg:w-10"
-          >
-            <ProfileDropdown />
-          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <QuickSearch />
+              </TooltipTrigger>
+              <TooltipContent>Vyhľadať knihu</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="ml-3 h-9 w-9 hover:bg-accent lg:h-10 lg:w-10"
+                >
+                  <ProfileDropdown />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Profil</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           <div className="ml-3">
             <ModeToggle />
           </div>
