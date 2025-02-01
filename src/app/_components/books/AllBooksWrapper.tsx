@@ -4,6 +4,7 @@ import {useState, useMemo, FC } from 'react';
 import { Search, BookOpen, SlidersHorizontal, X, Ghost } from 'lucide-react';
 import { Button } from '~/components/ui/button';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const initialBooks = [
   {
@@ -186,9 +187,11 @@ const AllBooksWrapper: FC = () => {
           {filteredBooks.map(book => (
             <div key={book.id} className="group">
               <div className="relative aspect-[3/4] mb-4 rounded-2xl overflow-hidden shadow-lg group-hover:shadow-2xl transition-all duration-300">
-                <img
+                <Image
                   src={book.coverUrl}
                   alt={book.title}
+                  width={60}
+                  height={60}
                   className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
