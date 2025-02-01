@@ -20,7 +20,7 @@ export const genreRouter = createTRPCRouter({
     .input(
       z.object({
         name: z.string(),
-      })
+      }),
     )
     .mutation(async ({ input }) => {
       return await db.genre.create({ data: input });
@@ -32,7 +32,7 @@ export const genreRouter = createTRPCRouter({
       z.object({
         id: z.string(),
         name: z.string().optional(),
-      })
+      }),
     )
     .mutation(async ({ input }) => {
       return await db.genre.update({ where: { id: input.id }, data: input });

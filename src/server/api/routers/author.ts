@@ -9,11 +9,13 @@ export const authorRouter = createTRPCRouter({
   }),
 
   // Get author detail
-  getAuthorDetail: publicProcedure.input(z.string()).query(async ({ input }) => {
-    return await db.author.findUnique({
-      where: { id: input },
-    });
-  }),
+  getAuthorDetail: publicProcedure
+    .input(z.string())
+    .query(async ({ input }) => {
+      return await db.author.findUnique({
+        where: { id: input },
+      });
+    }),
 
   // Create author
   createAuthor: publicProcedure
@@ -21,7 +23,7 @@ export const authorRouter = createTRPCRouter({
       z.object({
         name: z.string(),
         bio: z.string().optional(),
-      })
+      }),
     )
     .mutation(async ({ input }) => {
       return await db.author.create({ data: input });
@@ -34,14 +36,16 @@ export const authorRouter = createTRPCRouter({
         id: z.string(),
         name: z.string().optional(),
         bio: z.string().optional(),
-      })
+      }),
     )
     .mutation(async ({ input }) => {
       return await db.author.update({ where: { id: input.id }, data: input });
     }),
 
   // Delete author
-  deleteAuthor: publicProcedure.input(z.string()).mutation(async ({ input }) => {
-    return await db.author.delete({ where: { id: input } });
-  }),
+  deleteAuthor: publicProcedure
+    .input(z.string())
+    .mutation(async ({ input }) => {
+      return await db.author.delete({ where: { id: input } });
+    }),
 });
