@@ -22,11 +22,28 @@ model User {
   borrowRecords    BorrowRecord[]
 }
 
+model Genre {
+  id    String  @id @default(uuid()) @unique
+  name  String  @unique
+  books Book[]
+}
+
+model Category {
+  id    String  @id @default(uuid()) @unique
+  name  String  @unique
+  books Book[]
+}
+
+model Author {
+  id    String  @id @default(uuid()) @unique
+  name  String  @unique
+  bio   String?
+  books Book[]
+}
+
 model Book {
   id              String   @id @default(uuid()) @unique
   title           String
-  author          String
-  genre           String
   rating          Int
   coverUrl        String
   description     String
@@ -36,6 +53,15 @@ model Book {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt()
   borrowRecords   BorrowRecord[]
+
+  genreId    String
+  genre      Genre   @relation(fields: [genreId], references: [id], onDelete: Cascade)
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  authorId   String
+  author     Author  @relation(fields: [authorId], references: [id], onDelete: Cascade)
 }
 
 model BorrowRecord {
