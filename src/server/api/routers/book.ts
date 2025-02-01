@@ -17,15 +17,17 @@ export const bookRouter = createTRPCRouter({
 
   // Quick search book
   quickSearchBook: publicProcedure
-    .input(z.string())
-    .query(async ({ input }) => {
-      return await db.book.findMany({
-        where: {
-          OR: [{ title: { contains: input } }, { author: { contains: input } }],
+  .input(z.string())
+  .query(async ({ input }) => {
+    const lowercaseInput = input.toLowerCase();
+    return await db.book.findMany({
+      where: {
+        title: {
+          contains: lowercaseInput,
         },
-      });
-    }),
-
+      },
+    });
+  }),
   // Create book
   createBook: publicProcedure
     .input(
@@ -39,31 +41,26 @@ export const bookRouter = createTRPCRouter({
         totalCopies: z.number().min(1),
         availableCopies: z.number().min(0),
         summary: z.string(),
+        genreId: z.string(),
+        categoryId: z.string(),
+        authorId: z.string(),
       }),
     )
     .mutation(async ({ input }) => {
-      return await db.book.create({ data: input });
-    }),
-
-  // Update book
-  updateBook: publicProcedure
-    .input(
-      z.object({
-        id: z.string(),
-        title: z.string().optional(),
-        author: z.string().optional(),
-        genre: z.string().optional(),
-        rating: z.number().min(0).max(5).optional(),
-        coverUrl: z.string().url().optional(),
-        description: z.string().optional(),
-        totalCopies: z.number().min(1).optional(),
-        availableCopies: z.number().min(0).optional(),
-        summary: z.string().optional(),
-      }),
-    )
-    .mutation(async ({ input }) => {
-      const { id, ...updateData } = input;
-      return await db.book.update({ where: { id }, data: updateData });
+      return await db.book.create({
+        data: {
+          title: input.title,
+          rating: input.rating,
+          coverUrl: input.coverUrl,
+          description: input.description,
+          totalCopies: input.totalCopies,
+          availableCopies: input.availableCopies,
+          summary: input.summary,
+          genre: { connect: { id: input.genreId } },
+          category: { connect: { id: input.categoryId } },
+          author: { connect: { id: input.authorId } },
+        },
+      });
     }),
 
   // Delete book

@@ -18,7 +18,7 @@ const Features: FC = () => {
 
   return (
     <div className="overflow-y-hidden">
-      <div className="bg-gray-100 py-12 dark:bg-card">
+      <div className="bg-gray-100 py-12 dark:bg-zinc-900">
         <div className="max-w-8xl container mx-auto">
           <motion.div
             tabIndex={0}

@@ -17,7 +17,12 @@ import ModeToggle from "./ModeToggle";
 import ProfileDropdown from "../auth/ProfileDropdown";
 import QuickSearch from "./QuickSearch";
 import { FC, useState } from "react";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 
 const navigationItems = [
   {
@@ -106,7 +111,9 @@ const Header: FC = () => {
                           onClick={() => setIsOpen(false)}
                           className={cn(
                             "group flex flex-col gap-1 rounded-lg px-3 py-3 transition-colors hover:bg-accent",
-                            pathname === item.href ? "bg-accent" : "transparent",
+                            pathname === item.href
+                              ? "bg-accent"
+                              : "transparent",
                           )}
                         >
                           <div className="flex items-center gap-3">
@@ -132,7 +139,7 @@ const Header: FC = () => {
                         </Link>
                       </TooltipTrigger>
                       <TooltipContent>{item.description}</TooltipContent>
-                    </Tooltip> 
+                    </Tooltip>
                   ))}
                 </TooltipProvider>
               </nav>
