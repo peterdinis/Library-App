@@ -51,13 +51,15 @@ const QuickSearch: FC = () => {
           {isLoading && <Loader2 className="animate-spin" />}
           {isError && <p className="mt-4 font-bold text-2xl text-red-600"><Frown />Nastala chyba na strane applikácie</p>}
           {books && books.length > 0 ? (
-            <ul>
+            <ul className="space-y-3">
               {books.map((book) => (
-                <li key={book.id}>{book.title}</li>
+                <li key={book.id} className="p-3 border rounded-md hover:bg-gray-100 cursor-pointer transition-all">
+                  <p className="font-semibold text-lg text-blue-600">{book.title}</p>
+                </li>
               ))}
             </ul>
           ) : (
-            searchQuery.length > 2 && <p className="font-bold prose prose-p: text-xl"><Ghost className="animate-bounce" /> Kniha sa nenašla</p>
+            searchQuery.length > 2 && <p className="font-bold text-xl text-center text-gray-500"><Ghost className="animate-bounce" /> Kniha sa nenašla</p>
           )}
         </div>
       </DialogContent>
