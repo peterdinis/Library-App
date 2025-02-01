@@ -9,18 +9,20 @@ export const categoryRouter = createTRPCRouter({
   }),
 
   // Get category detail
-  getCategoryDetail: publicProcedure.input(z.string()).query(async ({ input }) => {
-    return await db.category.findUnique({
-      where: { id: input },
-    });
-  }),
+  getCategoryDetail: publicProcedure
+    .input(z.string())
+    .query(async ({ input }) => {
+      return await db.category.findUnique({
+        where: { id: input },
+      });
+    }),
 
   // Create category
   createCategory: publicProcedure
     .input(
       z.object({
         name: z.string(),
-      })
+      }),
     )
     .mutation(async ({ input }) => {
       return await db.category.create({ data: input });
@@ -32,14 +34,16 @@ export const categoryRouter = createTRPCRouter({
       z.object({
         id: z.string(),
         name: z.string().optional(),
-      })
+      }),
     )
     .mutation(async ({ input }) => {
       return await db.category.update({ where: { id: input.id }, data: input });
     }),
 
   // Delete category
-  deleteCategory: publicProcedure.input(z.string()).mutation(async ({ input }) => {
-    return await db.category.delete({ where: { id: input } });
-  }),
+  deleteCategory: publicProcedure
+    .input(z.string())
+    .mutation(async ({ input }) => {
+      return await db.category.delete({ where: { id: input } });
+    }),
 });

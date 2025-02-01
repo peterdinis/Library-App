@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import { FC } from "react";
@@ -14,17 +14,16 @@ import {
 import { useToast } from "~/hooks/use-toast";
 
 const ProfileDropdown: FC = () => {
-  
-  const {toast} = useToast();
+  const { toast } = useToast();
 
   const logoutFromApp = () => {
     toast({
       title: "Odhlásenie bolo úspešné",
       duration: 2000,
-      className: "bg-green-800 text-white font-bold text-xl"
-    })
-  }
-  
+      className: "bg-green-800 text-white font-bold text-xl",
+    });
+  };
+
   return (
     <>
       <DropdownMenu>
