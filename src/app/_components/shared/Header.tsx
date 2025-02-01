@@ -17,6 +17,7 @@ import ModeToggle from "./ModeToggle";
 import ProfileDropdown from "../auth/ProfileDropdown";
 import QuickSearch from "./QuickSearch";
 import { FC, useState } from "react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "~/components/ui/tooltip";
 
 const navigationItems = [
   {
@@ -96,41 +97,44 @@ const Header: FC = () => {
             </SheetHeader>
             <ScrollArea className="h-[calc(100vh-8rem)]">
               <nav className="flex flex-col gap-2 px-1 py-4">
-                {navigationItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => setIsOpen(false)}
-                    className={cn(
-                      "group flex flex-col gap-1 rounded-lg px-3 py-3 transition-colors hover:bg-accent",
-                      pathname === item.href ? "bg-accent" : "transparent",
-                    )}
-                  >
-                    <div className="flex items-center gap-3">
-                      <item.icon
-                        className={cn(
-                          "h-5 w-5",
-                          pathname === item.href
-                            ? "text-primary"
-                            : "text-muted-foreground group-hover:text-primary",
-                        )}
-                      />
-                      <span
-                        className={cn(
-                          "font-medium",
-                          pathname === item.href
-                            ? "text-primary"
-                            : "text-muted-foreground group-hover:text-primary",
-                        )}
-                      >
-                        {item.title}
-                      </span>
-                    </div>
-                    <span className="text-xs text-muted-foreground">
-                      {item.description}
-                    </span>
-                  </Link>
-                ))}
+                <TooltipProvider>
+                  {navigationItems.map((item) => (
+                    <Tooltip key={item.href}>
+                      <TooltipTrigger>
+                        <Link
+                          href={item.href}
+                          onClick={() => setIsOpen(false)}
+                          className={cn(
+                            "group flex flex-col gap-1 rounded-lg px-3 py-3 transition-colors hover:bg-accent",
+                            pathname === item.href ? "bg-accent" : "transparent",
+                          )}
+                        >
+                          <div className="flex items-center gap-3">
+                            <item.icon
+                              className={cn(
+                                "h-5 w-5",
+                                pathname === item.href
+                                  ? "text-primary"
+                                  : "text-muted-foreground group-hover:text-primary",
+                              )}
+                            />
+                            <span
+                              className={cn(
+                                "font-medium",
+                                pathname === item.href
+                                  ? "text-primary"
+                                  : "text-muted-foreground group-hover:text-primary",
+                              )}
+                            >
+                              {item.title}
+                            </span>
+                          </div>
+                        </Link>
+                      </TooltipTrigger>
+                      <TooltipContent>{item.description}</TooltipContent>
+                    </Tooltip>
+                  ))}
+                </TooltipProvider>
               </nav>
             </ScrollArea>
           </SheetContent>
@@ -150,37 +154,50 @@ const Header: FC = () => {
           <ul className="flex gap-1">
             {navigationItems.map((item) => (
               <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className={cn(
-                    "group flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-accent",
-                    pathname === item.href
-                      ? "bg-accent text-primary"
-                      : "text-muted-foreground",
-                  )}
-                >
-                  <item.icon className="h-4 w-4 transition-colors group-hover:text-primary" />
-                  {item.title}
-                </Link>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Link
+                        href={item.href}
+                        className={cn(
+                          "group flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-accent",
+                          pathname === item.href
+                            ? "bg-accent text-primary"
+                            : "text-muted-foreground",
+                        )}
+                      >
+                        <item.icon className="h-4 w-4 transition-colors group-hover:text-primary" />
+                        {item.title}
+                      </Link>
+                    </TooltipTrigger>
+                    <TooltipContent>{item.description}</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </li>
             ))}
           </ul>
         </nav>
         <nav className="flex flex-1 items-center justify-end gap-1 lg:hidden">
           {navigationItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "flex items-center justify-center rounded-lg p-2 transition-colors hover:bg-accent",
-                pathname === item.href
-                  ? "bg-accent text-primary"
-                  : "text-muted-foreground",
-              )}
-            >
-              <item.icon className="h-5 w-5" />
-              <span className="sr-only">{item.title}</span>
-            </Link>
+            <TooltipProvider key={item.href}>
+              <Tooltip>
+                <TooltipTrigger>
+                  <Link
+                    href={item.href}
+                    className={cn(
+                      "flex items-center justify-center rounded-lg p-2 transition-colors hover:bg-accent",
+                      pathname === item.href
+                        ? "bg-accent text-primary"
+                        : "text-muted-foreground",
+                    )}
+                  >
+                    <item.icon className="h-5 w-5" />
+                    <span className="sr-only">{item.title}</span>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>{item.description}</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           ))}
         </nav>
         <div className="flex items-center gap-1">
