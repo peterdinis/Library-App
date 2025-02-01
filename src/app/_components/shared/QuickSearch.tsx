@@ -54,7 +54,7 @@ const QuickSearch: FC = () => {
               <Frown /> Nastala chyba na strane applikácie
             </p>
           )}
-          {books && books.length > 0 ? (
+          {!isError && books && books.length > 0 ? (
             <ul className="space-y-3">
               {books.map((book) => (
                 <li
