@@ -1,6 +1,11 @@
 "use client";
 
-import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "~/components/ui/dialog";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+} from "~/components/ui/dialog";
 import { Loader2, Search, Frown, Ghost } from "lucide-react";
 import { FC, useState, ChangeEvent } from "react";
 import { Button } from "~/components/ui/button";
@@ -13,7 +18,11 @@ const QuickSearch: FC = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const { data: books, isLoading, isError } = api.book.quickSearchBook.useQuery(searchQuery, {
+  const {
+    data: books,
+    isLoading,
+    isError,
+  } = api.book.quickSearchBook.useQuery(searchQuery, {
     enabled: searchQuery.length > 2,
     retry: 1,
     staleTime: Infinity,
@@ -51,7 +60,7 @@ const QuickSearch: FC = () => {
         <div className="py-4">
           {isLoading && <Loader2 className="animate-spin" />}
           {isError && !isLoading && (
-            <p className="mt-4 font-bold text-2xl text-red-600">
+            <p className="mt-4 text-2xl font-bold text-red-600">
               <Frown /> Nastala chyba na strane applikácie
             </p>
           )}
@@ -60,9 +69,9 @@ const QuickSearch: FC = () => {
               {books.map((book) => (
                 <li
                   key={book.id}
-                  className="p-3 border rounded-md hover:bg-gray-100 cursor-pointer transition-all"
+                  className="cursor-pointer rounded-md border p-3 transition-all hover:bg-gray-100"
                 >
-                  <p className="font-semibold text-lg text-blue-600">
+                  <p className="text-lg font-semibold text-blue-600">
                     <Link href={`/books/${book.id}`}>{book.title}</Link>
                   </p>
                 </li>
@@ -70,7 +79,7 @@ const QuickSearch: FC = () => {
             </ul>
           ) : (
             searchQuery.length > 2 && (
-              <p className="font-bold text-xl text-center text-gray-500">
+              <p className="text-center text-xl font-bold text-gray-500">
                 <Ghost className="animate-bounce" /> Kniha sa nenašla
               </p>
             )

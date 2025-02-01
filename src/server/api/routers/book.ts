@@ -17,17 +17,17 @@ export const bookRouter = createTRPCRouter({
 
   // Quick search book
   quickSearchBook: publicProcedure
-  .input(z.string())
-  .query(async ({ input }) => {
-    const lowercaseInput = input.toLowerCase();
-    return await db.book.findMany({
-      where: {
-        title: {
-          contains: lowercaseInput,
+    .input(z.string())
+    .query(async ({ input }) => {
+      const lowercaseInput = input.toLowerCase();
+      return await db.book.findMany({
+        where: {
+          title: {
+            contains: lowercaseInput,
+          },
         },
-      },
-    });
-  }),
+      });
+    }),
   // Create book
   createBook: publicProcedure
     .input(
