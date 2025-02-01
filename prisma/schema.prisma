@@ -14,8 +14,8 @@ model User {
   universityId     Int      @unique
   password         String
   universityCard   String
-  status           String   @default("PENDING") // Replaces Status enum
-  role             String   @default("USER") // Replaces Role enum
+  status           String   @default("PENDING")
+  role             String   @default("USER") 
   lastActivityDate DateTime @default(now())
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt()
@@ -29,11 +29,9 @@ model Book {
   genre           String
   rating          Int
   coverUrl        String
-  coverColor      String
   description     String
   totalCopies     Int      @default(1)
   availableCopies Int      @default(0)
-  videoUrl        String
   summary         String
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt()
@@ -47,7 +45,7 @@ model BorrowRecord {
   borrowDate DateTime @default(now())
   dueDate    DateTime
   returnDate DateTime?
-  status     String   @default("BORROWED") // Replaces BorrowStatus enum
+  status     String   @default("BORROWED")
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt()
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
