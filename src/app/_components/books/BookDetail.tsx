@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
 import Link from "next/link";
+import BorrowBookModal from "../borrowBook/BorrowBookModal";
 
 const BookDetail: FC = () => {
   // In a real app, this would come from an API or props
@@ -136,9 +137,7 @@ const BookDetail: FC = () => {
             </div>
 
             <div className="flex flex-1 transform gap-6 rounded-xl px-8 py-4 text-lg font-semibold transition-all duration-300 hover:scale-105">
-              <Button size={"lg"} variant={"default"}>
-                Požičat knihu
-              </Button>
+              <BorrowBookModal />
               <Button size={"lg"} variant={"link"}>
                 <Link href="/books">Návrat na všetky knihy</Link>
               </Button>
