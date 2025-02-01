@@ -7,7 +7,8 @@ import { Toaster } from "~/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "SPŠT Knižnica | Bardejov",
-  description: "Oficiálna knižnica Strednej priemyselnej školy technickej v Bardejove. Prezrite si dostupné knihy, spravujte výpožičky a objavujte nové tituly.",
+  description:
+    "Oficiálna knižnica Strednej priemyselnej školy technickej v Bardejove. Prezrite si dostupné knihy, spravujte výpožičky a objavujte nové tituly.",
   keywords: [
     "SPŠT Knižnica",
     "Stredná priemyselná škola technická Bardejov",
@@ -39,7 +40,6 @@ export const metadata: Metadata = {
       "Oficiálna knižnica Strednej priemyselnej školy technickej v Bardejove. Prezrite si dostupné knihy, spravujte výpožičky a objavujte nové tituly.",
   },
 };
-
 
 export default function RootLayout({
   children,

@@ -1,7 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { db } from "~/server/db";
 
-
 async function main() {
   console.log("Seeding database...");
 
@@ -12,8 +11,8 @@ async function main() {
         data: {
           name: faker.music.genre(),
         },
-      })
-    )
+      }),
+    ),
   );
 
   // Create Categories
@@ -23,8 +22,8 @@ async function main() {
         data: {
           name: faker.commerce.department(),
         },
-      })
-    )
+      }),
+    ),
   );
 
   // Create Authors
@@ -35,8 +34,8 @@ async function main() {
           name: faker.person.fullName(),
           bio: faker.lorem.paragraph(),
         },
-      })
-    )
+      }),
+    ),
   );
 
   // Create Books
@@ -55,8 +54,8 @@ async function main() {
           categoryId: faker.helpers.arrayElement(categories).id,
           authorId: faker.helpers.arrayElement(authors).id,
         },
-      })
-    )
+      }),
+    ),
   );
 
   console.log("Database seeded successfully!");

@@ -16,16 +16,15 @@ export const bookRouter = createTRPCRouter({
   }),
 
   // Quick search book
-  quickSearchBook: publicProcedure.input(z.string()).query(async ({ input }) => {
-    return await db.book.findMany({
-      where: {
-        OR: [
-          { title: { contains: input } },
-          { author: { contains: input } },
-        ],
-      },
-    });
-  }),
+  quickSearchBook: publicProcedure
+    .input(z.string())
+    .query(async ({ input }) => {
+      return await db.book.findMany({
+        where: {
+          OR: [{ title: { contains: input } }, { author: { contains: input } }],
+        },
+      });
+    }),
 
   // Create book
   createBook: publicProcedure
@@ -40,7 +39,7 @@ export const bookRouter = createTRPCRouter({
         totalCopies: z.number().min(1),
         availableCopies: z.number().min(0),
         summary: z.string(),
-      })
+      }),
     )
     .mutation(async ({ input }) => {
       return await db.book.create({ data: input });
@@ -60,7 +59,7 @@ export const bookRouter = createTRPCRouter({
         totalCopies: z.number().min(1).optional(),
         availableCopies: z.number().min(0).optional(),
         summary: z.string().optional(),
-      })
+      }),
     )
     .mutation(async ({ input }) => {
       const { id, ...updateData } = input;
