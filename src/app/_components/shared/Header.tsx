@@ -132,7 +132,7 @@ const Header: FC = () => {
                         </Link>
                       </TooltipTrigger>
                       <TooltipContent>{item.description}</TooltipContent>
-                    </Tooltip>
+                    </Tooltip> 
                   ))}
                 </TooltipProvider>
               </nav>
