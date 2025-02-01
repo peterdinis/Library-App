@@ -20,8 +20,8 @@ export const bookRouter = createTRPCRouter({
     return await db.book.findMany({
       where: {
         OR: [
-          { title: { contains: input, mode: "insensitive" } },
-          { author: { contains: input, mode: "insensitive" } },
+          { title: { contains: input } },
+          { author: { contains: input } },
         ],
       },
     });
