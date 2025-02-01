@@ -6,6 +6,7 @@ import { Button } from "~/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { Label } from "~/components/ui/label";
+import { api } from "~/trpc/react";
 
 const initialBooks = [
   {
@@ -44,6 +45,10 @@ const categories = ["All", "Fiction", "Non-Fiction"];
 const genres = ["All", "Classic", "Science Fiction", "Science", "Biography"];
 
 const AllBooksWrapper: FC = () => {
+  const {data: categoriesForSelect} = api.category.getAllCategories.useQuery();
+  const {data: generesForSelect} = api.genre.getAllGenres.useQuery();
+  const {data: authorsForSelect} = api.author.getAllAuthors.useQuery();
+  
   const [books] = useState(initialBooks);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
