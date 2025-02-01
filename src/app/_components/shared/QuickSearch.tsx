@@ -7,6 +7,7 @@ import { Button } from "~/components/ui/button";
 import { DialogHeader } from "~/components/ui/dialog";
 import { Input } from "~/components/ui/input";
 import { api } from "~/trpc/react";
+import Link from "next/link";
 
 const QuickSearch: FC = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -61,7 +62,9 @@ const QuickSearch: FC = () => {
                   key={book.id}
                   className="p-3 border rounded-md hover:bg-gray-100 cursor-pointer transition-all"
                 >
-                  <p className="font-semibold text-lg text-blue-600">{book.title}</p>
+                  <p className="font-semibold text-lg text-blue-600">
+                    <Link href={`/books/${book.id}`}>{book.title}</Link>
+                  </p>
                 </li>
               ))}
             </ul>
