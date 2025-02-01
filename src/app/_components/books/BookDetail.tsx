@@ -3,6 +3,7 @@ import { Book, User, Calendar, BookOpen} from 'lucide-react';
 import Image from 'next/image';
 import { Button } from '~/components/ui/button';
 import { Label } from '~/components/ui/label';
+import Link from 'next/link';
 
 const BookDetail: FC = () => {
   // In a real app, this would come from an API or props
@@ -98,6 +99,9 @@ const BookDetail: FC = () => {
             <div className="flex gap-6 flex-1 py-4 px-8 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105">
               <Button size={"lg"} variant={"default"}>
                 Požičat knihu
+              </Button>
+              <Button size={"lg"} variant={"link"}>
+                <Link href="/books">Návrat na všetky knihy</Link>
               </Button>
             </div>
           </div>
