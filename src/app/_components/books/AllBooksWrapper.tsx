@@ -2,6 +2,8 @@
 
 import {useState, useMemo, FC } from 'react';
 import { Search, BookOpen, SlidersHorizontal, X, Ghost } from 'lucide-react';
+import { Button } from '~/components/ui/button';
+import Link from 'next/link';
 
 const initialBooks = [
   {
@@ -198,6 +200,9 @@ const AllBooksWrapper: FC = () => {
                     }`}>
                       {book.available ? 'Available' : 'Checked Out'}
                     </span>
+                    <Button variant={"link"} className='text-blue-200'>
+                      <Link href="/books/123">Detail Knihy</Link>
+                    </Button>
                   </div>
                 </div>
               </div>
