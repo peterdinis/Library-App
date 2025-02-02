@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Search, BookOpen, SlidersHorizontal, X, Ghost } from "lucide-react";
+import { SlidersHorizontal, Ghost } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
@@ -55,8 +55,8 @@ const ITEMS_PER_PAGE = 6;
 const AllBooksWrapper = () => {
   const [books] = useState(initialBooks);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory,] = useState("All");
-  const [selectedGenre, ] = useState("All");
+  const [selectedCategory] = useState("All");
+  const [selectedGenre] = useState("All");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -73,7 +73,7 @@ const AllBooksWrapper = () => {
       return matchesSearch && matchesCategory && matchesGenre;
     });
   }, [books, searchQuery, selectedCategory, selectedGenre]);
-  
+
   const totalPages = Math.ceil(filteredBooks.length / ITEMS_PER_PAGE);
 
   const paginatedBooks = useMemo(() => {
@@ -96,12 +96,18 @@ const AllBooksWrapper = () => {
         />
       )}
 
-      <BookSidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+      <BookSidebar
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+      />
 
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <BooksHeader />
         <div className="mx-auto mb-12 flex max-w-3xl gap-4">
-          <BookSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+          <BookSearch
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
 
           <button
             onClick={() => setIsSidebarOpen(true)}
@@ -148,10 +154,11 @@ const AllBooksWrapper = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <div className="absolute bottom-0 left-0 right-0 p-6">
                       <span
-                        className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${book.available
+                        className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${
+                          book.available
                             ? "bg-green-100 text-green-800"
                             : "bg-red-100 text-red-800"
-                          }`}
+                        }`}
                       >
                         {book.available ? "Available" : "Checked Out"}
                       </span>
@@ -195,7 +202,9 @@ const AllBooksWrapper = () => {
               <PaginationItem>
                 <PaginationPrevious
                   onClick={() => handlePageChange(currentPage - 1)}
-                  className={currentPage === 1 ? "opacity-50 pointer-events-none" : ""}
+                  className={
+                    currentPage === 1 ? "pointer-events-none opacity-50" : ""
+                  }
                 />
               </PaginationItem>
               {Array.from({ length: totalPages }, (_, idx) => {
@@ -214,7 +223,11 @@ const AllBooksWrapper = () => {
               <PaginationItem>
                 <PaginationNext
                   onClick={() => handlePageChange(currentPage + 1)}
-                  className={currentPage === totalPages ? "opacity-50 pointer-events-none" : ""}
+                  className={
+                    currentPage === totalPages
+                      ? "pointer-events-none opacity-50"
+                      : ""
+                  }
                 />
               </PaginationItem>
             </PaginationContent>
