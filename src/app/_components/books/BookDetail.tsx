@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
 import Link from "next/link";
-import BorrowBookModal from "../borrowBook/BorrowBookModal";
+import BorrowBookModal from "../booking/BorrowBookModal";
 
 const BookDetail: FC = () => {
   // In a real app, this would come from an API or props
