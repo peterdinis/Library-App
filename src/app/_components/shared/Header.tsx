@@ -15,7 +15,7 @@ import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 import ModeToggle from "./ModeToggle";
 import ProfileDropdown from "../auth/ProfileDropdown";
-import QuickSearch from "./QuickSearch";
+import QuickSearch from "../books/QuickSearch";
 import { FC, useState } from "react";
 import {
   Tooltip,
