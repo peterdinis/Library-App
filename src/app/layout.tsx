@@ -4,6 +4,7 @@ import { type Metadata } from "next";
 import { TRPCReactProvider } from "~/trpc/react";
 import { ThemeProvider } from "./_components/shared/providers/theme-provider";
 import { Toaster } from "~/components/ui/toaster";
+import ScrollToTop from "./_components/shared/ScrollToTop";
 
 export const metadata: Metadata = {
   title: "SPŠT Knižnica | Bardejov",
@@ -55,6 +56,7 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             {children}
+            <ScrollToTop />
             <Toaster />
           </ThemeProvider>
         </TRPCReactProvider>
