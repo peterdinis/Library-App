@@ -5,14 +5,6 @@ import { SlidersHorizontal, Ghost } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationPrevious,
-  PaginationNext,
-} from "~/components/ui/pagination";
 import BookSidebar from "./BookSidebar";
 import BooksHeader from "./BooksHeader";
 import BookSearch from "./BookSearch";
@@ -58,7 +50,7 @@ const AllBooksWrapper = () => {
   const [selectedCategory] = useState("All");
   const [selectedGenre] = useState("All");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage] = useState(1);
 
   const filteredBooks = useMemo(() => {
     return books.filter((book) => {
@@ -74,18 +66,10 @@ const AllBooksWrapper = () => {
     });
   }, [books, searchQuery, selectedCategory, selectedGenre]);
 
-  const totalPages = Math.ceil(filteredBooks.length / ITEMS_PER_PAGE);
-
   const paginatedBooks = useMemo(() => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     return filteredBooks.slice(startIndex, startIndex + ITEMS_PER_PAGE);
   }, [filteredBooks, currentPage]);
-
-  const handlePageChange = (page: number) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br dark:bg-background">
@@ -196,43 +180,7 @@ const AllBooksWrapper = () => {
           </div>
         )}
 
-        <div className="mt-14">
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  className={
-                    currentPage === 1 ? "pointer-events-none opacity-50" : ""
-                  }
-                />
-              </PaginationItem>
-              {Array.from({ length: totalPages }, (_, idx) => {
-                const page = idx + 1;
-                return (
-                  <PaginationItem key={page}>
-                    <PaginationLink
-                      onClick={() => handlePageChange(page)}
-                      isActive={page === currentPage}
-                    >
-                      {page}
-                    </PaginationLink>
-                  </PaginationItem>
-                );
-              })}
-              <PaginationItem>
-                <PaginationNext
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  className={
-                    currentPage === totalPages
-                      ? "pointer-events-none opacity-50"
-                      : ""
-                  }
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </div>
+        <div className="mt-14">TODO: Add later pagination</div>
       </div>
     </div>
   );
