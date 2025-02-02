@@ -76,9 +76,8 @@ const AllBooksWrapper: FC = () => {
 
       {/* Sidebar */}
       <div
-        className={`fixed right-0 top-0 z-50 h-full w-80 transform bg-white shadow-2xl transition-transform duration-300 ease-in-out dark:bg-background ${
-          isSidebarOpen ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`fixed right-0 top-0 z-50 h-full w-80 transform bg-white shadow-2xl transition-transform duration-300 ease-in-out dark:bg-background ${isSidebarOpen ? "translate-x-0" : "translate-x-full"
+          }`}
       >
         <div className="p-6">
           <div className="mb-8 flex items-center justify-between">
@@ -128,6 +127,24 @@ const AllBooksWrapper: FC = () => {
               </select>
             </div>
 
+            <div>
+              <Label className="mb-2 block text-sm font-medium text-gray-700 dark:text-sky-50">
+                Kategória
+              </Label>
+              <select
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-indigo-500 dark:bg-stone-600"
+                value={selectedGenre}
+                onChange={(e) => setSelectedGenre(e.target.value)}
+              >
+                {genres.map((genre) => (
+                  <option key={genre} value={genre}>
+                    {genre}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+
             {(selectedCategory !== "All" || selectedGenre !== "All") && (
               <button
                 onClick={() => {
@@ -146,12 +163,12 @@ const AllBooksWrapper: FC = () => {
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-12 text-center">
-          <div className="mb-4 flex items-center justify-center">
+          <div className="mb-4 flex items-center justify-center gap-4">
             <BookOpen className="h-12 w-12 text-indigo-600" />
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-50">
+              Všetky knihy
+            </h1>
           </div>
-          <h1 className="mb-2 text-4xl font-bold text-gray-900 dark:text-gray-50">
-            Všetky knihy
-          </h1>
         </div>
 
         {/* Search and Filter Toggle */}
@@ -215,11 +232,10 @@ const AllBooksWrapper: FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   <div className="absolute bottom-0 left-0 right-0 p-6">
                     <span
-                      className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${
-                        book.available
+                      className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${book.available
                           ? "bg-green-100 text-green-800"
                           : "bg-red-100 text-red-800"
-                      }`}
+                        }`}
                     >
                       {book.available ? "Available" : "Checked Out"}
                     </span>
