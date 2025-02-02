@@ -1,20 +1,13 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Search, BookOpen, SlidersHorizontal, X, Ghost } from "lucide-react";
+import { SlidersHorizontal, Ghost } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { Label } from "~/components/ui/label";
 import { Button } from "~/components/ui/button";
-import { api } from "~/trpc/react";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationPrevious,
-  PaginationNext,
-} from "~/components/ui/pagination";
+import BookSidebar from "./BookSidebar";
+import BooksHeader from "./BooksHeader";
+import BookSearch from "./BookSearch";
 
 const initialBooks = [
   {
@@ -47,29 +40,18 @@ const initialBooks = [
       "https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&q=80&w=1000",
     available: false,
   },
-  // Přidej další položky podle potřeby...
 ];
 
-const categories = ["All", "Fiction", "Non-Fiction"];
-const genres = ["All", "Classic", "Science Fiction", "Science", "Biography"];
-
-const ITEMS_PER_PAGE = 6; // Počet knih na stránku
+const ITEMS_PER_PAGE = 6;
 
 const AllBooksWrapper = () => {
-  // Data načtená z API
-  const { data: categoriesForSelect } = api.category.getAllCategories.useQuery();
-  const { data: generesForSelect } = api.genre.getAllGenres.useQuery();
-  const { data: authorsForSelect } = api.author.getAllAuthors.useQuery();
-
-  // Lokální stavy
   const [books] = useState(initialBooks);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [selectedGenre, setSelectedGenre] = useState("All");
+  const [selectedCategory] = useState("All");
+  const [selectedGenre] = useState("All");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage] = useState(1);
 
-  // Filtrování knih podle zadaných kritérií
   const filteredBooks = useMemo(() => {
     return books.filter((book) => {
       const matchesSearch =
@@ -84,28 +66,13 @@ const AllBooksWrapper = () => {
     });
   }, [books, searchQuery, selectedCategory, selectedGenre]);
 
-  // Počet celkových stránek
-  const totalPages = Math.ceil(filteredBooks.length / ITEMS_PER_PAGE);
-
-  // Pokud se filtr nebo hledaný výraz změní, resetuj stránku na 1
-  // (můžeš to doplnit pomocí useEffect, zde zjednodušeně nechat aktuální logiku)
-
-  // Výpočet knih, které se mají vykreslit na aktuální stránce
   const paginatedBooks = useMemo(() => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     return filteredBooks.slice(startIndex, startIndex + ITEMS_PER_PAGE);
   }, [filteredBooks, currentPage]);
 
-  // Handler pro změnu stránky
-  const handlePageChange = (page: number) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br dark:bg-background">
-      {/* Sidebar Overlay */}
       {isSidebarOpen && (
         <div
           className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm lg:hidden"
@@ -113,109 +80,18 @@ const AllBooksWrapper = () => {
         />
       )}
 
-      {/* Sidebar */}
-      <div
-        className={`fixed right-0 top-0 z-50 h-full w-80 transform bg-white shadow-2xl transition-transform duration-300 ease-in-out dark:bg-background ${isSidebarOpen ? "translate-x-0" : "translate-x-full"
-          }`}
-      >
-        <div className="p-6">
-          <div className="mb-8 flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-sky-50">
-              Filtre
-            </h2>
-            <button
-              onClick={() => setIsSidebarOpen(false)}
-              className="rounded-full p-2 transition-colors"
-            >
-              <X className="h-5 w-5 text-gray-500" />
-            </button>
-          </div>
-
-          <div className="space-y-6">
-            <div>
-              <Label className="mb-2 block text-sm font-medium text-gray-700 dark:text-sky-50">
-                Kategória
-              </Label>
-              <select
-                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-indigo-500 dark:bg-stone-600"
-                value={selectedCategory}
-                onChange={(e) => {
-                  setSelectedCategory(e.target.value);
-                  setCurrentPage(1);
-                }}
-              >
-                {categories.map((category) => (
-                  <option key={category} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <Label className="mb-2 block text-sm font-medium text-gray-700 dark:text-sky-50">
-                Žáner
-              </Label>
-              <select
-                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-indigo-500 dark:bg-stone-600"
-                value={selectedGenre}
-                onChange={(e) => {
-                  setSelectedGenre(e.target.value);
-                  setCurrentPage(1);
-                }}
-              >
-                {genres.map((genre) => (
-                  <option key={genre} value={genre}>
-                    {genre}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {(selectedCategory !== "All" || selectedGenre !== "All") && (
-              <button
-                onClick={() => {
-                  setSelectedCategory("All");
-                  setSelectedGenre("All");
-                  setCurrentPage(1);
-                }}
-                className="w-full rounded-lg px-4 py-2 text-sm text-indigo-600 transition-colors dark:text-sky-200"
-              >
-                Vyčistit filtre
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
+      <BookSidebar
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+      />
 
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="mb-12 text-center">
-          <div className="mb-4 flex items-center justify-center gap-4">
-            <BookOpen className="h-12 w-12 text-indigo-600" />
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-50">
-              Všetky knihy
-            </h1>
-          </div>
-        </div>
-
-        {/* Search and Filter Toggle */}
+        <BooksHeader />
         <div className="mx-auto mb-12 flex max-w-3xl gap-4">
-          <div className="flex-1 rounded-2xl bg-white/80 shadow-xl backdrop-blur-sm dark:bg-stone-800">
-            <div className="relative">
-              <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
-              <input
-                type="text"
-                placeholder="Hľadať knihu..."
-                className="w-full rounded-xl border-0 bg-transparent py-3 pl-12 pr-4 focus:ring-2 focus:ring-indigo-500"
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  setCurrentPage(1);
-                }}
-              />
-            </div>
-          </div>
+          <BookSearch
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
 
           <button
             onClick={() => setIsSidebarOpen(true)}
@@ -232,7 +108,6 @@ const AllBooksWrapper = () => {
           </button>
         </div>
 
-        {/* Active Filters */}
         {(selectedCategory !== "All" || selectedGenre !== "All") && (
           <div className="mx-auto mb-8 flex max-w-3xl flex-wrap gap-2">
             {selectedCategory !== "All" && (
@@ -248,7 +123,6 @@ const AllBooksWrapper = () => {
           </div>
         )}
 
-        {/* Books Grid */}
         {paginatedBooks.length > 0 ? (
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {paginatedBooks.map((book) => (
@@ -264,10 +138,11 @@ const AllBooksWrapper = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <div className="absolute bottom-0 left-0 right-0 p-6">
                       <span
-                        className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${book.available
+                        className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${
+                          book.available
                             ? "bg-green-100 text-green-800"
                             : "bg-red-100 text-red-800"
-                          }`}
+                        }`}
                       >
                         {book.available ? "Available" : "Checked Out"}
                       </span>
@@ -305,37 +180,7 @@ const AllBooksWrapper = () => {
           </div>
         )}
 
-        <div className="mt-14">
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  className={currentPage === 1 ? "opacity-50 pointer-events-none" : ""}
-                />
-              </PaginationItem>
-              {Array.from({ length: totalPages }, (_, idx) => {
-                const page = idx + 1;
-                return (
-                  <PaginationItem key={page}>
-                    <PaginationLink
-                      onClick={() => handlePageChange(page)}
-                      isActive={page === currentPage}
-                    >
-                      {page}
-                    </PaginationLink>
-                  </PaginationItem>
-                );
-              })}
-              <PaginationItem>
-                <PaginationNext
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  className={currentPage === totalPages ? "opacity-50 pointer-events-none" : ""}
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </div>
+        <div className="mt-14">TODO: Add later pagination</div>
       </div>
     </div>
   );
