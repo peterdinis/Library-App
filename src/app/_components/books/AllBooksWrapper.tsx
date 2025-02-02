@@ -1,11 +1,20 @@
 "use client";
 
-import { useState, useMemo, FC } from "react";
+import { useState, useMemo } from "react";
 import { Search, BookOpen, SlidersHorizontal, X, Ghost } from "lucide-react";
-import { Button } from "~/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import { Label } from "~/components/ui/label";
+import { Button } from "~/components/ui/button";
+import { api } from "~/trpc/react";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationPrevious,
+  PaginationNext,
+} from "~/components/ui/pagination";
 
 const initialBooks = [
   {
@@ -38,18 +47,29 @@ const initialBooks = [
       "https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&q=80&w=1000",
     available: false,
   },
+  // Přidej další položky podle potřeby...
 ];
 
 const categories = ["All", "Fiction", "Non-Fiction"];
 const genres = ["All", "Classic", "Science Fiction", "Science", "Biography"];
 
-const AllBooksWrapper: FC = () => {
+const ITEMS_PER_PAGE = 6; // Počet knih na stránku
+
+const AllBooksWrapper = () => {
+  // Data načtená z API
+  const { data: categoriesForSelect } = api.category.getAllCategories.useQuery();
+  const { data: generesForSelect } = api.genre.getAllGenres.useQuery();
+  const { data: authorsForSelect } = api.author.getAllAuthors.useQuery();
+
+  // Lokální stavy
   const [books] = useState(initialBooks);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedGenre, setSelectedGenre] = useState("All");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
+  // Filtrování knih podle zadaných kritérií
   const filteredBooks = useMemo(() => {
     return books.filter((book) => {
       const matchesSearch =
@@ -63,6 +83,25 @@ const AllBooksWrapper: FC = () => {
       return matchesSearch && matchesCategory && matchesGenre;
     });
   }, [books, searchQuery, selectedCategory, selectedGenre]);
+
+  // Počet celkových stránek
+  const totalPages = Math.ceil(filteredBooks.length / ITEMS_PER_PAGE);
+
+  // Pokud se filtr nebo hledaný výraz změní, resetuj stránku na 1
+  // (můžeš to doplnit pomocí useEffect, zde zjednodušeně nechat aktuální logiku)
+
+  // Výpočet knih, které se mají vykreslit na aktuální stránce
+  const paginatedBooks = useMemo(() => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredBooks.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  }, [filteredBooks, currentPage]);
+
+  // Handler pro změnu stránky
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br dark:bg-background">
@@ -100,7 +139,10 @@ const AllBooksWrapper: FC = () => {
               <select
                 className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-indigo-500 dark:bg-stone-600"
                 value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
+                onChange={(e) => {
+                  setSelectedCategory(e.target.value);
+                  setCurrentPage(1);
+                }}
               >
                 {categories.map((category) => (
                   <option key={category} value={category}>
@@ -117,7 +159,10 @@ const AllBooksWrapper: FC = () => {
               <select
                 className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-indigo-500 dark:bg-stone-600"
                 value={selectedGenre}
-                onChange={(e) => setSelectedGenre(e.target.value)}
+                onChange={(e) => {
+                  setSelectedGenre(e.target.value);
+                  setCurrentPage(1);
+                }}
               >
                 {genres.map((genre) => (
                   <option key={genre} value={genre}>
@@ -126,30 +171,13 @@ const AllBooksWrapper: FC = () => {
                 ))}
               </select>
             </div>
-
-            <div>
-              <Label className="mb-2 block text-sm font-medium text-gray-700 dark:text-sky-50">
-                Kategória
-              </Label>
-              <select
-                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-indigo-500 dark:bg-stone-600"
-                value={selectedGenre}
-                onChange={(e) => setSelectedGenre(e.target.value)}
-              >
-                {genres.map((genre) => (
-                  <option key={genre} value={genre}>
-                    {genre}
-                  </option>
-                ))}
-              </select>
-            </div>
-
 
             {(selectedCategory !== "All" || selectedGenre !== "All") && (
               <button
                 onClick={() => {
                   setSelectedCategory("All");
                   setSelectedGenre("All");
+                  setCurrentPage(1);
                 }}
                 className="w-full rounded-lg px-4 py-2 text-sm text-indigo-600 transition-colors dark:text-sky-200"
               >
@@ -181,7 +209,10 @@ const AllBooksWrapper: FC = () => {
                 placeholder="Hľadať knihu..."
                 className="w-full rounded-xl border-0 bg-transparent py-3 pl-12 pr-4 focus:ring-2 focus:ring-indigo-500"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setCurrentPage(1);
+                }}
               />
             </div>
           </div>
@@ -218,54 +249,54 @@ const AllBooksWrapper: FC = () => {
         )}
 
         {/* Books Grid */}
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filteredBooks.map((book) => (
-            <div key={book.id} className="group">
-              <div className="relative mb-4 aspect-[3/4] overflow-hidden rounded-2xl shadow-lg transition-all duration-300 group-hover:shadow-2xl">
-                <Image
-                  src={book.coverUrl}
-                  alt={book.title}
-                  width={60}
-                  height={60}
-                  className="absolute inset-0 h-full w-full transform object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <span
-                      className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${book.available
-                          ? "bg-green-100 text-green-800"
-                          : "bg-red-100 text-red-800"
-                        }`}
-                    >
-                      {book.available ? "Available" : "Checked Out"}
+        {paginatedBooks.length > 0 ? (
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {paginatedBooks.map((book) => (
+              <div key={book.id} className="group">
+                <div className="relative mb-4 aspect-[3/4] overflow-hidden rounded-2xl shadow-lg transition-all duration-300 group-hover:shadow-2xl">
+                  <Image
+                    src={book.coverUrl}
+                    alt={book.title}
+                    width={60}
+                    height={60}
+                    className="absolute inset-0 h-full w-full transform object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                      <span
+                        className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${book.available
+                            ? "bg-green-100 text-green-800"
+                            : "bg-red-100 text-red-800"
+                          }`}
+                      >
+                        {book.available ? "Available" : "Checked Out"}
+                      </span>
+                      <Button variant={"link"} className="text-blue-200">
+                        <Link href="/books/123">Detail Knihy</Link>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+                <div className="px-2">
+                  <h3 className="mb-1 line-clamp-1 text-lg font-semibold text-gray-900 dark:text-sky-50">
+                    {book.title}
+                  </h3>
+                  <p className="mb-2 text-sm text-gray-600 dark:text-sky-50">
+                    by {book.author}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-indigo-600 dark:text-sky-500">
+                      {book.genre}
                     </span>
-                    <Button variant={"link"} className="text-blue-200">
-                      <Link href="/books/123">Detail Knihy</Link>
-                    </Button>
+                    <span className="text-sm text-gray-500 dark:text-stone-400">
+                      {book.category}
+                    </span>
                   </div>
                 </div>
               </div>
-              <div className="px-2">
-                <h3 className="mb-1 line-clamp-1 text-lg font-semibold text-gray-900 dark:text-sky-50">
-                  {book.title}
-                </h3>
-                <p className="mb-2 text-sm text-gray-600 dark:text-sky-50">
-                  by {book.author}
-                </p>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-indigo-600 dark:text-sky-500">
-                    {book.genre}
-                  </span>
-                  <span className="text-sm text-gray-500 dark:text-stone-400">
-                    {book.category}
-                  </span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {filteredBooks.length === 0 && (
+            ))}
+          </div>
+        ) : (
           <div className="py-16 text-center">
             <p className="ml-3 flex items-center justify-center text-xl text-gray-500 dark:text-white">
               <Ghost className="ml-3 h-8 w-8 animate-bounce" /> Žiadne knihy
@@ -273,6 +304,38 @@ const AllBooksWrapper: FC = () => {
             </p>
           </div>
         )}
+
+        <div className="mt-14">
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  className={currentPage === 1 ? "opacity-50 pointer-events-none" : ""}
+                />
+              </PaginationItem>
+              {Array.from({ length: totalPages }, (_, idx) => {
+                const page = idx + 1;
+                return (
+                  <PaginationItem key={page}>
+                    <PaginationLink
+                      onClick={() => handlePageChange(page)}
+                      isActive={page === currentPage}
+                    >
+                      {page}
+                    </PaginationLink>
+                  </PaginationItem>
+                );
+              })}
+              <PaginationItem>
+                <PaginationNext
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  className={currentPage === totalPages ? "opacity-50 pointer-events-none" : ""}
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
       </div>
     </div>
   );
