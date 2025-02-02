@@ -127,6 +127,24 @@ const AllBooksWrapper: FC = () => {
               </select>
             </div>
 
+            <div>
+              <Label className="mb-2 block text-sm font-medium text-gray-700 dark:text-sky-50">
+                Kategória
+              </Label>
+              <select
+                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-indigo-500 dark:bg-stone-600"
+                value={selectedGenre}
+                onChange={(e) => setSelectedGenre(e.target.value)}
+              >
+                {genres.map((genre) => (
+                  <option key={genre} value={genre}>
+                    {genre}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+
             {(selectedCategory !== "All" || selectedGenre !== "All") && (
               <button
                 onClick={() => {
