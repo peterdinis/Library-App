@@ -1,12 +1,12 @@
 import { NextPage } from "next";
-import HomeWrapper from "../_components/home/HomeWrapper";
 import Footer from "../_components/home/Footer";
 import Features from "../_components/home/Features";
+import Hero from "../_components/home/Hero";
 
 const Homepage: NextPage = () => {
   return (
     <>
-      <HomeWrapper />
+      <Hero />
       <Features />
       <Footer />
     </>
