@@ -6,7 +6,6 @@ import Link from "next/link";
 import type { FC } from "react";
 import { Button } from "~/components/ui/button";
 import schollImage from "../../../public/img/main.png";
-import Features from "./Features";
 
 const Hero: FC = () => {
   const homepageVariants = {
