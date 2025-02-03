@@ -3,9 +3,7 @@
 import { X } from "lucide-react";
 import { FC, useState } from "react";
 import { Label } from "~/components/ui/label";
-
-const categories = ["All", "Fiction", "Non-Fiction"];
-const genres = ["All", "Classic", "Science Fiction", "Science", "Biography"];
+import { api } from "~/trpc/react";
 
 type BookSidebarProps = {
   isSidebarOpen: boolean;
@@ -16,8 +14,13 @@ const BookSidebar: FC<BookSidebarProps> = ({
   isSidebarOpen,
   setIsSidebarOpen,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [selectedGenre, setSelectedGenre] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedGenre, setSelectedGenre] = useState("");
+  const [selectedAuthor, setSelectedAuthor] = useState("");
+
+  const {data: categories} = api.category.getAllCategories.useQuery();
+  const {data: genres} = api.genre.getAllGenres.useQuery();
+  const {data: author} = api.author.getAllAuthors.useQuery()
   return (
     <>
       <div
@@ -50,30 +53,13 @@ const BookSidebar: FC<BookSidebarProps> = ({
                   setSelectedCategory(e.target.value);
                 }}
               >
-                {categories.map((category) => (
-                  <option key={category} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <Label className="mb-2 block text-sm font-medium text-gray-700 dark:text-sky-50">
-                Žáner
-              </Label>
-              <select
-                className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 focus:border-transparent focus:ring-2 focus:ring-indigo-500 dark:bg-stone-600"
-                value={selectedGenre}
-                onChange={(e) => {
-                  setSelectedGenre(e.target.value);
-                }}
-              >
-                {genres.map((genre) => (
-                  <option key={genre} value={genre}>
-                    {genre}
-                  </option>
-                ))}
+                {categories?.map((item, index) => {
+                  return (
+                    <option key={index}>
+                        {item.name}
+                    </option>
+                  )
+                })}
               </select>
             </div>
 
