@@ -8,6 +8,15 @@ import { Button } from "~/components/ui/button";
 import BookSidebar from "./BookSidebar";
 import BooksHeader from "./BooksHeader";
 import BookSearch from "./BookSearch";
+import { useFilterStore } from "~/app/_store/bookSidebarStore";
+import {
+  Pagination, 
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "~/components/ui/pagination";
 
 const initialBooks = [
   {
@@ -138,13 +147,12 @@ const AllBooksWrapper = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <div className="absolute bottom-0 left-0 right-0 p-6">
                       <span
-                        className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${
-                          book.available
+                        className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${book.available
                             ? "bg-green-100 text-green-800"
                             : "bg-red-100 text-red-800"
-                        }`}
+                          }`}
                       >
-                        {book.available ? "Available" : "Checked Out"}
+                        {book.available ? "Dostupná" : "Nedostupná"}
                       </span>
                       <Button variant={"link"} className="text-blue-200">
                         <Link href="/books/123">Detail Knihy</Link>
@@ -180,7 +188,21 @@ const AllBooksWrapper = () => {
           </div>
         )}
 
-        <div className="mt-14">TODO: Add later pagination</div>
+        <div className="mt-14">
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious href="#" />
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#">{currentPage}</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationNext href="#" />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
       </div>
     </div>
   );
