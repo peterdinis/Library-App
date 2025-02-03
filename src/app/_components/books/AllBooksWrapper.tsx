@@ -10,7 +10,7 @@ import BooksHeader from "./BooksHeader";
 import BookSearch from "./BookSearch";
 import { useFilterStore } from "~/app/_store/bookSidebarStore";
 import {
-  Pagination, 
+  Pagination,
   PaginationContent,
   PaginationItem,
   PaginationLink,
@@ -147,10 +147,11 @@ const AllBooksWrapper = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <div className="absolute bottom-0 left-0 right-0 p-6">
                       <span
-                        className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${book.available
+                        className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${
+                          book.available
                             ? "bg-green-100 text-green-800"
                             : "bg-red-100 text-red-800"
-                          }`}
+                        }`}
                       >
                         {book.available ? "Dostupná" : "Nedostupná"}
                       </span>
