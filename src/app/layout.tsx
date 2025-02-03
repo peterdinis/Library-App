@@ -7,7 +7,7 @@ import { Toaster } from "~/components/ui/toaster";
 import ScrollToTop from "./_components/shared/ScrollToTop";
 
 export const metadata: Metadata = {
-  title: "SPŠT Knižnica | Bardejov",
+  title: "SPŠT Knižnica Bardejov",
   description:
     "Oficiálna knižnica Strednej priemyselnej školy technickej v Bardejove. Prezrite si dostupné knihy, spravujte výpožičky a objavujte nové tituly.",
   keywords: [
