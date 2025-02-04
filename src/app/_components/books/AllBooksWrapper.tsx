@@ -55,13 +55,13 @@ const AllBooksWrapper = () => {
             setSearchQuery={setSearchQuery}
           />
 
-          <button
+          <Button
             onClick={() => setIsSidebarOpen(true)}
             className="flex items-center gap-2 rounded-2xl bg-white/80 px-4 py-3 shadow-xl backdrop-blur-sm transition-colors hover:bg-white/90 dark:bg-background"
           >
             <SlidersHorizontal className="h-5 w-5" />
             <span className="hidden sm:inline">Filtre</span>
-          </button>
+          </Button>
         </div>
 
         {isLoading ? (
