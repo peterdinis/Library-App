@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { SlidersHorizontal, Ghost } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,7 +8,6 @@ import { Button } from "~/components/ui/button";
 import BookSidebar from "./BookSidebar";
 import BooksHeader from "./BooksHeader";
 import BookSearch from "./BookSearch";
-import { useFilterStore } from "~/app/_store/bookSidebarStore";
 import {
   Pagination,
   PaginationContent,
@@ -17,68 +16,23 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "~/components/ui/pagination";
+import { api } from "~/trpc/react";
 
-const initialBooks = [
-  {
-    id: 1,
-    title: "To Kill a Mockingbird",
-    author: "Harper Lee",
-    category: "Fiction",
-    genre: "Classic",
-    coverUrl:
-      "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=1000",
-    available: true,
-  },
-  {
-    id: 2,
-    title: "1984",
-    author: "George Orwell",
-    category: "Fiction",
-    genre: "Science Fiction",
-    coverUrl:
-      "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&q=80&w=1000",
-    available: true,
-  },
-  {
-    id: 3,
-    title: "A Brief History of Time",
-    author: "Stephen Hawking",
-    category: "Non-Fiction",
-    genre: "Science",
-    coverUrl:
-      "https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&q=80&w=1000",
-    available: false,
-  },
-];
 
 const ITEMS_PER_PAGE = 6;
 
 const AllBooksWrapper = () => {
-  const [books] = useState(initialBooks);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory] = useState("All");
-  const [selectedGenre] = useState("All");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [currentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const filteredBooks = useMemo(() => {
-    return books.filter((book) => {
-      const matchesSearch =
-        book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        book.author.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesCategory =
-        selectedCategory === "All" || book.category === selectedCategory;
-      const matchesGenre =
-        selectedGenre === "All" || book.genre === selectedGenre;
+  const { data, isLoading } = api.book.getPaginatedBooks.useQuery({
+    page: currentPage,
+    pageSize: ITEMS_PER_PAGE,
+  });
 
-      return matchesSearch && matchesCategory && matchesGenre;
-    });
-  }, [books, searchQuery, selectedCategory, selectedGenre]);
-
-  const paginatedBooks = useMemo(() => {
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    return filteredBooks.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-  }, [filteredBooks, currentPage]);
+  const paginatedBooks = data?.books || [];
+  const totalPages = data?.totalPages || 1;
 
   return (
     <div className="min-h-screen bg-gradient-to-br dark:bg-background">
@@ -108,31 +62,12 @@ const AllBooksWrapper = () => {
           >
             <SlidersHorizontal className="h-5 w-5" />
             <span className="hidden sm:inline">Filtre</span>
-            {(selectedCategory !== "All" || selectedGenre !== "All") && (
-              <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-indigo-600 text-xs font-medium text-white">
-                {(selectedCategory !== "All" ? 1 : 0) +
-                  (selectedGenre !== "All" ? 1 : 0)}
-              </span>
-            )}
           </button>
         </div>
 
-        {(selectedCategory !== "All" || selectedGenre !== "All") && (
-          <div className="mx-auto mb-8 flex max-w-3xl flex-wrap gap-2">
-            {selectedCategory !== "All" && (
-              <span className="inline-flex items-center rounded-full bg-indigo-100 px-3 py-1 text-sm text-indigo-800">
-                {selectedCategory}
-              </span>
-            )}
-            {selectedGenre !== "All" && (
-              <span className="inline-flex items-center rounded-full bg-indigo-100 px-3 py-1 text-sm text-indigo-800">
-                {selectedGenre}
-              </span>
-            )}
-          </div>
-        )}
-
-        {paginatedBooks.length > 0 ? (
+        {isLoading ? (
+          <div className="py-16 text-center text-gray-500">Načítava sa...</div>
+        ) : paginatedBooks.length > 0 ? (
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {paginatedBooks.map((book) => (
               <div key={book.id} className="group">
@@ -156,7 +91,7 @@ const AllBooksWrapper = () => {
                         {book.available ? "Dostupná" : "Nedostupná"}
                       </span>
                       <Button variant={"link"} className="text-blue-200">
-                        <Link href="/books/123">Detail Knihy</Link>
+                        <Link href={`/books/${book.id}`}>Detail Knihy</Link>
                       </Button>
                     </div>
                   </div>
@@ -193,13 +128,23 @@ const AllBooksWrapper = () => {
           <Pagination>
             <PaginationContent>
               <PaginationItem>
-                <PaginationPrevious href="#" />
+                <PaginationPrevious
+                  href="#"
+                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                />
               </PaginationItem>
               <PaginationItem>
                 <PaginationLink href="#">{currentPage}</PaginationLink>
               </PaginationItem>
               <PaginationItem>
-                <PaginationNext href="#" />
+                <PaginationNext
+                  href="#"
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                  }
+                  disabled={currentPage === totalPages}
+                />
               </PaginationItem>
             </PaginationContent>
           </Pagination>
