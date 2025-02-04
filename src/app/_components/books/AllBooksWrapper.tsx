@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { SlidersHorizontal, Ghost } from "lucide-react";
+import { SlidersHorizontal, Ghost, Loader2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
@@ -17,7 +17,6 @@ import {
   PaginationPrevious,
 } from "~/components/ui/pagination";
 import { api } from "~/trpc/react";
-
 
 const ITEMS_PER_PAGE = 6;
 
@@ -66,7 +65,7 @@ const AllBooksWrapper = () => {
         </div>
 
         {isLoading ? (
-          <div className="py-16 text-center text-gray-500">Načítava sa...</div>
+          <Loader2 className="h-8 w-8 animate-spin" />
         ) : paginatedBooks.length > 0 ? (
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {paginatedBooks.map((book) => (
@@ -100,17 +99,6 @@ const AllBooksWrapper = () => {
                   <h3 className="mb-1 line-clamp-1 text-lg font-semibold text-gray-900 dark:text-sky-50">
                     {book.title}
                   </h3>
-                  <p className="mb-2 text-sm text-gray-600 dark:text-sky-50">
-                    by {book.author}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-indigo-600 dark:text-sky-500">
-                      {book.genre}
-                    </span>
-                    <span className="text-sm text-gray-500 dark:text-stone-400">
-                      {book.category}
-                    </span>
-                  </div>
                 </div>
               </div>
             ))}
@@ -130,7 +118,9 @@ const AllBooksWrapper = () => {
               <PaginationItem>
                 <PaginationPrevious
                   href="#"
-                  onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(prev - 1, 1))
+                  }
                   disabled={currentPage === 1}
                 />
               </PaginationItem>
