@@ -47,6 +47,7 @@ model Book {
   rating          Int
   coverUrl        String
   description     String
+  isAvaible       Boolean  @default(false)
   totalCopies     Int      @default(1)
   availableCopies Int      @default(0)
   summary         String

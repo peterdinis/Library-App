@@ -82,12 +82,12 @@ const AllBooksWrapper = () => {
                     <div className="absolute bottom-0 left-0 right-0 p-6">
                       <span
                         className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${
-                          book.available
+                          book.isAvaible
                             ? "bg-green-100 text-green-800"
                             : "bg-red-100 text-red-800"
                         }`}
                       >
-                        {book.available ? "Dostupná" : "Nedostupná"}
+                        {book.isAvaible ? "Dostupná" : "Nedostupná"}
                       </span>
                       <Button variant={"link"} className="text-blue-200">
                         <Link href={`/books/${book.id}`}>Detail Knihy</Link>
