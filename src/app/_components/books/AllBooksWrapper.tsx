@@ -77,21 +77,18 @@ const AllBooksWrapper = () => {
                     width={60}
                     height={60}
                     className="absolute inset-0 h-full w-full transform object-cover transition-transform duration-300 group-hover:scale-105"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <div className="absolute bottom-0 left-0 right-0 p-6">
                       <span
-                        className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${
-                          book.isAvaible
-                            ? "bg-green-100 text-green-800"
-                            : "bg-red-100 text-red-800"
-                        }`}
+                        className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${book.isAvaible
+                          ? "bg-green-100 text-green-800"
+                          : "bg-red-100 text-red-800"
+                          }`}
                       >
                         {book.isAvaible ? "Dostupná" : "Nedostupná"}
                       </span>
-                      <Button variant={"link"} className="text-blue-200">
-                        <Link href={`/books/${book.id}`}>Detail Knihy</Link>
-                      </Button>
                     </div>
                   </div>
                 </div>
@@ -99,6 +96,9 @@ const AllBooksWrapper = () => {
                   <h3 className="mb-1 line-clamp-1 text-lg font-semibold text-gray-900 dark:text-sky-50">
                     {book.title}
                   </h3>
+                  <Button variant={"link"} className="text-blue-200">
+                    <Link href={`/books/${book.id}`}>Detail Knihy</Link>
+                  </Button>
                 </div>
               </div>
             ))}
