@@ -26,13 +26,26 @@ const AllBooksWrapper = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data, isLoading } = api.book.getPaginatedBooks.useQuery({
-    page: currentPage,
-    pageSize: ITEMS_PER_PAGE,
-  });
+  // Ak existuje hľadaný výraz, použije sa quickSearchBook, inak sa použije paginované načítanie kníh
+  const { data: searchResults, isLoading: isSearching } =
+    api.book.quickSearchBook.useQuery(searchQuery, {
+      enabled: searchQuery.length > 0,
+    });
 
-  const paginatedBooks = data?.books || [];
-  const totalPages = data?.totalPages || 1;
+  const { data: paginatedData, isLoading: isLoadingPaginated } =
+    api.book.getPaginatedBooks.useQuery(
+      {
+        page: currentPage,
+        pageSize: ITEMS_PER_PAGE,
+      },
+      {
+        enabled: searchQuery.length === 0,
+      },
+    );
+
+  const books = searchQuery.length > 0 ? searchResults : paginatedData?.books || [];
+  const isLoading = searchQuery.length > 0 ? isSearching : isLoadingPaginated;
+  const totalPages = paginatedData?.totalPages || 1;
 
   return (
     <div className="min-h-screen bg-gradient-to-br dark:bg-background">
@@ -43,18 +56,12 @@ const AllBooksWrapper = () => {
         />
       )}
 
-      <BookSidebar
-        isSidebarOpen={isSidebarOpen}
-        setIsSidebarOpen={setIsSidebarOpen}
-      />
+      <BookSidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
 
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <BooksHeader />
         <div className="mx-auto mb-12 flex max-w-3xl gap-4">
-          <BookSearch
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-          />
+          <BookSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
           <Button
             onClick={() => setIsSidebarOpen(true)}
@@ -67,9 +74,9 @@ const AllBooksWrapper = () => {
 
         {isLoading ? (
           <Loader2 className="h-8 w-8 animate-spin" />
-        ) : paginatedBooks.length > 0 ? (
+        ) : books!.length > 0 ? (
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {paginatedBooks.map((book) => (
+            {books!.map((book) => (
               <div key={book.id} className="group">
                 <div className="relative mb-4 aspect-[3/4] overflow-hidden rounded-2xl shadow-lg transition-all duration-300 group-hover:shadow-2xl">
                   <Image
@@ -82,7 +89,11 @@ const AllBooksWrapper = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <div className="absolute bottom-0 left-0 right-0 p-6">
-                      {book.isAvaible ? <Badge variant={"success"}>Dostupná</Badge> : <Badge variant={"destructive"}>Nedostupná</Badge>}
+                      {book.isAvaible ? (
+                        <Badge variant={"success"}>Dostupná</Badge>
+                      ) : (
+                        <Badge variant={"destructive"}>Nedostupná</Badge>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -100,39 +111,36 @@ const AllBooksWrapper = () => {
         ) : (
           <div className="py-16 text-center">
             <p className="ml-3 flex items-center justify-center text-xl text-gray-500 dark:text-white">
-              <Ghost className="ml-3 h-8 w-8 animate-bounce" /> Žiadne knihy
-              neboli nájdené
+              <Ghost className="ml-3 h-8 w-8 animate-bounce" /> Žiadne knihy neboli nájdené
             </p>
           </div>
         )}
 
-        <div className="mt-14">
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious
-                  href="#"
-                  onClick={() =>
-                    setCurrentPage((prev) => Math.max(prev - 1, 1))
-                  }
-                  disabled={currentPage === 1}
-                />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">{currentPage}</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext
-                  href="#"
-                  onClick={() =>
-                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                  }
-                  disabled={currentPage === totalPages}
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </div>
+        {searchQuery.length === 0 && (
+          <div className="mt-14">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    href="#"
+                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                  />
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationLink href="#">{currentPage}</PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationNext
+                    href="#"
+                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                    disabled={currentPage === totalPages}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
       </div>
     </div>
   );
