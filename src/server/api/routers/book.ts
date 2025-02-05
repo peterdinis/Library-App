@@ -3,19 +3,16 @@ import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { db } from "~/server/db";
 
 export const bookRouter = createTRPCRouter({
-  // Get all books
   getAllBooks: publicProcedure.query(async () => {
     return await db.book.findMany();
   }),
 
-  // Get book detail
   getBookDetail: publicProcedure.input(z.string()).query(async ({ input }) => {
     return await db.book.findUnique({
       where: { id: input },
     });
   }),
 
-  // Quick search book
   quickSearchBook: publicProcedure
     .input(z.string())
     .query(async ({ input }) => {
@@ -28,7 +25,34 @@ export const bookRouter = createTRPCRouter({
         },
       });
     }),
-  // Create book
+
+  getPaginatedBooks: publicProcedure
+    .input(
+      z.object({
+        page: z.number().min(1),
+        pageSize: z.number().min(1).max(100),
+      }),
+    )
+    .query(async ({ input }) => {
+      const { page, pageSize } = input;
+      const skip = (page - 1) * pageSize;
+
+      const books = await db.book.findMany({
+        skip,
+        take: pageSize,
+        orderBy: { title: "asc" },
+      });
+
+      const totalBooks = await db.book.count();
+
+      return {
+        books,
+        totalBooks,
+        totalPages: Math.ceil(totalBooks / pageSize),
+        currentPage: page,
+      };
+    }),
+
   createBook: publicProcedure
     .input(
       z.object({
@@ -63,7 +87,6 @@ export const bookRouter = createTRPCRouter({
       });
     }),
 
-  // Delete book
   deleteBook: publicProcedure.input(z.string()).mutation(async ({ input }) => {
     return await db.book.delete({ where: { id: input } });
   }),

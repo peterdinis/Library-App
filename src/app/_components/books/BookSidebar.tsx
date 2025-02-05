@@ -11,9 +11,17 @@ type BookSidebarProps = {
   setIsSidebarOpen: (isSidebarOpen: boolean) => void;
 };
 
-const BookSidebar: FC<BookSidebarProps> = ({ isSidebarOpen, setIsSidebarOpen }) => {
-  const { selectedCategory, selectedGenre, selectedAuthor, setFilters, clearFilters } =
-    useFilterStore();
+const BookSidebar: FC<BookSidebarProps> = ({
+  isSidebarOpen,
+  setIsSidebarOpen,
+}) => {
+  const {
+    selectedCategory,
+    selectedGenre,
+    selectedAuthor,
+    setFilters,
+    clearFilters,
+  } = useFilterStore();
 
   const { data: categories } = api.category.getAllCategories.useQuery();
   const { data: genres } = api.genre.getAllGenres.useQuery();
@@ -27,8 +35,13 @@ const BookSidebar: FC<BookSidebarProps> = ({ isSidebarOpen, setIsSidebarOpen }) 
     >
       <div className="p-6">
         <div className="mb-8 flex items-center justify-between">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-sky-50">Filtre</h2>
-          <button onClick={() => setIsSidebarOpen(false)} className="rounded-full p-2 transition-colors">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-sky-50">
+            Filtre
+          </h2>
+          <button
+            onClick={() => setIsSidebarOpen(false)}
+            className="rounded-full p-2 transition-colors"
+          >
             <X className="h-5 w-5 text-gray-500" />
           </button>
         </div>
@@ -41,7 +54,9 @@ const BookSidebar: FC<BookSidebarProps> = ({ isSidebarOpen, setIsSidebarOpen }) 
             <select
               className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 focus:ring-2 focus:ring-indigo-500 dark:bg-stone-600"
               value={selectedGenre}
-              onChange={(e) => setFilters(selectedCategory, e.target.value, selectedAuthor)}
+              onChange={(e) =>
+                setFilters(selectedCategory, e.target.value, selectedAuthor)
+              }
             >
               <option value="">Vyber žáner</option>
               {genres?.map((item) => (
@@ -59,7 +74,9 @@ const BookSidebar: FC<BookSidebarProps> = ({ isSidebarOpen, setIsSidebarOpen }) 
             <select
               className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 focus:ring-2 focus:ring-indigo-500 dark:bg-stone-600"
               value={selectedAuthor}
-              onChange={(e) => setFilters(selectedCategory, selectedGenre, e.target.value)}
+              onChange={(e) =>
+                setFilters(selectedCategory, selectedGenre, e.target.value)
+              }
             >
               <option value="">Vyber autora</option>
               {authors?.map((item) => (
@@ -77,7 +94,9 @@ const BookSidebar: FC<BookSidebarProps> = ({ isSidebarOpen, setIsSidebarOpen }) 
             <select
               className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 focus:ring-2 focus:ring-indigo-500 dark:bg-stone-600"
               value={selectedCategory}
-              onChange={(e) => setFilters(e.target.value, selectedGenre, selectedAuthor)}
+              onChange={(e) =>
+                setFilters(e.target.value, selectedGenre, selectedAuthor)
+              }
             >
               <option value="">Vyber kategóriu</option>
               {categories?.map((item) => (
@@ -87,7 +106,7 @@ const BookSidebar: FC<BookSidebarProps> = ({ isSidebarOpen, setIsSidebarOpen }) 
               ))}
             </select>
           </div>
-          
+
           {(selectedCategory || selectedGenre || selectedAuthor) && (
             <button
               onClick={clearFilters}

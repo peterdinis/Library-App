@@ -1,84 +1,51 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { SlidersHorizontal, Ghost } from "lucide-react";
+import { useState } from "react";
+import { SlidersHorizontal, Ghost, Loader2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
 import BookSidebar from "./BookSidebar";
 import BooksHeader from "./BooksHeader";
 import BookSearch from "./BookSearch";
-import { useFilterStore } from "~/app/_store/bookSidebarStore";
 import {
-  Pagination, 
+  Pagination,
   PaginationContent,
   PaginationItem,
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "~/components/ui/pagination";
-
-const initialBooks = [
-  {
-    id: 1,
-    title: "To Kill a Mockingbird",
-    author: "Harper Lee",
-    category: "Fiction",
-    genre: "Classic",
-    coverUrl:
-      "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=1000",
-    available: true,
-  },
-  {
-    id: 2,
-    title: "1984",
-    author: "George Orwell",
-    category: "Fiction",
-    genre: "Science Fiction",
-    coverUrl:
-      "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&q=80&w=1000",
-    available: true,
-  },
-  {
-    id: 3,
-    title: "A Brief History of Time",
-    author: "Stephen Hawking",
-    category: "Non-Fiction",
-    genre: "Science",
-    coverUrl:
-      "https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&q=80&w=1000",
-    available: false,
-  },
-];
+import { api } from "~/trpc/react";
+import { Badge } from "~/components/ui/badge";
 
 const ITEMS_PER_PAGE = 6;
 
 const AllBooksWrapper = () => {
-  const [books] = useState(initialBooks);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory] = useState("All");
-  const [selectedGenre] = useState("All");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [currentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const filteredBooks = useMemo(() => {
-    return books.filter((book) => {
-      const matchesSearch =
-        book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        book.author.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesCategory =
-        selectedCategory === "All" || book.category === selectedCategory;
-      const matchesGenre =
-        selectedGenre === "All" || book.genre === selectedGenre;
-
-      return matchesSearch && matchesCategory && matchesGenre;
+  // Ak existuje hľadaný výraz, použije sa quickSearchBook, inak sa použije paginované načítanie kníh
+  const { data: searchResults, isLoading: isSearching } =
+    api.book.quickSearchBook.useQuery(searchQuery, {
+      enabled: searchQuery.length > 0,
     });
-  }, [books, searchQuery, selectedCategory, selectedGenre]);
 
-  const paginatedBooks = useMemo(() => {
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    return filteredBooks.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-  }, [filteredBooks, currentPage]);
+  const { data: paginatedData, isLoading: isLoadingPaginated } =
+    api.book.getPaginatedBooks.useQuery(
+      {
+        page: currentPage,
+        pageSize: ITEMS_PER_PAGE,
+      },
+      {
+        enabled: searchQuery.length === 0,
+      },
+    );
+
+  const books = searchQuery.length > 0 ? searchResults : paginatedData?.books || [];
+  const isLoading = searchQuery.length > 0 ? isSearching : isLoadingPaginated;
+  const totalPages = paginatedData?.totalPages || 1;
 
   return (
     <div className="min-h-screen bg-gradient-to-br dark:bg-background">
@@ -89,52 +56,27 @@ const AllBooksWrapper = () => {
         />
       )}
 
-      <BookSidebar
-        isSidebarOpen={isSidebarOpen}
-        setIsSidebarOpen={setIsSidebarOpen}
-      />
+      <BookSidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
 
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <BooksHeader />
         <div className="mx-auto mb-12 flex max-w-3xl gap-4">
-          <BookSearch
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-          />
+          <BookSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
-          <button
+          <Button
             onClick={() => setIsSidebarOpen(true)}
             className="flex items-center gap-2 rounded-2xl bg-white/80 px-4 py-3 shadow-xl backdrop-blur-sm transition-colors hover:bg-white/90 dark:bg-background"
           >
             <SlidersHorizontal className="h-5 w-5" />
             <span className="hidden sm:inline">Filtre</span>
-            {(selectedCategory !== "All" || selectedGenre !== "All") && (
-              <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-indigo-600 text-xs font-medium text-white">
-                {(selectedCategory !== "All" ? 1 : 0) +
-                  (selectedGenre !== "All" ? 1 : 0)}
-              </span>
-            )}
-          </button>
+          </Button>
         </div>
 
-        {(selectedCategory !== "All" || selectedGenre !== "All") && (
-          <div className="mx-auto mb-8 flex max-w-3xl flex-wrap gap-2">
-            {selectedCategory !== "All" && (
-              <span className="inline-flex items-center rounded-full bg-indigo-100 px-3 py-1 text-sm text-indigo-800">
-                {selectedCategory}
-              </span>
-            )}
-            {selectedGenre !== "All" && (
-              <span className="inline-flex items-center rounded-full bg-indigo-100 px-3 py-1 text-sm text-indigo-800">
-                {selectedGenre}
-              </span>
-            )}
-          </div>
-        )}
-
-        {paginatedBooks.length > 0 ? (
+        {isLoading ? (
+          <Loader2 className="h-8 w-8 animate-spin" />
+        ) : books!.length > 0 ? (
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {paginatedBooks.map((book) => (
+            {books!.map((book) => (
               <div key={book.id} className="group">
                 <div className="relative mb-4 aspect-[3/4] overflow-hidden rounded-2xl shadow-lg transition-all duration-300 group-hover:shadow-2xl">
                   <Image
@@ -143,20 +85,15 @@ const AllBooksWrapper = () => {
                     width={60}
                     height={60}
                     className="absolute inset-0 h-full w-full transform object-cover transition-transform duration-300 group-hover:scale-105"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <span
-                        className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${book.available
-                            ? "bg-green-100 text-green-800"
-                            : "bg-red-100 text-red-800"
-                          }`}
-                      >
-                        {book.available ? "Dostupná" : "Nedostupná"}
-                      </span>
-                      <Button variant={"link"} className="text-blue-200">
-                        <Link href="/books/123">Detail Knihy</Link>
-                      </Button>
+                      {book.isAvaible ? (
+                        <Badge variant={"success"}>Dostupná</Badge>
+                      ) : (
+                        <Badge variant={"destructive"}>Nedostupná</Badge>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -164,17 +101,9 @@ const AllBooksWrapper = () => {
                   <h3 className="mb-1 line-clamp-1 text-lg font-semibold text-gray-900 dark:text-sky-50">
                     {book.title}
                   </h3>
-                  <p className="mb-2 text-sm text-gray-600 dark:text-sky-50">
-                    by {book.author}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-indigo-600 dark:text-sky-500">
-                      {book.genre}
-                    </span>
-                    <span className="text-sm text-gray-500 dark:text-stone-400">
-                      {book.category}
-                    </span>
-                  </div>
+                  <Button variant={"link"} className="text-blue-200">
+                    <Link href={`/books/${book.id}`}>Detail Knihy</Link>
+                  </Button>
                 </div>
               </div>
             ))}
@@ -182,27 +111,36 @@ const AllBooksWrapper = () => {
         ) : (
           <div className="py-16 text-center">
             <p className="ml-3 flex items-center justify-center text-xl text-gray-500 dark:text-white">
-              <Ghost className="ml-3 h-8 w-8 animate-bounce" /> Žiadne knihy
-              neboli nájdené
+              <Ghost className="ml-3 h-8 w-8 animate-bounce" /> Žiadne knihy neboli nájdené
             </p>
           </div>
         )}
 
-        <div className="mt-14">
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious href="#" />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#">{currentPage}</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext href="#" />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </div>
+        {searchQuery.length === 0 && (
+          <div className="mt-14">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    href="#"
+                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                  />
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationLink href="#">{currentPage}</PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationNext
+                    href="#"
+                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                    disabled={currentPage === totalPages}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
       </div>
     </div>
   );

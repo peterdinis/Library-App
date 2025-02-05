@@ -14,10 +14,19 @@ export const useFilterStore = create<FilterState>((set, get) => ({
   selectedGenre: "",
   selectedAuthor: "",
   setFilters: (category, genre, author) =>
-    set({ selectedCategory: category, selectedGenre: genre, selectedAuthor: author }),
-  clearFilters: () => set({ selectedCategory: "", selectedGenre: "", selectedAuthor: "" }),
+    set({
+      selectedCategory: category,
+      selectedGenre: genre,
+      selectedAuthor: author,
+    }),
+  clearFilters: () =>
+    set({ selectedCategory: "", selectedGenre: "", selectedAuthor: "" }),
   getFilters: () => {
     const { selectedCategory, selectedGenre, selectedAuthor } = get();
-    return { category: selectedCategory, genre: selectedGenre, author: selectedAuthor };
+    return {
+      category: selectedCategory,
+      genre: selectedGenre,
+      author: selectedAuthor,
+    };
   },
 }));
