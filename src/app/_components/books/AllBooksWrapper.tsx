@@ -17,6 +17,7 @@ import {
   PaginationPrevious,
 } from "~/components/ui/pagination";
 import { api } from "~/trpc/react";
+import { Badge } from "~/components/ui/badge";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -81,14 +82,7 @@ const AllBooksWrapper = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <span
-                        className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${book.isAvaible
-                          ? "bg-green-100 text-green-800"
-                          : "bg-red-100 text-red-800"
-                          }`}
-                      >
-                        {book.isAvaible ? "Dostupná" : "Nedostupná"}
-                      </span>
+                      {book.isAvaible ? <Badge variant={"success"}>Dostupná</Badge> : <Badge variant={"destructive"}>Nedostupná</Badge>}
                     </div>
                   </div>
                 </div>
