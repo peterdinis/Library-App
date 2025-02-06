@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   },
 };
 
-const Layout = async ({ children }: { children: ReactNode }) => {
+const AuthLayout = async ({ children }: { children: ReactNode }) => {
   return (
     <main>
       <ThemeProvider
@@ -61,4 +61,4 @@ const Layout = async ({ children }: { children: ReactNode }) => {
   );
 };
 
-export default Layout;
+export default AuthLayout;
