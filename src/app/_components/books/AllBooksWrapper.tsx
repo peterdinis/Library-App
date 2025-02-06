@@ -43,7 +43,8 @@ const AllBooksWrapper = () => {
       },
     );
 
-  const books = searchQuery.length > 0 ? searchResults : paginatedData?.books || [];
+  const books =
+    searchQuery.length > 0 ? searchResults : paginatedData?.books || [];
   const isLoading = searchQuery.length > 0 ? isSearching : isLoadingPaginated;
   const totalPages = paginatedData?.totalPages || 1;
 
@@ -56,12 +57,18 @@ const AllBooksWrapper = () => {
         />
       )}
 
-      <BookSidebar isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+      <BookSidebar
+        isSidebarOpen={isSidebarOpen}
+        setIsSidebarOpen={setIsSidebarOpen}
+      />
 
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <BooksHeader />
         <div className="mx-auto mb-12 flex max-w-3xl gap-4">
-          <BookSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+          <BookSearch
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
 
           <Button
             onClick={() => setIsSidebarOpen(true)}
@@ -111,7 +118,8 @@ const AllBooksWrapper = () => {
         ) : (
           <div className="py-16 text-center">
             <p className="ml-3 flex items-center justify-center text-xl text-gray-500 dark:text-white">
-              <Ghost className="ml-3 h-8 w-8 animate-bounce" /> Žiadne knihy neboli nájdené
+              <Ghost className="ml-3 h-8 w-8 animate-bounce" /> Žiadne knihy
+              neboli nájdené
             </p>
           </div>
         )}
@@ -123,7 +131,9 @@ const AllBooksWrapper = () => {
                 <PaginationItem>
                   <PaginationPrevious
                     href="#"
-                    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.max(prev - 1, 1))
+                    }
                     disabled={currentPage === 1}
                   />
                 </PaginationItem>
@@ -133,7 +143,9 @@ const AllBooksWrapper = () => {
                 <PaginationItem>
                   <PaginationNext
                     href="#"
-                    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                    }
                     disabled={currentPage === totalPages}
                   />
                 </PaginationItem>
