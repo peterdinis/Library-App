@@ -104,7 +104,7 @@ const Header: FC = () => {
                 <TooltipProvider>
                   {navigationItems.map((item) => (
                     <Tooltip key={item.href}>
-                      <TooltipTrigger>
+                      <TooltipTrigger asChild>
                         <Link
                           href={item.href}
                           onClick={() => setIsOpen(false)}
@@ -162,7 +162,7 @@ const Header: FC = () => {
               <li key={item.href}>
                 <TooltipProvider>
                   <Tooltip>
-                    <TooltipTrigger>
+                    <TooltipTrigger asChild>
                       <Link
                         href={item.href}
                         className={cn(
@@ -187,7 +187,7 @@ const Header: FC = () => {
           {navigationItems.map((item) => (
             <TooltipProvider key={item.href}>
               <Tooltip>
-                <TooltipTrigger>
+                <TooltipTrigger asChild>
                   <Link
                     href={item.href}
                     className={cn(
@@ -209,7 +209,7 @@ const Header: FC = () => {
         <div className="flex items-center gap-1">
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <QuickSearch />
               </TooltipTrigger>
               <TooltipContent>Vyhľadať knihu</TooltipContent>
@@ -217,7 +217,7 @@ const Header: FC = () => {
           </TooltipProvider>
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                   <ProfileDropdown />
               </TooltipTrigger>
               <TooltipContent>Profil</TooltipContent>
