@@ -1,11 +1,22 @@
-import { NextPage } from "next";
+"use client"
 
-const SignUpPage: NextPage = () => {
+import { NextPage } from "next";
+import AuthForm from "~/app/_components/auth/AuthForm";
+import { signUpSchema } from "~/app/_schemas/authSchema";
+
+const SignupPage: NextPage = () => {
     return (
-        <>
-            Sign-Up
-        </>
+        <AuthForm
+    type="SIGN_UP"
+    schema={signUpSchema}
+    defaultValues={{
+      email: "",
+      password: "",
+      fullName: "",
+      class: ""
+    }}
+  />
     )
 }
 
-export default SignUpPage
+export default SignupPage
