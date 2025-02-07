@@ -19,6 +19,7 @@
     "lint:fix": "next lint --fix",
     "preview": "next build && next start",
     "start": "next start",
+    "test": "cypress open",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -70,6 +71,7 @@
     "@types/react-dom": "^18.3.5",
     "@typescript-eslint/eslint-plugin": "^8.22.0",
     "@typescript-eslint/parser": "^8.22.0",
+    "cypress": "^14.0.2",
     "eslint": "^8.57.1",
     "eslint-config-next": "^15.1.6",
     "postcss": "^8.5.1",
