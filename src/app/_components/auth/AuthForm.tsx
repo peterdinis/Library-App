@@ -20,7 +20,8 @@ import { FIELD_NAMES } from "~/app/_contstants";
 interface Props<T extends FieldValues> {
   schema: ZodType<T>;
   defaultValues: T;
-  onSubmit: (data: T) => Promise<{ success: boolean; error?: string }>;
+  // Optional for now later required
+  onSubmit?: (data: T) => Promise<{ success: boolean; error?: string }>;
   type: "SIGN_IN" | "SIGN_UP";
 }
 
@@ -41,7 +42,7 @@ const AuthForm = <T extends FieldValues>({
   });
 
   const handleSubmit: SubmitHandler<T> = async (data) => {
-    const result = await onSubmit(data);
+    const result = await onSubmit!(data);
 
     if (result.success) {
       toast({
