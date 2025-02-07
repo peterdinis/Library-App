@@ -26,7 +26,7 @@ const AllBooksWrapper = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Ak existuje hľadaný výraz, použije sa quickSearchBook, inak sa použije paginované načítanie kníh
+
   const { data: searchResults, isLoading: isSearching } =
     api.book.quickSearchBook.useQuery(searchQuery, {
       enabled: searchQuery.length > 0,
@@ -72,7 +72,7 @@ const AllBooksWrapper = () => {
 
           <Button
             onClick={() => setIsSidebarOpen(true)}
-            className="flex items-center gap-2 rounded-2xl bg-white/80 px-4 py-3 shadow-xl backdrop-blur-sm transition-colors hover:bg-white/90 dark:bg-background"
+            className="flex items-center gap-2 rounded-2xl dark:text-sky-50 bg-white/80 px-4 py-3 text-black shadow-xl backdrop-blur-sm transition-colors hover:bg-white/90 dark:bg-background"
           >
             <SlidersHorizontal className="h-5 w-5" />
             <span className="hidden sm:inline">Filtre</span>
