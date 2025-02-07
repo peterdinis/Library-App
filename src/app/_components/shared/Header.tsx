@@ -88,7 +88,6 @@ const Header: FC = () => {
                   strokeLinejoin="round"
                 ></path>
               </svg>
-              <span className="sr-only">Toggle Menu</span>
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-[300px] pr-0">
@@ -105,7 +104,7 @@ const Header: FC = () => {
                 <TooltipProvider>
                   {navigationItems.map((item) => (
                     <Tooltip key={item.href}>
-                      <TooltipTrigger>
+                      <TooltipTrigger asChild>
                         <Link
                           href={item.href}
                           onClick={() => setIsOpen(false)}
@@ -163,7 +162,7 @@ const Header: FC = () => {
               <li key={item.href}>
                 <TooltipProvider>
                   <Tooltip>
-                    <TooltipTrigger>
+                    <TooltipTrigger asChild>
                       <Link
                         href={item.href}
                         className={cn(
@@ -188,7 +187,7 @@ const Header: FC = () => {
           {navigationItems.map((item) => (
             <TooltipProvider key={item.href}>
               <Tooltip>
-                <TooltipTrigger>
+                <TooltipTrigger asChild>
                   <Link
                     href={item.href}
                     className={cn(
@@ -210,7 +209,7 @@ const Header: FC = () => {
         <div className="flex items-center gap-1">
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <QuickSearch />
               </TooltipTrigger>
               <TooltipContent>Vyhľadať knihu</TooltipContent>
@@ -218,14 +217,8 @@ const Header: FC = () => {
           </TooltipProvider>
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="ml-3 h-9 w-9 hover:bg-accent lg:h-10 lg:w-10"
-                >
+              <TooltipTrigger asChild>
                   <ProfileDropdown />
-                </Button>
               </TooltipTrigger>
               <TooltipContent>Profil</TooltipContent>
             </Tooltip>
