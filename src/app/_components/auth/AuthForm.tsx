@@ -13,7 +13,7 @@ import { ZodType } from "zod";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useToast } from "~/hooks/use-toast";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "~/components/ui/form";
+import { Form, FormMessage, FormField, FormItem, FormLabel } from "~/components/ui/form";
 import { Button } from "~/components/ui/button";
 
 interface Props<T extends FieldValues> {
@@ -46,8 +46,8 @@ const AuthForm = <T extends FieldValues>({
       toast({
         title: "Success",
         description: isSignIn
-          ? "You have successfully signed in."
-          : "You have successfully signed up.",
+          ? "Prihlásenie bolo úspešné"
+          : "Registrácia bola úspešná.",
       });
 
       router.push("/");
@@ -63,13 +63,8 @@ const AuthForm = <T extends FieldValues>({
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-2xl font-semibold text-white">
-        {isSignIn ? "Welcome back to BookWise" : "Create your library account"}
+        {isSignIn ? "Vitajte v SPŠT Knižnica" : "Zaregistrujte sa"}
       </h1>
-      <p className="text-light-100">
-        {isSignIn
-          ? "Access the vast collection of resources, and stay updated"
-          : "Please complete all fields and upload a valid university ID to gain access to the library"}
-      </p>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleSubmit)}
@@ -91,8 +86,8 @@ const AuthForm = <T extends FieldValues>({
             />
           ))}
 
-          <Button type="submit" className="form-btn">
-            {isSignIn ? "Sign In" : "Sign Up"}
+          <Button variant={"default"} size={"lg"} type="submit">
+            {isSignIn ? "Prihlásenie" : "Registrácia"}
           </Button>
         </form>
       </Form>
