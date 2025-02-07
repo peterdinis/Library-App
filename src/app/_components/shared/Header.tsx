@@ -88,7 +88,6 @@ const Header: FC = () => {
                   strokeLinejoin="round"
                 ></path>
               </svg>
-              <span className="sr-only">Toggle Menu</span>
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-[300px] pr-0">
@@ -219,13 +218,7 @@ const Header: FC = () => {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="ml-3 h-9 w-9 hover:bg-accent lg:h-10 lg:w-10"
-                >
                   <ProfileDropdown />
-                </Button>
               </TooltipTrigger>
               <TooltipContent>Profil</TooltipContent>
             </Tooltip>
