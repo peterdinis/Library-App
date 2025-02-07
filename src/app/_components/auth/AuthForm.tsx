@@ -10,21 +10,11 @@ import {
   UseFormReturn,
 } from "react-hook-form";
 import { ZodType } from "zod";
-
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import Link from "next/link";
-
-import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { useToast } from "~/hooks/use-toast";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "~/components/ui/form";
+import { Button } from "~/components/ui/button";
 
 interface Props<T extends FieldValues> {
   schema: ZodType<T>;
@@ -39,6 +29,7 @@ const AuthForm = <T extends FieldValues>({
   defaultValues,
   onSubmit,
 }: Props<T>) => {
+  const {toast} = useToast()
   const router = useRouter();
 
   const isSignIn = type === "SIGN_IN";
@@ -94,27 +85,6 @@ const AuthForm = <T extends FieldValues>({
                   <FormLabel className="capitalize">
                     {FIELD_NAMES[field.name as keyof typeof FIELD_NAMES]}
                   </FormLabel>
-                  <FormControl>
-                    {field.name === "universityCard" ? (
-                      <FileUpload
-                        type="image"
-                        accept="image/*"
-                        placeholder="Upload your ID"
-                        folder="ids"
-                        variant="dark"
-                        onFileChange={field.onChange}
-                      />
-                    ) : (
-                      <Input
-                        required
-                        type={
-                          FIELD_TYPES[field.name as keyof typeof FIELD_TYPES]
-                        }
-                        {...field}
-                        className="form-input"
-                      />
-                    )}
-                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
