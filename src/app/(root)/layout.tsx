@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Toaster } from "~/components/ui/toaster";
-import Header from "../_components/shared/Header";
+import Header from "../_components/shared/Navigation";
 import ScrollToTop from "../_components/shared/ScrollToTop";
 import { ThemeProvider } from "../_components/shared/providers/theme-provider";
 

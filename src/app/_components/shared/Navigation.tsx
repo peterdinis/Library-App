@@ -45,7 +45,7 @@ const navigationItems = [
 	},
 ];
 
-const Header: FC = () => {
+const Navigation: FC = () => {
 	const pathname = usePathname();
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -232,4 +232,4 @@ const Header: FC = () => {
 	);
 };
 
-export default Header;
+export default Navigation
