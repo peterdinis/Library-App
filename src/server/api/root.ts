@@ -1,7 +1,7 @@
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
+import { authorRouter } from "./routers/author";
 import { bookRouter } from "./routers/book";
 import { categoryRouter } from "./routers/category";
-import { authorRouter } from "./routers/author";
 import { genreRouter } from "./routers/genre";
 import { userRouter } from "./routers/user";
 
@@ -11,11 +11,11 @@ import { userRouter } from "./routers/user";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  book: bookRouter,
-  category: categoryRouter,
-  author: authorRouter,
-  genre: genreRouter,
-  user: userRouter
+	book: bookRouter,
+	category: categoryRouter,
+	author: authorRouter,
+	genre: genreRouter,
+	user: userRouter,
 });
 
 // export type definition of API
