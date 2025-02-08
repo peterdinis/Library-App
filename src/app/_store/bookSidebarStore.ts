@@ -6,17 +6,22 @@ interface FilterState {
 	selectedAuthor?: string;
 	setFilters: (filters: Partial<FilterState>) => void;
 	clearFilters: () => void;
+	filters: () => Partial<FilterState>; 
 }
 
-export const useFilterStore = create<FilterState>((set) => ({
+export const useFilterStore = create<FilterState>((set, get) => ({
 	selectedCategory: undefined,
 	selectedGenre: undefined,
 	selectedAuthor: undefined,
+
 	setFilters: (filters) => set((state) => ({ ...state, ...filters })),
+
 	clearFilters: () =>
 		set({
 			selectedCategory: undefined,
 			selectedGenre: undefined,
 			selectedAuthor: undefined,
 		}),
+
+		filters: () => get(), 
 }));

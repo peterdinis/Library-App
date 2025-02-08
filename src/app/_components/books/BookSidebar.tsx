@@ -35,40 +35,52 @@ const BookSidebar: FC<BookSidebarProps> = ({
 			</button>
 
 			<div className="space-y-4 p-4">
-				<Label>Kategória</Label>
-				{categories?.map((category) => (
-					<button
-						key={category.id}
-						onClick={() => handleFilterChange("categoryId", category.id)}
-						className="block"
-					>
-						{category.name}
-					</button>
-				))}
+				<Label htmlFor="category">Kategória</Label>
+				<select
+					id="category"
+					className="w-full p-2 border rounded"
+					onChange={(e) => handleFilterChange("categoryId", e.target.value)}
+				>
+					<option value="">Vyber kategóriu</option>
+					{categories?.map((category) => (
+						<option key={category.id} value={category.id}>
+							{category.name}
+						</option>
+					))}
+				</select>
 
-				<Label>Žáner</Label>
-				{genres?.map((genre) => (
-					<button
-						key={genre.id}
-						onClick={() => handleFilterChange("genreId", genre.id)}
-						className="block"
-					>
-						{genre.name}
-					</button>
-				))}
+				<Label htmlFor="genre">Žáner</Label>
+				<select
+					id="genre"
+					className="w-full p-2 border rounded"
+					onChange={(e) => handleFilterChange("genreId", e.target.value)}
+				>
+					<option value="">Vyber žáner</option>
+					{genres?.map((genre) => (
+						<option key={genre.id} value={genre.id}>
+							{genre.name}
+						</option>
+					))}
+				</select>
 
-				<Label>Autor</Label>
-				{authors?.map((author) => (
-					<button
-						key={author.id}
-						onClick={() => handleFilterChange("authorId", author.id)}
-						className="block"
-					>
-						{author.name}
-					</button>
-				))}
+				<Label htmlFor="author">Autor</Label>
+				<select
+					id="author"
+					className="w-full p-2 border rounded"
+					onChange={(e) => handleFilterChange("authorId", e.target.value)}
+				>
+					<option value="">Vyber autora</option>
+					{authors?.map((author) => (
+						<option key={author.id} value={author.id}>
+							{author.name}
+						</option>
+					))}
+				</select>
 
-				<button onClick={clearFilters} className="mt-4 text-red-500">
+				<button
+					onClick={clearFilters}
+					className="mt-4 w-full p-2 bg-red-500 text-white rounded"
+				>
 					Vymazať filtre
 				</button>
 			</div>
