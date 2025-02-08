@@ -41,6 +41,10 @@ export const authConfig = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
+  session: {
+    strategy: "jwt",
+  },
+  debug: true,
   adapter: PrismaAdapter(db),
   callbacks: {
     session: ({ session, user }) => ({
