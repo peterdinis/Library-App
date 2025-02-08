@@ -54,7 +54,6 @@ const QuickSearch: FC = () => {
 						value={searchQuery}
 						onChange={handleSearchInputChange}
 					/>
-					<Button>Hľadať knihu</Button>
 				</div>
 				<div className="py-4">
 					{isLoading && <Loader2 className="animate-spin" />}
@@ -63,7 +62,7 @@ const QuickSearch: FC = () => {
 							<Frown /> Nastala chyba na strane applikácie
 						</p>
 					)}
-					{!isError && books && books.length > 0 ? (
+					{!isError && books && books.length > 0 && (
 						<ul className="space-y-3">
 							{books.map((book) => (
 								<li
@@ -71,17 +70,19 @@ const QuickSearch: FC = () => {
 									className="cursor-pointer rounded-md border p-3 transition-all hover:bg-gray-100"
 								>
 									<p className="text-lg font-semibold text-blue-600">
-										<Link href={`/books/${book.id}`}>{book.title}</Link>
+										<Link
+											href={`/books/${book.id}`}
+											onClick={() => {
+												setSearchQuery("")
+												setIsSearchOpen(false);
+											}}
+										>
+											{book.title}
+										</Link>
 									</p>
 								</li>
 							))}
 						</ul>
-					) : (
-						isError && !isLoading && searchQuery.length > 2 && (
-							<p className="text-center text-xl font-bold text-gray-500">
-								<Ghost className="animate-bounce" /> Kniha sa nenašla
-							</p>
-						)
 					)}
 				</div>
 			</DialogContent>
