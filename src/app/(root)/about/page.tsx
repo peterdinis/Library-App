@@ -1,8 +1,8 @@
-import { NextPage } from "next";
+import type { NextPage } from "next";
 import AboutWrapper from "~/app/_components/about/AboutWrapper";
 
 const AboutPage: NextPage = () => {
-  return <AboutWrapper />;
+	return <AboutWrapper />;
 };
 
 export default AboutPage;
