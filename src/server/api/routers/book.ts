@@ -26,41 +26,41 @@ export const bookRouter = createTRPCRouter({
 			});
 		}),
 
-	getPaginatedBooks: publicProcedure
+		getPaginatedBooks: publicProcedure
 		.input(
-			z.object({
-				page: z.number().min(1),
-				pageSize: z.number().min(1).max(100),
-				categoryId: z.string().optional(),
-				genreId: z.string().optional(),
-				authorId: z.string().optional(),
-			}),
+		  z.object({
+			page: z.number().min(1),
+			pageSize: z.number().min(1).max(100),
+			categoryId: z.string().optional(),
+			genreId: z.string().optional(),
+			authorId: z.string().optional(),
+		  })
 		)
 		.query(async ({ input }) => {
-			const { page, pageSize, categoryId, genreId, authorId } = input;
-			const skip = (page - 1) * pageSize;
-
-			const filters = {
-				...(categoryId && { categoryId }),
-				...(genreId && { genreId }),
-				...(authorId && { authorId }),
-			};
-
-			const books = await db.book.findMany({
-				where: filters,
-				skip,
-				take: pageSize,
-				orderBy: { title: "asc" },
-			});
-
-			const totalBooks = await db.book.count({ where: filters });
-
-			return {
-				books,
-				totalBooks,
-				totalPages: Math.ceil(totalBooks / pageSize),
-				currentPage: page,
-			};
+		  const { page, pageSize, categoryId, genreId, authorId } = input;
+		  const skip = (page - 1) * pageSize;
+	  
+		  const filters = {
+			...(categoryId && { categoryId }),
+			...(genreId && { genreId }),
+			...(authorId && { authorId }),
+		  };
+	  
+		  const books = await db.book.findMany({
+			where: filters,
+			skip,
+			take: pageSize,
+			orderBy: { title: "asc" },
+		  });
+	  
+		  const totalBooks = await db.book.count({ where: filters });
+	  
+		  return {
+			books,
+			totalBooks,
+			totalPages: Math.ceil(totalBooks / pageSize),
+			currentPage: page,
+		  };
 		}),
 
 	createBook: publicProcedure
