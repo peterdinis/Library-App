@@ -37,12 +37,12 @@ const Hero: FC = () => {
           </h2>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-            <Button size="lg" variant="default" className="w-full sm:w-auto">
+            <Button id="bookBtn" size="lg" variant="default" className="w-full sm:w-auto">
               <Link href="/books" className="w-full">
                 Zobraziť všekty knihy
               </Link>
             </Button>
-            <Button size="lg" variant="secondary" className="w-full sm:w-auto">
+            <Button id="schollBtn" size="lg" variant="secondary" className="w-full sm:w-auto">
               <Link href="https://www.spsbj.sk/" className="w-full">
                 Školská stránka
               </Link>
