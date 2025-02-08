@@ -11,7 +11,10 @@ type BookSidebarProps = {
   setIsSidebarOpen: (isSidebarOpen: boolean) => void;
 };
 
-const BookSidebar: FC<BookSidebarProps> = ({ isSidebarOpen, setIsSidebarOpen }) => {
+const BookSidebar: FC<BookSidebarProps> = ({
+  isSidebarOpen,
+  setIsSidebarOpen,
+}) => {
   const { setFilters, clearFilters } = useFilterStore();
   const { data: categories } = api.category.getAllCategories.useQuery();
   const { data: genres } = api.genre.getAllGenres.useQuery();
@@ -22,7 +25,8 @@ const BookSidebar: FC<BookSidebarProps> = ({ isSidebarOpen, setIsSidebarOpen }) 
   };
 
   return (
-    <div className={`fixed right-0 top-0 z-50 h-full w-80 transform bg-white shadow-2xl transition-transform duration-300 ease-in-out dark:bg-background ${
+    <div
+      className={`fixed right-0 top-0 z-50 h-full w-80 transform bg-white shadow-2xl transition-transform duration-300 ease-in-out dark:bg-background ${
         isSidebarOpen ? "translate-x-0" : "translate-x-full"
       }`}
     >
@@ -30,7 +34,7 @@ const BookSidebar: FC<BookSidebarProps> = ({ isSidebarOpen, setIsSidebarOpen }) 
         <X className="h-6 w-6" />
       </button>
 
-      <div className="p-4 space-y-4">
+      <div className="space-y-4 p-4">
         <Label>Kategória</Label>
         {categories?.map((category) => (
           <button
@@ -64,7 +68,9 @@ const BookSidebar: FC<BookSidebarProps> = ({ isSidebarOpen, setIsSidebarOpen }) 
           </button>
         ))}
 
-        <button onClick={clearFilters} className="mt-4 text-red-500">Vymazať filtre</button>
+        <button onClick={clearFilters} className="mt-4 text-red-500">
+          Vymazať filtre
+        </button>
       </div>
     </div>
   );
