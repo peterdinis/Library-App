@@ -2,7 +2,7 @@ import { Book, Mail, Lock } from "lucide-react";
 import { FC } from "react";
 import { Button } from "~/components/ui/button";
 
-const LoginForm: FC = () => {
+const RegisterForm: FC = () => {
     return (
         <div className="flex items-center justify-center p-4">
             <div className="max-w-md w-full space-y-8 bg-white dark:bg-zinc-900 p-8 rounded-xl shadow-lg">
@@ -69,4 +69,4 @@ const LoginForm: FC = () => {
     )
 }
 
-export default LoginForm
+export default RegisterForm
