@@ -41,12 +41,11 @@ const QuickSearch: FC = () => {
 					className="h-9 w-9 hover:bg-accent lg:h-10 lg:w-10"
 				>
 					<Search className="h-4 w-4" />
-					<span className="sr-only">Search</span>
 				</Button>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
-					<DialogTitle>Rýchle vyhľadávanie</DialogTitle>
+					<DialogTitle>Rýchle vyhľadávanie Kníh</DialogTitle>
 				</DialogHeader>
 				<div className="flex gap-2 py-4">
 					<Input
@@ -55,7 +54,7 @@ const QuickSearch: FC = () => {
 						value={searchQuery}
 						onChange={handleSearchInputChange}
 					/>
-					<Button>Hľadať</Button>
+					<Button>Hľadať knihu</Button>
 				</div>
 				<div className="py-4">
 					{isLoading && <Loader2 className="animate-spin" />}
