@@ -1,10 +1,10 @@
 "use client";
 
-import { NextPage } from "next";
+import type { NextPage } from "next";
 import LoginForm from "~/app/_components/auth/LoginForm";
 
 const SignInPage: NextPage = () => {
-  return <LoginForm />;
+	return <LoginForm />;
 };
 
 export default SignInPage;
