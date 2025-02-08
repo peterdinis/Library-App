@@ -18,15 +18,13 @@ import { api } from "~/trpc/react";
 import BookSearch from "./BookSearch";
 import BookSidebar from "./BookSidebar";
 import BooksHeader from "./BooksHeader";
-
-const ITEMS_PER_PAGE = 6;
+import { useFilterStore } from "~/app/_store/bookSidebarStore";
 
 const AllBooksWrapper = () => {
 	const [searchQuery, setSearchQuery] = useState("");
 	const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
-
-	// Ak existuje hľadaný výraz, použije sa quickSearchBook, inak sa použije paginované načítanie kníh
+	const filters = useFilterStore((state) => state.filters());
 	const { data: searchResults, isLoading: isSearching } =
 		api.book.quickSearchBook.useQuery(searchQuery, {
 			enabled: searchQuery.length > 0,
@@ -36,8 +34,11 @@ const AllBooksWrapper = () => {
 		api.book.getPaginatedBooks.useQuery(
 			{
 				page: currentPage,
-				pageSize: ITEMS_PER_PAGE,
-			},
+				pageSize: 6,
+				categoryId: filters?.selectedCategory || undefined,
+				genreId: filters?.selectedGenre || undefined,
+				authorId: filters?.selectedAuthor || undefined,
+			  },
 			{
 				enabled: searchQuery.length === 0,
 			},
