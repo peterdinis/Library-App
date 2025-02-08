@@ -218,7 +218,7 @@ const Header: FC = () => {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                  <ProfileDropdown />
+                <ProfileDropdown />
               </TooltipTrigger>
               <TooltipContent>Profil</TooltipContent>
             </Tooltip>
