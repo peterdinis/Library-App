@@ -77,7 +77,7 @@ const QuickSearch: FC = () => {
 							))}
 						</ul>
 					) : (
-						searchQuery.length > 2 && (
+						isError && !isLoading && searchQuery.length > 2 && (
 							<p className="text-center text-xl font-bold text-gray-500">
 								<Ghost className="animate-bounce" /> Kniha sa nenašla
 							</p>
