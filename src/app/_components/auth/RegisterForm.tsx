@@ -1,3 +1,5 @@
+"use client"
+
 import { Book, Lock, Mail, User } from "lucide-react";
 import type { FC } from "react";
 import { Button } from "~/components/ui/button";
