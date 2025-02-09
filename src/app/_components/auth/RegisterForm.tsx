@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Book, Lock, Mail, User } from "lucide-react";
 import type { FC } from "react";
@@ -54,12 +54,16 @@ const RegisterForm: FC = () => {
                 <input
                   id="fullName"
                   type="text"
-                  {...register("fullName", { required: "Full name is required" })}
+                  {...register("fullName", {
+                    required: "Full name is required",
+                  })}
                   className="block w-full rounded-lg border border-gray-300 px-4 py-3 pl-10 placeholder-gray-500 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   placeholder="Your Full Name"
                 />
                 {errors.fullName && (
-                  <p className="text-red-500 text-sm mt-1">{errors.fullName.message}</p>
+                  <p className="mt-1 text-sm text-red-500">
+                    {errors.fullName.message}
+                  </p>
                 )}
               </div>
             </div>
@@ -83,7 +87,9 @@ const RegisterForm: FC = () => {
                   placeholder="you@school.edu"
                 />
                 {errors.email && (
-                  <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+                  <p className="mt-1 text-sm text-red-500">
+                    {errors.email.message}
+                  </p>
                 )}
               </div>
             </div>
@@ -102,12 +108,16 @@ const RegisterForm: FC = () => {
                 <input
                   id="password"
                   type="password"
-                  {...register("password", { required: "Password is required" })}
+                  {...register("password", {
+                    required: "Password is required",
+                  })}
                   className="block w-full rounded-lg border border-gray-300 px-4 py-3 pl-10 placeholder-gray-500 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   placeholder="••••••••"
                 />
                 {errors.password && (
-                  <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+                  <p className="mt-1 text-sm text-red-500">
+                    {errors.password.message}
+                  </p>
                 )}
               </div>
             </div>
