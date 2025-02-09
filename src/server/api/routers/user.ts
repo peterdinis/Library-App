@@ -10,8 +10,10 @@ export const userRouter = createTRPCRouter({
       z.object({
         fullName: z.string().min(1, "Full name is required"),
         email: z.string().email("Invalid email address"),
-        password: z.string().min(6, "Password must be at least 6 characters long"),
-      })
+        password: z
+          .string()
+          .min(6, "Password must be at least 6 characters long"),
+      }),
     )
     .mutation(async ({ input }) => {
       const { fullName, email, password } = input;
@@ -44,8 +46,10 @@ export const userRouter = createTRPCRouter({
     .input(
       z.object({
         email: z.string().email("Invalid email address"),
-        password: z.string().min(6, "Password must be at least 6 characters long"),
-      })
+        password: z
+          .string()
+          .min(6, "Password must be at least 6 characters long"),
+      }),
     )
     .mutation(async ({ input }) => {
       const { email, password } = input;
@@ -66,5 +70,5 @@ export const userRouter = createTRPCRouter({
         console.log(error, "Signin error");
         return { success: false, error: "Signin error" };
       }
-    })
+    }),
 });
