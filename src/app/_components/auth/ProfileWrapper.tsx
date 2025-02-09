@@ -1,9 +1,11 @@
 import { FC } from "react";
+import {useSession} from "next-auth/react";
 
 const ProfileWrapper: FC = () => {
+    const {data: session}  = useSession()
     return (
         <>
-            Profile
+            {session?.user.email}
         </>
     )
 }
