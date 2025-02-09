@@ -2,6 +2,7 @@ import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { db } from "~/server/db";
 import { z } from "zod";
 import bcrypt from "bcrypt";
+import { signIn } from "~/server/auth";
 
 export const userRouter = createTRPCRouter({
   register: publicProcedure
@@ -14,7 +15,7 @@ export const userRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       const { fullName, email, password } = input;
-      
+
       const existingUser = await db.user.findUnique({
         where: { email },
       });
@@ -38,4 +39,32 @@ export const userRouter = createTRPCRouter({
         userId: newUser.id,
       };
     }),
+
+  loginUser: publicProcedure
+    .input(
+      z.object({
+        email: z.string().email("Invalid email address"),
+        password: z.string().min(6, "Password must be at least 6 characters long"),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { email, password } = input;
+
+      try {
+        const result = await signIn("credentials", {
+          email,
+          password,
+          redirect: false,
+        });
+
+        if (result?.error) {
+          return { success: false, error: result.error };
+        }
+
+        return { success: true };
+      } catch (error) {
+        console.log(error, "Signin error");
+        return { success: false, error: "Signin error" };
+      }
+    })
 });
