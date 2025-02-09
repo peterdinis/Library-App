@@ -11,11 +11,11 @@ import { userRouter } from "./routers/user";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-	book: bookRouter,
-	category: categoryRouter,
-	author: authorRouter,
-	genre: genreRouter,
-	user: userRouter,
+  book: bookRouter,
+  category: categoryRouter,
+  author: authorRouter,
+  genre: genreRouter,
+  user: userRouter,
 });
 
 // export type definition of API
