@@ -14,8 +14,6 @@ model User {
   password         String
   status           String   @default("PENDING")
   role             String   @default("USER") 
-  class            String   @default("1.A")
-  isTeacher        Boolean  @default(false)
   lastActivityDate DateTime @default(now())
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt()
