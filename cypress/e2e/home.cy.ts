@@ -1,4 +1,4 @@
-describe("Home.cy.tsx", () => {
+describe("Homepage Tests", () => {
   it("should visit localhost:3000", () => {
     cy.visit("http://localhost:3000");
     cy.url().should("include", "localhost:3000");
