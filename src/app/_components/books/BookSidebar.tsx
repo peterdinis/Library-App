@@ -24,6 +24,12 @@ const BookSidebar: FC<BookSidebarProps> = ({
     setFilters({ [filterType]: value });
   };
 
+  const handleClearFilters = () => {
+    clearFilters();
+    const selects = document.querySelectorAll("select");
+    selects.forEach((select) => (select.value = ""));
+  };
+
   return (
     <div
       className={`fixed right-0 top-0 z-50 h-full w-80 transform bg-white shadow-2xl transition-transform duration-300 ease-in-out dark:bg-background ${
@@ -78,7 +84,7 @@ const BookSidebar: FC<BookSidebarProps> = ({
         </select>
 
         <button
-          onClick={clearFilters}
+          onClick={handleClearFilters}
           className="mt-4 w-full rounded bg-red-500 p-2 text-white"
         >
           Vymazať filtre
