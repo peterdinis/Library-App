@@ -25,6 +25,8 @@ const AllBooksWrapper = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const filters = useFilterStore((state) => state.filters());
+
+  console.log("FF", filters);
   const { data: searchResults, isLoading: isSearching } =
     api.book.quickSearchBook.useQuery(searchQuery, {
       enabled: searchQuery.length > 0,
@@ -35,9 +37,9 @@ const AllBooksWrapper = () => {
       {
         page: currentPage,
         pageSize: 6,
-        categoryId: filters?.selectedCategory || undefined,
-        genreId: filters?.selectedGenre || undefined,
-        authorId: filters?.selectedAuthor || undefined,
+        categoryId: filters?.categoryId || undefined,
+        genreId: filters?.genreId || undefined,
+        authorId: filters?.authorId || undefined,
       },
       {
         enabled: searchQuery.length === 0,
