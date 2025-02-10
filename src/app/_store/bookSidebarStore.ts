@@ -21,9 +21,9 @@ export const useFilterStore = create<FilterState>((set, get) => ({
 
   clearFilters: () =>
     set({
-      selectedCategory: undefined,
-      selectedGenre: undefined,
-      selectedAuthor: undefined,
+      categoryId: undefined,
+      genreId: undefined,
+      authorId: undefined,
     }),
 
   filters: () => get(),
