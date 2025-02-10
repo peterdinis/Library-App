@@ -4,6 +4,9 @@ interface FilterState {
   selectedCategory?: string;
   selectedGenre?: string;
   selectedAuthor?: string;
+  categoryId?: string;
+  genreId?: string;
+  authorId?: string;
   setFilters: (filters: Partial<FilterState>) => void;
   clearFilters: () => void;
   filters: () => Partial<FilterState>;
