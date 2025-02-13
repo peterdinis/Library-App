@@ -3,7 +3,15 @@
 import { X } from "lucide-react";
 import type { FC } from "react";
 import { useFilterStore } from "~/app/_store/bookSidebarStore";
+import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from "~/components/ui/select";
 import { api } from "~/trpc/react";
 
 type BookSidebarProps = {
@@ -26,8 +34,6 @@ const BookSidebar: FC<BookSidebarProps> = ({
 
   const handleClearFilters = () => {
     clearFilters();
-    const selects = document.querySelectorAll("select");
-    selects.forEach((select) => (select.value = ""));
   };
 
   return (
@@ -42,53 +48,59 @@ const BookSidebar: FC<BookSidebarProps> = ({
 
       <div className="space-y-4 p-4">
         <Label htmlFor="category">Kategória</Label>
-        <select
-          id="category"
-          className="w-full rounded border p-2"
-          onChange={(e) => handleFilterChange("categoryId", e.target.value)}
+        <Select
+          onValueChange={(value) => handleFilterChange("categoryId", value)}
         >
-          <option value="">Vyber kategóriu</option>
-          {categories?.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
+          <SelectTrigger id="category">
+            <SelectValue placeholder="Vyber kategóriu" />
+          </SelectTrigger>
+          <SelectContent>
+            {categories?.map((category) => (
+              <SelectItem key={category.id} value={category.id}>
+                {category.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
         <Label htmlFor="genre">Žáner</Label>
-        <select
-          id="genre"
-          className="w-full rounded border p-2"
-          onChange={(e) => handleFilterChange("genreId", e.target.value)}
-        >
-          <option value="">Vyber žáner</option>
-          {genres?.map((genre) => (
-            <option key={genre.id} value={genre.id}>
-              {genre.name}
-            </option>
-          ))}
-        </select>
+        <Select onValueChange={(value) => handleFilterChange("genreId", value)}>
+          <SelectTrigger id="genre">
+            <SelectValue placeholder="Vyber žáner" />
+          </SelectTrigger>
+          <SelectContent>
+            {genres?.map((genre) => (
+              <SelectItem key={genre.id} value={genre.id}>
+                {genre.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
         <Label htmlFor="author">Autor</Label>
-        <select
-          id="author"
-          className="w-full rounded border p-2"
-          onChange={(e) => handleFilterChange("authorId", e.target.value)}
+        <Select
+          onValueChange={(value) => handleFilterChange("authorId", value)}
         >
-          <option value="">Vyber autora</option>
-          {authors?.map((author) => (
-            <option key={author.id} value={author.id}>
-              {author.name}
-            </option>
-          ))}
-        </select>
+          <SelectTrigger id="author">
+            <SelectValue placeholder="Vyber autora" />
+          </SelectTrigger>
+          <SelectContent>
+            {authors?.map((author) => (
+              <SelectItem key={author.id} value={author.id}>
+                {author.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
-        <button
+        <Button
+          className="mt-6 w-full rounded-lg"
           onClick={handleClearFilters}
-          className="mt-4 w-full rounded bg-red-500 p-2 text-white"
+          variant="default"
+          size="lg"
         >
           Vymazať filtre
-        </button>
+        </Button>
       </div>
     </div>
   );
