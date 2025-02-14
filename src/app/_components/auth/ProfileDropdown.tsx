@@ -33,13 +33,10 @@ const ProfileDropdown: FC = () => {
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuLabel>JD</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
             <Link href={"/profile"}>Profil</Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link href="/books/borrowed">Požičané knihy</Link>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={logoutFromApp}>
             Odhlásenie
