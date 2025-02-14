@@ -9,12 +9,7 @@ import {
   Popover, PopoverContent,
   PopoverTrigger
 } from "~/components/ui/popover";
-
-interface RegisterFormInputs {
-  fullName: string;
-  email: string;
-  password: string;
-}
+import { RegisterFormInputs } from "./Auth.interface";
 
 const RegisterForm: FC = () => {
   const {
