@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { BookOpen, Calendar, Clock} from "lucide-react"
+import Image from "next/image"
 import { FC, useState } from "react"
 import { Badge } from "~/components/ui/badge"
 import { Button } from "~/components/ui/button"
@@ -112,7 +113,9 @@ function BookGrid({ books, animate = true }: { books: any; animate?: boolean }) 
                 transition={{ duration: 0.2 }}
                 className="relative aspect-[3/4] overflow-hidden rounded-md bg-muted"
               >
-                <img
+                <Image
+                  width={60}
+                  height={60}
                   src={book.coverUrl || "/placeholder.svg"}
                   alt={book.title}
                   className="absolute inset-0 h-full w-full object-cover"
@@ -167,7 +170,6 @@ const ProfileWrapper: FC = () => {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
             <div className="space-y-1">
               <h1 className="text-2xl font-bold">Ján Novák</h1>
-              <p className="text-muted-foreground">Študentské číslo: 12345</p>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Clock className="h-4 w-4" />
                 <span>Člen od Septembra 2023</span>
