@@ -170,10 +170,7 @@ const ProfileWrapper: FC = () => {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
             <div className="space-y-1">
               <h1 className="text-2xl font-bold">Ján Novák</h1>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Clock className="h-4 w-4" />
-                <span>Člen od Septembra 2023</span>
-              </div>
+
             </div>
           </div>
         </motion.div>
