@@ -145,12 +145,6 @@
 	}
 }
 
-@layer utilities {
-	.root-container {
-		@apply flex min-h-screen flex-1 flex-col bg-cover bg-top bg-background px-5 xs:px-10 md:px-16;
-	}
-}
-
 @layer base {
 	* {
 		@apply border-border;

@@ -1,6 +1,8 @@
 "use client";
 
+import { signOut } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import type { FC } from "react";
 import { Avatar, AvatarFallback } from "~/components/ui/avatar";
 import {
@@ -14,15 +16,18 @@ import {
 import { useToast } from "~/hooks/use-toast";
 
 const ProfileDropdown: FC = () => {
-  const { toast } = useToast();
+	const { toast } = useToast();
+	const router = useRouter()
 
-  const logoutFromApp = () => {
-    toast({
-      title: "Odhlásenie bolo úspešné",
-      duration: 2000,
-      className: "bg-green-800 text-white font-bold text-xl",
-    });
-  };
+	const logoutFromApp = () => {
+		toast({
+			title: "Odhlásenie bolo úspešné",
+			duration: 2000,
+			className: "bg-green-800 text-white font-bold text-xl",
+		});
+		signOut()
+		router.push("/")
+	};
 
   return (
     <>
