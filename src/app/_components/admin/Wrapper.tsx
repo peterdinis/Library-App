@@ -47,11 +47,8 @@ const Wrapper: FC = () => {
                     ))}
                 </nav>
             </div>
-
-            {/* Main Content */}
             <div className="flex-1">
-                {/* Header */}
-                <header className="bg-white border-b border-gray-200 px-6 py-4">
+                <header className="bg-white dark:bg-stone-900 border-b border-gray-200 px-6 py-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4 flex-1">
                             <div className="relative">
@@ -79,7 +76,6 @@ const Wrapper: FC = () => {
                     </div>
                 </header>
 
-                {/* Dashboard Content */}
                 <main className="p-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
                         {[
@@ -108,10 +104,10 @@ const Wrapper: FC = () => {
                                 color: 'bg-red-500'
                             }
                         ].map((stat, index) => (
-                            <div key={index} className="bg-white rounded-lg shadow p-6">
+                            <div key={index} className="bg-white dark:bg-background rounded-lg shadow p-6">
                                 <div className="flex items-center justify-between">
                                     <div>
-                                        <p className="text-sm text-gray-600">{stat.title}</p>
+                                        <p className="text-sm text-gray-600 dark:text-sky-50">{stat.title}</p>
                                         <p className="text-2xl font-semibold mt-1">{stat.value}</p>
                                     </div>
                                     <div className={`${stat.color} p-3 rounded-lg`}>
@@ -122,8 +118,7 @@ const Wrapper: FC = () => {
                         ))}
                     </div>
 
-                    {/* Recent Activity */}
-                    <div className="bg-white rounded-lg shadow">
+                    <div className="bg-white dark:bg-background rounded-lg shadow">
                         <div className="p-6 border-b border-gray-200">
                             <h2 className="text-lg font-semibold">Recent Activity</h2>
                         </div>
