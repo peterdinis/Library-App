@@ -15,6 +15,9 @@ import {
   Menu,
   X
 } from 'lucide-react';
+import AdminProfileDropdown from './AdminProfileDropdown';
+import ModeToggle from '../shared/ModeToggle';
+import { Input } from '~/components/ui/input';
 
 const Wrapper: FC = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -37,7 +40,7 @@ const Wrapper: FC = () => {
 
       {/* Sidebar */}
       <div className={`${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 
-        fixed lg:static top-0 left-0 h-full w-64 bg-indigo-700 dark:bg-stone-900 
+        fixed lg:static top-0 left-0 h-full w-64 bg-blue-800 dark:bg-stone-900 
         text-white p-6 transform transition-transform duration-200 ease-in-out z-30`}>
         <div className="hidden lg:flex items-center gap-2 mb-8">
           <BookOpen className="h-8 w-8" />
@@ -85,24 +88,20 @@ const Wrapper: FC = () => {
             <div className="flex items-center gap-4 flex-1 min-w-0">
               <div className="relative flex-1 max-w-xs">
                 <Search className="h-5 w-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                <input
+                <Input
                   type="text"
-                  placeholder="Search..."
+                  placeholder="Hľadať knihu..."
                   className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <button className="relative">
-                <Bell className="h-6 w-6 text-gray-600" />
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                  3
-                </span>
-              </button>
               <div className="flex items-center gap-2">
-                <UserCircle className="h-8 w-8 text-gray-600" />
-                <span className="text-sm font-medium hidden sm:inline">Admin User</span>
+                <span className="text-sm font-medium hidden sm:inline">
+                  <AdminProfileDropdown />
+                </span>
               </div>
+              <ModeToggle />
             </div>
           </div>
         </header>
