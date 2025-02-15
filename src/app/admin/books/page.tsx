@@ -1,7 +1,8 @@
 import { NextPage } from "next";
+import AdminBooks from "~/app/_components/admin/AdminBooks";
 
 const AdminBooksPage: NextPage = () => {
-  return <>Books Page</>;
+  return <AdminBooks />
 };
 
 export default AdminBooksPage;
