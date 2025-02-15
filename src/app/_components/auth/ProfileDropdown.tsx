@@ -16,18 +16,18 @@ import {
 import { useToast } from "~/hooks/use-toast";
 
 const ProfileDropdown: FC = () => {
-	const { toast } = useToast();
-	const router = useRouter()
+  const { toast } = useToast();
+  const router = useRouter();
 
-	const logoutFromApp = () => {
-		toast({
-			title: "Odhlásenie bolo úspešné",
-			duration: 2000,
-			className: "bg-green-800 text-white font-bold text-xl",
-		});
-		signOut()
-		router.push("/")
-	};
+  const logoutFromApp = () => {
+    toast({
+      title: "Odhlásenie bolo úspešné",
+      duration: 2000,
+      className: "bg-green-800 text-white font-bold text-xl",
+    });
+    signOut();
+    router.push("/");
+  };
 
   return (
     <>

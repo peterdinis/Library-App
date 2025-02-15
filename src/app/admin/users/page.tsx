@@ -1,11 +1,7 @@
 import { NextPage } from "next";
 
 const AdminUsersPage: NextPage = () => {
-    return (
-        <>
-            Users Page
-        </>
-    )
-}
+  return <>Users Page</>;
+};
 
-export default AdminUsersPage
+export default AdminUsersPage;
