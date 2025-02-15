@@ -1,19 +1,20 @@
 "use client"
 
-import {FC, useState } from 'react';
-import { 
-  BookOpen, 
-  Users, 
-  Clock, 
-  BarChart3, 
+import { FC, useState } from 'react';
+import {
+  BookOpen,
+  Users,
+  Clock,
+  BarChart3,
   Search,
-  Bell,
-  UserCircle,
+  BookText,
+  ChartColumnStacked,
   BookMarked,
   UserCheck,
   AlertCircle,
   Menu,
-  X
+  X,
+  Users2
 } from 'lucide-react';
 import AdminProfileDropdown from './AdminProfileDropdown';
 import ModeToggle from '../shared/ModeToggle';
@@ -46,13 +47,15 @@ const Wrapper: FC = () => {
           <BookOpen className="h-8 w-8" />
           <h1 className="text-xl font-bold">Knižnica Admin</h1>
         </div>
-        
+
         <nav className="space-y-2">
           {[
-            { id: 'dashboard', icon: BarChart3, label: 'Dashboard' },
-            { id: 'books', icon: BookMarked, label: 'Books' },
-            { id: 'members', icon: Users, label: 'Members' },
-            { id: 'loans', icon: Clock, label: 'Loans' }
+            { id: 'dashboard', icon: BarChart3, label: 'Admin', link: "/admin" },
+            { id: 'books', icon: BookMarked, label: 'Knihy', link: "/admin/books" },
+            { id: 'members', icon: Users, label: 'Všetci používatelia', link: "/admin/users" },
+            { id: 'categories', icon: ChartColumnStacked, label: 'Kategórie', link: "/admin/categories" },
+            { id: "authors", icon: Users2, label: "Spisovatelia/ky", link: "/admin/authors" },
+            { id: "borrowedBooks", icon: BookText, label: "Všetky objednávky", link: "/admin/booking" },
           ].map((item) => (
             <button
               key={item.id}
@@ -61,8 +64,8 @@ const Wrapper: FC = () => {
                 if (window.innerWidth < 1024) setSidebarOpen(false);
               }}
               className={`w-full flex items-center gap-3 px-4 py-2 rounded-lg transition-colors
-                ${activeTab === item.id 
-                  ? 'bg-indigo-800 text-white' 
+                ${activeTab === item.id
+                  ? 'bg-indigo-800 text-white'
                   : 'text-indigo-100 hover:bg-indigo-600'}`}
             >
               <item.icon className="h-5 w-5 flex-shrink-0" />
@@ -74,7 +77,7 @@ const Wrapper: FC = () => {
 
       {/* Overlay */}
       {isSidebarOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
@@ -110,29 +113,29 @@ const Wrapper: FC = () => {
         <main className="flex-1 p-4 sm:p-6 overflow-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6">
             {[
-              { 
-                title: 'Total Books', 
-                value: '2,543', 
-                icon: BookMarked, 
-                color: 'bg-blue-500' 
+              {
+                title: 'Total Books',
+                value: '2,543',
+                icon: BookMarked,
+                color: 'bg-blue-500'
               },
-              { 
-                title: 'Active Members', 
-                value: '847', 
-                icon: UserCheck, 
-                color: 'bg-green-500' 
+              {
+                title: 'Active Members',
+                value: '847',
+                icon: UserCheck,
+                color: 'bg-green-500'
               },
-              { 
-                title: 'Books on Loan', 
-                value: '234', 
-                icon: Clock, 
-                color: 'bg-yellow-500' 
+              {
+                title: 'Books on Loan',
+                value: '234',
+                icon: Clock,
+                color: 'bg-yellow-500'
               },
-              { 
-                title: 'Overdue Returns', 
-                value: '12', 
-                icon: AlertCircle, 
-                color: 'bg-red-500' 
+              {
+                title: 'Overdue Returns',
+                value: '12',
+                icon: AlertCircle,
+                color: 'bg-red-500'
               }
             ].map((stat, index) => (
               <div key={index} className="bg-white dark:bg-background rounded-lg shadow p-4 sm:p-6">
@@ -195,9 +198,9 @@ const Wrapper: FC = () => {
                       <td className="py-4">{item.date}</td>
                       <td className="py-4">
                         <span className={`px-2 py-1 rounded-full text-xs whitespace-nowrap
-                          ${item.status === 'Active' ? 'bg-blue-100 text-blue-800' : 
+                          ${item.status === 'Active' ? 'bg-blue-100 text-blue-800' :
                             item.status === 'Completed' ? 'bg-green-100 text-green-800' :
-                            'bg-red-100 text-red-800'}`}>
+                              'bg-red-100 text-red-800'}`}>
                           {item.status}
                         </span>
                       </td>
