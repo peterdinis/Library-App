@@ -19,6 +19,7 @@ import {
 import AdminProfileDropdown from './AdminProfileDropdown';
 import ModeToggle from '../shared/ModeToggle';
 import { Input } from '~/components/ui/input';
+import Link from 'next/link';
 
 const Wrapper: FC = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -69,7 +70,7 @@ const Wrapper: FC = () => {
                   : 'text-indigo-100 hover:bg-indigo-600'}`}
             >
               <item.icon className="h-5 w-5 flex-shrink-0" />
-              <span className="whitespace-nowrap">{item.label}</span>
+              <Link href={item.link} className='whitespace-nowrap'>{item.label}</Link>
             </button>
           ))}
         </nav>
