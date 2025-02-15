@@ -19,7 +19,7 @@ import ModeToggle from "../shared/ModeToggle";
 import { Input } from "~/components/ui/input";
 import Link from "next/link";
 
-const AdminCategories: FC = () => {
+const AdminGenres: FC = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
@@ -153,11 +153,11 @@ const AdminCategories: FC = () => {
 
         {/* Dashboard Content */}
         <main className="flex-1 overflow-auto p-4 sm:p-6">
-            Categories
+            Genres
         </main>
       </div>
     </div>
   );
 };
 
-export default AdminCategories;
+export default AdminGenres;
