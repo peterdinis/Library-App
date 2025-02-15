@@ -11,6 +11,7 @@ import {
   ChartColumnStacked,
   BookMarked,
   UserCheck,
+  Library,
   AlertCircle,
   Menu,
   X,
@@ -56,6 +57,7 @@ const Wrapper: FC = () => {
             { id: 'members', icon: Users, label: 'Všetci používatelia', link: "/admin/users" },
             { id: 'categories', icon: ChartColumnStacked, label: 'Kategórie', link: "/admin/categories" },
             { id: "authors", icon: Users2, label: "Spisovatelia/ky", link: "/admin/authors" },
+            {id: "genres", icon: Library, label: "Žánre", link: "/admin/genres"},
             { id: "borrowedBooks", icon: BookText, label: "Všetky objednávky", link: "/admin/booking" },
           ].map((item) => (
             <button
