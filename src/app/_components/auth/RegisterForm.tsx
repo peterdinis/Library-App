@@ -6,8 +6,9 @@ import { Button } from "~/components/ui/button";
 import { useForm } from "react-hook-form";
 import { api } from "~/trpc/react";
 import {
-  Popover, PopoverContent,
-  PopoverTrigger
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
 } from "~/components/ui/popover";
 import { RegisterFormInputs } from "./Auth.interface";
 
@@ -128,8 +129,8 @@ const RegisterForm: FC = () => {
           </div>
           <Popover>
             <PopoverTrigger>Ako prebieha registrácia?</PopoverTrigger>
-            <PopoverContent className="p-4 bg-white dark:bg-stone-900 shadow-lg rounded-lg">
-              <ul className="list-decimal list-inside space-y-2 text-gray-700 dark:text-sky-200">
+            <PopoverContent className="rounded-lg bg-white p-4 shadow-lg dark:bg-stone-900">
+              <ul className="list-inside list-decimal space-y-2 text-gray-700 dark:text-sky-200">
                 <li>Zaregistrujte sa.</li>
                 <li>Admin potvrdí váš účet.</li>
                 <li>Po potvrdení e-mailom sa môžete prihlásiť do knižnice.</li>

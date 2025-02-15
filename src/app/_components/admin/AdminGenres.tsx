@@ -4,15 +4,12 @@ import { FC, useState } from "react";
 import {
   BookOpen,
   Users,
-  Clock,
   BarChart3,
   Search,
   BookText,
   ChartColumnStacked,
   BookMarked,
-  UserCheck,
   Library,
-  AlertCircle,
   Menu,
   X,
   Users2,
@@ -22,7 +19,7 @@ import ModeToggle from "../shared/ModeToggle";
 import { Input } from "~/components/ui/input";
 import Link from "next/link";
 
-const Wrapper: FC = () => {
+const AdminGenres: FC = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
@@ -156,121 +153,11 @@ const Wrapper: FC = () => {
 
         {/* Dashboard Content */}
         <main className="flex-1 overflow-auto p-4 sm:p-6">
-          <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
-            {[
-              {
-                title: "Total Books",
-                value: "2,543",
-                icon: BookMarked,
-                color: "bg-blue-500",
-              },
-              {
-                title: "Active Members",
-                value: "847",
-                icon: UserCheck,
-                color: "bg-green-500",
-              },
-              {
-                title: "Books on Loan",
-                value: "234",
-                icon: Clock,
-                color: "bg-yellow-500",
-              },
-              {
-                title: "Overdue Returns",
-                value: "12",
-                icon: AlertCircle,
-                color: "bg-red-500",
-              },
-            ].map((stat, index) => (
-              <div
-                key={index}
-                className="rounded-lg bg-white p-4 shadow dark:bg-background sm:p-6"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="min-w-0">
-                    <p className="truncate text-sm text-gray-600 dark:text-sky-50">
-                      {stat.title}
-                    </p>
-                    <p className="mt-1 text-xl font-semibold sm:text-2xl">
-                      {stat.value}
-                    </p>
-                  </div>
-                  <div className={`${stat.color} flex-shrink-0 rounded-lg p-3`}>
-                    <stat.icon className="h-6 w-6 text-white" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="overflow-hidden rounded-lg bg-white shadow dark:bg-background">
-            <div className="border-b border-gray-200 p-4 sm:p-6">
-              <h2 className="text-lg font-semibold">Recent Activity</h2>
-            </div>
-            <div className="overflow-x-auto p-4 sm:p-6">
-              <table className="w-full min-w-[600px]">
-                <thead>
-                  <tr className="text-left text-sm text-gray-500">
-                    <th className="pb-4">Action</th>
-                    <th className="pb-4">Book</th>
-                    <th className="pb-4">Member</th>
-                    <th className="pb-4">Date</th>
-                    <th className="pb-4">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="text-sm">
-                  {[
-                    {
-                      action: "Borrowed",
-                      book: "The Great Gatsby",
-                      member: "John Smith",
-                      date: "2024-03-10",
-                      status: "Active",
-                    },
-                    {
-                      action: "Returned",
-                      book: "1984",
-                      member: "Sarah Johnson",
-                      date: "2024-03-09",
-                      status: "Completed",
-                    },
-                    {
-                      action: "Overdue",
-                      book: "To Kill a Mockingbird",
-                      member: "Mike Brown",
-                      date: "2024-03-01",
-                      status: "Late",
-                    },
-                  ].map((item, index) => (
-                    <tr key={index} className="border-t border-gray-100">
-                      <td className="py-4">{item.action}</td>
-                      <td className="py-4">{item.book}</td>
-                      <td className="py-4">{item.member}</td>
-                      <td className="py-4">{item.date}</td>
-                      <td className="py-4">
-                        <span
-                          className={`whitespace-nowrap rounded-full px-2 py-1 text-xs ${
-                            item.status === "Active"
-                              ? "bg-blue-100 text-blue-800"
-                              : item.status === "Completed"
-                                ? "bg-green-100 text-green-800"
-                                : "bg-red-100 text-red-800"
-                          }`}
-                        >
-                          {item.status}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+            Genres
         </main>
       </div>
     </div>
   );
 };
 
-export default Wrapper;
+export default AdminGenres;
