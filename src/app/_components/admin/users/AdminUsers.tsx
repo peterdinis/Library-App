@@ -14,12 +14,14 @@ import {
   X,
   Users2,
 } from "lucide-react";
-import AdminProfileDropdown from "./AdminProfileDropdown";
-import ModeToggle from "../shared/ModeToggle";
 import { Input } from "~/components/ui/input";
 import Link from "next/link";
+import AdminProfileDropdown from "../AdminProfileDropdown";
+import ModeToggle from "../../shared/ModeToggle";
+import { UsersTable } from "./UsersTable";
+import { columns } from "../books/columns";
 
-const AdminBooks: FC = () => {
+const AdminUsers: FC = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
@@ -153,11 +155,14 @@ const AdminBooks: FC = () => {
 
         {/* Dashboard Content */}
         <main className="flex-1 overflow-auto p-4 sm:p-6">
-          Books
+        <h1 className="text-center font-bold text-5xl">Všetci používatelia učitelia / študenti</h1>
+            <div className="mt-4">
+              <UsersTable columns={columns} data={[]} />
+            </div>
         </main>
       </div>
     </div>
   );
 };
 
-export default AdminBooks;
+export default AdminUsers;

@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import AdminGenres from "~/app/_components/admin/AdminGenres";
+import AdminGenres from "~/app/_components/admin/genres/AdminGenres";
 
 const AdminGenresPage: NextPage = () => {
   return <AdminGenres />
