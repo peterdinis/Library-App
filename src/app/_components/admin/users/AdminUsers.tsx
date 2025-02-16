@@ -155,6 +155,7 @@ const AdminUsers: FC = () => {
 
         {/* Dashboard Content */}
         <main className="flex-1 overflow-auto p-4 sm:p-6">
+        <h1 className="text-center font-bold text-5xl">Všetci používatelia učitelia / študenti</h1>
             <div className="mt-4">
               <UsersTable columns={columns} data={[]} />
             </div>
