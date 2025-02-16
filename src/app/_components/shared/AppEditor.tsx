@@ -1,18 +1,16 @@
-'use client';
+"use client";
 
-import dynamic from 'next/dynamic';
-import { FC } from 'react';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import dynamic from "next/dynamic";
+import { FC } from "react";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 const Editor = dynamic(
-    () => import('react-draft-wysiwyg').then((mod) => mod.Editor),
-    { ssr: false }
+  () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
+  { ssr: false },
 );
 
 const AppEditor: FC = () => {
-    return <Editor
-
-    />
+  return <Editor />;
 };
 
-export default AppEditor
+export default AppEditor;
