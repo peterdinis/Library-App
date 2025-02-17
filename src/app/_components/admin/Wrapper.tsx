@@ -31,13 +31,11 @@ import {
 const Wrapper: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [activeTab, setActiveTab] = useState("dashboard");
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
-
+  const [isSidebarOpen, setSidebarOpen] = useState(false)
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
 
   return (
     <div className="flex h-screen flex-col overflow-hidden lg:flex-row">
-      {/* Mobile Header */}
       <div className="flex items-center justify-between bg-indigo-700 p-4 dark:bg-stone-900 lg:hidden">
         <div className="flex items-center gap-2">
           <BookOpen className="h-6 w-6 text-white" />
@@ -52,7 +50,6 @@ const Wrapper: FC = () => {
         </button>
       </div>
 
-      {/* Sidebar */}
       <div
         className={`${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} fixed left-0 top-0 z-30 h-full w-64 transform bg-blue-800 p-6 text-white transition-transform duration-200 ease-in-out dark:bg-stone-900 lg:static lg:translate-x-0`}
       >
@@ -127,7 +124,6 @@ const Wrapper: FC = () => {
         </nav>
       </div>
 
-      {/* Overlay */}
       {isSidebarOpen && (
         <div
           className="fixed inset-0 z-20 bg-black bg-opacity-50 lg:hidden"
@@ -135,9 +131,7 @@ const Wrapper: FC = () => {
         />
       )}
 
-      {/* Main Content */}
       <div className="flex h-[calc(100vh-64px)] min-w-0 flex-1 flex-col bg-gray-50 dark:bg-stone-800 lg:h-screen">
-        {/* Header */}
         <header className="flex-shrink-0 border-b border-gray-200 bg-white px-4 py-4 dark:bg-stone-900 sm:px-6">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex min-w-0 flex-1 items-center gap-4">
@@ -154,7 +148,6 @@ const Wrapper: FC = () => {
           </div>
         </header>
 
-        {/* Dashboard Content */}
         <main className="flex-1 overflow-auto p-4 sm:p-6">
           <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
             {[
