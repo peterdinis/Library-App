@@ -1,11 +1,7 @@
 import { FC } from "react";
 
 const CreateGenreForm: FC = () => {
-    return (
-        <>
-            Genre Form
-        </>
-    )
-}
+  return <>Genre Form</>;
+};
 
-export default CreateGenreForm
+export default CreateGenreForm;

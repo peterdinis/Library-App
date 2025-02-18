@@ -1,11 +1,7 @@
 import { FC } from "react";
 
 const CreateCategoryForm: FC = () => {
-    return (
-        <>
-            Create category form
-        </>
-    )
-}
+  return <>Create category form</>;
+};
 
-export default CreateCategoryForm
+export default CreateCategoryForm;
