@@ -14,10 +14,10 @@ import {
   X,
   Users2,
 } from "lucide-react";
-import AdminProfileDropdown from "./AdminProfileDropdown";
-import ModeToggle from "../shared/ModeToggle";
 import { Input } from "~/components/ui/input";
 import Link from "next/link";
+import AdminProfileDropdown from "../AdminProfileDropdown";
+import ModeToggle from "../../shared/ModeToggle";
 
 const AdminBooking: FC = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
