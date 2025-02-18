@@ -152,9 +152,7 @@ const AdminBooking: FC = () => {
         </header>
 
         {/* Dashboard Content */}
-        <main className="flex-1 overflow-auto p-4 sm:p-6">
-            Booking
-        </main>
+        <main className="flex-1 overflow-auto p-4 sm:p-6">Booking</main>
       </div>
     </div>
   );

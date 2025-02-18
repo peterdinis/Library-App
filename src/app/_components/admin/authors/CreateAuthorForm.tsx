@@ -1,11 +1,7 @@
 import { FC } from "react";
 
 const CreateAuthorForm: FC = () => {
-    return (
-        <>
-            Nový spisovateľ
-        </> 
-    )
-}
+  return <>Nový spisovateľ</>;
+};
 
-export default CreateAuthorForm
+export default CreateAuthorForm;

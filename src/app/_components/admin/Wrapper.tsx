@@ -27,14 +27,14 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "~/components/ui/pagination";
-import { usePathname } from "next/navigation"; 
+import { usePathname } from "next/navigation";
 
 const Wrapper: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [activeTab, setActiveTab] = useState("dashboard");
-  const [isSidebarOpen, setSidebarOpen] = useState(false)
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
-  const pathname = usePathname(); 
+  const pathname = usePathname();
 
   return (
     <div className="flex h-screen flex-col overflow-hidden lg:flex-row">
@@ -106,18 +106,18 @@ const Wrapper: FC = () => {
             },
           ].map((item) => (
             <button
-                onClick={() => {
-                  if (window.innerWidth < 1024) setSidebarOpen(false);
-                }}
-                className={`flex w-full items-center gap-3 rounded-lg px-4 py-2 transition-colors ${
-                  pathname === item.id
-                    ? "bg-indigo-800 text-white"
-                    : "text-indigo-100 hover:bg-indigo-600"
-                }`}
-              >
-                <item.icon className="h-5 w-5 flex-shrink-0" />
-                {item.label}
-              </button>
+              onClick={() => {
+                if (window.innerWidth < 1024) setSidebarOpen(false);
+              }}
+              className={`flex w-full items-center gap-3 rounded-lg px-4 py-2 transition-colors ${
+                pathname === item.id
+                  ? "bg-indigo-800 text-white"
+                  : "text-indigo-100 hover:bg-indigo-600"
+              }`}
+            >
+              <item.icon className="h-5 w-5 flex-shrink-0" />
+              {item.label}
+            </button>
           ))}
         </nav>
       </div>
