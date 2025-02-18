@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import CreateAuthorForm from "~/app/_components/admin/authors/CreateAuthorForm";
 
 const CreateAuthorPage: NextPage = () => {
-    return <CreateAuthorForm />
-}
+  return <CreateAuthorForm />;
+};
 
-export default CreateAuthorPage
+export default CreateAuthorPage;

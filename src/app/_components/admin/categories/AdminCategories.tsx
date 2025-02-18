@@ -14,10 +14,10 @@ import {
   X,
   Users2,
 } from "lucide-react";
-import AdminProfileDropdown from "./AdminProfileDropdown";
-import ModeToggle from "../shared/ModeToggle";
 import { Input } from "~/components/ui/input";
 import Link from "next/link";
+import AdminProfileDropdown from "../AdminProfileDropdown";
+import ModeToggle from "../../shared/ModeToggle";
 
 const AdminCategories: FC = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -152,9 +152,7 @@ const AdminCategories: FC = () => {
         </header>
 
         {/* Dashboard Content */}
-        <main className="flex-1 overflow-auto p-4 sm:p-6">
-            Categories
-        </main>
+        <main className="flex-1 overflow-auto p-4 sm:p-6">Categories</main>
       </div>
     </div>
   );

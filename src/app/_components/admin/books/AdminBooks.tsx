@@ -155,10 +155,10 @@ const AdminBooks: FC = () => {
 
         {/* Dashboard Content */}
         <main className="flex-1 overflow-auto p-4 sm:p-6">
-            <h1 className="text-center font-bold text-5xl">Všetky Knihy</h1>
-            <div className="mt-4">
-              <BooksTable columns={columns} data={[]} />
-            </div>
+          <h1 className="text-center text-5xl font-bold">Všetky Knihy</h1>
+          <div className="mt-4">
+            <BooksTable columns={columns} data={[]} />
+          </div>
         </main>
       </div>
     </div>
