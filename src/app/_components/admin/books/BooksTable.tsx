@@ -42,6 +42,9 @@ export function BooksTable<TData, TValue>({
     pageCount: Math.ceil(data.length / 10),
   });
 
+  const currentPage = table.getState().pagination.pageIndex + 1;
+  const totalPages = table.getPageCount();
+
   return (
     <div className="rounded-md border p-4">
       <Button variant={"default"}>
@@ -87,7 +90,7 @@ export function BooksTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
-      <Pagination className="mt-4">
+      <Pagination className="mt-4 flex items-center justify-center gap-4">
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
@@ -95,8 +98,8 @@ export function BooksTable<TData, TValue>({
               disabled={!table.getCanPreviousPage()}
             />
           </PaginationItem>
-          <PaginationItem>
-            {table.getPageCount() > 5 && <PaginationEllipsis />}
+          <PaginationItem className="font-semibold">
+            Strana {currentPage} z {totalPages}
           </PaginationItem>
           <PaginationItem>
             <PaginationNext
