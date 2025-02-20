@@ -15,6 +15,7 @@ import {
   Menu,
   X,
   Users2,
+  Loader2,
 } from "lucide-react";
 import AdminProfileDropdown from "./AdminProfileDropdown";
 import ModeToggle from "../shared/ModeToggle";
@@ -27,12 +28,20 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "~/components/ui/pagination";
+import { api } from "~/trpc/react";
+import WrapperTable from "./WrapperTable";
 
 const AdminWrapper: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [activeTab, setActiveTab] = useState("dashboard");
   const [isSidebarOpen, setSidebarOpen] = useState(false)
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
+  const {data: bookData, isLoading: bookLoading} = api.book.getAllBooks.useQuery()
+  const {data: categoryData, isLoading: categoryLoading} = api.category.getAllCategories.useQuery()  
+  const {data: genreData, isLoading: genreLoading} = api.genre.getAllGenres.useQuery()
+  const {data: authorsData, isLoading: authorLoading} = api.author.getAllAuthors.useQuery()
+
+  if(bookLoading || categoryLoading || genreLoading || authorLoading) return <Loader2 className="animate-spin w-8 h-8" />
 
   return (
     <div className="flex h-screen flex-col overflow-hidden lg:flex-row">
@@ -152,26 +161,38 @@ const AdminWrapper: FC = () => {
           <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
             {[
               {
-                title: "Total Books",
-                value: "2,543",
+                title: "Všetky knihy",
+                value: bookData?.length,
                 icon: BookMarked,
                 color: "bg-blue-500",
               },
               {
-                title: "Active Members",
-                value: "847",
+                title: "Všetky kategórie",
+                value: categoryData?.length,
                 icon: UserCheck,
                 color: "bg-green-500",
               },
               {
-                title: "Books on Loan",
-                value: "234",
+                title: "Všetky žánre",
+                value: genreData?.length,
                 icon: Clock,
                 color: "bg-yellow-500",
               },
               {
-                title: "Overdue Returns",
-                value: "12",
+                title: "Všetky spisovateľia/ky",
+                value: authorsData?.length,
+                icon: AlertCircle,
+                color: "bg-red-500",
+              },
+              {
+                title: "Všetky objednávky",
+                value: "123", // TODO: replace later
+                icon: AlertCircle,
+                color: "bg-red-500",
+              },
+              {
+                title: "Všetci používatelia",
+                value: "123", // TODO: Replace later
                 icon: AlertCircle,
                 color: "bg-red-500",
               },
@@ -199,66 +220,9 @@ const AdminWrapper: FC = () => {
 
           <div className="overflow-hidden rounded-lg bg-white shadow dark:bg-background">
             <div className="border-b border-gray-200 p-4 sm:p-6">
-              <h2 className="text-lg font-semibold">Recent Activity</h2>
+              <h2 className="text-lg font-semibold">Posledné objednávky kníh</h2>
             </div>
-            <div className="overflow-x-auto p-4 sm:p-6">
-              <table className="w-full min-w-[600px]">
-                <thead>
-                  <tr className="text-left text-sm text-gray-500">
-                    <th className="pb-4">Action</th>
-                    <th className="pb-4">Book</th>
-                    <th className="pb-4">Member</th>
-                    <th className="pb-4">Date</th>
-                    <th className="pb-4">Status</th>
-                  </tr>
-                </thead>
-                <tbody className="text-sm">
-                  {[
-                    {
-                      action: "Borrowed",
-                      book: "The Great Gatsby",
-                      member: "John Smith",
-                      date: "2024-03-10",
-                      status: "Active",
-                    },
-                    {
-                      action: "Returned",
-                      book: "1984",
-                      member: "Sarah Johnson",
-                      date: "2024-03-09",
-                      status: "Completed",
-                    },
-                    {
-                      action: "Overdue",
-                      book: "To Kill a Mockingbird",
-                      member: "Mike Brown",
-                      date: "2024-03-01",
-                      status: "Late",
-                    },
-                  ].map((item, index) => (
-                    <tr key={index} className="border-t border-gray-100">
-                      <td className="py-4">{item.action}</td>
-                      <td className="py-4">{item.book}</td>
-                      <td className="py-4">{item.member}</td>
-                      <td className="py-4">{item.date}</td>
-                      <td className="py-4">
-                        <span
-                          className={`whitespace-nowrap rounded-full px-2 py-1 text-xs ${
-                            item.status === "Active"
-                              ? "bg-blue-100 text-blue-800"
-                              : item.status === "Completed"
-                                ? "bg-green-100 text-green-800"
-                                : "bg-red-100 text-red-800"
-                          }`}
-                        >
-                          {item.status}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <WrapperTable />
           </div>
 
           <div className="mt-14">
