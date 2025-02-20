@@ -28,7 +28,8 @@ const AdminBooks: FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const {data, isLoading} = api.book.getAllBooks.useQuery()
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
-  
+
+  console.log("D", data)
   if(isLoading) return <Loader2 className="animate-spin w-8 h-8" />
 
   return (
