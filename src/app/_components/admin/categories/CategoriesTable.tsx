@@ -6,8 +6,6 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import Link from "next/link";
-import { Button } from "~/components/ui/button";
 import {
   Table,
   TableHeader,
@@ -25,15 +23,15 @@ import {
   PaginationEllipsis,
 } from "~/components/ui/pagination";
 
-interface BooksTableProps<TData, TValue> {
+interface CategoriesTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function BooksTable<TData, TValue>({
+export function CategoriesTable<TData, TValue>({
   columns,
   data,
-}: BooksTableProps<TData, TValue>) {
+}: CategoriesTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
     columns,
@@ -42,14 +40,8 @@ export function BooksTable<TData, TValue>({
     pageCount: Math.ceil(data.length / 10),
   });
 
-  const currentPage = table.getState().pagination.pageIndex + 1;
-  const totalPages = table.getPageCount();
-
   return (
     <div className="rounded-md border p-4">
-      <Button variant={"default"}>
-        <Link href="/admin/books/create">Pridať novú knihu</Link>
-      </Button>
       <Table className="mt-6">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -90,7 +82,7 @@ export function BooksTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
-      <Pagination className="mt-4 flex items-center justify-center gap-4">
+      <Pagination className="mt-4">
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
@@ -98,8 +90,8 @@ export function BooksTable<TData, TValue>({
               disabled={!table.getCanPreviousPage()}
             />
           </PaginationItem>
-          <PaginationItem className="font-semibold">
-            Strana {currentPage} z {totalPages}
+          <PaginationItem>
+            {table.getPageCount() > 5 && <PaginationEllipsis />}
           </PaginationItem>
           <PaginationItem>
             <PaginationNext
