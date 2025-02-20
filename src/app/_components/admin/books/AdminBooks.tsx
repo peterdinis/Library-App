@@ -13,23 +13,26 @@ import {
   Menu,
   X,
   Users2,
+  Loader2,
 } from "lucide-react";
 import AdminProfileDropdown from "../AdminProfileDropdown";
 import ModeToggle from "../../shared/ModeToggle";
 import { Input } from "~/components/ui/input";
 import Link from "next/link";
 import { BooksTable } from "./BooksTable";
-import { columns } from "./columns";
+import { columns, Book } from "./columns";
+import { api } from "~/trpc/react";
 
 const AdminBooks: FC = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-
+  const {data, isLoading} = api.book.getAllBooks.useQuery()
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
+  
+  if(isLoading) return <Loader2 className="animate-spin w-8 h-8" />
 
   return (
     <div className="flex h-screen flex-col overflow-hidden lg:flex-row">
-      {/* Mobile Header */}
       <div className="flex items-center justify-between bg-indigo-700 p-4 dark:bg-stone-900 lg:hidden">
         <div className="flex items-center gap-2">
           <BookOpen className="h-6 w-6 text-white" />
@@ -43,8 +46,6 @@ const AdminBooks: FC = () => {
           )}
         </button>
       </div>
-
-      {/* Sidebar */}
       <div
         className={`${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} fixed left-0 top-0 z-30 h-full w-64 transform bg-blue-800 p-6 text-white transition-transform duration-200 ease-in-out dark:bg-stone-900 lg:static lg:translate-x-0`}
       >
@@ -153,11 +154,10 @@ const AdminBooks: FC = () => {
           </div>
         </header>
 
-        {/* Dashboard Content */}
         <main className="flex-1 overflow-auto p-4 sm:p-6">
           <h1 className="text-center text-5xl font-bold">Všetky Knihy</h1>
           <div className="mt-4">
-            <BooksTable columns={columns} data={[]} />
+            <BooksTable columns={columns} data={data as unknown as Book[]} />
           </div>
         </main>
       </div>
