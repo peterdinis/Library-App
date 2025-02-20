@@ -15,6 +15,7 @@ import {
   Menu,
   X,
   Users2,
+  Loader2,
 } from "lucide-react";
 import AdminProfileDropdown from "./AdminProfileDropdown";
 import ModeToggle from "../shared/ModeToggle";
@@ -27,12 +28,19 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "~/components/ui/pagination";
+import { api } from "~/trpc/react";
 
 const Wrapper: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [activeTab, setActiveTab] = useState("dashboard");
   const [isSidebarOpen, setSidebarOpen] = useState(false)
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
+  const {data: bookData, isLoading: bookLoading} = api.book.getAllBooks.useQuery()
+  const {data: categoryData, isLoading: categoryLoading} = api.category.getAllCategories.useQuery()  
+  const {data: genreData, isLoading: genreLoading} = api.genre.getAllGenres.useQuery()
+  const {data: authorsData, isLoading: authorLoading} = api.author.getAllAuthors.useQuery()
+
+  if(bookLoading || categoryLoading || genreLoading || authorLoading) return <Loader2 className="animate-spin w-8 h-8" />
 
   return (
     <div className="flex h-screen flex-col overflow-hidden lg:flex-row">
@@ -152,26 +160,38 @@ const Wrapper: FC = () => {
           <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
             {[
               {
-                title: "Total Books",
-                value: "2,543",
+                title: "Všetky knihy",
+                value: bookData?.length,
                 icon: BookMarked,
                 color: "bg-blue-500",
               },
               {
-                title: "Active Members",
-                value: "847",
+                title: "Všetky kategórie",
+                value: categoryData?.length,
                 icon: UserCheck,
                 color: "bg-green-500",
               },
               {
-                title: "Books on Loan",
-                value: "234",
+                title: "Všetky žánre",
+                value: genreData?.length,
                 icon: Clock,
                 color: "bg-yellow-500",
               },
               {
-                title: "Overdue Returns",
-                value: "12",
+                title: "Všetky spisovateľia/ky",
+                value: authorsData?.length,
+                icon: AlertCircle,
+                color: "bg-red-500",
+              },
+              {
+                title: "Všetky spisovateľia/ky",
+                value: authorsData?.length,
+                icon: AlertCircle,
+                color: "bg-red-500",
+              },
+              {
+                title: "Všetky spisovateľia/ky",
+                value: authorsData?.length,
                 icon: AlertCircle,
                 color: "bg-red-500",
               },
