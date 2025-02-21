@@ -1,65 +1,109 @@
-import { FC } from "react";
+"use client";
 
-const WrapperTable: FC = () => {
-    return (
-        <div className="overflow-x-auto p-4 sm:p-6">
-            <table className="w-full min-w-[600px]">
-                <thead>
-                    <tr className="text-left text-sm text-gray-500">
-                        <th className="pb-4">Action</th>
-                        <th className="pb-4">Book</th>
-                        <th className="pb-4">Member</th>
-                        <th className="pb-4">Date</th>
-                        <th className="pb-4">Status</th>
-                    </tr>
-                </thead>
-                <tbody className="text-sm">
-                    {[
-                        {
-                            action: "Borrowed",
-                            book: "The Great Gatsby",
-                            member: "John Smith",
-                            date: "2024-03-10",
-                            status: "Active",
-                        },
-                        {
-                            action: "Returned",
-                            book: "1984",
-                            member: "Sarah Johnson",
-                            date: "2024-03-09",
-                            status: "Completed",
-                        },
-                        {
-                            action: "Overdue",
-                            book: "To Kill a Mockingbird",
-                            member: "Mike Brown",
-                            date: "2024-03-01",
-                            status: "Late",
-                        },
-                    ].map((item, index) => (
-                        <tr key={index} className="border-t border-gray-100">
-                            <td className="py-4">{item.action}</td>
-                            <td className="py-4">{item.book}</td>
-                            <td className="py-4">{item.member}</td>
-                            <td className="py-4">{item.date}</td>
-                            <td className="py-4">
-                                <span
-                                    className={`whitespace-nowrap rounded-full px-2 py-1 text-xs ${item.status === "Active"
-                                            ? "bg-blue-100 text-blue-800"
-                                            : item.status === "Completed"
-                                                ? "bg-green-100 text-green-800"
-                                                : "bg-red-100 text-red-800"
-                                        }`}
-                                >
-                                    {item.status}
-                                </span>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
-    )
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import {
+  Table,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+} from "~/components/ui/table";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationPrevious,
+  PaginationNext,
+  PaginationEllipsis,
+} from "~/components/ui/pagination";
+
+interface WrapperTableProps<TData, TValue> {
+  columns: ColumnDef<TData, TValue>[];
+  data: TData[];
 }
 
-export default WrapperTable
+export function WrapperTable<TData, TValue>({
+  columns,
+  data,
+}: WrapperTableProps<TData, TValue>) {
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    manualPagination: true,
+    pageCount: Math.ceil(data.length / 10),
+  });
+
+  const currentPage = table.getState().pagination.pageIndex + 1;
+  const totalPages = table.getPageCount();
+
+  return (
+    <div className="rounded-md border p-4">
+      <Table className="mt-6">
+        <TableHeader>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <TableHead key={header.id}>
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )}
+                </TableHead>
+              ))}
+            </TableRow>
+          ))}
+        </TableHeader>
+        <TableBody>
+          {table.getRowModel().rows.length ? (
+            table.getRowModel().rows.map((row) => (
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() && "selected"}
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                No results.
+              </TableCell>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+      <Pagination className="mt-4 flex items-center justify-center gap-4">
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            />
+          </PaginationItem>
+          <PaginationItem className="font-semibold">
+            Strana {currentPage} z {totalPages}
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    </div>
+  );
+}

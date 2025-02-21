@@ -4,14 +4,11 @@ import { FC, useState } from "react";
 import {
   BookOpen,
   Users,
-  Clock,
   BarChart3,
   BookText,
   ChartColumnStacked,
   BookMarked,
-  UserCheck,
   Library,
-  AlertCircle,
   Menu,
   X,
   Users2,
@@ -29,7 +26,8 @@ import {
   PaginationPrevious,
 } from "~/components/ui/pagination";
 import { api } from "~/trpc/react";
-import WrapperTable from "./WrapperTable";
+import {WrapperTable} from "./WrapperTable";
+import { wrapperColumns } from "./wrapperColumns";
 
 const Wrapper: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -214,7 +212,7 @@ const Wrapper: FC = () => {
             <div className="border-b border-gray-200 p-4 sm:p-6">
               <h2 className="text-lg font-semibold">Posledné objednávky kníh</h2>
             </div>
-            <WrapperTable />
+            <WrapperTable data={[]} columns={wrapperColumns} />
           </div>
 
           <div className="mt-14">
