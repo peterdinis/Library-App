@@ -22,6 +22,8 @@ import {
   PaginationNext,
   PaginationEllipsis,
 } from "~/components/ui/pagination";
+import { Button } from "~/components/ui/button";
+import Link from "next/link";
 
 interface CategoriesTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -42,6 +44,11 @@ export function CategoriesTable<TData, TValue>({
 
   return (
     <div className="rounded-md border p-4">
+      <Button>
+        <Link href="/admin/categories/create">
+          Pridaj novú kategóriu
+        </Link>
+      </Button>
       <Table className="mt-6">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

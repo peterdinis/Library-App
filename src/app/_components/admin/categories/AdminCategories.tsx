@@ -13,6 +13,7 @@ import {
   Menu,
   X,
   Users2,
+  Loader2,
 } from "lucide-react";
 import { Input } from "~/components/ui/input";
 import Link from "next/link";
@@ -20,12 +21,17 @@ import AdminProfileDropdown from "../AdminProfileDropdown";
 import ModeToggle from "../../shared/ModeToggle";
 import { CategoriesTable } from "./CategoriesTable";
 import { categoryColumns } from "./categoryColumns";
+import { api } from "~/trpc/react";
+import { Category } from "@prisma/client";
 
 const AdminCategories: FC = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-
+  const {data, isLoading} = api.category.getAllCategories.useQuery()
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
+
+
+  if(isLoading) return <Loader2 className="animate-spin w-8 h-8" />
 
   return (
     <div className="flex h-screen flex-col overflow-hidden lg:flex-row">
@@ -156,7 +162,7 @@ const AdminCategories: FC = () => {
         {/* Dashboard Content */}
         <main className="flex-1 overflow-auto p-4 sm:p-6">
           <h1 className="text-center text-5xl font-bold">Všetky kategórie</h1>
-          <CategoriesTable data={[]} columns={categoryColumns} />
+          <CategoriesTable data={data as unknown as Category[]} columns={categoryColumns} />
         </main>
       </div>
     </div>

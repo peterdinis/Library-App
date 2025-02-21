@@ -29,7 +29,7 @@ import { api } from "~/trpc/react";
 import { WrapperTable } from "./WrapperTable";
 import { wrapperColumns } from "./wrapperColumns";
 
-const Wrapper: FC = () => {
+const AdminWrapper: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [activeTab, setActiveTab] = useState("dashboard");
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -256,4 +256,4 @@ const Wrapper: FC = () => {
   );
 };
 
-export default Wrapper;
+export default AdminWrapper;
