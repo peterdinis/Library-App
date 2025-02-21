@@ -4,14 +4,11 @@ import { FC, useState } from "react";
 import {
   BookOpen,
   Users,
-  Clock,
   BarChart3,
   BookText,
   ChartColumnStacked,
   BookMarked,
-  UserCheck,
   Library,
-  AlertCircle,
   Menu,
   X,
   Users2,
@@ -29,19 +26,24 @@ import {
   PaginationPrevious,
 } from "~/components/ui/pagination";
 import { api } from "~/trpc/react";
-import WrapperTable from "./WrapperTable";
+import { WrapperTable } from "./WrapperTable";
+import { wrapperColumns } from "./wrapperColumns";
 
 const AdminWrapper: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [activeTab, setActiveTab] = useState("dashboard");
-  const [isSidebarOpen, setSidebarOpen] = useState(false)
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
-  const {data: bookData, isLoading: bookLoading} = api.book.getAllBooks.useQuery()
-  const {data: categoryData, isLoading: categoryLoading} = api.category.getAllCategories.useQuery()  
-  const {data: genreData, isLoading: genreLoading} = api.genre.getAllGenres.useQuery()
-  const {data: authorsData, isLoading: authorLoading} = api.author.getAllAuthors.useQuery()
-
-  if(bookLoading || categoryLoading || genreLoading || authorLoading) return <Loader2 className="animate-spin w-8 h-8" />
+  const { data: bookData, isLoading: bookLoading } =
+    api.book.getAllBooks.useQuery();
+  const { data: categoryData, isLoading: categoryLoading } =
+    api.category.getAllCategories.useQuery();
+  const { data: genreData, isLoading: genreLoading } =
+    api.genre.getAllGenres.useQuery();
+  const { data: authorsData, isLoading: authorLoading } =
+    api.author.getAllAuthors.useQuery();
+  if (bookLoading || categoryLoading || genreLoading || authorLoading)
+    return <Loader2 className="h-8 w-8 animate-spin" />;
 
   return (
     <div className="flex h-screen flex-col overflow-hidden lg:flex-row">
@@ -163,38 +165,32 @@ const AdminWrapper: FC = () => {
               {
                 title: "Všetky knihy",
                 value: bookData?.length,
-                icon: BookMarked,
                 color: "bg-blue-500",
               },
               {
                 title: "Všetky kategórie",
                 value: categoryData?.length,
-                icon: UserCheck,
                 color: "bg-green-500",
               },
               {
                 title: "Všetky žánre",
                 value: genreData?.length,
-                icon: Clock,
                 color: "bg-yellow-500",
               },
               {
                 title: "Všetky spisovateľia/ky",
                 value: authorsData?.length,
-                icon: AlertCircle,
                 color: "bg-red-500",
               },
               {
                 title: "Všetky objednávky",
                 value: "123", // TODO: replace later
-                icon: AlertCircle,
-                color: "bg-red-500",
+                color: "bg-orange-500",
               },
               {
                 title: "Všetci používatelia",
                 value: "123", // TODO: Replace later
-                icon: AlertCircle,
-                color: "bg-red-500",
+                color: "bg-fuchsia-500",
               },
             ].map((stat, index) => (
               <div
@@ -210,9 +206,9 @@ const AdminWrapper: FC = () => {
                       {stat.value}
                     </p>
                   </div>
-                  <div className={`${stat.color} flex-shrink-0 rounded-lg p-3`}>
-                    <stat.icon className="h-6 w-6 text-white" />
-                  </div>
+                  <div
+                    className={`${stat.color} flex-shrink-0 rounded-lg p-3`}
+                  />
                 </div>
               </div>
             ))}
@@ -220,9 +216,11 @@ const AdminWrapper: FC = () => {
 
           <div className="overflow-hidden rounded-lg bg-white shadow dark:bg-background">
             <div className="border-b border-gray-200 p-4 sm:p-6">
-              <h2 className="text-lg font-semibold">Posledné objednávky kníh</h2>
+              <h2 className="text-lg font-semibold">
+                Posledné objednávky kníh
+              </h2>
             </div>
-            <WrapperTable />
+            <WrapperTable data={[]} columns={wrapperColumns} />
           </div>
 
           <div className="mt-14">

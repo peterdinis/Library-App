@@ -23,15 +23,15 @@ import {
   PaginationEllipsis,
 } from "~/components/ui/pagination";
 
-interface WrapperTableProps<TData, TValue> {
+interface AuthorsTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function WrapperTable<TData, TValue>({
+export function AuthorsTable<TData, TValue>({
   columns,
   data,
-}: WrapperTableProps<TData, TValue>) {
+}: AuthorsTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
     columns,
@@ -39,9 +39,6 @@ export function WrapperTable<TData, TValue>({
     manualPagination: true,
     pageCount: Math.ceil(data.length / 10),
   });
-
-  const currentPage = table.getState().pagination.pageIndex + 1;
-  const totalPages = table.getPageCount();
 
   return (
     <div className="rounded-md border p-4">
@@ -85,7 +82,7 @@ export function WrapperTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
-      <Pagination className="mt-4 flex items-center justify-center gap-4">
+      <Pagination className="mt-4">
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
@@ -93,8 +90,8 @@ export function WrapperTable<TData, TValue>({
               disabled={!table.getCanPreviousPage()}
             />
           </PaginationItem>
-          <PaginationItem className="font-semibold">
-            Strana {currentPage} z {totalPages}
+          <PaginationItem>
+            {table.getPageCount() > 5 && <PaginationEllipsis />}
           </PaginationItem>
           <PaginationItem>
             <PaginationNext
