@@ -163,38 +163,32 @@ const Wrapper: FC = () => {
               {
                 title: "Všetky knihy",
                 value: bookData?.length,
-                icon: BookMarked,
                 color: "bg-blue-500",
               },
               {
                 title: "Všetky kategórie",
                 value: categoryData?.length,
-                icon: UserCheck,
                 color: "bg-green-500",
               },
               {
                 title: "Všetky žánre",
                 value: genreData?.length,
-                icon: Clock,
                 color: "bg-yellow-500",
               },
               {
                 title: "Všetky spisovateľia/ky",
                 value: authorsData?.length,
-                icon: AlertCircle,
                 color: "bg-red-500",
               },
               {
                 title: "Všetky objednávky",
                 value: "123", // TODO: replace later
-                icon: AlertCircle,
-                color: "bg-red-500",
+                color: "bg-orange-500",
               },
               {
                 title: "Všetci používatelia",
                 value: "123", // TODO: Replace later
-                icon: AlertCircle,
-                color: "bg-red-500",
+                color: "bg-fuchsia-500",
               },
             ].map((stat, index) => (
               <div
@@ -210,9 +204,7 @@ const Wrapper: FC = () => {
                       {stat.value}
                     </p>
                   </div>
-                  <div className={`${stat.color} flex-shrink-0 rounded-lg p-3`}>
-                    <stat.icon className="h-6 w-6 text-white" />
-                  </div>
+                  <div className={`${stat.color} flex-shrink-0 rounded-lg p-3`} />
                 </div>
               </div>
             ))}
