@@ -19,7 +19,7 @@ export const appRouter = createTRPCRouter({
   genre: genreRouter,
   user: userRouter,
   booking: bookingRouter,
-  admin: adminRouter
+  admin: adminRouter,
 });
 
 // export type definition of API

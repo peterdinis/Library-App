@@ -26,19 +26,24 @@ import {
   PaginationPrevious,
 } from "~/components/ui/pagination";
 import { api } from "~/trpc/react";
-import {WrapperTable} from "./WrapperTable";
+import { WrapperTable } from "./WrapperTable";
 import { wrapperColumns } from "./wrapperColumns";
 
 const Wrapper: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [activeTab, setActiveTab] = useState("dashboard");
-  const [isSidebarOpen, setSidebarOpen] = useState(false)
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
-  const {data: bookData, isLoading: bookLoading} = api.book.getAllBooks.useQuery()
-  const {data: categoryData, isLoading: categoryLoading} = api.category.getAllCategories.useQuery()  
-  const {data: genreData, isLoading: genreLoading} = api.genre.getAllGenres.useQuery()
-  const {data: authorsData, isLoading: authorLoading} = api.author.getAllAuthors.useQuery()
-  if(bookLoading || categoryLoading || genreLoading || authorLoading) return <Loader2 className="animate-spin w-8 h-8" />
+  const { data: bookData, isLoading: bookLoading } =
+    api.book.getAllBooks.useQuery();
+  const { data: categoryData, isLoading: categoryLoading } =
+    api.category.getAllCategories.useQuery();
+  const { data: genreData, isLoading: genreLoading } =
+    api.genre.getAllGenres.useQuery();
+  const { data: authorsData, isLoading: authorLoading } =
+    api.author.getAllAuthors.useQuery();
+  if (bookLoading || categoryLoading || genreLoading || authorLoading)
+    return <Loader2 className="h-8 w-8 animate-spin" />;
 
   return (
     <div className="flex h-screen flex-col overflow-hidden lg:flex-row">
@@ -201,7 +206,9 @@ const Wrapper: FC = () => {
                       {stat.value}
                     </p>
                   </div>
-                  <div className={`${stat.color} flex-shrink-0 rounded-lg p-3`} />
+                  <div
+                    className={`${stat.color} flex-shrink-0 rounded-lg p-3`}
+                  />
                 </div>
               </div>
             ))}
@@ -209,7 +216,9 @@ const Wrapper: FC = () => {
 
           <div className="overflow-hidden rounded-lg bg-white shadow dark:bg-background">
             <div className="border-b border-gray-200 p-4 sm:p-6">
-              <h2 className="text-lg font-semibold">Posledné objednávky kníh</h2>
+              <h2 className="text-lg font-semibold">
+                Posledné objednávky kníh
+              </h2>
             </div>
             <WrapperTable data={[]} columns={wrapperColumns} />
           </div>
