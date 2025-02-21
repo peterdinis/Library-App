@@ -19,7 +19,7 @@ import Link from "next/link";
 import AdminProfileDropdown from "../AdminProfileDropdown";
 import ModeToggle from "../../shared/ModeToggle";
 import { CategoriesTable } from "./CategoriesTable";
-import { columns } from "../books/columns";
+import { categoryColumns } from "./categoryColumns";
 
 const AdminCategories: FC = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -156,7 +156,7 @@ const AdminCategories: FC = () => {
         {/* Dashboard Content */}
         <main className="flex-1 overflow-auto p-4 sm:p-6">
           <h1 className="text-center text-5xl font-bold">Všetky kategórie</h1>
-          <CategoriesTable data={[]} columns={columns} />
+          <CategoriesTable data={[]} columns={categoryColumns} />
         </main>
       </div>
     </div>
