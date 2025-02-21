@@ -38,7 +38,6 @@ const Wrapper: FC = () => {
   const {data: categoryData, isLoading: categoryLoading} = api.category.getAllCategories.useQuery()  
   const {data: genreData, isLoading: genreLoading} = api.genre.getAllGenres.useQuery()
   const {data: authorsData, isLoading: authorLoading} = api.author.getAllAuthors.useQuery()
-
   if(bookLoading || categoryLoading || genreLoading || authorLoading) return <Loader2 className="animate-spin w-8 h-8" />
 
   return (
