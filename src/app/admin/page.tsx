@@ -1,8 +1,8 @@
 import { NextPage } from "next";
-import Wrapper from "../_components/admin/Wrapper";
+import AdminWrapper from "../_components/admin/AdminWrapper";
 
 const MainAdminPage: NextPage = () => {
-  return <Wrapper />;
+  return <AdminWrapper />;
 };
 
 export default MainAdminPage;
