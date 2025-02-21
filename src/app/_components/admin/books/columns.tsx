@@ -5,8 +5,8 @@ import { ColumnDef } from "@tanstack/react-table";
 export type Book = {
   id: string;
   title: string;
-  availableCopies: number
-  isAvaible: boolean
+  availableCopies: number;
+  isAvaible: boolean;
 };
 
 export const columns: ColumnDef<Book>[] = [
@@ -16,11 +16,11 @@ export const columns: ColumnDef<Book>[] = [
   },
   {
     accessorKey: "availableCopies",
-    header: "Počet kopií"
+    header: "Počet kopií",
   },
 
   {
     accessorKey: "isAvaible",
-    header: "Dostupnosť"
-  }
+    header: "Dostupnosť",
+  },
 ];

@@ -26,10 +26,10 @@ import { api } from "~/trpc/react";
 const AdminBooks: FC = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const {data, isLoading} = api.book.getAllBooks.useQuery()
+  const { data, isLoading } = api.book.getAllBooks.useQuery();
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
-  
-  if(isLoading) return <Loader2 className="animate-spin w-8 h-8" />
+
+  if (isLoading) return <Loader2 className="h-8 w-8 animate-spin" />;
 
   return (
     <div className="flex h-screen flex-col overflow-hidden lg:flex-row">

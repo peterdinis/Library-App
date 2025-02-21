@@ -18,6 +18,8 @@ import { Input } from "~/components/ui/input";
 import Link from "next/link";
 import AdminProfileDropdown from "../AdminProfileDropdown";
 import ModeToggle from "../../shared/ModeToggle";
+import { AuthorsTable } from "./AuthorsTable";
+import { authorsColumns } from "./authorsColumns";
 
 const AdminAuthors: FC = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -152,7 +154,12 @@ const AdminAuthors: FC = () => {
         </header>
 
         {/* Dashboard Content */}
-        <main className="flex-1 overflow-auto p-4 sm:p-6">Authors</main>
+        <main className="flex-1 overflow-auto p-4 sm:p-6">
+          <h1 className="text-center text-5xl font-bold">
+            Všetci spisovatelia
+          </h1>
+          <AuthorsTable columns={authorsColumns} data={[]} />
+        </main>
       </div>
     </div>
   );
