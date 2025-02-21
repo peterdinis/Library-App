@@ -18,6 +18,8 @@ import AdminProfileDropdown from "../AdminProfileDropdown";
 import ModeToggle from "../../shared/ModeToggle";
 import { Input } from "~/components/ui/input";
 import Link from "next/link";
+import { GenresTable } from "./GenresTable";
+import { genreColumns } from "./genreColumns";
 
 const AdminGenres: FC = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -154,6 +156,7 @@ const AdminGenres: FC = () => {
         {/* Dashboard Content */}
         <main className="flex-1 overflow-auto p-4 sm:p-6">
           <h1 className="text-center text-5xl font-bold">Všetky žánre</h1>
+          <GenresTable data={[]} columns={genreColumns} />
         </main>
       </div>
     </div>
