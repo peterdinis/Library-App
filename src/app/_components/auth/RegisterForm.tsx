@@ -1,6 +1,7 @@
 "use client";
 
-import { Book, Lock, Mail, User } from "lucide-react";
+import { useState } from "react";
+import { Book, Lock, Mail, User, Eye, EyeOff } from "lucide-react";
 import type { FC } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "~/components/ui/button";
@@ -20,6 +21,11 @@ const RegisterForm: FC = () => {
 	} = useForm<RegisterFormInputs>();
 
 	const registerMutation = api.user.register.useMutation();
+	const [showPassword, setShowPassword] = useState(false);
+
+	const togglePasswordVisibility = () => {
+		setShowPassword((prev) => !prev);
+	};
 
 	const onSubmit = (data: RegisterFormInputs) => {
 		registerMutation.mutate(data);
@@ -106,13 +112,24 @@ const RegisterForm: FC = () => {
 								</div>
 								<input
 									id="password"
-									type="password"
+									type={showPassword ? "text" : "password"}
 									{...register("password", {
 										required: "Password is required",
 									})}
 									className="block w-full rounded-lg border border-gray-300 px-4 py-3 pl-10 placeholder-gray-500 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500"
 									placeholder="••••••••"
 								/>
+								<button
+									type="button"
+									onClick={togglePasswordVisibility}
+									className="absolute inset-y-0 right-0 flex items-center pr-3"
+								>
+									{showPassword ? (
+										<EyeOff className="h-5 w-5 text-gray-400" />
+									) : (
+										<Eye className="h-5 w-5 text-gray-400" />
+									)}
+								</button>
 								{errors.password && (
 									<p className="mt-1 text-sm text-red-500">
 										{errors.password.message}
