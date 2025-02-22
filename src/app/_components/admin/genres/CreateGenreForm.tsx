@@ -27,7 +27,7 @@ const CreateGenreForm: FC = () => {
   const createNewGenreMut = api.genre.createGenre.useMutation({
     onSuccess: () => {
       reset();
-      utils.category.getAllCategories.invalidate()
+      utils.genre.getAllGenres.invalidate()
       toast({
         title: "Žáner bol vytvorený",
         duration: 2000,
