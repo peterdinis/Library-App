@@ -22,6 +22,8 @@ import {
   PaginationNext,
   PaginationEllipsis,
 } from "~/components/ui/pagination";
+import { Button } from "~/components/ui/button";
+import Link from "next/link";
 
 interface GenresTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -42,6 +44,11 @@ export function GenresTable<TData, TValue>({
 
   return (
     <div className="rounded-md border p-4">
+      <Button>
+        <Link href="/admin/genres/create">
+          Pridaj nový žáner
+        </Link>
+      </Button>
       <Table className="mt-6">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -51,9 +58,9 @@ export function GenresTable<TData, TValue>({
                   {header.isPlaceholder
                     ? null
                     : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )}
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
                 </TableHead>
               ))}
             </TableRow>
