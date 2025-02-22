@@ -5,7 +5,7 @@ const AboutWrapper: FC = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mx-auto max-w-3xl space-y-8">
-        <h3 className="text-center text-4xl font-bold">O knižnici</h3>
+        <h3 className="text-center text-4xl font-bold">O školskej knižnici</h3>
         <Card className="border-none bg-primary/5 shadow-lg">
           <CardHeader>
             <CardTitle className="text-2xl">

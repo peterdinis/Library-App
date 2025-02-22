@@ -109,7 +109,7 @@ const AllBooksWrapper = () => {
                   <h3 className="mb-1 line-clamp-1 text-lg font-semibold text-gray-900 dark:text-sky-50">
                     {book.title}
                   </h3>
-                  <Button variant={"link"} className="text-blue-200">
+                  <Button variant={"link"} className="text-sky-600 dark:text-sky-200">
                     <Link href={`/books/${book.id}`}>Detail Knihy</Link>
                   </Button>
                 </div>
