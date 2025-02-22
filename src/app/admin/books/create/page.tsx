@@ -1,8 +1,8 @@
-import { NextPage } from "next";
+import type { NextPage } from "next";
 import CreateBookForm from "~/app/_components/admin/books/CreateBookForm";
 
 const CreateBookPage: NextPage = () => {
-  return <CreateBookForm />;
+	return <CreateBookForm />;
 };
 
 export default CreateBookPage;
