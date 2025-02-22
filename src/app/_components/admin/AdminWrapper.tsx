@@ -99,12 +99,6 @@ const AdminWrapper: FC = () => {
 							label: "Žánre",
 							link: "/admin/genres",
 						},
-						{
-							id: "borrowedBooks",
-							icon: BookText,
-							label: "Všetky objednávky",
-							link: "/admin/booking",
-						},
 					].map((item) => (
 						<button
 							key={item.id}
