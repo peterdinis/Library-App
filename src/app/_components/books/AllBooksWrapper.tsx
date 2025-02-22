@@ -75,8 +75,8 @@ const AllBooksWrapper = () => {
             onClick={() => setIsSidebarOpen(true)}
             className="flex items-center gap-2 rounded-2xl bg-white/80 px-4 py-3 shadow-xl backdrop-blur-sm transition-colors hover:bg-white/90 dark:bg-background"
           >
-            <SlidersHorizontal className="h-5 w-5" />
-            <span className="hidden sm:inline">Filtre</span>
+            <SlidersHorizontal className="h-5 w-5 text-black dark:text-white" />
+            <span className="hidden sm:inline text-black dark:text-white">Filtre</span>
           </Button>
         </div>
 
