@@ -90,25 +90,25 @@ export function BooksTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
-      <Pagination className="mt-4 flex items-center justify-center gap-4">
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-            />
-          </PaginationItem>
-          <PaginationItem className="font-semibold">
-            Strana {currentPage} z {totalPages}
-          </PaginationItem>
-          <PaginationItem>
-            <PaginationNext
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-            />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
+      <Pagination className="mt-4 flex items-center justify-between sm:justify-center gap-2 sm:gap-4">
+  <PaginationContent>
+    <PaginationItem>
+      <PaginationPrevious
+        onClick={() => table.previousPage()}
+        disabled={!table.getCanPreviousPage()}
+      />
+    </PaginationItem>
+    <PaginationItem className="hidden sm:inline-block font-semibold">
+      Strana {currentPage} z {totalPages}
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationNext
+        onClick={() => table.nextPage()}
+        disabled={!table.getCanNextPage()}
+      />
+    </PaginationItem>
+  </PaginationContent>
+</Pagination>
     </div>
   );
 }
