@@ -22,7 +22,6 @@ import {
   PaginationItem,
   PaginationPrevious,
   PaginationNext,
-  PaginationEllipsis,
 } from "~/components/ui/pagination";
 
 interface BooksTableProps<TData, TValue> {
