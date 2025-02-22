@@ -1,8 +1,8 @@
-import { NextPage } from "next";
+import type { NextPage } from "next";
 import AdminBooking from "~/app/_components/admin/bookings/AdminBooking";
 
 const AdminBookingPage: NextPage = () => {
-  return <AdminBooking />;
+	return <AdminBooking />;
 };
 
 export default AdminBookingPage;
