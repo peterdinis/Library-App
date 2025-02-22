@@ -20,7 +20,6 @@ import {
   PaginationItem,
   PaginationPrevious,
   PaginationNext,
-  PaginationEllipsis,
 } from "~/components/ui/pagination";
 import { Button } from "~/components/ui/button";
 import Link from "next/link";
@@ -41,6 +40,8 @@ export function AuthorsTable<TData, TValue>({
     manualPagination: true,
     pageCount: Math.ceil(data.length / 10),
   });
+
+  const totalPages = table.getPageCount();
 
   return (
     <div className="rounded-md border p-4">
@@ -96,7 +97,7 @@ export function AuthorsTable<TData, TValue>({
             />
           </PaginationItem>
           <PaginationItem>
-            {table.getPageCount() > 5 && <PaginationEllipsis />}
+            {totalPages}
           </PaginationItem>
           <PaginationItem>
             <PaginationNext
