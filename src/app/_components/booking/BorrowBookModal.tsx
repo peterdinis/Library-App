@@ -34,9 +34,6 @@ const BorrowBookModal: FC = () => {
       <DialogContent className="max-w-[600px] w-full max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Požičat knihu</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
-          </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           {[
