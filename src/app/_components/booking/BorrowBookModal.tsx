@@ -25,56 +25,48 @@ const BorrowBookModal: FC = () => {
       className: "bg-green-800 text-white font-bold",
     });
   };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Požičat knihu</Button>
+        <Button variant="outline">Požičať knihu</Button>
       </DialogTrigger>
-      <DialogContent className="max-w-[600px]">
+      <DialogContent className="max-w-[600px] w-full max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="font-bold text-3xl">Požičat knihu</DialogTitle>
+          <DialogTitle>Požičat knihu</DialogTitle>
+          <DialogDescription>
+            Make changes to your profile here. Click save when you're done.
+          </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Meno
-            </Label>
-            <Input id="name" placeholder="Meno" className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Trieda
-            </Label>
-            <Input id="username" placeholder="Trieda" className="col-span-3" />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Názov knihy
-            </Label>
-            <Input
-              id="username"
-              placeholder="Názov knihy"
-              className="col-span-3"
-            />
-          </div>
-          <div className="grid grid-cols-2 items-center gap-4">
-            <div className="flex flex-col items-center">
-              <Label htmlFor="from" className="text-right">
-                Od
+          {[
+            { id: "name", label: "Meno", placeholder: "Meno" },
+            { id: "class", label: "Trieda", placeholder: "Trieda" },
+            { id: "book", label: "Názov knihy", placeholder: "Názov knihy" },
+          ].map(({ id, label, placeholder }) => (
+            <div key={id} className="flex flex-col sm:grid sm:grid-cols-4 items-center gap-2 sm:gap-4">
+              <Label htmlFor={id} className="text-left sm:text-right w-full">
+                {label}
               </Label>
-              <Calendar id="from" />
+              <Input id={id} placeholder={placeholder} className="col-span-3 w-full" />
             </div>
-            <div className="ml-8 flex flex-col items-center">
-              <Label htmlFor="to" className="text-right">
-                Do
-              </Label>
-              <Calendar id="to" />
+          ))}
+
+          {/* Calendar Section */}
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <div className="flex flex-col items-center w-full">
+              <Label htmlFor="from" className="mb-2">Od</Label>
+              <Calendar id="from" className="w-full" />
+            </div>
+            <div className="flex flex-col items-center w-full">
+              <Label htmlFor="to" className="mb-2">Do</Label>
+              <Calendar id="to" className="w-full" />
             </div>
           </div>
         </div>
         <DialogFooter>
           <Button onClick={borrowFnForNow} type="submit">
-            Požičat knihu
+            Save changes
           </Button>
         </DialogFooter>
       </DialogContent>
