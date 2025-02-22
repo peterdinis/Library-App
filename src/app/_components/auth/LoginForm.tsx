@@ -1,10 +1,12 @@
-"use client"
+"use client";
 
-import { Book, Lock, Mail } from "lucide-react";
-import type { FC } from "react";
+import { Book, Lock, Mail, Eye, EyeOff } from "lucide-react";
+import { useState, type FC } from "react";
 import { Button } from "~/components/ui/button";
 
 const LoginForm: FC = () => {
+	const [showPassword, setShowPassword] = useState(false);
+
 	return (
 		<div className="flex items-center justify-center min-h-screen p-6 bg-gray-100 dark:bg-zinc-900">
 			<div className="w-full max-w-md space-y-6 rounded-xl bg-white p-8 shadow-lg dark:bg-zinc-800">
@@ -17,6 +19,7 @@ const LoginForm: FC = () => {
 					</h2>
 				</div>
 				<form className="mt-6 space-y-4">
+					{/* Email */}
 					<div>
 						<label
 							htmlFor="email"
@@ -39,6 +42,7 @@ const LoginForm: FC = () => {
 						</div>
 					</div>
 
+					{/* Password */}
 					<div>
 						<label
 							htmlFor="password"
@@ -51,16 +55,24 @@ const LoginForm: FC = () => {
 								<Lock className="h-5 w-5 text-gray-400" />
 							</span>
 							<input
-								type="password"
+								type={showPassword ? "text" : "password"}
 								id="password"
 								name="password"
 								required
-								className="w-full rounded-lg border border-gray-300 bg-gray-50 p-3 pl-10 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-zinc-700 dark:text-white dark:placeholder-gray-400"
+								className="w-full rounded-lg border border-gray-300 bg-gray-50 p-3 pl-10 pr-10 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-zinc-700 dark:text-white dark:placeholder-gray-400"
 								placeholder="••••••••"
 							/>
+							<button
+								type="button"
+								onClick={() => setShowPassword(!showPassword)}
+								className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 dark:text-gray-300"
+							>
+								{showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+							</button>
 						</div>
 					</div>
 
+					{/* Submit */}
 					<div className="text-center">
 						<Button size="lg" variant="default" className="w-full">
 							Prihlásiť sa
