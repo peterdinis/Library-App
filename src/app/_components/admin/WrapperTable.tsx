@@ -20,7 +20,6 @@ import {
   PaginationItem,
   PaginationPrevious,
   PaginationNext,
-  PaginationEllipsis,
 } from "~/components/ui/pagination";
 
 interface WrapperTableProps<TData, TValue> {
@@ -94,7 +93,7 @@ export function WrapperTable<TData, TValue>({
             />
           </PaginationItem>
           <PaginationItem className="font-semibold">
-            Strana {currentPage} z {totalPages}
+            {totalPages}
           </PaginationItem>
           <PaginationItem>
             <PaginationNext
