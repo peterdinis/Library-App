@@ -15,14 +15,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { type FC, useState } from "react";
-import {
-	Pagination,
-	PaginationContent,
-	PaginationItem,
-	PaginationLink,
-	PaginationNext,
-	PaginationPrevious,
-} from "~/components/ui/pagination";
 import { api } from "~/trpc/react";
 import ModeToggle from "../shared/ModeToggle";
 import AdminProfileDropdown from "./AdminProfileDropdown";
@@ -221,34 +213,6 @@ const AdminWrapper: FC = () => {
 							</h2>
 						</div>
 						<WrapperTable data={[]} columns={wrapperColumns} />
-					</div>
-
-					<div className="mt-14">
-						<Pagination>
-							<PaginationContent>
-								<PaginationItem>
-									<PaginationPrevious
-										href="#"
-										onClick={() =>
-											setCurrentPage((prev) => Math.max(prev - 1, 1))
-										}
-										disabled={currentPage === 1}
-									/>
-								</PaginationItem>
-								<PaginationItem>
-									<PaginationLink href="#">{currentPage}</PaginationLink>
-								</PaginationItem>
-								<PaginationItem>
-									<PaginationNext
-										href="#"
-										onClick={() =>
-											setCurrentPage((prev) => Math.min(prev + 1, 6))
-										}
-										disabled={currentPage === 6}
-									/>
-								</PaginationItem>
-							</PaginationContent>
-						</Pagination>
 					</div>
 				</main>
 			</div>
