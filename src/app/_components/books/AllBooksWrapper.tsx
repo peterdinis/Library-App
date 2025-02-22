@@ -101,9 +101,9 @@ const AllBooksWrapper = () => {
 									<div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
 										<div className="absolute bottom-0 left-0 right-0 p-6">
 											{book.isAvaible ? (
-												<Badge variant={"success"}>Dostupná</Badge>
+												<Badge className="text-lg" variant={"success"}>Dostupná</Badge>
 											) : (
-												<Badge variant={"destructive"}>Nedostupná</Badge>
+												<Badge className="text-lg" variant={"destructive"}>Nedostupná</Badge>
 											)}
 										</div>
 									</div>
