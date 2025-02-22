@@ -42,6 +42,8 @@ export function CategoriesTable<TData, TValue>({
     pageCount: Math.ceil(data.length / 10),
   });
 
+  const totalPages = table.getPageCount();
+
   return (
     <div className="rounded-md border p-4">
       <Button>
@@ -98,7 +100,7 @@ export function CategoriesTable<TData, TValue>({
             />
           </PaginationItem>
           <PaginationItem>
-            {table.getPageCount() > 5 && <PaginationEllipsis />}
+            {totalPages}
           </PaginationItem>
           <PaginationItem>
             <PaginationNext

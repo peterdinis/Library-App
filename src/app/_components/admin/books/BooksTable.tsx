@@ -41,7 +41,6 @@ export function BooksTable<TData, TValue>({
     pageCount: Math.ceil(data.length / 10),
   });
 
-  const currentPage = table.getState().pagination.pageIndex + 1;
   const totalPages = table.getPageCount();
 
   return (
@@ -98,7 +97,7 @@ export function BooksTable<TData, TValue>({
       />
     </PaginationItem>
     <PaginationItem className="hidden sm:inline-block font-semibold">
-      Strana {currentPage} z {totalPages}
+      {totalPages}
     </PaginationItem>
     <PaginationItem>
       <PaginationNext
