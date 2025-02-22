@@ -76,8 +76,8 @@ const AllBooksWrapper = () => {
             onClick={() => setIsSidebarOpen(true)}
             className="flex items-center gap-2 rounded-2xl px-4 py-3 shadow-xl backdrop-blur-sm transition-colors dark:bg-background"
           >
-            <SlidersHorizontal className="h-5 w-5" />
-            <span className="hidden sm:inline">Filtre</span>
+            <SlidersHorizontal className="h-5 w-5 text-black dark:text-white" />
+            <span className="hidden sm:inline text-black dark:text-white">Filtre</span>
           </Button>
         </div>
 
@@ -110,7 +110,7 @@ const AllBooksWrapper = () => {
                   <h3 className="mb-1 line-clamp-1 text-lg font-semibold text-gray-900 dark:text-sky-50">
                     {book.title}
                   </h3>
-                  <Button variant={"link"} className="text-blue-200">
+                  <Button variant={"link"} className="text-sky-600 dark:text-sky-200">
                     <Link href={`/books/${book.id}`}>Detail Knihy</Link>
                   </Button>
                 </div>
