@@ -6,7 +6,6 @@ import { Calendar } from "~/components/ui/calendar";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -34,10 +33,7 @@ const BorrowBookModal: FC = () => {
       </DialogTrigger>
       <DialogContent className="max-w-[600px] w-full max-h-[80vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Požičať knihu</DialogTitle>
-          <DialogDescription>
-            Vyplňte potrebné informácie a stlačte tlačidlo pre požičanie knihy.
-          </DialogDescription>
+          <DialogTitle>Požičat knihu</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           {[
@@ -66,8 +62,8 @@ const BorrowBookModal: FC = () => {
           </div>
         </div>
         <DialogFooter>
-          <Button onClick={borrowFnForNow} type="submit" className="w-full sm:w-auto">
-            Požičať knihu
+          <Button onClick={borrowFnForNow} type="submit">
+            Save changes
           </Button>
         </DialogFooter>
       </DialogContent>

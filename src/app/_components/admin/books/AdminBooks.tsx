@@ -156,7 +156,7 @@ const AdminBooks: FC = () => {
 
         <main className="flex-1 overflow-auto p-4 sm:p-6">
           <h1 className="text-center text-5xl font-bold">Všetky Knihy</h1>
-          <div className="mt-4">
+          <div className="mt-8">
             <BooksTable columns={columns} data={data as unknown as Book[]} />
           </div>
         </main>

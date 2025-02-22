@@ -13,6 +13,7 @@ import {
   Menu,
   X,
   Users2,
+  Loader2,
 } from "lucide-react";
 import { Input } from "~/components/ui/input";
 import Link from "next/link";
@@ -20,12 +21,17 @@ import AdminProfileDropdown from "../AdminProfileDropdown";
 import ModeToggle from "../../shared/ModeToggle";
 import { AuthorsTable } from "./AuthorsTable";
 import { authorsColumns } from "./authorsColumns";
+import { api } from "~/trpc/react";
+import { Author } from "@prisma/client";
 
 const AdminAuthors: FC = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-
+  const {data, isLoading} = api.author.getAllAuthors.useQuery()
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
+
+
+  if(isLoading) return <Loader2 className="animate-spin w-8 h-8" />
 
   return (
     <div className="flex h-screen flex-col overflow-hidden lg:flex-row">
@@ -158,7 +164,7 @@ const AdminAuthors: FC = () => {
           <h1 className="text-center text-5xl font-bold">
             Všetci spisovatelia
           </h1>
-          <AuthorsTable columns={authorsColumns} data={[]} />
+          <AuthorsTable columns={authorsColumns} data={data as unknown as Author[]} />
         </main>
       </div>
     </div>

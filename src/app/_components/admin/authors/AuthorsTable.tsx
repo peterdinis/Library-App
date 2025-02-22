@@ -22,6 +22,8 @@ import {
   PaginationNext,
   PaginationEllipsis,
 } from "~/components/ui/pagination";
+import { Button } from "~/components/ui/button";
+import Link from "next/link";
 
 interface AuthorsTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -42,6 +44,9 @@ export function AuthorsTable<TData, TValue>({
 
   return (
     <div className="rounded-md border p-4">
+      <Button variant={"default"}>
+        <Link href="/admin/authors/create">Vytvor nového spisovateľa</Link>
+      </Button>
       <Table className="mt-6">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

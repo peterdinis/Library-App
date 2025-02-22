@@ -13,6 +13,7 @@ import {
   Menu,
   X,
   Users2,
+  Loader2,
 } from "lucide-react";
 import AdminProfileDropdown from "../AdminProfileDropdown";
 import ModeToggle from "../../shared/ModeToggle";
@@ -20,13 +21,17 @@ import { Input } from "~/components/ui/input";
 import Link from "next/link";
 import { GenresTable } from "./GenresTable";
 import { genreColumns } from "./genreColumns";
+import { api } from "~/trpc/react";
+import { Genre } from "@prisma/client";
 
 const AdminGenres: FC = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-
+  const {data, isLoading} = api.genre.getAllGenres.useQuery()
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
 
+
+  if(isLoading) return <Loader2 className="animate-spin w-8 h-8" />
   return (
     <div className="flex h-screen flex-col overflow-hidden lg:flex-row">
       {/* Mobile Header */}
@@ -156,7 +161,7 @@ const AdminGenres: FC = () => {
         {/* Dashboard Content */}
         <main className="flex-1 overflow-auto p-4 sm:p-6">
           <h1 className="text-center text-5xl font-bold">Všetky žánre</h1>
-          <GenresTable data={[]} columns={genreColumns} />
+          <GenresTable data={data as unknown as Genre[]} columns={genreColumns} />
         </main>
       </div>
     </div>
