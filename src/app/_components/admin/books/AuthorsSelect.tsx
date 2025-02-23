@@ -12,7 +12,13 @@ import { Loader2 } from "lucide-react";
 import { FC } from "react";
 import { api } from "~/trpc/react";
 
-const AuthorsSelect: FC = () => {
+interface AuthorSelectProps {
+    onSelect: (value: string) => void;
+}
+
+const AuthorsSelect: FC<AuthorSelectProps> = ({
+    onSelect
+}) => {
     const { data, isLoading } = api.author.getAllAuthors.useQuery()
 
     if (isLoading) return <Loader2 className="animate-spin w-8 h-8" />
@@ -22,6 +28,7 @@ const AuthorsSelect: FC = () => {
         <>
             <Label htmlFor="author">Vybrať spisovateľa/ku</Label>
             <Select
+            onValueChange={onSelect}
             >
                 <SelectTrigger id="author">
                     <SelectValue placeholder="Vybrať spisovateľa/ku" />

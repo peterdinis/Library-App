@@ -12,11 +12,11 @@ import { Loader2 } from "lucide-react";
 import { FC } from "react";
 import { api } from "~/trpc/react";
 
-interface AdminSelectProps {
+interface CategorySelectProps {
     onSelect: (value: string) => void;
 }
 
-const CategoriesSelect: FC<AdminSelectProps> = ({
+const CategoriesSelect: FC<CategorySelectProps> = ({
     onSelect
 }) => {
     const { data, isLoading } = api.category.getAllCategories.useQuery()

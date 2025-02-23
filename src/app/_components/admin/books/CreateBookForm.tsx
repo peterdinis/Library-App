@@ -14,6 +14,7 @@ import CategoriesSelect from "./CategoriesSelect";
 import Navigation from "../../shared/Navigation";
 import { Loader2 } from "lucide-react";
 import { UploadButton } from "~/lib/uploadthing";
+import AuthorsSelect from "./AuthorsSelect";
 
 // Schéma validácie
 const bookSchema = z.object({
@@ -61,7 +62,18 @@ const CreateBookForm = () => {
   });
 
   const onSubmit = (data: FormData) => {
-    mutate({ ...data, coverUrl: coverUrl || "" });
+    mutate({
+      ...data,
+      coverUrl: coverUrl || "",
+      rating: Number(data.rating),
+      totalCopies: Number(data.totalCopies),
+      availableCopies: Number(data.availableCopies),
+      genreId: data.genreId,
+      authorId: data.authorId,
+      categoryId: data.categoryId,
+      genre: "",
+      author: "",
+    });
   };
 
   return (
@@ -92,6 +104,9 @@ const CreateBookForm = () => {
 
         <CategoriesSelect onSelect={(value) => setValue("categoryId", value)} />
         {errors.categoryId && <p className="text-red-500">{errors.categoryId.message}</p>}
+
+        <AuthorsSelect onSelect={(value) => setValue("authorId", value)} />
+        {errors.authorId && <p className="text-red-500">{errors.authorId.message}</p>}
 
         <div>
           <label className="font-medium">Hodnotenie (0-5)</label>
