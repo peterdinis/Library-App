@@ -15,6 +15,7 @@ import Navigation from "../../shared/Navigation";
 import { Loader2 } from "lucide-react";
 import { UploadButton } from "~/lib/uploadthing";
 import AuthorsSelect from "./AuthorsSelect";
+import { ourFileRouter } from "~/app/api/uploadthing/core";
 
 // Schéma validácie
 const bookSchema = z.object({
@@ -146,7 +147,7 @@ const CreateBookForm = () => {
               setCoverUrl(uploadedUrl);
               setValue("coverUrl", uploadedUrl);
             } }
-            onUploadError={(error) => alert(`Chyba pri nahrávaní: ${error.message}`)} endpoint={"bookCreate"}          />
+            onUploadError={(error) => alert(`Chyba pri nahrávaní: ${error.message}`)} endpoint={"imageUploader"}          />
           {watch("coverUrl") && (
             <img src={watch("coverUrl")} alt="Náhľad obálky" className="mt-2 h-40 object-cover" />
           )}
