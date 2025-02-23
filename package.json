@@ -13,7 +13,6 @@
 		"format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
 		"format:write": "prettier --write \"**/*.{ts,tsx,js,jsx,mdx}\" --cache",
 		"postinstall": "prisma generate",
-		"lint": "pnpm biome check --write .",
 		"seed": "tsx prisma/seed.ts",
 		"preview": "next build && next start",
 		"start": "next start",
@@ -71,7 +70,6 @@
 		"zustand": "^5.0.3"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.9.4",
 		"@tailwindcss/typography": "^0.5.16",
 		"@types/bcrypt": "^5.0.2",
 		"@types/draft-js": "^0.11.18",
