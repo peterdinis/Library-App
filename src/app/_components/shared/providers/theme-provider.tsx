@@ -4,22 +4,22 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 import * as React from "react";
 
 export function ThemeProvider({
-	children,
-	...props
+  children,
+  ...props
 }: React.ComponentProps<typeof NextThemesProvider>) {
-	const [mounted, setMounted] = React.useState(false);
+  const [mounted, setMounted] = React.useState(false);
 
-	React.useEffect(() => {
-		setMounted(true);
-	}, []);
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
-	if (!mounted) {
-		return null;
-	}
+  if (!mounted) {
+    return null;
+  }
 
-	return (
-		<NextThemesProvider attribute="class" defaultTheme="light" {...props}>
-			{children}
-		</NextThemesProvider>
-	);
+  return (
+    <NextThemesProvider attribute="class" defaultTheme="light" {...props}>
+      {children}
+    </NextThemesProvider>
+  );
 }
