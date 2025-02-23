@@ -80,63 +80,104 @@ const CreateBookForm = () => {
   return (
     <>
       <Navigation />
-      <h1 className="mt-10 text-center text-4xl font-bold">Vytvorenie novej knihy</h1>
+      <h1 className="mt-10 text-center text-4xl font-bold">
+        Vytvorenie novej knihy
+      </h1>
       <div className="mt-3">
         <Button variant="link" onClick={() => router.push("/admin")}>
           Návrat na admin časť
         </Button>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="max-w-xl mx-auto mt-6 space-y-4">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="mx-auto mt-6 max-w-xl space-y-4"
+      >
         <div>
           <label className="font-medium">Názov knihy</label>
           <Input {...register("title")} placeholder="Zadajte názov" />
-          {errors.title && <p className="text-red-500">{errors.title.message}</p>}
+          {errors.title && (
+            <p className="text-red-500">{errors.title.message}</p>
+          )}
         </div>
 
         <div>
           <label className="font-medium">Autor</label>
           <Input {...register("authorId")} placeholder="Zadajte ID autora" />
-          {errors.authorId && <p className="text-red-500">{errors.authorId.message}</p>}
+          {errors.authorId && (
+            <p className="text-red-500">{errors.authorId.message}</p>
+          )}
         </div>
 
         <GenresSelect onSelect={(value) => setValue("genreId", value)} />
-        {errors.genreId && <p className="text-red-500">{errors.genreId.message}</p>}
+        {errors.genreId && (
+          <p className="text-red-500">{errors.genreId.message}</p>
+        )}
 
         <CategoriesSelect onSelect={(value) => setValue("categoryId", value)} />
-        {errors.categoryId && <p className="text-red-500">{errors.categoryId.message}</p>}
+        {errors.categoryId && (
+          <p className="text-red-500">{errors.categoryId.message}</p>
+        )}
 
         <AuthorsSelect onSelect={(value) => setValue("authorId", value)} />
-        {errors.authorId && <p className="text-red-500">{errors.authorId.message}</p>}
+        {errors.authorId && (
+          <p className="text-red-500">{errors.authorId.message}</p>
+        )}
 
         <div>
           <label className="font-medium">Hodnotenie (0-5)</label>
-          <Input type="number" {...register("rating", { valueAsNumber: true })} min="0" max="5" />
-          {errors.rating && <p className="text-red-500">{errors.rating.message}</p>}
+          <Input
+            type="number"
+            {...register("rating", { valueAsNumber: true })}
+            min="0"
+            max="5"
+          />
+          {errors.rating && (
+            <p className="text-red-500">{errors.rating.message}</p>
+          )}
         </div>
 
         <div>
           <label className="font-medium">Popis</label>
-          <Textarea {...register("description")} placeholder="Krátky popis knihy" />
-          {errors.description && <p className="text-red-500">{errors.description.message}</p>}
+          <Textarea
+            {...register("description")}
+            placeholder="Krátky popis knihy"
+          />
+          {errors.description && (
+            <p className="text-red-500">{errors.description.message}</p>
+          )}
         </div>
 
         <div>
           <label className="font-medium">Celkový počet kópií</label>
-          <Input type="number" {...register("totalCopies", { valueAsNumber: true })} min="1" />
-          {errors.totalCopies && <p className="text-red-500">{errors.totalCopies.message}</p>}
+          <Input
+            type="number"
+            {...register("totalCopies", { valueAsNumber: true })}
+            min="1"
+          />
+          {errors.totalCopies && (
+            <p className="text-red-500">{errors.totalCopies.message}</p>
+          )}
         </div>
 
         <div>
           <label className="font-medium">Dostupné kópie</label>
-          <Input type="number" {...register("availableCopies", { valueAsNumber: true })} min="0" />
-          {errors.availableCopies && <p className="text-red-500">{errors.availableCopies.message}</p>}
+          <Input
+            type="number"
+            {...register("availableCopies", { valueAsNumber: true })}
+            min="0"
+          />
+          {errors.availableCopies && (
+            <p className="text-red-500">{errors.availableCopies.message}</p>
+          )}
         </div>
 
         <div>
           <label className="font-medium">Zhrnutie</label>
           <Textarea {...register("summary")} placeholder="Stručné zhrnutie" />
-          {errors.summary && <p className="text-red-500">{errors.summary.message}</p>}
+          {errors.summary && (
+            <p className="text-red-500">{errors.summary.message}</p>
+          )}
         </div>
 
         <div>
@@ -146,16 +187,30 @@ const CreateBookForm = () => {
               const uploadedUrl = res?.[0]?.url || "";
               setCoverUrl(uploadedUrl);
               setValue("coverUrl", uploadedUrl);
-            } }
-            onUploadError={(error) => alert(`Chyba pri nahrávaní: ${error.message}`)} endpoint={"imageUploader"}          />
+            }}
+            onUploadError={(error) =>
+              alert(`Chyba pri nahrávaní: ${error.message}`)
+            }
+            endpoint={"imageUploader"}
+          />
           {watch("coverUrl") && (
-            <img src={watch("coverUrl")} alt="Náhľad obálky" className="mt-2 h-40 object-cover" />
+            <img
+              src={watch("coverUrl")}
+              alt="Náhľad obálky"
+              className="mt-2 h-40 object-cover"
+            />
           )}
-          {errors.coverUrl && <p className="text-red-500">{errors.coverUrl.message}</p>}
+          {errors.coverUrl && (
+            <p className="text-red-500">{errors.coverUrl.message}</p>
+          )}
         </div>
 
         <Button type="submit" disabled={isPending} className="w-full">
-          {isPending ? <Loader2 className="h-5 w-5 animate-spin" /> : "Vytvoriť knihu"}
+          {isPending ? (
+            <Loader2 className="h-5 w-5 animate-spin" />
+          ) : (
+            "Vytvoriť knihu"
+          )}
         </Button>
       </form>
     </>
