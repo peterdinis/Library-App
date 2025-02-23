@@ -1,35 +1,17 @@
 "use client";
 
-import {
-	BarChart3,
-	BookMarked,
-	BookOpen,
-	BookText,
-	ChartColumnStacked,
-	Library,
-	Loader2,
-	Menu,
-	Search,
-	Users,
-	Users2,
-	X,
-} from "lucide-react";
-import Link from "next/link";
-import { type FC, useState } from "react";
-import { Input } from "~/components/ui/input";
+import { Loader2 } from "lucide-react";
+import { FC } from "react";
 import { api } from "~/trpc/react";
-import ModeToggle from "../../shared/ModeToggle";
-import AdminProfileDropdown from "../AdminProfileDropdown";
+import { columns } from "./columns";
+import { Book } from "@prisma/client";
 import { BooksTable } from "./BooksTable";
-import { type Book, columns } from "./columns";
+import AdminSharedComponent from "../shared/AdminSharedComponent";
 
 const AdminBooks: FC = () => {
-	const [activeTab, setActiveTab] = useState("dashboard");
-	const [isSidebarOpen, setSidebarOpen] = useState(false);
-	const { data, isLoading } = api.book.getAllBooks.useQuery();
-	const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
+  const { data, isLoading } = api.book.getAllBooks.useQuery();
 
-	if (isLoading) return <Loader2 className="h-8 w-8 animate-spin" />;
+  if (isLoading) return <Loader2 className="h-8 w-8 animate-spin" />;
 
 	return (
 		<div className="flex h-screen flex-col overflow-hidden lg:flex-row">

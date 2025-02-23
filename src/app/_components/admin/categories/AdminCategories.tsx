@@ -1,34 +1,14 @@
 "use client";
 
 import type { Category } from "@prisma/client";
-import {
-	BarChart3,
-	BookMarked,
-	BookOpen,
-	BookText,
-	ChartColumnStacked,
-	Library,
-	Loader2,
-	Menu,
-	Search,
-	Users,
-	Users2,
-	X,
-} from "lucide-react";
-import Link from "next/link";
-import { type FC, useState } from "react";
-import { Input } from "~/components/ui/input";
-import { api } from "~/trpc/react";
-import ModeToggle from "../../shared/ModeToggle";
-import AdminProfileDropdown from "../AdminProfileDropdown";
-import { CategoriesTable } from "./CategoriesTable";
+import { FC } from "react";
 import { categoryColumns } from "./categoryColumns";
+import { CategoriesTable } from "./CategoriesTable";
+import { api } from "~/trpc/react";
+import { Loader2 } from "lucide-react";
 
 const AdminCategories: FC = () => {
-	const [activeTab, setActiveTab] = useState("dashboard");
-	const [isSidebarOpen, setSidebarOpen] = useState(false);
-	const { data, isLoading } = api.category.getAllCategories.useQuery();
-	const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
+  const { data, isLoading } = api.category.getAllCategories.useQuery();
 
 	if (isLoading) return <Loader2 className="animate-spin w-8 h-8" />;
 

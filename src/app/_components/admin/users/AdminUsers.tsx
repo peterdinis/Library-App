@@ -1,25 +1,9 @@
 "use client";
 
-import {
-	BarChart3,
-	BookMarked,
-	BookOpen,
-	BookText,
-	ChartColumnStacked,
-	Library,
-	Menu,
-	Search,
-	Users,
-	Users2,
-	X,
-} from "lucide-react";
-import Link from "next/link";
-import { type FC, useState } from "react";
-import { Input } from "~/components/ui/input";
-import ModeToggle from "../../shared/ModeToggle";
-import AdminProfileDropdown from "../AdminProfileDropdown";
+import { FC } from "react";
 import { columns } from "../books/columns";
 import { UsersTable } from "./UsersTable";
+import AdminSharedComponent from "../shared/AdminSharedComponent";
 
 const AdminUsers: FC = () => {
 	const [activeTab, setActiveTab] = useState("dashboard");
