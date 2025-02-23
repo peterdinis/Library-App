@@ -12,7 +12,13 @@ import { Loader2 } from "lucide-react";
 import { FC } from "react";
 import { api } from "~/trpc/react";
 
-const CategoriesSelect: FC = () => {
+interface CategorySelectProps {
+    onSelect: (value: string) => void;
+}
+
+const CategoriesSelect: FC<CategorySelectProps> = ({
+    onSelect
+}) => {
     const { data, isLoading } = api.category.getAllCategories.useQuery()
 
     if (isLoading) return <Loader2 className="animate-spin w-8 h-8" />
@@ -22,6 +28,7 @@ const CategoriesSelect: FC = () => {
         <>
             <Label htmlFor="category">Vybrať kategóriu</Label>
             <Select
+            onValueChange={onSelect}
             >
                 <SelectTrigger id="category">
                     <SelectValue placeholder="Vybrať kategóriu" />
