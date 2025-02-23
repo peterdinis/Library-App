@@ -11,9 +11,9 @@ import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
 import GenresSelect from "./GenresSelect";
 import CategoriesSelect from "./CategoriesSelect";
-import { UploadButton } from "./UploadComponents";
 import Navigation from "../../shared/Navigation";
 import { Loader2 } from "lucide-react";
+import { UploadButton } from "~/lib/uploadthing";
 
 // Schéma validácie
 const bookSchema = z.object({
@@ -21,19 +21,21 @@ const bookSchema = z.object({
   authorId: z.string().min(1, "Autor je povinný"),
   genreId: z.string().min(1, "Žáner je povinný"),
   categoryId: z.string().min(1, "Kategória je povinná"),
-  rating: z.number().min(0).max(5),
-  coverUrl: z.string().url("Neplatná URL adresa"),
+  rating: z.number().min(0).max(5, "Hodnotenie musí byť medzi 0 a 5"),
+  coverUrl: z.string().url("Neplatná URL adresa").optional(),
   description: z.string().min(10, "Popis musí mať aspoň 10 znakov"),
   totalCopies: z.number().min(1, "Musí byť aspoň 1 kópia"),
-  availableCopies: z.number().min(0),
+  availableCopies: z.number().min(0, "Dostupné kópie musia byť 0 alebo viac"),
   summary: z.string().min(10, "Zhrnutie musí mať aspoň 10 znakov"),
 });
+
+type FormData = z.infer<typeof bookSchema>;
 
 const CreateBookForm = () => {
   const router = useRouter();
   const [coverUrl, setCoverUrl] = useState<string | null>(null);
-  
-  const { mutate, isPening} = api.book.createBook.useMutation({
+
+  const { mutate, isPending } = api.book.createBook.useMutation({
     onSuccess: () => {
       alert("Kniha bola úspešne vytvorená!");
       router.push("/admin");
@@ -49,12 +51,17 @@ const CreateBookForm = () => {
     setValue,
     watch,
     formState: { errors },
-  } = useForm({
+  } = useForm<FormData>({
     resolver: zodResolver(bookSchema),
+    defaultValues: {
+      rating: 0,
+      totalCopies: 1,
+      availableCopies: 0,
+    },
   });
 
-  const onSubmit = (data: any) => {
-    mutate({ ...data, coverUrl: coverUrl! });
+  const onSubmit = (data: FormData) => {
+    mutate({ ...data, coverUrl: coverUrl || "" });
   };
 
   return (
@@ -119,19 +126,20 @@ const CreateBookForm = () => {
         <div>
           <label className="font-medium">Obálka knihy</label>
           <UploadButton
-            endpoint="coverUpload"
             onClientUploadComplete={(res) => {
-              setCoverUrl(res?.[0]?.url || "");
-              setValue("coverUrl", res?.[0]?.url || "");
-            }}
-            onUploadError={(error) => alert(`Chyba pri nahrávaní: ${error.message}`)}
-          />
-          {coverUrl && <img src={coverUrl} alt="Náhľad obálky" className="mt-2 h-40 object-cover" />}
+              const uploadedUrl = res?.[0]?.url || "";
+              setCoverUrl(uploadedUrl);
+              setValue("coverUrl", uploadedUrl);
+            } }
+            onUploadError={(error) => alert(`Chyba pri nahrávaní: ${error.message}`)} endpoint={"bookCreate"}          />
+          {watch("coverUrl") && (
+            <img src={watch("coverUrl")} alt="Náhľad obálky" className="mt-2 h-40 object-cover" />
+          )}
           {errors.coverUrl && <p className="text-red-500">{errors.coverUrl.message}</p>}
         </div>
 
-        <Button type="submit" disabled={isLoading} className="w-full">
-          {isPening? <Loader2 className="h-5 w-5 animate-spin" /> : "Vytvoriť knihu"}
+        <Button type="submit" disabled={isPending} className="w-full">
+          {isPending ? <Loader2 className="h-5 w-5 animate-spin" /> : "Vytvoriť knihu"}
         </Button>
       </form>
     </>

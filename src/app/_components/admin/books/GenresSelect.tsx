@@ -12,7 +12,11 @@ import { Loader2 } from "lucide-react";
 import { FC } from "react";
 import { api } from "~/trpc/react";
 
-const GenresSelect: FC = () => {
+interface GenresSelectProps {
+    onSelect: (value: string) => void;
+}
+
+const GenresSelect: FC<GenresSelectProps> = ({onSelect}: GenresSelectProps) => {
     const { data, isLoading } = api.genre.getAllGenres.useQuery()
 
     if (isLoading) return <Loader2 className="animate-spin w-8 h-8" />
@@ -22,6 +26,7 @@ const GenresSelect: FC = () => {
         <>
             <Label htmlFor="genre">Vybrať žáner</Label>
             <Select
+                onValueChange={onSelect}
             >
                 <SelectTrigger id="genre">
                     <SelectValue placeholder="Vybrať žáner" />
