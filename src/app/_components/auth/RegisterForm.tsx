@@ -12,6 +12,7 @@ import {
 } from "~/components/ui/popover";
 import { api } from "~/trpc/react";
 import type { RegisterFormInputs } from "./Auth.interface";
+import { useToast } from "~/hooks/use-toast";
 
 const RegisterForm: FC = () => {
   const {
@@ -19,6 +20,7 @@ const RegisterForm: FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterFormInputs>();
+  const {toast} = useToast()
 
   const registerMutation = api.user.register.useMutation();
   const [showPassword, setShowPassword] = useState(false);
@@ -29,6 +31,11 @@ const RegisterForm: FC = () => {
 
   const onSubmit = (data: RegisterFormInputs) => {
     registerMutation.mutate(data);
+    toast({
+      title: "Registrácia bola úspešná. Počkajte kým Vám admin schváli účet",
+      duration: 2000,
+      className: "bg-orange-700 text-white font-bold text-xl"
+    })
   };
 
   return (
@@ -39,7 +46,7 @@ const RegisterForm: FC = () => {
             <Book className="h-12 w-12 text-indigo-600" />
           </div>
           <h2 className="mt-4 text-3xl font-bold text-gray-900 dark:text-sky-50">
-            Prihlásenie
+            Registrácia
           </h2>
         </div>
 
@@ -50,7 +57,7 @@ const RegisterForm: FC = () => {
                 htmlFor="fullName"
                 className="block text-sm font-medium text-gray-700 dark:text-sky-50"
               >
-                Full Name
+                Celé meno
               </label>
               <div className="relative mt-1">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -78,7 +85,7 @@ const RegisterForm: FC = () => {
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700 dark:text-sky-50"
               >
-                Email address
+                Email
               </label>
               <div className="relative mt-1">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -104,7 +111,7 @@ const RegisterForm: FC = () => {
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700 dark:text-sky-50"
               >
-                Password
+               Heslo
               </label>
               <div className="relative mt-1">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -141,7 +148,7 @@ const RegisterForm: FC = () => {
 
           <div className="text-center">
             <Button size="lg" variant="default" type="submit">
-              Prihlásiť sa
+              Registrácia
             </Button>
           </div>
           <Popover>
