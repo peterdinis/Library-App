@@ -1,11 +1,37 @@
-"use client";
+'use client';
 
-import { Book, Lock, Mail, Eye, EyeOff } from "lucide-react";
-import { useState, type FC } from "react";
-import { Button } from "~/components/ui/button";
+import { Book, Lock, Mail, Eye, EyeOff, Loader2 } from 'lucide-react';
+import { useState, type FC, FormEvent } from 'react';
+import { Button } from '~/components/ui/button';
+import { useToast } from '~/hooks/use-toast';
+import { api } from '~/trpc/react';
 
 const LoginForm: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const {toast} = useToast()
+  const loginUser = api.user.loginUser.useMutation({
+    onError: (error) => {
+      setError(error.message);
+    },
+  });
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    
+    const result = await loginUser.mutateAsync({ email, password });
+    if (!result.success) {
+      setError(result.error);
+    }
+    toast({
+      title: "Prihlásenie bolo úspešné",
+      duration: 2000,
+      className: "bg-green-800 text-white font-bold text-xl"
+    })
+  };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 p-6 dark:bg-zinc-900">
@@ -18,7 +44,7 @@ const LoginForm: FC = () => {
             Prihlásenie
           </h2>
         </div>
-        <form className="mt-6 space-y-4">
+        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           {/* Email */}
           <div>
             <label
@@ -35,6 +61,8 @@ const LoginForm: FC = () => {
                 type="email"
                 id="email"
                 name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full rounded-lg border border-gray-300 bg-gray-50 p-3 pl-10 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-zinc-700 dark:text-white dark:placeholder-gray-400"
                 placeholder="napriklad@skola.edu"
@@ -55,9 +83,11 @@ const LoginForm: FC = () => {
                 <Lock className="h-5 w-5 text-gray-400" />
               </span>
               <input
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 id="password"
                 name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 className="w-full rounded-lg border border-gray-300 bg-gray-50 p-3 pl-10 pr-10 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-zinc-700 dark:text-white dark:placeholder-gray-400"
                 placeholder="••••••••"
@@ -76,10 +106,19 @@ const LoginForm: FC = () => {
             </div>
           </div>
 
+          {/* Error Message */}
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+
           {/* Submit */}
           <div className="text-center">
-            <Button size="lg" variant="default" className="w-full">
-              Prihlásiť sa
+            <Button
+              type="submit"
+              size="lg"
+              variant="default"
+              className="w-full"
+              disabled={loginUser.isPending}
+            >
+              {loginUser.isPending ? <Loader2 className='animate-spin w-8 h-8' /> : 'Prihlásiť sa'}
             </Button>
           </div>
         </form>
