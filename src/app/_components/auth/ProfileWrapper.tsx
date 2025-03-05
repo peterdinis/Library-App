@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BookOpen, Calendar} from "lucide-react";
+import { BookOpen, Calendar } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { type FC, useState } from "react";
@@ -171,7 +171,7 @@ const ITEMS_PER_PAGE = 6;
 const ProfileWrapper: FC = () => {
   const [activePage, setActivePage] = useState(1);
   const [historyPage, setHistoryPage] = useState(1);
-  const {data: session} = useSession()
+  const { data: session } = useSession();
   const activeBooks = borrowedBooks.slice(
     (activePage - 1) * ITEMS_PER_PAGE,
     activePage * ITEMS_PER_PAGE,

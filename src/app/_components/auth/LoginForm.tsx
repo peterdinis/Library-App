@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { Book, Lock, Mail, Eye, EyeOff, Loader2 } from 'lucide-react';
-import { useState, type FC, FormEvent } from 'react';
-import { Button } from '~/components/ui/button';
-import { useToast } from '~/hooks/use-toast';
-import { api } from '~/trpc/react';
+import { Book, Lock, Mail, Eye, EyeOff, Loader2 } from "lucide-react";
+import { useState, type FC, FormEvent } from "react";
+import { Button } from "~/components/ui/button";
+import { useToast } from "~/hooks/use-toast";
+import { api } from "~/trpc/react";
 
 const LoginForm: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const {toast} = useToast()
+  const { toast } = useToast();
   const loginUser = api.user.loginUser.useMutation({
     onError: (error) => {
       setError(error.message);
@@ -21,7 +21,7 @@ const LoginForm: FC = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
-    
+
     const result = await loginUser.mutateAsync({ email, password });
     if (!result.success) {
       setError(result.error);
@@ -29,8 +29,8 @@ const LoginForm: FC = () => {
     toast({
       title: "Prihlásenie bolo úspešné",
       duration: 2000,
-      className: "bg-green-800 text-white font-bold text-xl"
-    })
+      className: "bg-green-800 text-white font-bold text-xl",
+    });
   };
 
   return (
@@ -83,7 +83,7 @@ const LoginForm: FC = () => {
                 <Lock className="h-5 w-5 text-gray-400" />
               </span>
               <input
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 id="password"
                 name="password"
                 value={password}
@@ -107,7 +107,7 @@ const LoginForm: FC = () => {
           </div>
 
           {/* Error Message */}
-          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+          {error && <p className="text-center text-sm text-red-500">{error}</p>}
 
           {/* Submit */}
           <div className="text-center">
@@ -118,7 +118,11 @@ const LoginForm: FC = () => {
               className="w-full"
               disabled={loginUser.isPending}
             >
-              {loginUser.isPending ? <Loader2 className='animate-spin w-8 h-8' /> : 'Prihlásiť sa'}
+              {loginUser.isPending ? (
+                <Loader2 className="h-8 w-8 animate-spin" />
+              ) : (
+                "Prihlásiť sa"
+              )}
             </Button>
           </div>
         </form>
