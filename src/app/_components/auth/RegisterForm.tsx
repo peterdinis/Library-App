@@ -20,7 +20,7 @@ const RegisterForm: FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterFormInputs>();
-  const {toast} = useToast()
+  const { toast } = useToast();
 
   const registerMutation = api.user.register.useMutation();
   const [showPassword, setShowPassword] = useState(false);
@@ -34,8 +34,8 @@ const RegisterForm: FC = () => {
     toast({
       title: "Registrácia bola úspešná. Počkajte kým Vám admin schváli účet",
       duration: 2000,
-      className: "bg-orange-700 text-white font-bold text-xl"
-    })
+      className: "bg-orange-700 text-white font-bold text-xl",
+    });
   };
 
   return (
@@ -111,7 +111,7 @@ const RegisterForm: FC = () => {
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700 dark:text-sky-50"
               >
-               Heslo
+                Heslo
               </label>
               <div className="relative mt-1">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
