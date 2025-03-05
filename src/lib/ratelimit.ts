@@ -5,7 +5,7 @@ const ratelimit = new Ratelimit({
   redis,
   limiter: Ratelimit.fixedWindow(5, "1m"),
   analytics: true,
-  prefix: "@upstash/ratelimit"
+  prefix: "@upstash/ratelimit",
 });
 
-export default ratelimit
+export default ratelimit;
