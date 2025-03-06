@@ -2,7 +2,6 @@
 
 import { signOut } from "next-auth/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import type { FC } from "react";
 import { Avatar, AvatarFallback } from "~/components/ui/avatar";
 import {
@@ -17,7 +16,6 @@ import { useToast } from "~/hooks/use-toast";
 
 const ProfileDropdown: FC = () => {
   const { toast } = useToast();
-  const router = useRouter();
 
   const logoutFromApp = () => {
     toast({
