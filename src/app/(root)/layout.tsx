@@ -4,6 +4,7 @@ import { Toaster } from "~/components/ui/toaster";
 import Navigation from "../_components/shared/Navigation";
 import ScrollToTop from "../_components/shared/ScrollToTop";
 import { ThemeProvider } from "../_components/shared/providers/theme-provider";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "SPŠT Knižnica Bardejov",
@@ -51,11 +52,13 @@ const Layout = async ({ children }: { children: ReactNode }) => {
         disableTransitionOnChange
       >
         <Navigation />
-        <div>
+          <SessionProvider>
+          <div>
           {children}
           <Toaster />
           <ScrollToTop />
         </div>
+          </SessionProvider>
       </ThemeProvider>
     </main>
   );

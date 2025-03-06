@@ -5,8 +5,10 @@ import { useState, type FC, FormEvent } from "react";
 import { Button } from "~/components/ui/button";
 import { useToast } from "~/hooks/use-toast";
 import { api } from "~/trpc/react";
+import { useRouter } from "next/navigation";
 
 const LoginForm: FC = () => {
+  const router = useRouter()
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,6 +33,8 @@ const LoginForm: FC = () => {
       duration: 2000,
       className: "bg-green-800 text-white font-bold text-xl",
     });
+
+    router.push("/profile")
   };
 
   return (

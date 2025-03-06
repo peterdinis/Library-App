@@ -5,6 +5,7 @@ import { Toaster } from "~/components/ui/toaster";
 import { TRPCReactProvider } from "~/trpc/react";
 import ScrollToTop from "./_components/shared/ScrollToTop";
 import { ThemeProvider } from "./_components/shared/providers/theme-provider";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "SPŠT Knižnica Bardejov",
@@ -55,9 +56,11 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <SessionProvider>
             {children}
             <ScrollToTop />
             <Toaster />
+            </SessionProvider>
           </ThemeProvider>
         </TRPCReactProvider>
       </body>
