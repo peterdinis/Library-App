@@ -172,6 +172,8 @@ const ProfileWrapper: FC = () => {
   const [activePage, setActivePage] = useState(1);
   const [historyPage, setHistoryPage] = useState(1);
   const { data: session } = useSession();
+
+  console.log("S", session)
   const activeBooks = borrowedBooks.slice(
     (activePage - 1) * ITEMS_PER_PAGE,
     activePage * ITEMS_PER_PAGE,

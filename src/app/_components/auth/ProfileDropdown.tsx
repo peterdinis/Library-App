@@ -25,9 +25,12 @@ const ProfileDropdown: FC = () => {
       duration: 2000,
       className: "bg-green-800 text-white font-bold text-xl",
     });
-    signOut();
-    router.push("/");
+  
+    signOut({
+      callbackUrl: "/",
+    });
   };
+  
 
   return (
     <>
