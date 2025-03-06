@@ -57,9 +57,9 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <SessionProvider>
-            {children}
-            <ScrollToTop />
-            <Toaster />
+              {children}
+              <ScrollToTop />
+              <Toaster />
             </SessionProvider>
           </ThemeProvider>
         </TRPCReactProvider>

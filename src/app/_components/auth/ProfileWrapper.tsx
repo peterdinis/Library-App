@@ -183,8 +183,8 @@ const ProfileWrapper: FC = () => {
   );
 
   const userEmail = useMemo(() => {
-    return localStorage.getItem("userEmail")
-  }, [])
+    return localStorage.getItem("userEmail");
+  }, []);
 
   const activeTotalPages = Math.ceil(borrowedBooks.length / ITEMS_PER_PAGE);
   const historyTotalPages = Math.ceil(historyBooks.length / ITEMS_PER_PAGE);

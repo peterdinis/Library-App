@@ -52,13 +52,13 @@ const AuthLayout = async ({ children }: { children: ReactNode }) => {
         disableTransitionOnChange
       >
         <Navigation />
-          <SessionProvider>
-            <div>
+        <SessionProvider>
+          <div>
             {children}
             <Toaster />
             <ScrollToTop />
           </div>
-          </SessionProvider>
+        </SessionProvider>
       </ThemeProvider>
     </main>
   );

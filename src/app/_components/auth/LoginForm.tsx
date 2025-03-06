@@ -8,7 +8,7 @@ import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 
 const LoginForm: FC = () => {
-  const router = useRouter()
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,7 +26,7 @@ const LoginForm: FC = () => {
 
     const result = await loginUser.mutateAsync({ email, password });
 
-    localStorage.setItem("userEmail", email)
+    localStorage.setItem("userEmail", email);
     if (!result.success) {
       setError(result.error);
     }
@@ -36,7 +36,7 @@ const LoginForm: FC = () => {
       className: "bg-green-800 text-white font-bold text-xl",
     });
 
-    router.push("/profile")
+    router.push("/profile");
   };
 
   return (
