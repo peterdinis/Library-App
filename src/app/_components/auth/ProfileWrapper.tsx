@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { BookOpen, Calendar } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { type FC, useState } from "react";
+import { type FC, useMemo, useState } from "react";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import {
@@ -171,7 +171,7 @@ const ITEMS_PER_PAGE = 6;
 const ProfileWrapper: FC = () => {
   const [activePage, setActivePage] = useState(1);
   const [historyPage, setHistoryPage] = useState(1);
-  const { data: session } = useSession();
+
   const activeBooks = borrowedBooks.slice(
     (activePage - 1) * ITEMS_PER_PAGE,
     activePage * ITEMS_PER_PAGE,
@@ -181,6 +181,10 @@ const ProfileWrapper: FC = () => {
     (historyPage - 1) * ITEMS_PER_PAGE,
     historyPage * ITEMS_PER_PAGE,
   );
+
+  const userEmail = useMemo(() => {
+    return localStorage.getItem("userEmail");
+  }, []);
 
   const activeTotalPages = Math.ceil(borrowedBooks.length / ITEMS_PER_PAGE);
   const historyTotalPages = Math.ceil(historyBooks.length / ITEMS_PER_PAGE);
@@ -196,7 +200,7 @@ const ProfileWrapper: FC = () => {
         >
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
             <div className="space-y-1">
-              <h1 className="text-2xl font-bold">{session?.user.email}</h1>
+              <h1 className="text-2xl font-bold">{userEmail}</h1>
             </div>
           </div>
         </motion.div>
