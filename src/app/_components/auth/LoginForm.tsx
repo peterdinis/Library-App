@@ -25,6 +25,8 @@ const LoginForm: FC = () => {
     setError(null);
 
     const result = await loginUser.mutateAsync({ email, password });
+
+    localStorage.setItem("userEmail", email)
     if (!result.success) {
       setError(result.error);
     }
