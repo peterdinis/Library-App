@@ -24,31 +24,32 @@ export const authConfig = {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
+      async authorize(credentials: any) {
         if (!credentials?.email || !credentials?.password) {
-          return null;
+          throw new Error("Chýba email alebo heslo.");
         }
 
         const user = await db.user.findUnique({
-          where: { email: credentials.email.toString() },
+          where: { email: credentials.email },
         });
 
-        console.log("USER", user);
-
-        if (!user) return null;
+        if (!user) {
+          throw new Error("Používateľ neexistuje.");
+        }
 
         const isPasswordValid = await compare(
-          credentials.password.toString(),
+          credentials.password,
           user.password,
         );
-
-        if (!isPasswordValid) return null;
+        if (!isPasswordValid) {
+          throw new Error("Nesprávne heslo.");
+        }
 
         return {
-          id: user.id.toString(),
+          id: user.id,
           email: user.email,
           name: user.fullName,
-        } as User;
+        };
       },
     }),
   ],
