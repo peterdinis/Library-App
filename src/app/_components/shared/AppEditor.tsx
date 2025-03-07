@@ -16,28 +16,64 @@ interface AppEditorProps {
   name?: string;
   control?: any;
   defaultValue?: string;
-  editorState?: EditorState;
-  setEditorState?: Dispatch<SetStateAction<EditorState>>;
+  editorState?: EditorState | null;
+  setEditorState?: Dispatch<SetStateAction<EditorState | null>>;
 }
 
-const AppEditor: FC<AppEditorProps> = ({ name, control, defaultValue }) => {
-  const [editorState, setEditorState] = useState(() =>
+const AppEditor: FC<AppEditorProps> = ({
+  name = "editor",
+  control,
+  defaultValue,
+  editorState: externalEditorState,
+  setEditorState: externalSetEditorState
+}) => {
+  // Use internal state if no external state is provided
+  const [internalEditorState, setInternalEditorState] = useState(() =>
     defaultValue
       ? EditorState.createWithContent(convertFromRaw(JSON.parse(defaultValue)))
       : EditorState.createEmpty()
   );
+  
+  // Determine which state and setter to use
+  const editorState = externalEditorState !== undefined ? 
+    (externalEditorState || EditorState.createEmpty()) : 
+    internalEditorState;
+    
+  const handleEditorChange = (state: EditorState) => {
+    if (externalSetEditorState) {
+      externalSetEditorState(state);
+    } else {
+      setInternalEditorState(state);
+    }
+  };
 
   useEffect(() => {
     if (defaultValue) {
-      setEditorState(
-        EditorState.createWithContent(convertFromRaw(JSON.parse(defaultValue)))
-      );
+      if (!externalSetEditorState) {
+        setInternalEditorState(
+          EditorState.createWithContent(convertFromRaw(JSON.parse(defaultValue)))
+        );
+      }
     }
-  }, [defaultValue]);
+  }, [defaultValue, externalSetEditorState]);
 
+  // Standalone editor (not connected to react-hook-form)
+  if (!control) {
+    return (
+      <Editor
+        editorState={editorState}
+        onEditorStateChange={handleEditorChange}
+        toolbar={{
+          options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'history'],
+        }}
+      />
+    );
+  }
+
+  // Connected to react-hook-form
   return (
     <Controller
-      name={name!}
+      name={name}
       control={control}
       defaultValue={defaultValue || ""}
       render={({ field }) => {
@@ -45,8 +81,11 @@ const AppEditor: FC<AppEditorProps> = ({ name, control, defaultValue }) => {
           <Editor
             editorState={editorState}
             onEditorStateChange={(state) => {
-              setEditorState(state);
-              field.onChange(JSON.stringify(convertToRaw(state.getCurrentContent()))); // Update the form value
+              handleEditorChange(state);
+              field.onChange(JSON.stringify(convertToRaw(state.getCurrentContent())));
+            }}
+            toolbar={{
+              options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'history'],
             }}
           />
         );
