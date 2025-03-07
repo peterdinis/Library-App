@@ -8,13 +8,15 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
-import { Textarea } from "~/components/ui/textarea";
 import GenresSelect from "./GenresSelect";
 import CategoriesSelect from "./CategoriesSelect";
 import Navigation from "../../shared/Navigation";
 import { Loader2 } from "lucide-react";
 import { UploadButton } from "~/lib/uploadthing";
 import AuthorsSelect from "./AuthorsSelect";
+import AppEditor from "../../shared/AppEditor";
+import { EditorState } from "react-draft-wysiwyg";
+import { convertToRaw } from "draft-js";
 
 const bookSchema = z.object({
   title: z.string().min(1, "Názov knihy je povinný"),
@@ -34,6 +36,8 @@ type FormData = z.infer<typeof bookSchema>;
 const CreateBookForm = () => {
   const router = useRouter();
   const [coverUrl, setCoverUrl] = useState<string | null>(null);
+  const [description, setDescription] = useState(EditorState.createEmpty());
+  const [summary, setSummary] = useState(EditorState.createEmpty());
 
   const { mutate, isPending } = api.book.createBook.useMutation({
     onSuccess: () => {
@@ -72,6 +76,8 @@ const CreateBookForm = () => {
       categoryId: data.categoryId,
       genre: "",
       author: "",
+      description: JSON.stringify(convertToRaw(description.getCurrentContent())),
+      summary: JSON.stringify(convertToRaw(summary.getCurrentContent())),
     });
   };
 
@@ -129,10 +135,7 @@ const CreateBookForm = () => {
 
         <div>
           <label className="font-medium">Popis</label>
-          <Textarea
-            {...register("description")}
-            placeholder="Krátky popis knihy"
-          />
+          <AppEditor editorState={description} setEditorState={setDescription} />
           {errors.description && (
             <p className="text-red-500">{errors.description.message}</p>
           )}
@@ -164,7 +167,7 @@ const CreateBookForm = () => {
 
         <div>
           <label className="font-medium">Zhrnutie</label>
-          <Textarea {...register("summary")} placeholder="Stručné zhrnutie" />
+          <AppEditor editorState={summary} setEditorState={setSummary} />
           {errors.summary && (
             <p className="text-red-500">{errors.summary.message}</p>
           )}
