@@ -1,12 +1,12 @@
 "use client";
 
-import { Book, Lock, Mail, Eye, EyeOff, Loader2 } from "lucide-react";
+import { Book, Lock, Mail, Eye, EyeOff} from "lucide-react";
 import { useState, type FC, FormEvent } from "react";
 import { Button } from "~/components/ui/button";
 import { useToast } from "~/hooks/use-toast";
-import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 
 const LoginForm: FC = () => {
   const router = useRouter();
@@ -50,7 +50,6 @@ const LoginForm: FC = () => {
           </h2>
         </div>
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-          {/* Email */}
           <div>
             <label
               htmlFor="email"
@@ -75,7 +74,6 @@ const LoginForm: FC = () => {
             </div>
           </div>
 
-          {/* Password */}
           <div>
             <label
               htmlFor="password"
@@ -110,11 +108,8 @@ const LoginForm: FC = () => {
               </button>
             </div>
           </div>
-
-          {/* Error Message */}
           {error && <p className="text-center text-sm text-red-500">{error}</p>}
 
-          {/* Submit */}
           <div className="text-center">
             <Button
               type="submit"
@@ -126,6 +121,11 @@ const LoginForm: FC = () => {
             </Button>
           </div>
         </form>
+        <div className="mt-4">
+          <Button size={"lg"} variant={"link"}>
+                <Link href="/sign-up">Vytvoriť si účet</Link>
+          </Button>
+        </div>
       </div>
     </div>
   );
