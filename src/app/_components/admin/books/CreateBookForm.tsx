@@ -15,9 +15,7 @@ import Navigation from "../../shared/Navigation";
 import { Loader2 } from "lucide-react";
 import { UploadButton } from "~/lib/uploadthing";
 import AuthorsSelect from "./AuthorsSelect";
-import { ourFileRouter } from "~/app/api/uploadthing/core";
 
-// Schéma validácie
 const bookSchema = z.object({
   title: z.string().min(1, "Názov knihy je povinný"),
   authorId: z.string().min(1, "Autor je povinný"),
@@ -101,14 +99,6 @@ const CreateBookForm = () => {
           )}
         </div>
 
-        <div>
-          <label className="font-medium">Autor</label>
-          <Input {...register("authorId")} placeholder="Zadajte ID autora" />
-          {errors.authorId && (
-            <p className="text-red-500">{errors.authorId.message}</p>
-          )}
-        </div>
-
         <GenresSelect onSelect={(value) => setValue("genreId", value)} />
         {errors.genreId && (
           <p className="text-red-500">{errors.genreId.message}</p>
@@ -183,6 +173,7 @@ const CreateBookForm = () => {
         <div>
           <label className="font-medium">Obálka knihy</label>
           <UploadButton
+            className="text-black dark:text-white"
             onClientUploadComplete={(res) => {
               const uploadedUrl = res?.[0]?.url || "";
               setCoverUrl(uploadedUrl);
