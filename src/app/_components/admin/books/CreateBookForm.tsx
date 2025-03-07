@@ -39,15 +39,6 @@ const CreateBookForm = () => {
   const [description, setDescription] = useState<EditorState | null>(null);
   const [summary, setSummary] = useState<EditorState | null>(null);
 
-  useEffect(() => {
-    if (description === null) {
-      setDescription(EditorState.createEmpty());
-    }
-    if (summary === null) {
-      setSummary(EditorState.createEmpty());
-    }
-  }, [description, summary]);
-
   const { mutate, isPending } = api.book.createBook.useMutation({
     onSuccess: () => {
       alert("Kniha bola úspešne vytvorená!");
