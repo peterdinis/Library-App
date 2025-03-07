@@ -1,11 +1,12 @@
 "use client";
 
-import { Book, Lock, Mail, Eye, EyeOff, Loader2 } from "lucide-react";
+import { Book, Lock, Mail, Eye, EyeOff} from "lucide-react";
 import { useState, type FC, FormEvent } from "react";
 import { Button } from "~/components/ui/button";
 import { useToast } from "~/hooks/use-toast";
-import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import Link from "next/link";
 
 const LoginForm: FC = () => {
   const router = useRouter();
@@ -14,29 +15,27 @@ const LoginForm: FC = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
-  const loginUser = api.user.loginUser.useMutation({
-    onError: (error) => {
-      setError(error.message);
-    },
-  });
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
-
-    const result = await loginUser.mutateAsync({ email, password });
-
-    localStorage.setItem("userEmail", email);
-    if (!result.success) {
+  
+    const result = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+  
+    if (!result?.error) {
+      toast({
+        title: "Prihlásenie bolo úspešné",
+        duration: 2000,
+        className: "bg-green-800 text-white font-bold text-xl",
+      });
+      router.push("/profile");
+    } else {
       setError(result.error);
     }
-    toast({
-      title: "Prihlásenie bolo úspešné",
-      duration: 2000,
-      className: "bg-green-800 text-white font-bold text-xl",
-    });
-
-    router.push("/profile");
   };
 
   return (
@@ -51,7 +50,6 @@ const LoginForm: FC = () => {
           </h2>
         </div>
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-          {/* Email */}
           <div>
             <label
               htmlFor="email"
@@ -76,7 +74,6 @@ const LoginForm: FC = () => {
             </div>
           </div>
 
-          {/* Password */}
           <div>
             <label
               htmlFor="password"
@@ -111,27 +108,24 @@ const LoginForm: FC = () => {
               </button>
             </div>
           </div>
-
-          {/* Error Message */}
           {error && <p className="text-center text-sm text-red-500">{error}</p>}
 
-          {/* Submit */}
           <div className="text-center">
             <Button
               type="submit"
               size="lg"
               variant="default"
               className="w-full"
-              disabled={loginUser.isPending}
             >
-              {loginUser.isPending ? (
-                <Loader2 className="h-8 w-8 animate-spin" />
-              ) : (
-                "Prihlásiť sa"
-              )}
+              Prihlásiť sa
             </Button>
           </div>
         </form>
+        <div className="mt-4">
+          <Button size={"lg"} variant={"link"}>
+                <Link href="/sign-up">Vytvoriť si účet</Link>
+          </Button>
+        </div>
       </div>
     </div>
   );
