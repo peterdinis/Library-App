@@ -182,9 +182,7 @@ const ProfileWrapper: FC = () => {
     historyPage * ITEMS_PER_PAGE,
   );
 
-  const userEmail = useMemo(() => {
-    return localStorage.getItem("userEmail");
-  }, []);
+  const {data: session} = useSession();
 
   const activeTotalPages = Math.ceil(borrowedBooks.length / ITEMS_PER_PAGE);
   const historyTotalPages = Math.ceil(historyBooks.length / ITEMS_PER_PAGE);
@@ -200,7 +198,7 @@ const ProfileWrapper: FC = () => {
         >
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
             <div className="space-y-1">
-              <h1 className="text-2xl font-bold">{userEmail}</h1>
+              <h1 className="text-2xl font-bold">{session?.user.email}</h1>
             </div>
           </div>
         </motion.div>

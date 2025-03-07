@@ -6,6 +6,7 @@ import { Button } from "~/components/ui/button";
 import { useToast } from "~/hooks/use-toast";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const LoginForm: FC = () => {
   const router = useRouter();
@@ -14,29 +15,26 @@ const LoginForm: FC = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
-  const loginUser = api.user.loginUser.useMutation({
-    onError: (error) => {
-      setError(error.message);
-    },
-  });
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
-
-    const result = await loginUser.mutateAsync({ email, password });
-
-    localStorage.setItem("userEmail", email);
-    if (!result.success) {
-      setError(result.error ?? null);
-    } else {
+  
+    const result = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+  
+    if (!result?.error) {
       toast({
         title: "Prihlásenie bolo úspešné",
         duration: 2000,
         className: "bg-green-800 text-white font-bold text-xl",
       });
-
       router.push("/profile");
+    } else {
+      setError(result.error);
     }
   };
 
@@ -123,13 +121,8 @@ const LoginForm: FC = () => {
               size="lg"
               variant="default"
               className="w-full"
-              disabled={loginUser.isPending}
             >
-              {loginUser.isPending ? (
-                <Loader2 className="h-8 w-8 animate-spin" />
-              ) : (
-                "Prihlásiť sa"
-              )}
+              Prihlásiť sa
             </Button>
           </div>
         </form>
