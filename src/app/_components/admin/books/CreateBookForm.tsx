@@ -5,19 +5,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
-import { Textarea } from "~/components/ui/textarea";
 import GenresSelect from "./GenresSelect";
 import CategoriesSelect from "./CategoriesSelect";
 import Navigation from "../../shared/Navigation";
 import { Loader2 } from "lucide-react";
 import { UploadButton } from "~/lib/uploadthing";
 import AuthorsSelect from "./AuthorsSelect";
-import { ourFileRouter } from "~/app/api/uploadthing/core";
+import AppEditor from "../../shared/AppEditor";
+import { EditorState } from "react-draft-wysiwyg";
+import { convertToRaw } from "draft-js";
 
-// Schéma validácie
 const bookSchema = z.object({
   title: z.string().min(1, "Názov knihy je povinný"),
   authorId: z.string().min(1, "Autor je povinný"),
@@ -36,6 +36,17 @@ type FormData = z.infer<typeof bookSchema>;
 const CreateBookForm = () => {
   const router = useRouter();
   const [coverUrl, setCoverUrl] = useState<string | null>(null);
+  const [description, setDescription] = useState<EditorState | null>(null);
+  const [summary, setSummary] = useState<EditorState | null>(null);
+
+  useEffect(() => {
+    if (description === null) {
+      setDescription(EditorState.createEmpty());
+    }
+    if (summary === null) {
+      setSummary(EditorState.createEmpty());
+    }
+  }, [description, summary]);
 
   const { mutate, isPending } = api.book.createBook.useMutation({
     onSuccess: () => {
@@ -74,6 +85,8 @@ const CreateBookForm = () => {
       categoryId: data.categoryId,
       genre: "",
       author: "",
+      description: JSON.stringify(convertToRaw(description!.getCurrentContent())),
+      summary: JSON.stringify(convertToRaw(summary!.getCurrentContent())),
     });
   };
 
@@ -98,14 +111,6 @@ const CreateBookForm = () => {
           <Input {...register("title")} placeholder="Zadajte názov" />
           {errors.title && (
             <p className="text-red-500">{errors.title.message}</p>
-          )}
-        </div>
-
-        <div>
-          <label className="font-medium">Autor</label>
-          <Input {...register("authorId")} placeholder="Zadajte ID autora" />
-          {errors.authorId && (
-            <p className="text-red-500">{errors.authorId.message}</p>
           )}
         </div>
 
@@ -139,10 +144,7 @@ const CreateBookForm = () => {
 
         <div>
           <label className="font-medium">Popis</label>
-          <Textarea
-            {...register("description")}
-            placeholder="Krátky popis knihy"
-          />
+          <AppEditor editorState={description!} setEditorState={setDescription!} />
           {errors.description && (
             <p className="text-red-500">{errors.description.message}</p>
           )}
@@ -174,7 +176,7 @@ const CreateBookForm = () => {
 
         <div>
           <label className="font-medium">Zhrnutie</label>
-          <Textarea {...register("summary")} placeholder="Stručné zhrnutie" />
+          <AppEditor editorState={summary} setEditorState={setSummary} />
           {errors.summary && (
             <p className="text-red-500">{errors.summary.message}</p>
           )}
@@ -183,6 +185,7 @@ const CreateBookForm = () => {
         <div>
           <label className="font-medium">Obálka knihy</label>
           <UploadButton
+            className="text-black dark:text-white"
             onClientUploadComplete={(res) => {
               const uploadedUrl = res?.[0]?.url || "";
               setCoverUrl(uploadedUrl);
