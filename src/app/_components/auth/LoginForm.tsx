@@ -28,15 +28,16 @@ const LoginForm: FC = () => {
 
     localStorage.setItem("userEmail", email);
     if (!result.success) {
-      setError(result.error);
-    }
-    toast({
-      title: "Prihlásenie bolo úspešné",
-      duration: 2000,
-      className: "bg-green-800 text-white font-bold text-xl",
-    });
+      setError(result.error ?? null);
+    } else {
+      toast({
+        title: "Prihlásenie bolo úspešné",
+        duration: 2000,
+        className: "bg-green-800 text-white font-bold text-xl",
+      });
 
-    router.push("/profile");
+      router.push("/profile");
+    }
   };
 
   return (

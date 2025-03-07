@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { signIn } from "~/server/auth";
+import { compare } from "bcrypt";
 import { db } from "~/server/db";
 
 export const userRouter = createTRPCRouter({
@@ -45,30 +45,27 @@ export const userRouter = createTRPCRouter({
   loginUser: publicProcedure
     .input(
       z.object({
-        email: z.string().email("Invalid email address"),
-        password: z
-          .string()
-          .min(6, "Password must be at least 6 characters long"),
+        email: z.string().email("Neplatná emailová adresa"),
+        password: z.string().min(6, "Heslo musí mať aspoň 6 znakov"),
       }),
     )
     .mutation(async ({ input }) => {
       const { email, password } = input;
 
-      try {
-        const result = await signIn("credentials", {
-          email,
-          password,
-          redirect: false,
-        });
+      const user = await db.user.findUnique({ where: { email } });
 
-        if (result?.error) {
-          return { success: false, error: result.error };
-        }
-
-        return { success: true };
-      } catch (error) {
-        console.log(error, "Signin error");
-        return { success: false, error: "Signin error" };
+      if (!user) {
+        return {
+          success: false,
+          error: "Používateľ s touto emailovou adresou neexistuje.",
+        };
       }
+
+      const isPasswordValid = await compare(password, user.password);
+      if (!isPasswordValid) {
+        return { success: false, error: "Nesprávne heslo." };
+      }
+
+      return { success: true };
     }),
 });

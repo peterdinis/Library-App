@@ -37,7 +37,10 @@ export const authConfig = {
           throw new Error("Používateľ neexistuje.");
         }
 
-        const isPasswordValid = await compare(credentials.password, user.password);
+        const isPasswordValid = await compare(
+          credentials.password,
+          user.password,
+        );
         if (!isPasswordValid) {
           throw new Error("Nesprávne heslo.");
         }
