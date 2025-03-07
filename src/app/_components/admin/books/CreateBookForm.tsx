@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { api } from "~/trpc/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import GenresSelect from "./GenresSelect";
@@ -36,8 +36,17 @@ type FormData = z.infer<typeof bookSchema>;
 const CreateBookForm = () => {
   const router = useRouter();
   const [coverUrl, setCoverUrl] = useState<string | null>(null);
-  const [description, setDescription] = useState(EditorState.createEmpty());
-  const [summary, setSummary] = useState(EditorState.createEmpty());
+  const [description, setDescription] = useState<EditorState | null>(null);
+  const [summary, setSummary] = useState<EditorState | null>(null);
+
+  useEffect(() => {
+    if (description === null) {
+      setDescription(EditorState.createEmpty());
+    }
+    if (summary === null) {
+      setSummary(EditorState.createEmpty());
+    }
+  }, [description, summary]);
 
   const { mutate, isPending } = api.book.createBook.useMutation({
     onSuccess: () => {
@@ -76,8 +85,8 @@ const CreateBookForm = () => {
       categoryId: data.categoryId,
       genre: "",
       author: "",
-      description: JSON.stringify(convertToRaw(description.getCurrentContent())),
-      summary: JSON.stringify(convertToRaw(summary.getCurrentContent())),
+      description: JSON.stringify(convertToRaw(description!.getCurrentContent())),
+      summary: JSON.stringify(convertToRaw(summary!.getCurrentContent())),
     });
   };
 
@@ -135,7 +144,7 @@ const CreateBookForm = () => {
 
         <div>
           <label className="font-medium">Popis</label>
-          <AppEditor editorState={description} setEditorState={setDescription} />
+          <AppEditor editorState={description!} setEditorState={setDescription!} />
           {errors.description && (
             <p className="text-red-500">{errors.description.message}</p>
           )}
