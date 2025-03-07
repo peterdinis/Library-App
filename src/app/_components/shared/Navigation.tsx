@@ -23,6 +23,7 @@ import { cn } from "~/lib/utils";
 import ProfileDropdown from "../auth/ProfileDropdown";
 import QuickSearch from "../books/QuickSearch";
 import ModeToggle from "./ModeToggle";
+import { useSession } from "next-auth/react";
 
 const navigationItems = [
   {
@@ -48,6 +49,7 @@ const navigationItems = [
 const Navigation: FC = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const { data: session } = useSession()
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -215,14 +217,20 @@ const Navigation: FC = () => {
               <TooltipContent>Vyhľadať knihu</TooltipContent>
             </Tooltip>
           </TooltipProvider>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <ProfileDropdown />
-              </TooltipTrigger>
-              <TooltipContent>Profil</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          {session?.user ? (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <ProfileDropdown />
+                </TooltipTrigger>
+                <TooltipContent>Profil</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          ): (
+            <Button variant={"link"}>
+              <Link href="/sign-in">Prihlásiť sa</Link>
+            </Button>
+          )}
           <div className="ml-3">
             <ModeToggle />
           </div>
