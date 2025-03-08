@@ -57,14 +57,57 @@ const AppEditor: FC<AppEditorProps> = ({
   }, [defaultValue, externalSetEditorState]);
 
   const toolbarOptions = {
-    options: ["inline", "blockType", "fontSize", "list", "textAlign", "history"],
+    options: [
+      "inline", "blockType", "fontSize", "fontFamily", "list", "textAlign",
+      "colorPicker", "link", "embedded", "emoji", "image", "remove",
+      "history"
+    ],
     inline: {
-      options: ["bold", "italic", "underline", "strikethrough"],
+      options: ["bold", "italic", "underline", "strikethrough", "monospace", "superscript", "subscript"],
+    },
+    blockType: {
+      options: ["Normal", "H1", "H2", "H3", "H4", "H5", "H6", "Blockquote", "Code"],
     },
     fontSize: {
       options: [8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 48, 60, 72],
     },
+    fontFamily: {
+      options: ["Arial", "Georgia", "Impact", "Tahoma", "Times New Roman", "Verdana"],
+    },
+    list: {
+      options: ["unordered", "ordered", "indent", "outdent"],
+    },
+    textAlign: {
+      options: ["left", "center", "right", "justify"],
+    },
+    colorPicker: {
+      colors: ["#000000", "#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF"],
+    },
+    link: {
+      options: ["link", "unlink"],
+      defaultTargetOption: "_blank",
+    },
+    embedded: {
+      defaultSize: {
+        height: "auto",
+        width: "100%",
+      },
+    },
+    emoji: {
+      emojis: ["😀", "😂", "😎", "👍", "💡", "🚀", "🔥", "🎉", "❤️", "✅"],
+    },
+    image: {
+      uploadCallback: async (file: File) => {
+      },
+      previewImage: true,
+      alt: { present: true, mandatory: false },
+    },
+    remove: {},
+    history: {
+      options: ["undo", "redo"],
+    },
   };
+  
 
   if (!control) {
     return (
