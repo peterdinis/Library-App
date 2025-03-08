@@ -76,7 +76,9 @@ const CreateBookForm = () => {
       categoryId: data.categoryId,
       genre: "",
       author: "",
-      description: JSON.stringify(convertToRaw(description!.getCurrentContent())),
+      description: JSON.stringify(
+        convertToRaw(description!.getCurrentContent()),
+      ),
       summary: JSON.stringify(convertToRaw(summary!.getCurrentContent())),
     });
   };
@@ -135,7 +137,10 @@ const CreateBookForm = () => {
 
         <div>
           <label className="font-medium">Popis</label>
-          <AppEditor editorState={description!} setEditorState={setDescription!} />
+          <AppEditor
+            editorState={description!}
+            setEditorState={setDescription!}
+          />
           {errors.description && (
             <p className="text-red-500">{errors.description.message}</p>
           )}
