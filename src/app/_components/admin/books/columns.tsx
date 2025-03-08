@@ -22,6 +22,6 @@ export const columns: ColumnDef<Book>[] = [
   {
     accessorKey: "isAvaible",
     header: "Dostupnosť",
-    cell: ({ getValue }) => booleanColumnHelper(getValue() as boolean)
+    cell: ({ getValue }) => booleanColumnHelper(getValue() as boolean),
   },
-]
+];

@@ -7,7 +7,7 @@ import { Dispatch, FC, SetStateAction } from "react";
 import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Loader2 } from "lucide-react";
-import { useTheme } from "next-themes"; 
+import { useTheme } from "next-themes";
 
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
