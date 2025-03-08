@@ -182,7 +182,7 @@ const ProfileWrapper: FC = () => {
     historyPage * ITEMS_PER_PAGE,
   );
 
-  const {data: session} = useSession();
+  const { data: session } = useSession();
 
   const activeTotalPages = Math.ceil(borrowedBooks.length / ITEMS_PER_PAGE);
   const historyTotalPages = Math.ceil(historyBooks.length / ITEMS_PER_PAGE);

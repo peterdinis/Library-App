@@ -1,6 +1,6 @@
 "use client";
 
-import { Book, Lock, Mail, Eye, EyeOff} from "lucide-react";
+import { Book, Lock, Mail, Eye, EyeOff } from "lucide-react";
 import { useState, type FC, FormEvent } from "react";
 import { Button } from "~/components/ui/button";
 import { useToast } from "~/hooks/use-toast";
@@ -19,13 +19,13 @@ const LoginForm: FC = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
-  
+
     const result = await signIn("credentials", {
       redirect: false,
       email,
       password,
     });
-  
+
     if (!result?.error) {
       toast({
         title: "Prihlásenie bolo úspešné",
@@ -123,7 +123,7 @@ const LoginForm: FC = () => {
         </form>
         <div className="mt-4">
           <Button size={"lg"} variant={"link"}>
-                <Link href="/sign-up">Vytvoriť si účet</Link>
+            <Link href="/sign-up">Vytvoriť si účet</Link>
           </Button>
         </div>
       </div>

@@ -49,7 +49,7 @@ const navigationItems = [
 const Navigation: FC = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-  const { data: session } = useSession()
+  const { data: session } = useSession();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -185,7 +185,7 @@ const Navigation: FC = () => {
             ))}
           </ul>
         </nav>
-        <nav className="flex flex-1 items-center justify-end gap-1 lg:hidden">
+        <nav className="flex flex-1 items-center justify-end gap-1 lg:hidden xxs:hidden">
           {navigationItems.map((item) => (
             <TooltipProvider key={item.href}>
               <Tooltip>
@@ -226,7 +226,7 @@ const Navigation: FC = () => {
                 <TooltipContent>Profil</TooltipContent>
               </Tooltip>
             </TooltipProvider>
-          ): (
+          ) : (
             <Button variant={"link"}>
               <Link href="/sign-in">Prihlásiť sa</Link>
             </Button>
