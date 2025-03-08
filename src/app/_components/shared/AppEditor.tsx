@@ -7,11 +7,14 @@ import { Dispatch, FC, SetStateAction } from "react";
 import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Loader2 } from "lucide-react";
-import { useTheme } from "next-themes";  // Import the useTheme hook
+import { useTheme } from "next-themes"; // Import the useTheme hook
 
-const Editor = dynamic(() => import("react-draft-wysiwyg").then((mod) => mod.Editor), {
-  ssr: false,
-});
+const Editor = dynamic(
+  () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
+  {
+    ssr: false,
+  },
+);
 
 interface AppEditorProps<T extends FieldValues> {
   name?: string;
@@ -23,20 +26,56 @@ interface AppEditorProps<T extends FieldValues> {
 
 const toolbarOptions = {
   options: [
-    "inline", "blockType", "fontSize", "fontFamily", "list", "textAlign", 
-    "colorPicker", "link", "embedded", "emoji", "image", "remove", "history"
+    "inline",
+    "blockType",
+    "fontSize",
+    "fontFamily",
+    "list",
+    "textAlign",
+    "colorPicker",
+    "link",
+    "embedded",
+    "emoji",
+    "image",
+    "remove",
+    "history",
   ],
   inline: {
-    options: ["bold", "italic", "underline", "strikethrough", "monospace", "superscript", "subscript"],
+    options: [
+      "bold",
+      "italic",
+      "underline",
+      "strikethrough",
+      "monospace",
+      "superscript",
+      "subscript",
+    ],
   },
   blockType: {
-    options: ["Normal", "H1", "H2", "H3", "H4", "H5", "H6", "Blockquote", "Code"],
+    options: [
+      "Normal",
+      "H1",
+      "H2",
+      "H3",
+      "H4",
+      "H5",
+      "H6",
+      "Blockquote",
+      "Code",
+    ],
   },
   fontSize: {
     options: [8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 48, 60, 72],
   },
   fontFamily: {
-    options: ["Arial", "Georgia", "Impact", "Tahoma", "Times New Roman", "Verdana"],
+    options: [
+      "Arial",
+      "Georgia",
+      "Impact",
+      "Tahoma",
+      "Times New Roman",
+      "Verdana",
+    ],
   },
   list: {
     options: ["unordered", "ordered", "indent", "outdent"],
@@ -45,7 +84,15 @@ const toolbarOptions = {
     options: ["left", "center", "right", "justify"],
   },
   colorPicker: {
-    colors: ["#000000", "#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF"],
+    colors: [
+      "#000000",
+      "#FF0000",
+      "#00FF00",
+      "#0000FF",
+      "#FFFF00",
+      "#FF00FF",
+      "#00FFFF",
+    ],
   },
   link: {
     options: ["link", "unlink"],
@@ -80,7 +127,12 @@ const AppEditor: FC<AppEditorProps<FieldValues>> = ({
 }) => {
   const { theme } = useTheme(); // Get the current theme
   const [internalEditorState, setInternalEditorState] = useState<EditorState>(
-    () => (defaultValue ? EditorState.createWithContent(convertFromRaw(JSON.parse(defaultValue))) : EditorState.createEmpty())
+    () =>
+      defaultValue
+        ? EditorState.createWithContent(
+            convertFromRaw(JSON.parse(defaultValue)),
+          )
+        : EditorState.createEmpty(),
   );
 
   const editorState = externalEditorState ?? internalEditorState;
@@ -95,7 +147,9 @@ const AppEditor: FC<AppEditorProps<FieldValues>> = ({
 
   useEffect(() => {
     if (defaultValue && !externalSetEditorState) {
-      setInternalEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(defaultValue))));
+      setInternalEditorState(
+        EditorState.createWithContent(convertFromRaw(JSON.parse(defaultValue))),
+      );
     }
   }, [defaultValue, externalSetEditorState]);
 
@@ -103,7 +157,7 @@ const AppEditor: FC<AppEditorProps<FieldValues>> = ({
   const editorClass = theme === "dark" ? "editor-dark" : "editor-light";
 
   return (
-    <Suspense fallback={<Loader2 className="animate-spin w-8 h-8" />}>
+    <Suspense fallback={<Loader2 className="h-8 w-8 animate-spin" />}>
       {control ? (
         <Controller
           name={name}
@@ -114,7 +168,9 @@ const AppEditor: FC<AppEditorProps<FieldValues>> = ({
               editorState={editorState}
               onEditorStateChange={(state) => {
                 handleEditorChange(state);
-                field.onChange(JSON.stringify(convertToRaw(state.getCurrentContent())));
+                field.onChange(
+                  JSON.stringify(convertToRaw(state.getCurrentContent())),
+                );
               }}
               toolbar={toolbarOptions}
               wrapperClassName={editorClass} // Apply dynamic class here

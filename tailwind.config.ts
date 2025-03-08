@@ -16,6 +16,9 @@ export default {
       },
       screens: {
         xs: "480px",
+        xxs: {
+          max: "400px",
+        },
       },
       container: {
         center: true,
