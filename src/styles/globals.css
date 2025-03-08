@@ -16,6 +16,27 @@
 	position: relative;
 }
 
+.editor-dark .rdw-editor-toolbar {
+	background-color: #333 !important;
+}
+
+.editor-dark .rdw-dropdown-optionwrapper,
+.editor-dark .rdw-dropdown-option-active {
+  background-color: #333;
+  color: white;
+}
+
+.editor-dark .rdw-dropdown-selectedtext {
+	color: #333 !important;
+}
+
+.editor-dark .rdw-option-wrapper {
+  background-color: white;
+  color: #222;
+  border: 1px solid #444;
+}
+
+
 .icon-position {
 	position: fixed;
 	bottom: 40px;
