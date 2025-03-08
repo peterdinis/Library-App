@@ -27,18 +27,17 @@ const AppEditor: FC<AppEditorProps> = ({
   editorState: externalEditorState,
   setEditorState: externalSetEditorState
 }) => {
-  // Use internal state if no external state is provided
   const [internalEditorState, setInternalEditorState] = useState(() =>
     defaultValue
       ? EditorState.createWithContent(convertFromRaw(JSON.parse(defaultValue)))
       : EditorState.createEmpty()
   );
-  
-  // Determine which state and setter to use
-  const editorState = externalEditorState !== undefined ? 
-    (externalEditorState || EditorState.createEmpty()) : 
-    internalEditorState;
-    
+
+  const editorState =
+    externalEditorState !== undefined
+      ? externalEditorState || EditorState.createEmpty()
+      : internalEditorState;
+
   const handleEditorChange = (state: EditorState) => {
     if (externalSetEditorState) {
       externalSetEditorState(state);
@@ -48,48 +47,50 @@ const AppEditor: FC<AppEditorProps> = ({
   };
 
   useEffect(() => {
-    if (defaultValue) {
+    let isMounted = true;
+
+    if (defaultValue && isMounted) {
       if (!externalSetEditorState) {
         setInternalEditorState(
           EditorState.createWithContent(convertFromRaw(JSON.parse(defaultValue)))
         );
       }
     }
+
+    return () => {
+      isMounted = false; // Cleanup function to avoid updating state on an unmounted component
+    };
   }, [defaultValue, externalSetEditorState]);
 
-  // Standalone editor (not connected to react-hook-form)
   if (!control) {
     return (
       <Editor
         editorState={editorState}
         onEditorStateChange={handleEditorChange}
         toolbar={{
-          options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'history'],
+          options: ["inline", "blockType", "fontSize", "list", "textAlign", "history"],
         }}
       />
     );
   }
 
-  // Connected to react-hook-form
   return (
     <Controller
       name={name}
       control={control}
       defaultValue={defaultValue || ""}
-      render={({ field }) => {
-        return (
-          <Editor
-            editorState={editorState}
-            onEditorStateChange={(state) => {
-              handleEditorChange(state);
-              field.onChange(JSON.stringify(convertToRaw(state.getCurrentContent())));
-            }}
-            toolbar={{
-              options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'history'],
-            }}
-          />
-        );
-      }}
+      render={({ field }) => (
+        <Editor
+          editorState={editorState}
+          onEditorStateChange={(state) => {
+            handleEditorChange(state);
+            field.onChange(JSON.stringify(convertToRaw(state.getCurrentContent())));
+          }}
+          toolbar={{
+            options: ["inline", "blockType", "fontSize", "list", "textAlign", "history"],
+          }}
+        />
+      )}
     />
   );
 };
