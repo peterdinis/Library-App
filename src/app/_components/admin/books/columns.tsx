@@ -1,6 +1,7 @@
 "use client";
 
 import type { ColumnDef } from "@tanstack/react-table";
+import { booleanColumnHelper } from "~/utils/booleanTableColumn";
 
 export type Book = {
   id: string;
@@ -18,9 +19,9 @@ export const columns: ColumnDef<Book>[] = [
     accessorKey: "availableCopies",
     header: "Počet kopií",
   },
-
   {
     accessorKey: "isAvaible",
     header: "Dostupnosť",
+    cell: ({ getValue }) => booleanColumnHelper(getValue() as boolean)
   },
-];
+]
