@@ -47,29 +47,31 @@ const AppEditor: FC<AppEditorProps> = ({
   };
 
   useEffect(() => {
-    let isMounted = true;
-
-    if (defaultValue && isMounted) {
+    if (defaultValue) {
       if (!externalSetEditorState) {
         setInternalEditorState(
           EditorState.createWithContent(convertFromRaw(JSON.parse(defaultValue)))
         );
       }
     }
-
-    return () => {
-      isMounted = false; // Cleanup function to avoid updating state on an unmounted component
-    };
   }, [defaultValue, externalSetEditorState]);
+
+  const toolbarOptions = {
+    options: ["inline", "blockType", "fontSize", "list", "textAlign", "history"],
+    inline: {
+      options: ["bold", "italic", "underline", "strikethrough"],
+    },
+    fontSize: {
+      options: [8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 48, 60, 72],
+    },
+  };
 
   if (!control) {
     return (
       <Editor
         editorState={editorState}
         onEditorStateChange={handleEditorChange}
-        toolbar={{
-          options: ["inline", "blockType", "fontSize", "list", "textAlign", "history"],
-        }}
+        toolbar={toolbarOptions}
       />
     );
   }
@@ -86,9 +88,7 @@ const AppEditor: FC<AppEditorProps> = ({
             handleEditorChange(state);
             field.onChange(JSON.stringify(convertToRaw(state.getCurrentContent())));
           }}
-          toolbar={{
-            options: ["inline", "blockType", "fontSize", "list", "textAlign", "history"],
-          }}
+          toolbar={toolbarOptions}
         />
       )}
     />
