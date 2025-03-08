@@ -18,9 +18,9 @@ export const columns: ColumnDef<Book>[] = [
     accessorKey: "availableCopies",
     header: "Počet kopií",
   },
-
   {
     accessorKey: "isAvaible",
     header: "Dostupnosť",
+    cell: ({ getValue }) => (getValue() ? "Áno" : "Nie"),
   },
-];
+]
