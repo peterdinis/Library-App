@@ -7,7 +7,7 @@ import { Dispatch, FC, SetStateAction } from "react";
 import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Loader2 } from "lucide-react";
-import { useTheme } from "next-themes"; // Import the useTheme hook
+import { useTheme } from "next-themes";
 
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -153,7 +153,6 @@ const AppEditor: FC<AppEditorProps<FieldValues>> = ({
     }
   }, [defaultValue, externalSetEditorState]);
 
-  // Dynamically determine the editor style based on the theme
   const editorClass = theme === "dark" ? "editor-dark" : "editor-light";
 
   return (
