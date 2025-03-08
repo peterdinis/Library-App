@@ -3,10 +3,11 @@
 import dynamic from "next/dynamic";
 import { useState, useEffect, Suspense } from "react";
 import { Control, Controller, FieldValues } from "react-hook-form";
-import type { Dispatch, FC, SetStateAction } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { Loader2 } from "lucide-react";
+import { useTheme } from "next-themes";  // Import the useTheme hook
 
 const Editor = dynamic(() => import("react-draft-wysiwyg").then((mod) => mod.Editor), {
   ssr: false,
@@ -20,10 +21,11 @@ interface AppEditorProps<T extends FieldValues> {
   setEditorState?: Dispatch<SetStateAction<EditorState | null>>;
 }
 
-
-  
 const toolbarOptions = {
-  options: ["inline", "blockType", "fontSize", "fontFamily", "list", "textAlign", "colorPicker", "link", "embedded", "emoji", "image", "remove", "history"],
+  options: [
+    "inline", "blockType", "fontSize", "fontFamily", "list", "textAlign", 
+    "colorPicker", "link", "embedded", "emoji", "image", "remove", "history"
+  ],
   inline: {
     options: ["bold", "italic", "underline", "strikethrough", "monospace", "superscript", "subscript"],
   },
@@ -69,7 +71,6 @@ const toolbarOptions = {
   },
 };
 
-
 const AppEditor: FC<AppEditorProps<FieldValues>> = ({
   name = "editor",
   control,
@@ -77,6 +78,7 @@ const AppEditor: FC<AppEditorProps<FieldValues>> = ({
   editorState: externalEditorState,
   setEditorState: externalSetEditorState,
 }) => {
+  const { theme } = useTheme(); // Get the current theme
   const [internalEditorState, setInternalEditorState] = useState<EditorState>(
     () => (defaultValue ? EditorState.createWithContent(convertFromRaw(JSON.parse(defaultValue))) : EditorState.createEmpty())
   );
@@ -96,6 +98,10 @@ const AppEditor: FC<AppEditorProps<FieldValues>> = ({
       setInternalEditorState(EditorState.createWithContent(convertFromRaw(JSON.parse(defaultValue))));
     }
   }, [defaultValue, externalSetEditorState]);
+
+  // Dynamically determine the editor style based on the theme
+  const editorClass = theme === "dark" ? "editor-dark" : "editor-light";
+
   return (
     <Suspense fallback={<Loader2 className="animate-spin w-8 h-8" />}>
       {control ? (
@@ -111,11 +117,19 @@ const AppEditor: FC<AppEditorProps<FieldValues>> = ({
                 field.onChange(JSON.stringify(convertToRaw(state.getCurrentContent())));
               }}
               toolbar={toolbarOptions}
+              wrapperClassName={editorClass} // Apply dynamic class here
+              editorClassName={editorClass} // Apply dynamic class here as well
             />
           )}
         />
       ) : (
-        <Editor editorState={editorState} onEditorStateChange={handleEditorChange} toolbar={toolbarOptions} />
+        <Editor
+          editorState={editorState}
+          onEditorStateChange={handleEditorChange}
+          toolbar={toolbarOptions}
+          wrapperClassName={editorClass} // Apply dynamic class here
+          editorClassName={editorClass} // Apply dynamic class here
+        />
       )}
     </Suspense>
   );
