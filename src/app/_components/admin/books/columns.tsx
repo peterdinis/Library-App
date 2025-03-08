@@ -8,7 +8,7 @@ export type Book = {
   title: string;
   availableCopies: number;
   isAvaible: boolean;
-  rating: number
+  rating: number;
 };
 
 export const columns: ColumnDef<Book>[] = [
@@ -28,6 +28,6 @@ export const columns: ColumnDef<Book>[] = [
 
   {
     accessorKey: "rating",
-    header: "Hodnotenie"
-  }
+    header: "Hodnotenie",
+  },
 ];
