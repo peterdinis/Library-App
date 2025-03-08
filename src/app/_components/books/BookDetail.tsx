@@ -59,7 +59,7 @@ const BookDetail: FC = () => {
                 {book.title}
               </h1>
               <div className="mt-4 grid gap-6 sm:grid-cols-2">
-                <div className="flex items-center gap-3 rounded-lg bg-indigo-50 p-4 text-indigo-700 dark:bg-zinc-500">
+                <div className="flex items-center gap-3 rounded-lg bg-indigo-50 p-4 text-indigo-700 dark:bg-stone-700">
                   <Book
                     size={24}
                     className="text-indigo-500 dark:text-orange-500"
@@ -73,7 +73,7 @@ const BookDetail: FC = () => {
                     </span>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 rounded-lg bg-indigo-50 p-4 text-indigo-700 dark:bg-zinc-500">
+                <div className="flex items-center gap-3 rounded-lg bg-indigo-50 p-4 text-indigo-700 dark:bg-stone-700">
                   <Calendar
                     size={24}
                     className="text-indigo-500 dark:text-orange-500"
