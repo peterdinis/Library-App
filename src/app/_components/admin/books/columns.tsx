@@ -8,6 +8,7 @@ export type Book = {
   title: string;
   availableCopies: number;
   isAvaible: boolean;
+  rating: number
 };
 
 export const columns: ColumnDef<Book>[] = [
@@ -24,4 +25,9 @@ export const columns: ColumnDef<Book>[] = [
     header: "Dostupnosť",
     cell: ({ getValue }) => booleanColumnHelper(getValue() as boolean),
   },
+
+  {
+    accessorKey: "rating",
+    header: "Hodnotenie"
+  }
 ];
