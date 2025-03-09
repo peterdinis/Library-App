@@ -20,7 +20,7 @@ export const bookingRouter = createTRPCRouter({
     .input(
       z.object({
         userId: z.string(),
-      })
+      }),
     )
     .query(async ({ input }) => {
       return await db.borrowRecord.findMany({
@@ -35,7 +35,7 @@ export const bookingRouter = createTRPCRouter({
       z.object({
         userId: z.string(),
         bookingId: z.string(),
-      })
+      }),
     )
     .query(async ({ input }) => {
       return await db.borrowRecord.findFirst({
@@ -52,7 +52,7 @@ export const bookingRouter = createTRPCRouter({
         userId: z.string(),
         bookId: z.string(),
         dueDate: z.string().datetime(),
-      })
+      }),
     )
     .mutation(async ({ input }) => {
       const borrowDate = new Date();
@@ -95,7 +95,7 @@ export const bookingRouter = createTRPCRouter({
       z.object({
         bookingId: z.string(),
         returnDate: z.string().datetime(),
-      })
+      }),
     )
     .mutation(async ({ input }) => {
       const borrowRecord = await db.borrowRecord.findUnique({
@@ -129,4 +129,8 @@ export const bookingRouter = createTRPCRouter({
 
       return updatedBooking;
     }),
+
+  deleteAllBookings: publicProcedure.query(async () => {
+    return await db.borrowRecord.deleteMany();
+  }),
 });
