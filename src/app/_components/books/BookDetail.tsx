@@ -100,7 +100,7 @@ const BookDetail: FC = () => {
             </div>
 
             <div className="flex flex-col justify-center gap-4 sm:flex-row sm:justify-start sm:gap-6">
-              {book.availableCopies > 0 && <BorrowBookModal />}
+              {book.availableCopies > 0 && <BorrowBookModal bookId={bookID} />}
               <Button size="lg" variant="link">
                 <Link
                   href="/books"
