@@ -5,13 +5,13 @@ import { isBefore, parseISO } from "date-fns";
 
 export const bookingRouter = createTRPCRouter({
   getAllBookings: publicProcedure.query(async () => {
-    return await db.borrowRecord.findMany();
+    return await db.booking.findMany();
   }),
 
   getBookingDetail: publicProcedure
     .input(z.string())
     .query(async ({ input }) => {
-      return await db.borrowRecord.findUnique({
+      return await db.booking.findUnique({
         where: { id: input },
       });
     }),
@@ -23,7 +23,7 @@ export const bookingRouter = createTRPCRouter({
       }),
     )
     .query(async ({ input }) => {
-      return await db.borrowRecord.findMany({
+      return await db.booking.findMany({
         where: {
           userId: input.userId,
         },
@@ -38,7 +38,7 @@ export const bookingRouter = createTRPCRouter({
       }),
     )
     .query(async ({ input }) => {
-      return await db.borrowRecord.findFirst({
+      return await db.booking.findFirst({
         where: {
           userId: input.userId,
           id: input.bookingId,
@@ -70,7 +70,7 @@ export const bookingRouter = createTRPCRouter({
         throw new Error("Book is not available for borrowing.");
       }
 
-      const newBooking = await db.borrowRecord.create({
+      const newBooking = await db.booking.create({
         data: {
           userId: input.userId,
           bookId: input.bookId,
@@ -98,21 +98,21 @@ export const bookingRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input }) => {
-      const borrowRecord = await db.borrowRecord.findUnique({
+      const booking = await db.booking.findUnique({
         where: { id: input.bookingId },
       });
 
-      if (!borrowRecord || borrowRecord.status === "RETURNED") {
+      if (!booking || booking.status === "RETURNED") {
         throw new Error("Invalid booking or already returned.");
       }
 
       const returnDate = parseISO(input.returnDate);
 
-      if (isBefore(returnDate, borrowRecord.borrowDate)) {
+      if (isBefore(returnDate, booking.borrowDate)) {
         throw new Error("Return date cannot be earlier than the borrow date.");
       }
 
-      const updatedBooking = await db.borrowRecord.update({
+      const updatedBooking = await db.booking.update({
         where: { id: input.bookingId },
         data: {
           returnDate,
@@ -121,7 +121,7 @@ export const bookingRouter = createTRPCRouter({
       });
 
       await db.book.update({
-        where: { id: borrowRecord.bookId },
+        where: { id: booking.bookId },
         data: {
           availableCopies: { increment: 1 },
         },
@@ -131,6 +131,6 @@ export const bookingRouter = createTRPCRouter({
     }),
 
   deleteAllBookings: publicProcedure.query(async () => {
-    return await db.borrowRecord.deleteMany();
+    return await db.booking.deleteMany();
   }),
 });
