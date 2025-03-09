@@ -52,6 +52,7 @@ export const bookingRouter = createTRPCRouter({
         userId: z.string(),
         bookId: z.string(),
         dueDate: z.string().datetime(),
+        className: z.string()
       }),
     )
     .mutation(async ({ input }) => {
@@ -75,6 +76,7 @@ export const bookingRouter = createTRPCRouter({
           userId: input.userId,
           bookId: input.bookId,
           borrowDate,
+          className: input.className,
           dueDate,
           status: "BORROWED",
         },
