@@ -1,6 +1,7 @@
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { db } from "~/server/db";
 import z from "zod";
+import { isBefore, parseISO } from "date-fns";
 
 export const bookingRouter = createTRPCRouter({
   getAllBookings: publicProcedure.query(async () => {
@@ -19,22 +20,14 @@ export const bookingRouter = createTRPCRouter({
     .input(
       z.object({
         userId: z.string(),
-      }),
+      })
     )
     .query(async ({ input }) => {
-      const oneUser = await db.user.findFirst({
+      return await db.borrowRecord.findMany({
         where: {
-          id: input.userId,
+          userId: input.userId,
         },
       });
-
-      const allUsersBooking = await db.borrowRecord.findMany({
-        where: {
-          userId: oneUser!.id,
-        },
-      });
-
-      return allUsersBooking;
     }),
 
   getDetailOfUserBooking: publicProcedure
@@ -42,26 +35,18 @@ export const bookingRouter = createTRPCRouter({
       z.object({
         userId: z.string(),
         bookingId: z.string(),
-      }),
+      })
     )
     .query(async ({ input }) => {
-      const oneUser = await db.user.findFirst({
+      return await db.borrowRecord.findFirst({
         where: {
-          id: input.userId,
-        },
-      });
-
-      const borrowedBookDetail = await db.borrowRecord.findFirst({
-        where: {
-          userId: oneUser!.id,
+          userId: input.userId,
           id: input.bookingId,
         },
       });
-
-      return borrowedBookDetail;
     }),
 
-    createBooking: publicProcedure
+  createBooking: publicProcedure
     .input(
       z.object({
         userId: z.string(),
@@ -70,6 +55,13 @@ export const bookingRouter = createTRPCRouter({
       })
     )
     .mutation(async ({ input }) => {
+      const borrowDate = new Date();
+      const dueDate = parseISO(input.dueDate);
+
+      if (isBefore(dueDate, borrowDate)) {
+        throw new Error("Due date cannot be earlier than the borrow date.");
+      }
+
       const book = await db.book.findUnique({
         where: { id: input.bookId },
       });
@@ -82,7 +74,8 @@ export const bookingRouter = createTRPCRouter({
         data: {
           userId: input.userId,
           bookId: input.bookId,
-          dueDate: new Date(input.dueDate),
+          borrowDate,
+          dueDate,
           status: "BORROWED",
         },
       });
@@ -101,6 +94,7 @@ export const bookingRouter = createTRPCRouter({
     .input(
       z.object({
         bookingId: z.string(),
+        returnDate: z.string().datetime(),
       })
     )
     .mutation(async ({ input }) => {
@@ -112,10 +106,16 @@ export const bookingRouter = createTRPCRouter({
         throw new Error("Invalid booking or already returned.");
       }
 
+      const returnDate = parseISO(input.returnDate);
+
+      if (isBefore(returnDate, borrowRecord.borrowDate)) {
+        throw new Error("Return date cannot be earlier than the borrow date.");
+      }
+
       const updatedBooking = await db.borrowRecord.update({
         where: { id: input.bookingId },
         data: {
-          returnDate: new Date(),
+          returnDate,
           status: "RETURNED",
         },
       });
@@ -128,5 +128,5 @@ export const bookingRouter = createTRPCRouter({
       });
 
       return updatedBooking;
-    })
+    }),
 });
