@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
 import { db } from "~/server/db";
 
 export const bookRouter = createTRPCRouter({
-  getAllBooks: publicProcedure.query(async () => {
+  getAllBooks: protectedProcedure.query(async () => {
     return await db.book.findMany();
   }),
 
@@ -63,7 +63,7 @@ export const bookRouter = createTRPCRouter({
       };
     }),
 
-  createBook: publicProcedure
+  createBook: protectedProcedure
     .input(
       z.object({
         title: z.string(),
@@ -97,7 +97,7 @@ export const bookRouter = createTRPCRouter({
       });
     }),
 
-  deleteBook: publicProcedure.input(z.string()).mutation(async ({ input }) => {
+  deleteBook: protectedProcedure.input(z.string()).mutation(async ({ input }) => {
     return await db.book.delete({ where: { id: input } });
   }),
 });

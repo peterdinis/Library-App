@@ -1,14 +1,12 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
 import { db } from "~/server/db";
 
 export const categoryRouter = createTRPCRouter({
-  // Get all categories
-  getAllCategories: publicProcedure.query(async () => {
+  getAllCategories: protectedProcedure.query(async () => {
     return await db.category.findMany();
   }),
 
-  // Get category detail
   getCategoryDetail: publicProcedure
     .input(z.string())
     .query(async ({ input }) => {
@@ -17,8 +15,7 @@ export const categoryRouter = createTRPCRouter({
       });
     }),
 
-  // Create category
-  createCategory: publicProcedure
+  createCategory: protectedProcedure
     .input(
       z.object({
         name: z.string(),
@@ -28,8 +25,7 @@ export const categoryRouter = createTRPCRouter({
       return await db.category.create({ data: input });
     }),
 
-  // Update category
-  updateCategory: publicProcedure
+  updateCategory: protectedProcedure
     .input(
       z.object({
         id: z.string(),
@@ -40,8 +36,7 @@ export const categoryRouter = createTRPCRouter({
       return await db.category.update({ where: { id: input.id }, data: input });
     }),
 
-  // Delete category
-  deleteCategory: publicProcedure
+  deleteCategory: protectedProcedure
     .input(z.string())
     .mutation(async ({ input }) => {
       return await db.category.delete({ where: { id: input } });
