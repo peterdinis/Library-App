@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 import { db } from "~/server/db";
 
 export const bookRouter = createTRPCRouter({
@@ -97,7 +101,50 @@ export const bookRouter = createTRPCRouter({
       });
     }),
 
-  deleteBook: protectedProcedure.input(z.string()).mutation(async ({ input }) => {
-    return await db.book.delete({ where: { id: input } });
-  }),
+  updateBook: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        title: z.string().optional(),
+        author: z.string().optional(),
+        genre: z.string().optional(),
+        rating: z.number().min(0).max(5).optional(),
+        coverUrl: z.string().url().optional(),
+        description: z.string().optional(),
+        totalCopies: z.number().min(1).optional(),
+        availableCopies: z.number().min(0).optional(),
+        summary: z.string().optional(),
+        genreId: z.string().optional(),
+        categoryId: z.string().optional(),
+        authorId: z.string().optional(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      const { id, ...updateData } = input;
+      const updatedData = Object.fromEntries(
+        Object.entries(updateData).filter(([_, v]) => v !== undefined),
+      );
+
+      return await db.book.update({
+        where: { id },
+        data: {
+          ...updatedData,
+          genre: updateData.genreId
+            ? { connect: { id: updateData.genreId } }
+            : undefined,
+          category: updateData.categoryId
+            ? { connect: { id: updateData.categoryId } }
+            : undefined,
+          author: updateData.authorId
+            ? { connect: { id: updateData.authorId } }
+            : undefined,
+        },
+      });
+    }),
+
+  deleteBook: protectedProcedure
+    .input(z.string())
+    .mutation(async ({ input }) => {
+      return await db.book.delete({ where: { id: input } });
+    }),
 });

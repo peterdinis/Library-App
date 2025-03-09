@@ -1,10 +1,14 @@
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 import { db } from "~/server/db";
 import z from "zod";
 import { isBefore, parseISO } from "date-fns";
 
 export const bookingRouter = createTRPCRouter({
-  getAllBookings: publicProcedure.query(async () => {
+  getAllBookings: protectedProcedure.query(async () => {
     return await db.booking.findMany();
   }),
 
@@ -52,7 +56,7 @@ export const bookingRouter = createTRPCRouter({
         userId: z.string(),
         bookId: z.string(),
         dueDate: z.string().datetime(),
-        className: z.string()
+        className: z.string(),
       }),
     )
     .mutation(async ({ input }) => {
@@ -132,7 +136,7 @@ export const bookingRouter = createTRPCRouter({
       return updatedBooking;
     }),
 
-  deleteAllBookings: publicProcedure.query(async () => {
+  deleteAllBookings: protectedProcedure.query(async () => {
     return await db.booking.deleteMany();
   }),
 });
