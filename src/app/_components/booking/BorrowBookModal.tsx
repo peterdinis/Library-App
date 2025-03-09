@@ -21,7 +21,9 @@ type BorrowBookModalProps = {
   bookId: string;
 };
 
-const BorrowBookModal: FC<BorrowBookModalProps> = ({ bookId }: BorrowBookModalProps) => {
+const BorrowBookModal: FC<BorrowBookModalProps> = ({
+  bookId,
+}: BorrowBookModalProps) => {
   const { toast } = useToast();
   const { data: session } = useSession();
   const createBooking = api.booking.createBooking.useMutation();
@@ -81,20 +83,43 @@ const BorrowBookModal: FC<BorrowBookModalProps> = ({ bookId }: BorrowBookModalPr
         <div className="grid gap-4 py-4">
           {[
             { id: "name", label: "Meno", value: name, setValue: setName },
-            { id: "class", label: "Trieda", value: className, setValue: setClassName },
+            {
+              id: "class",
+              label: "Trieda",
+              value: className,
+              setValue: setClassName,
+            },
           ].map(({ id, label, value, setValue }) => (
-            <div key={id} className="flex flex-col items-center gap-2 sm:grid sm:grid-cols-4 sm:gap-4">
-              <Label htmlFor={id} className="w-full text-left sm:text-right">{label}</Label>
-              <Input id={id} value={value} onChange={(e) => setValue(e.target.value)} className="col-span-3 w-full" />
+            <div
+              key={id}
+              className="flex flex-col items-center gap-2 sm:grid sm:grid-cols-4 sm:gap-4"
+            >
+              <Label htmlFor={id} className="w-full text-left sm:text-right">
+                {label}
+              </Label>
+              <Input
+                id={id}
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                className="col-span-3 w-full"
+              />
             </div>
           ))}
           <div className="flex flex-col items-center gap-4 sm:flex-row">
             <div className="flex w-full flex-col items-center">
-              <Label htmlFor="from" className="mb-2">Od</Label>
-              <Calendar mode="single" selected={fromDate} onSelect={setFromDate} />
+              <Label htmlFor="from" className="mb-2">
+                Od
+              </Label>
+              <Calendar
+                mode="single"
+                selected={fromDate}
+                onSelect={setFromDate}
+              />
             </div>
             <div className="flex w-full flex-col items-center">
-              <Label htmlFor="to" className="mb-2">Do</Label>
+              <Label htmlFor="to" className="mb-2">
+                Do
+              </Label>
               <Calendar mode="single" selected={toDate} onSelect={setToDate} />
             </div>
           </div>
