@@ -1,5 +1,6 @@
 "use client";
 
+import { useSession } from "next-auth/react";
 import type { FC } from "react";
 import { Button } from "~/components/ui/button";
 import { Calendar } from "~/components/ui/calendar";
@@ -23,7 +24,8 @@ const BorrowBookModal: FC<BorrowBookModalProps> = ({
   bookId
 }: BorrowBookModalProps) => {
   const { toast } = useToast();
-
+  const {data: session} = useSession()
+  
   const borrowFnForNow = () => {
     toast({
       title: "Kniha bola požičaná",
@@ -61,8 +63,7 @@ const BorrowBookModal: FC<BorrowBookModalProps> = ({
               />
             </div>
           ))}
-
-          {/* Calendar Section */}
+          
           <div className="flex flex-col items-center gap-4 sm:flex-row">
             <div className="flex w-full flex-col items-center">
               <Label htmlFor="from" className="mb-2">
