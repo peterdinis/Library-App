@@ -69,7 +69,7 @@ const RegisterForm: FC = () => {
                   {...register("fullName", {
                     required: "Full name is required",
                   })}
-                  className="block w-full rounded-lg border border-gray-300 px-4 py-3 pl-10 placeholder-gray-500 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="block w-full form-input rounded-lg border border-gray-300 px-4 py-3 pl-10 placeholder-gray-500 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   placeholder="Your Full Name"
                 />
                 {errors.fullName && (
@@ -95,7 +95,7 @@ const RegisterForm: FC = () => {
                   id="email"
                   type="email"
                   {...register("email", { required: "Email is required" })}
-                  className="block w-full rounded-lg border border-gray-300 px-4 py-3 pl-10 placeholder-gray-500 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="block form-input w-full rounded-lg border border-gray-300 px-4 py-3 pl-10 placeholder-gray-500 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   placeholder="you@school.edu"
                 />
                 {errors.email && (
@@ -123,7 +123,7 @@ const RegisterForm: FC = () => {
                   {...register("password", {
                     required: "Password is required",
                   })}
-                  className="block w-full rounded-lg border border-gray-300 px-4 py-3 pl-10 placeholder-gray-500 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="block form-input w-full rounded-lg border border-gray-300 px-4 py-3 pl-10 placeholder-gray-500 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500"
                   placeholder="••••••••"
                 />
                 <button
