@@ -1,5 +1,4 @@
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
-import { adminRouter } from "./routers/admin";
 import { authorRouter } from "./routers/author";
 import { bookRouter } from "./routers/book";
 import { bookingRouter } from "./routers/booking";
@@ -13,8 +12,7 @@ export const appRouter = createTRPCRouter({
   author: authorRouter,
   genre: genreRouter,
   user: userRouter,
-  booking: bookingRouter,
-  admin: adminRouter,
+  booking: bookingRouter
 });
 
 export type AppRouter = typeof appRouter;
