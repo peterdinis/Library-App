@@ -26,16 +26,16 @@ enum BorrowedStatus {
 }
 
 model User {
-  id               String         @id @unique @default(uuid())
+  id               String     @id @unique @default(uuid())
   fullName         String
-  email            String         @unique
+  email            String     @unique
   password         String
-  status           Status         @default(PENDING)
-  role             Role           @default(USER)
-  lastActivityDate DateTime       @default(now())
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt()
-  borrowRecords    BorrowRecord[]
+  status           Status     @default(PENDING)
+  role             Role       @default(USER)
+  lastActivityDate DateTime   @default(now())
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt()
+  bookings         Booking[] 
 }
 
 model Genre {
@@ -58,39 +58,39 @@ model Author {
 }
 
 model Book {
-  id              String         @id @unique @default(uuid())
+  id              String     @id @unique @default(uuid())
   title           String
   rating          Int
   coverUrl        String
   description     String
-  isAvaible       Boolean        @default(false)
-  totalCopies     Int            @default(1)
-  availableCopies Int            @default(0)
+  isAvaible       Boolean    @default(false)
+  totalCopies     Int        @default(1)
+  availableCopies Int        @default(0)
   summary         String
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt()
-  borrowRecords   BorrowRecord[]
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt()
+  bookings        Booking[]  
 
-  genreId String
-  genre   Genre  @relation(fields: [genreId], references: [id], onDelete: Cascade)
+  genreId   String
+  genre     Genre    @relation(fields: [genreId], references: [id], onDelete: Cascade)
 
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
-  authorId String
-  author   Author @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId   String
+  author     Author   @relation(fields: [authorId], references: [id], onDelete: Cascade)
 }
 
-model BorrowRecord {
-  id         String    @id @unique @default(uuid())
+model Booking {
+  id         String          @id @unique @default(uuid())
   userId     String
   bookId     String
-  borrowDate DateTime  @default(now())
+  borrowDate DateTime        @default(now())
   dueDate    DateTime
   returnDate DateTime?
-  status     BorrowedStatus   @default(BORROWED)
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt()
-  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  book       Book      @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  status     BorrowedStatus  @default(BORROWED)
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt()
+  user       User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  book       Book            @relation(fields: [bookId], references: [id], onDelete: Cascade)
 }
