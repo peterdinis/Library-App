@@ -87,6 +87,7 @@ model Booking {
   bookId     String
   borrowDate DateTime        @default(now())
   dueDate    DateTime
+  className  String
   returnDate DateTime?
   status     BorrowedStatus  @default(BORROWED)
   createdAt  DateTime        @default(now())
