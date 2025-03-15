@@ -4,12 +4,10 @@ import { Book, Lock, Mail, Eye, EyeOff } from "lucide-react";
 import { useState, type FC, FormEvent } from "react";
 import { Button } from "~/components/ui/button";
 import { useToast } from "~/hooks/use-toast";
-import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 
 const LoginForm: FC = () => {
-  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,7 +30,7 @@ const LoginForm: FC = () => {
         duration: 2000,
         className: "bg-green-800 text-white font-bold text-xl",
       });
-      router.push("/profile");
+      window.location.replace("/profile");
     } else {
       setError(result.error);
     }

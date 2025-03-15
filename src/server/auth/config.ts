@@ -3,13 +3,14 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 import type { DefaultSession, NextAuthConfig } from "next-auth";
 import { db } from "~/server/db";
+import { Role } from "~/types/applicationTypes";
 
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
       status: string;
-      role: string;
+      role: Role
     } & DefaultSession["user"];
   }
 }
@@ -50,6 +51,7 @@ export const authConfig = {
           id: user.id,
           email: user.email,
           name: user.fullName,
+          role: user.role,
         };
       },
     }),
