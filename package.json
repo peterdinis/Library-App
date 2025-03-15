@@ -15,8 +15,7 @@
 		"postinstall": "prisma generate",
 		"seed": "tsx prisma/seed.ts",
 		"preview": "next build && next start",
-		"start": "next start",
-		"test": "cypress open"
+		"start": "next start"
 	},
 	"dependencies": {
 		"@auth/prisma-adapter": "^2.8.0",
