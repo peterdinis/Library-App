@@ -7,7 +7,7 @@ import {
 import { db } from "~/server/db";
 
 export const genreRouter = createTRPCRouter({
-  getAllGenres: protectedProcedure.query(async () => {
+  getAllGenres: publicProcedure.query(async () => {
     return await db.genre.findMany();
   }),
 

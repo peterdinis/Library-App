@@ -7,7 +7,7 @@ import {
 import { db } from "~/server/db";
 
 export const categoryRouter = createTRPCRouter({
-  getAllCategories: protectedProcedure.query(async () => {
+  getAllCategories: publicProcedure.query(async () => {
     return await db.category.findMany();
   }),
 
