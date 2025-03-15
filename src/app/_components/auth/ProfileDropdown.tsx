@@ -15,9 +15,7 @@ import { useToast } from "~/hooks/use-toast";
 
 const ProfileDropdown: FC = () => {
   const { toast } = useToast();
-  const {data: session}  = useSession()
-
-  console.log("S", session)
+  
   const logoutFromApp = () => {
     toast({
       title: "Odhlásenie bolo úspešné",
