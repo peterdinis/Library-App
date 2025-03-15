@@ -69,7 +69,7 @@ const RegisterForm: FC = () => {
                   {...register("fullName", {
                     required: "Full name is required",
                   })}
-                  className="form-input block w-full rounded-lg border border-gray-300 px-4 py-3 pl-10 placeholder-gray-500 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="form-input w-full rounded-lg border border-gray-300 bg-gray-50 p-3 pl-10 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-zinc-700 dark:text-white dark:placeholder-white"
                   placeholder="Your Full Name"
                 />
                 {errors.fullName && (
@@ -95,7 +95,7 @@ const RegisterForm: FC = () => {
                   id="email"
                   type="email"
                   {...register("email", { required: "Email is required" })}
-                  className="form-input block w-full rounded-lg border border-gray-300 px-4 py-3 pl-10 placeholder-gray-500 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="form-input w-full rounded-lg border border-gray-300 bg-gray-50 p-3 pl-10 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-zinc-700 dark:text-white dark:placeholder-white"
                   placeholder="you@school.edu"
                 />
                 {errors.email && (
@@ -123,7 +123,7 @@ const RegisterForm: FC = () => {
                   {...register("password", {
                     required: "Password is required",
                   })}
-                  className="form-input block w-full rounded-lg border border-gray-300 px-4 py-3 pl-10 placeholder-gray-500 focus:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="form-input w-full rounded-lg border border-gray-300 bg-gray-50 p-3 pl-10 placeholder-gray-500 focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-zinc-700 dark:text-white dark:placeholder-white"
                   placeholder="••••••••"
                 />
                 <button
