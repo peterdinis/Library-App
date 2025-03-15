@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { BookOpen, Calendar } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { type FC, useMemo, useState } from "react";
+import { type FC, useState } from "react";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import {
