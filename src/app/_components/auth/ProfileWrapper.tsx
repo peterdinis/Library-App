@@ -11,11 +11,11 @@ import { Loader2 } from "lucide-react";
 const ProfileWrapper: FC = () => {
   const { data: session } = useSession();
 
+  // TODO: Return book
+
   const { data: myBorrowedBooksData, isLoading, isError } = api.booking.getAllUsersBookings.useQuery({
     userId: session?.user.id!
   })
-
-  console.log(myBorrowedBooksData)
 
   if (isLoading) {
     return <Loader2 className="animate-spin w-8 h-8" />
