@@ -15,8 +15,7 @@ import { useToast } from "~/hooks/use-toast";
 
 const ProfileDropdown: FC = () => {
   const { toast } = useToast();
-  const {data: session}  = useSession()
-  
+
   const logoutFromApp = () => {
     toast({
       title: "Odhlásenie bolo úspešné",
@@ -38,6 +37,9 @@ const ProfileDropdown: FC = () => {
           <DropdownMenuSeparator />
           <DropdownMenuItem>
             <Link href={"/profile"}>Profil</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href={"/admin"}>Admin</Link>
           </DropdownMenuItem>
           <DropdownMenuItem onClick={logoutFromApp}>
             Odhlásenie
