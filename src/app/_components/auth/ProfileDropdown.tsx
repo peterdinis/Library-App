@@ -1,6 +1,6 @@
 "use client";
 
-import { signOut, useSession} from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import type { FC } from "react";
 import {
@@ -15,7 +15,7 @@ import { useToast } from "~/hooks/use-toast";
 
 const ProfileDropdown: FC = () => {
   const { toast } = useToast();
-  
+
   const logoutFromApp = () => {
     toast({
       title: "Odhlásenie bolo úspešné",

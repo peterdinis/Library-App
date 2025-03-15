@@ -1,20 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BookOpen, Calendar } from "lucide-react";
-import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { type FC, useState } from "react";
-import { Badge } from "~/components/ui/badge";
-import { Button } from "~/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
+import { BookGrid, Pagination } from "./ProfileHelpersComponents";
+import { useSession } from "next-auth/react";
 
 // For now static data later make this dynamic
 const borrowedBooks: any = Array.from({ length: 12 }, (_, i) => ({
@@ -38,133 +28,6 @@ const historyBooks: any = Array.from({ length: 15 }, (_, i) => ({
   coverUrl: `/placeholder.svg?height=200&width=150&text=História${i + 1}`,
   status: "ontime",
 }));
-
-function getStatusColor(status: any) {
-  switch (status) {
-    case "overdue":
-      return "text-red-500";
-    case "soon":
-      return "text-yellow-500";
-    default:
-      return "text-green-500";
-  }
-}
-
-function getStatusBadge(status: any) {
-  switch (status) {
-    case "overdue":
-      return <Badge variant="destructive">Po termíne</Badge>;
-    case "soon":
-      return <Badge className="bg-yellow-500">Čoskoro vyprší</Badge>;
-    default:
-      return <Badge variant="secondary">V poriadku</Badge>;
-  }
-}
-
-function Pagination({
-  currentPage,
-  totalPages,
-  onPageChange,
-}: {
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
-}) {
-  return (
-    <div className="flex items-center justify-center gap-2">
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-      >
-        Predchádzajúca
-      </Button>
-
-      <div className="flex items-center gap-1">
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-          <Button
-            key={page}
-            variant={currentPage === page ? "default" : "outline"}
-            size="sm"
-            className="w-10"
-            onClick={() => onPageChange(page)}
-          >
-            {page}
-          </Button>
-        ))}
-      </div>
-
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-      >
-        Nasledujúca
-      </Button>
-    </div>
-  );
-}
-
-function BookGrid({
-  books,
-  animate = true,
-}: {
-  books: any;
-  animate?: boolean;
-}) {
-  return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {books.map((book: any, index: number) => (
-        <motion.div
-          key={book.id}
-          initial={animate ? { opacity: 0, y: 20 } : false}
-          animate={animate ? { opacity: 1, y: 0 } : false}
-          transition={{ delay: 0.1 * (index % 6), duration: 0.5 }}
-        >
-          <Card className="group overflow-hidden transition-all hover:shadow-md">
-            <CardHeader className="relative p-4">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.2 }}
-                className="relative aspect-[3/4] overflow-hidden rounded-md bg-muted"
-              >
-                <Image
-                  width={60}
-                  height={60}
-                  src={book.coverUrl || "/placeholder.svg"}
-                  alt={book.title}
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-              </motion.div>
-            </CardHeader>
-            <CardContent className="space-y-3 p-4">
-              <div className="space-y-2">
-                <CardTitle className="line-clamp-1">{book.title}</CardTitle>
-                <CardDescription className="flex items-center gap-2">
-                  <BookOpen className="h-4 w-4" />
-                  {book.author}
-                </CardDescription>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-sm">
-                  <Calendar
-                    className={`h-4 w-4 ${getStatusColor(book.status)}`}
-                  />
-                  <span className={getStatusColor(book.status)}>
-                    {new Date(book.dueDate).toLocaleDateString()}
-                  </span>
-                </div>
-                {getStatusBadge(book.status)}
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-      ))}
-    </div>
-  );
-}
 
 const ITEMS_PER_PAGE = 6;
 
