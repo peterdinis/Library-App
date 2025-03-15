@@ -1,18 +1,19 @@
 import { compare } from "bcrypt";
 import CredentialsProvider from "next-auth/providers/credentials";
-
 import type { DefaultSession, NextAuthConfig } from "next-auth";
 import { db } from "~/server/db";
 import { Role } from "~/types/applicationTypes";
+import { User } from "@prisma/client";
 
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
       status: string;
-      role: Role
+      role: Role;
     } & DefaultSession["user"];
   }
+  interface CustomerUser extends User {}
 }
 
 export const authConfig = {
@@ -52,6 +53,7 @@ export const authConfig = {
           email: user.email,
           name: user.fullName,
           role: user.role,
+          status: user.status,
         };
       },
     }),
@@ -64,6 +66,7 @@ export const authConfig = {
       if (user) {
         token.id = user.id;
         token.name = user.name;
+        token.role = (user as User).role;
       }
 
       return token;
@@ -72,6 +75,7 @@ export const authConfig = {
       if (session.user) {
         session.user.id = token.id as string;
         session.user.name = token.name as string;
+        session.user.role = token.role as Role;
       }
 
       return session;
