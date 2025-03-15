@@ -12,10 +12,17 @@ import {
 } from "~/components/ui/pagination";
 import { wrapperColumns } from "./wrapperColumns";
 import { WrapperTable } from "./WrapperTable";
+import useTeacher from "~/hooks/useTeacher";
+import useAdmin from "~/hooks/useAdmin";
 
 const AdminWrapper: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const admin = useAdmin()
+  const teacher = useTeacher()
 
+  if(!admin || !teacher) {
+    window.location.replace("/")
+  }
   return (
     <AdminSharedComponent showStats={true}>
       <div className="overflow-hidden rounded-lg bg-white shadow dark:bg-background">

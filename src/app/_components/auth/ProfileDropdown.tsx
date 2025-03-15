@@ -1,9 +1,8 @@
 "use client";
 
-import { signOut, useSession } from "next-auth/react";
+import { signOut, useSession} from "next-auth/react";
 import Link from "next/link";
 import type { FC } from "react";
-import { Avatar, AvatarFallback } from "~/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,7 +15,9 @@ import { useToast } from "~/hooks/use-toast";
 
 const ProfileDropdown: FC = () => {
   const { toast } = useToast();
-  const { data: session } = useSession();
+  const {data: session}  = useSession()
+
+  console.log("S", session)
   const logoutFromApp = () => {
     toast({
       title: "Odhlásenie bolo úspešné",
@@ -34,7 +35,7 @@ const ProfileDropdown: FC = () => {
       <DropdownMenu>
         <DropdownMenuTrigger>Profil</DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel>JD</DropdownMenuLabel>
+          <DropdownMenuLabel>Môj Profil</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
             <Link href={"/profile"}>Profil</Link>
