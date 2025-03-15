@@ -7,7 +7,7 @@ import {
 import { db } from "~/server/db";
 
 export const authorRouter = createTRPCRouter({
-  getAllAuthors: protectedProcedure.query(async () => {
+  getAllAuthors: publicProcedure.query(async () => {
     return await db.author.findMany();
   }),
 
