@@ -43,12 +43,12 @@ const BookDetail: FC = () => {
             <div className="rounded-xl p-6 text-center shadow-lg transition-all duration-300 dark:bg-stone-800">
               <span
                 className={`text-lg font-semibold ${
-                  book.availableCopies > 0
+                  book.isAvaible 
                     ? "text-emerald-700"
                     : "text-rose-700"
                 }`}
               >
-                {book.availableCopies > 0 ? "Dostupná" : "Nedostupná"}
+                {book.isAvaible ? "Dostupná" : "Nedostupná"}
               </span>
             </div>
           </div>
