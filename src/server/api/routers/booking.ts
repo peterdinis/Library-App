@@ -20,7 +20,7 @@ export const bookingRouter = createTRPCRouter({
       });
     }),
 
-    getAllUsersBookings: publicProcedure
+  getAllUsersBookings: publicProcedure
     .input(
       z.object({
         userId: z.string(),
@@ -36,12 +36,12 @@ export const bookingRouter = createTRPCRouter({
         },
       });
 
-      const books = bookings.flatMap(booking => booking.book);
-  
+      const books = bookings.flatMap((booking) => booking.book);
+
       return {
         books,
-        bookings
-      }
+        bookings,
+      };
     }),
 
   getDetailOfUserBooking: publicProcedure

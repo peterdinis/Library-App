@@ -12,15 +12,24 @@ const ProfileWrapper: FC = () => {
 
   // TODO: Return book
 
-  const { data: myBorrowedBooksData, isLoading, isError } = api.booking.getAllUsersBookings.useQuery({
-    userId: session?.user.id!
-  })
+  const {
+    data: myBorrowedBooksData,
+    isLoading,
+    isError,
+  } = api.booking.getAllUsersBookings.useQuery({
+    userId: session?.user.id!,
+  });
 
   if (isLoading) {
-    return <Loader2 className="animate-spin w-8 h-8" />
+    return <Loader2 className="h-8 w-8 animate-spin" />;
   }
 
-  if (isError) return <p className="prose prose-p: text-red-800 font-bold text-xl">Chyba pri zobrazení požičaných kníh</p>
+  if (isError)
+    return (
+      <p className="prose-p: prose text-xl font-bold text-red-800">
+        Chyba pri zobrazení požičaných kníh
+      </p>
+    );
 
   return (
     <div className="min-h-screen bg-white p-6 dark:bg-background">
@@ -38,7 +47,9 @@ const ProfileWrapper: FC = () => {
           </div>
         </motion.div>
 
-        <h3 className="prose prose-h3: font-bold text-3xl dark:text-white">Moje požičané knihy</h3>
+        <h3 className="prose-h3: prose text-3xl font-bold dark:text-white">
+          Moje požičané knihy
+        </h3>
         <div className="mt-3">
           <BookGrid books={myBorrowedBooksData} />
         </div>
