@@ -96,7 +96,7 @@ const AllBooksWrapper = () => {
                     width={60}
                     height={60}
                     className="absolute inset-0 h-full w-full transform object-cover transition-transform duration-300 group-hover:scale-105"
-                    loading="lazy"
+                    priority={true}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <div className="absolute bottom-0 left-0 right-0 p-6">
