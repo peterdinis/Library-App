@@ -19,7 +19,7 @@ const BookDetail: FC = () => {
     isLoading,
     error,
   } = api.book.getBookDetail.useQuery(bookID, { enabled: !!id });
-  const {data: session} = useSession()
+  const { data: session } = useSession();
   if (isLoading) return <Loader2 className="mx-auto h-8 w-8 animate-spin" />;
   if (error)
     return (
@@ -44,9 +44,7 @@ const BookDetail: FC = () => {
             <div className="rounded-xl p-6 text-center shadow-lg transition-all duration-300 dark:bg-stone-800">
               <span
                 className={`text-lg font-semibold ${
-                  book.isAvaible 
-                    ? "text-emerald-700"
-                    : "text-rose-700"
+                  book.isAvaible ? "text-emerald-700" : "text-rose-700"
                 }`}
               >
                 {book.isAvaible ? "Dostupná" : "Nedostupná"}
@@ -101,7 +99,9 @@ const BookDetail: FC = () => {
             </div>
 
             <div className="flex flex-col justify-center gap-4 sm:flex-row sm:justify-start sm:gap-6">
-              {book.availableCopies > 0 && book.isAvaible && session?.user && <BorrowBookModal bookId={bookID} />}
+              {book.availableCopies > 0 && book.isAvaible && session?.user && (
+                <BorrowBookModal bookId={bookID} />
+              )}
               <Button size="lg" variant="link">
                 <Link
                   href="/books"
