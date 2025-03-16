@@ -24,7 +24,7 @@ type Book = {
   borrowDate: string;
 };
 
-type BooksData = {
+export type BooksData = {
   books: Book[];
 };
 

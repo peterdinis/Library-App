@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useMemo, type FC } from "react";
-import { BookGrid } from "./ProfileHelpersComponents";
+import { type FC } from "react";
+import { BookGrid, BooksData } from "./ProfileHelpersComponents";
 import { useSession } from "next-auth/react";
 import { api } from "~/trpc/react";
 import { Loader2 } from "lucide-react";
@@ -51,7 +51,7 @@ const ProfileWrapper: FC = () => {
           Moje požičané knihy
         </h3>
         <div className="mt-3">
-          <BookGrid books={myBorrowedBooksData} />
+          <BookGrid books={myBorrowedBooksData as unknown as BooksData} />
         </div>
       </div>
     </div>
