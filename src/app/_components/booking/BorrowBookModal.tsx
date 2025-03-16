@@ -114,6 +114,7 @@ const BorrowBookModal: FC<BorrowBookModalProps> = ({
               </Label>
               <Calendar
                 mode="single"
+                selected={fromDate}
                 onSelect={setFromDate}
               />
             </div>
@@ -121,7 +122,7 @@ const BorrowBookModal: FC<BorrowBookModalProps> = ({
               <Label htmlFor="to" className="mb-2">
                 Do
               </Label>
-              <Calendar mode="single" onSelect={setToDate} />
+              <Calendar selected={toDate} mode="single" onSelect={setToDate} />
             </div>
           </div>
         </div>
