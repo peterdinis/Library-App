@@ -36,6 +36,7 @@ const BookDetail: FC = () => {
               <Image
                 width={300}
                 height={400}
+                priority={true}
                 src={book.coverUrl}
                 alt={`Cover of ${book.title}`}
                 className="h-auto w-full rounded-lg object-cover shadow-md"
