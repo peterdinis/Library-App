@@ -20,18 +20,28 @@ export const bookingRouter = createTRPCRouter({
       });
     }),
 
-  getAllUsersBookings: publicProcedure
+    getAllUsersBookings: publicProcedure
     .input(
       z.object({
         userId: z.string(),
       }),
     )
     .query(async ({ input }) => {
-      return await db.booking.findMany({
+      const bookings = await db.booking.findMany({
         where: {
           userId: input.userId,
         },
+        include: {
+          book: true,
+        },
       });
+
+      const books = bookings.flatMap(booking => booking.book);
+  
+      return {
+        books,
+        bookings
+      }
     }),
 
   getDetailOfUserBooking: publicProcedure

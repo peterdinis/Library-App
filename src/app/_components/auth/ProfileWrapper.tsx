@@ -1,8 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { type FC } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
+import { useMemo, type FC } from "react";
 import { BookGrid } from "./ProfileHelpersComponents";
 import { useSession } from "next-auth/react";
 import { api } from "~/trpc/react";
@@ -39,24 +38,10 @@ const ProfileWrapper: FC = () => {
           </div>
         </motion.div>
 
-        <Tabs defaultValue="borrowed" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 lg:w-[400px]">
-            <TabsTrigger value="borrowed">
-              Aktívne výpožičky TODO
-            </TabsTrigger>
-            <TabsTrigger value="history">
-              História výpožičiek TODO
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="borrowed" className="space-y-6">
-            <BookGrid books={myBorrowedBooksData} />
-          </TabsContent>
-
-          <TabsContent value="history" className="space-y-6">
-            TODO Something simular to BookGrid
-          </TabsContent>
-        </Tabs>
+        <h3 className="prose prose-h3: font-bold text-3xl dark:text-white">Moje požičané knihy</h3>
+        <div className="mt-3">
+          <BookGrid books={myBorrowedBooksData} />
+        </div>
       </div>
     </div>
   );
