@@ -78,7 +78,7 @@ const BorrowBookModal: FC<BorrowBookModalProps> = ({
       <DialogTrigger asChild>
         <Button variant="outline">Požičať knihu</Button>
       </DialogTrigger>
-      <DialogContent className="max-h-[80vh] w-full max-w-[580px] overflow-y-auto">
+      <DialogContent className="max-h-[80vh] w-full max-w-[650px] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Požičať knihu</DialogTitle>
         </DialogHeader>
@@ -122,7 +122,7 @@ const BorrowBookModal: FC<BorrowBookModalProps> = ({
               <Label htmlFor="to" className="mb-2">
                 Do
               </Label>
-              <Calendar mode="single" selected={toDate} onSelect={setToDate} />
+              <Calendar selected={toDate} mode="single" onSelect={setToDate} />
             </div>
           </div>
         </div>
