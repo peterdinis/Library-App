@@ -9,6 +9,7 @@ import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
 import { api } from "~/trpc/react";
 import BorrowBookModal from "../booking/BorrowBookModal";
+import { useSession } from "next-auth/react";
 
 const BookDetail: FC = () => {
   const { id } = useParams();
@@ -18,7 +19,7 @@ const BookDetail: FC = () => {
     isLoading,
     error,
   } = api.book.getBookDetail.useQuery(bookID, { enabled: !!id });
-
+  const {data: session} = useSession()
   if (isLoading) return <Loader2 className="mx-auto h-8 w-8 animate-spin" />;
   if (error)
     return (
@@ -100,7 +101,7 @@ const BookDetail: FC = () => {
             </div>
 
             <div className="flex flex-col justify-center gap-4 sm:flex-row sm:justify-start sm:gap-6">
-              {book.availableCopies > 0 && <BorrowBookModal bookId={bookID} />}
+              {book.availableCopies > 0 && book.isAvaible && session?.user && <BorrowBookModal bookId={bookID} />}
               <Button size="lg" variant="link">
                 <Link
                   href="/books"

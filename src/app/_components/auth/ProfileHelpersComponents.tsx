@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { BookOpen, Calendar } from "lucide-react";
+import { Calendar } from "lucide-react";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import {
@@ -8,8 +8,11 @@ import {
   CardContent,
   CardTitle,
   CardDescription,
+  CardFooter,
 } from "~/components/ui/card";
 import Image from "next/image";
+import { useMemo } from "react";
+import { Booking } from "@prisma/client";
 
 function getStatusColor(status: string) {
   switch (status) {
@@ -86,10 +89,21 @@ export function BookGrid({
   books: any;
   animate?: boolean;
 }) {
-    console.log("B", books)
+
+  const bookingInfo = useMemo(() => {
+    return books.books.map((item: Booking) => {
+      return {
+        id: item.id,
+        dueDate: item.dueDate,
+        status: item.status,
+        borrowedDate: item.borrowDate
+      }
+    })
+  }, [books])
+
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {books.map((book: any, index: number) => (
+      {books.books.map((book: any, index: number) => (
         <motion.div
           key={book.id}
           initial={animate ? { opacity: 0, y: 20 } : false}
@@ -116,14 +130,13 @@ export function BookGrid({
               <div className="space-y-2">
                 <CardTitle className="line-clamp-1">{book.title}</CardTitle>
                 <CardDescription className="flex items-center gap-2">
-                  <BookOpen className="h-4 w-4" />
                   {book.author}
                 </CardDescription>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-sm">
                   <Calendar
-                    className={`h-4 w-4 ${getStatusColor(book.status)}`}
+                    className={`h-4 w-4 ${getStatusColor(book.dueDate)}`}
                   />
                   <span className={getStatusColor(book.status)}>
                     {new Date(book.dueDate).toLocaleDateString()}
@@ -132,6 +145,9 @@ export function BookGrid({
                 {getStatusBadge(book.status)}
               </div>
             </CardContent>
+            <CardFooter className="mt-4">
+            <Button size={"lg"}>Vrátit knihu</Button>
+            </CardFooter>
           </Card>
         </motion.div>
       ))}
