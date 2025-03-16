@@ -62,10 +62,12 @@ const BorrowBookModal: FC<BorrowBookModalProps> = ({
         title: "Kniha bola úspešne požičaná!",
         className: "bg-green-800 text-white font-bold",
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Neznámá chyba";
       toast({
         title: "Chyba pri požičiavaní knihy",
-        description: error.message,
+        description: errorMessage,
         className: "bg-red-800 text-white font-bold",
       });
     }

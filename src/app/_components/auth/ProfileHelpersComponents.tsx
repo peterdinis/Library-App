@@ -89,17 +89,16 @@ export function BookGrid({
   books: any;
   animate?: boolean;
 }) {
-
   const bookingInfo = useMemo(() => {
     return books.books.map((item: Booking) => {
       return {
         id: item.id,
         dueDate: item.dueDate,
         status: item.status,
-        borrowedDate: item.borrowDate
-      }
-    })
-  }, [books])
+        borrowedDate: item.borrowDate,
+      };
+    });
+  }, [books]);
 
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -146,7 +145,7 @@ export function BookGrid({
               </div>
             </CardContent>
             <CardFooter className="mt-4">
-            <Button size={"lg"}>Vrátit knihu</Button>
+              <Button size={"lg"}>Vrátit knihu</Button>
             </CardFooter>
           </Card>
         </motion.div>
