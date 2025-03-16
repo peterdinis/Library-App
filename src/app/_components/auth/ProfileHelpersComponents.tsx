@@ -133,6 +133,7 @@ export function BookGrid({
                   height={60}
                   src={book.coverUrl || "/placeholder.svg"}
                   alt={book.title}
+                  priority={true}
                   className="absolute inset-0 h-full w-full object-cover"
                 />
               </motion.div>
