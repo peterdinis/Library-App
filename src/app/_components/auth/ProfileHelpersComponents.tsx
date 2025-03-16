@@ -14,6 +14,20 @@ import Image from "next/image";
 import { useMemo } from "react";
 import { Booking } from "@prisma/client";
 
+type Book = {
+  id: string;
+  title: string;
+  author: string;
+  coverUrl?: string;
+  dueDate: string;
+  status: "overdue" | "soon" | "ok";
+  borrowDate: string;
+};
+
+type BooksData = {
+  books: Book[];
+};
+
 function getStatusColor(status: string) {
   switch (status) {
     case "overdue":
@@ -86,23 +100,21 @@ export function BookGrid({
   books,
   animate = true,
 }: {
-  books: any;
+  books: BooksData;
   animate?: boolean;
 }) {
   const bookingInfo = useMemo(() => {
-    return books.books.map((item: Booking) => {
-      return {
-        id: item.id,
-        dueDate: item.dueDate,
-        status: item.status,
-        borrowedDate: item.borrowDate,
-      };
-    });
+    return books.books.map((item) => ({
+      id: item.id,
+      dueDate: item.dueDate,
+      status: item.status,
+      borrowedDate: item.borrowDate,
+    }));
   }, [books]);
 
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {books.books.map((book: any, index: number) => (
+      {books.books.map((book, index) => (
         <motion.div
           key={book.id}
           initial={animate ? { opacity: 0, y: 20 } : false}
@@ -135,7 +147,7 @@ export function BookGrid({
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-sm">
                   <Calendar
-                    className={`h-4 w-4 ${getStatusColor(book.dueDate)}`}
+                    className={`h-4 w-4 ${getStatusColor(book.status)}`}
                   />
                   <span className={getStatusColor(book.status)}>
                     {new Date(book.dueDate).toLocaleDateString()}
