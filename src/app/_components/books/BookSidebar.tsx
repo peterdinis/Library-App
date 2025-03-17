@@ -1,7 +1,7 @@
 "use client";
 
 import { X } from "lucide-react";
-import type { FC } from "react";
+import { FC, useState } from "react";
 import { useFilterStore } from "~/app/_store/bookSidebarStore";
 import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
@@ -28,12 +28,25 @@ const BookSidebar: FC<BookSidebarProps> = ({
   const { data: genres } = api.genre.getAllGenres.useQuery();
   const { data: authors } = api.author.getAllAuthors.useQuery();
 
+  const [selectedCategory, setSelectedCategory] = useState<string | undefined>();
+  const [selectedGenre, setSelectedGenre] = useState<string | undefined>();
+  const [selectedAuthor, setSelectedAuthor] = useState<string | undefined>();
+
+  console.log(selectedAuthor, selectedGenre, selectedCategory)
   const handleFilterChange = (filterType: string, value: string) => {
     setFilters({ [filterType]: value });
+
+    if (filterType === "categoryId") setSelectedCategory(value);
+    if (filterType === "genreId") setSelectedGenre(value);
+    if (filterType === "authorId") setSelectedAuthor(value);
   };
 
   const handleClearFilters = () => {
     clearFilters();
+
+    setSelectedCategory(undefined);
+    setSelectedGenre(undefined);
+    setSelectedAuthor(undefined);
   };
 
   return (
@@ -50,6 +63,7 @@ const BookSidebar: FC<BookSidebarProps> = ({
         <Label htmlFor="category">Kategória</Label>
         <Select
           onValueChange={(value) => handleFilterChange("categoryId", value)}
+          value={selectedCategory === undefined ? "" : selectedCategory}
         >
           <SelectTrigger id="category">
             <SelectValue placeholder="Vyber kategóriu" />
@@ -64,7 +78,10 @@ const BookSidebar: FC<BookSidebarProps> = ({
         </Select>
 
         <Label htmlFor="genre">Žáner</Label>
-        <Select onValueChange={(value) => handleFilterChange("genreId", value)}>
+        <Select
+          onValueChange={(value) => handleFilterChange("genreId", value)}
+          value={selectedGenre === undefined ? "" : selectedGenre}
+        >
           <SelectTrigger id="genre">
             <SelectValue placeholder="Vyber žáner" />
           </SelectTrigger>
@@ -80,6 +97,7 @@ const BookSidebar: FC<BookSidebarProps> = ({
         <Label htmlFor="author">Autor</Label>
         <Select
           onValueChange={(value) => handleFilterChange("authorId", value)}
+          value={selectedAuthor === undefined ? "" : selectedAuthor}
         >
           <SelectTrigger id="author">
             <SelectValue placeholder="Vyber autora" />
