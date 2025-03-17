@@ -25,7 +25,7 @@ const AdminWrapper: FC = () => {
   }
   return (
     <AdminSharedComponent showStats={true}>
-      <div className="overflow-hidden rounded-lg bg-white shadow dark:bg-background">
+      <div className="overflow-hidden rounded-lg bg-white shadow-sm dark:bg-background">
         <div className="border-b border-gray-200 p-4 sm:p-6">
           <h2 className="text-lg font-semibold">Posledné objednávky kníh</h2>
         </div>

@@ -115,7 +115,7 @@ const AdminAuthors: FC = () => {
                   : "text-indigo-100 hover:bg-indigo-600"
               }`}
             >
-              <item.icon className="h-5 w-5 flex-shrink-0" />
+              <item.icon className="h-5 w-5 shrink-0" />
               <Link href={item.link} className="whitespace-nowrap">
                 {item.label}
               </Link>
@@ -135,7 +135,7 @@ const AdminAuthors: FC = () => {
       {/* Main Content */}
       <div className="flex h-[calc(100vh-64px)] min-w-0 flex-1 flex-col bg-gray-50 dark:bg-stone-800 lg:h-screen">
         {/* Header */}
-        <header className="flex-shrink-0 border-b border-gray-200 bg-white px-4 py-4 dark:bg-stone-900 sm:px-6">
+        <header className="shrink-0 border-b border-gray-200 bg-white px-4 py-4 dark:bg-stone-900 sm:px-6">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex min-w-0 flex-1 items-center gap-4">
               <div className="relative max-w-xs flex-1">
@@ -143,7 +143,7 @@ const AdminAuthors: FC = () => {
                 <Input
                   type="text"
                   placeholder="Hľadať knihu..."
-                  className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 focus:outline-hidden focus:ring-2 focus:ring-indigo-500"
                 />
               </div>
             </div>
