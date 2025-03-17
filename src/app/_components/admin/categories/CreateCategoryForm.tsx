@@ -54,7 +54,7 @@ const CreateCategoryForm: FC = () => {
   };
 
   return (
-    <div className="mx-auto mt-10 max-w-lg rounded-lg border p-6 shadow">
+    <div className="mx-auto mt-10 max-w-lg rounded-lg border p-6 shadow-sm">
       <h1 className="mb-4 text-center text-3xl font-bold">
         Vytvor novú kategóriu
       </h1>

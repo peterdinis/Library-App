@@ -13,7 +13,7 @@ const BookSearch: FC<BookSearchProps> = ({
   setSearchQuery,
 }: BookSearchProps) => {
   return (
-    <div className="flex-1 rounded-2xl bg-white/80 shadow-xl backdrop-blur-sm dark:bg-stone-800">
+    <div className="flex-1 rounded-2xl bg-white/80 shadow-xl backdrop-blur-xs dark:bg-stone-800">
       <div className="relative">
         <Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
         <input

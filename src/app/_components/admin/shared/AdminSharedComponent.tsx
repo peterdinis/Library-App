@@ -124,7 +124,7 @@ const AdminSharedComponent: FC<AdminSharedComponentProps> = ({
                   : "text-indigo-100 hover:bg-indigo-600"
               }`}
             >
-              <item.icon className="h-5 w-5 flex-shrink-0" />
+              <item.icon className="h-5 w-5 shrink-0" />
               <Link href={item.link} className="whitespace-nowrap">
                 {item.label}
               </Link>
@@ -141,7 +141,7 @@ const AdminSharedComponent: FC<AdminSharedComponentProps> = ({
       )}
 
       <div className="flex h-[calc(100vh-64px)] min-w-0 flex-1 flex-col bg-gray-50 dark:bg-stone-800 lg:h-screen">
-        <header className="flex-shrink-0 border-b border-gray-200 bg-white px-4 py-4 dark:bg-stone-900 sm:px-6">
+        <header className="shrink-0 border-b border-gray-200 bg-white px-4 py-4 dark:bg-stone-900 sm:px-6">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex min-w-0 flex-1 items-center gap-4">
               <div className="relative max-w-xs flex-1" />
@@ -194,7 +194,7 @@ const AdminSharedComponent: FC<AdminSharedComponentProps> = ({
               ].map((stat, index) => (
                 <div
                   key={index}
-                  className="rounded-lg bg-white p-4 shadow dark:bg-background sm:p-6"
+                  className="rounded-lg bg-white p-4 shadow-sm dark:bg-background sm:p-6"
                 >
                   <div className="flex items-center justify-between">
                     <div className="min-w-0">
@@ -206,7 +206,7 @@ const AdminSharedComponent: FC<AdminSharedComponentProps> = ({
                       </p>
                     </div>
                     <div
-                      className={`${stat.color} flex-shrink-0 rounded-lg p-3`}
+                      className={`${stat.color} shrink-0 rounded-lg p-3`}
                     />
                   </div>
                 </div>

@@ -126,7 +126,7 @@ export function BookGrid({
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.2 }}
-                className="relative aspect-[3/4] overflow-hidden rounded-md bg-muted"
+                className="relative aspect-3/4 overflow-hidden rounded-md bg-muted"
               >
                 <Image
                   width={60}
