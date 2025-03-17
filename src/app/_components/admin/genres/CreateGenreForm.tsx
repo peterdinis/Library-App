@@ -54,7 +54,7 @@ const CreateGenreForm: FC = () => {
   };
 
   return (
-    <div className="mx-auto mt-10 max-w-lg rounded-lg border p-6 shadow">
+    <div className="mx-auto mt-10 max-w-lg rounded-lg border p-6 shadow-sm">
       <h1 className="mb-4 text-center text-3xl font-bold">Vytvor nový žáner</h1>
       <Button variant={"link"}>
         <Link href="/admin">Vrátiť sa na admina</Link>

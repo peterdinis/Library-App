@@ -38,7 +38,7 @@ const ProfileWrapper: FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-8 rounded-xl bg-white p-6 shadow-sm dark:bg-zinc-900"
+          className="mb-8 rounded-xl bg-white p-6 shadow-xs dark:bg-zinc-900"
         >
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
             <div className="space-y-1">
