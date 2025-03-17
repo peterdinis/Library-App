@@ -50,10 +50,10 @@ const AllBooksWrapper = () => {
   const totalPages = paginatedData?.totalPages || 1;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br dark:bg-background">
+    <div className="min-h-screen bg-linear-to-br dark:bg-background">
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm lg:hidden"
+          className="fixed inset-0 z-40 bg-black/20 backdrop-blur-xs lg:hidden"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
@@ -74,7 +74,7 @@ const AllBooksWrapper = () => {
           <Button
             size={"lg"}
             onClick={() => setIsSidebarOpen(true)}
-            className="flex items-center gap-2 rounded-2xl px-4 py-3 shadow-xl backdrop-blur-sm transition-colors dark:bg-background"
+            className="flex items-center gap-2 rounded-2xl px-4 py-3 shadow-xl backdrop-blur-xs transition-colors dark:bg-background"
           >
             <SlidersHorizontal className="h-5 w-5 text-black dark:text-white" />
             <span className="hidden text-black dark:text-white sm:inline">
@@ -89,7 +89,7 @@ const AllBooksWrapper = () => {
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {books!.map((book) => (
               <div key={book.id} className="group">
-                <div className="relative mb-4 aspect-[3/4] overflow-hidden rounded-2xl shadow-lg transition-all duration-300 group-hover:shadow-2xl">
+                <div className="relative mb-4 aspect-3/4 overflow-hidden rounded-2xl shadow-lg transition-all duration-300 group-hover:shadow-2xl">
                   <Image
                     src={book.coverUrl}
                     alt={book.title}
@@ -98,7 +98,7 @@ const AllBooksWrapper = () => {
                     className="absolute inset-0 h-full w-full transform object-cover transition-transform duration-300 group-hover:scale-105"
                     priority={true}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                     <div className="absolute bottom-0 left-0 right-0 p-6">
                       {book.isAvaible ? (
                         <Badge variant={"success"}>Dostupná</Badge>
