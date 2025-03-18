@@ -28,7 +28,6 @@ const AdminSharedComponent: FC<AdminSharedComponentProps> = ({
   showStats,
   children,
 }) => {
-  const [currentPage, setCurrentPage] = useState(1);
   const [activeTab, setActiveTab] = useState("dashboard");
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
