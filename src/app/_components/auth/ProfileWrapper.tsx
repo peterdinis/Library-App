@@ -32,7 +32,7 @@ const ProfileWrapper: FC = () => {
     );
 
   return (
-    <div className="min-h-screen bg-white p-6 dark:bg-background">
+    <div className="dark:bg-background min-h-screen bg-white p-6">
       <div className="container mx-auto max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

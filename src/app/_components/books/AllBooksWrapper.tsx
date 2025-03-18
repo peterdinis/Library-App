@@ -50,7 +50,7 @@ const AllBooksWrapper = () => {
   const totalPages = paginatedData?.totalPages || 1;
 
   return (
-    <div className="min-h-screen bg-linear-to-br dark:bg-background">
+    <div className="dark:bg-background min-h-screen bg-linear-to-br">
       {isSidebarOpen && (
         <div
           className="fixed inset-0 z-40 bg-black/20 backdrop-blur-xs lg:hidden"
@@ -74,10 +74,10 @@ const AllBooksWrapper = () => {
           <Button
             size={"lg"}
             onClick={() => setIsSidebarOpen(true)}
-            className="flex items-center bg-sky-600 hover:bg-sky-700 gap-2 rounded-2xl px-4 py-3 shadow-xl backdrop-blur-xs transition-colors dark:bg-foreground"
+            className="dark:bg-foreground flex items-center gap-2 rounded-2xl bg-sky-600 px-4 py-3 shadow-xl backdrop-blur-xs transition-colors hover:bg-sky-700"
           >
             <SlidersHorizontal className="h-5 w-5 text-white dark:text-black" />
-            <span className="hidden text-white dark:text-black sm:inline">
+            <span className="hidden text-white sm:inline dark:text-black">
               Filtre
             </span>
           </Button>
@@ -99,7 +99,7 @@ const AllBooksWrapper = () => {
                     priority={true}
                   />
                   <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <div className="absolute right-0 bottom-0 left-0 p-6">
                       {book.isAvaible ? (
                         <Badge variant={"success"}>Dostupná</Badge>
                       ) : (

@@ -38,7 +38,7 @@ const QuickSearch: FC = () => {
         <Button
           variant="ghost"
           size="icon"
-          className="h-9 w-9 hover:bg-accent lg:h-10 lg:w-10"
+          className="hover:bg-accent h-9 w-9 lg:h-10 lg:w-10"
         >
           <Search className="h-4 w-4" />
         </Button>

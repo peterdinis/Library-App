@@ -52,7 +52,7 @@ const Navigation: FC = () => {
   const { data: session } = useSession();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/60">
+    <header className="bg-background/95 supports-backdrop-filter:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur-sm">
       <div className="container flex h-14 items-center lg:h-16">
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
@@ -95,7 +95,7 @@ const Navigation: FC = () => {
           <SheetContent side="left" className="w-[300px] pr-0">
             <SheetHeader className="px-1">
               <SheetTitle className="flex items-center gap-2 text-lg font-medium">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                <div className="bg-primary text-primary-foreground flex h-8 w-8 items-center justify-center rounded-lg">
                   <Book className="h-4 w-4" />
                 </div>
                 Školská Knižnica
@@ -111,7 +111,7 @@ const Navigation: FC = () => {
                           href={item.href}
                           onClick={() => setIsOpen(false)}
                           className={cn(
-                            "group flex flex-col gap-1 rounded-lg px-3 py-3 transition-colors hover:bg-accent",
+                            "group hover:bg-accent flex flex-col gap-1 rounded-lg px-3 py-3 transition-colors",
                             pathname === item.href
                               ? "bg-accent"
                               : "transparent",
@@ -149,12 +149,12 @@ const Navigation: FC = () => {
         </Sheet>
         <Link
           href="/"
-          className="mr-4 flex items-center gap-2 transition-colors hover:text-primary sm:mr-6"
+          className="hover:text-primary mr-4 flex items-center gap-2 transition-colors sm:mr-6"
         >
-          <div className="flex h-7 w-7 ml-5 items-center justify-center rounded-lg bg-primary text-primary-foreground sm:h-8 sm:w-8">
+          <div className="bg-primary text-primary-foreground ml-5 flex h-7 w-7 items-center justify-center rounded-lg sm:h-8 sm:w-8">
             <Book className="h-4 w-4" />
           </div>
-          <span className="hidden font-bold xs:inline-block">
+          <span className="xs:inline-block hidden font-bold">
             Školská knižnica
           </span>
         </Link>
@@ -168,13 +168,13 @@ const Navigation: FC = () => {
                       <Link
                         href={item.href}
                         className={cn(
-                          "group flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-accent",
+                          "group hover:bg-accent flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors",
                           pathname === item.href
                             ? "bg-accent text-primary"
                             : "text-muted-foreground",
                         )}
                       >
-                        <item.icon className="h-4 w-4 transition-colors group-hover:text-primary" />
+                        <item.icon className="group-hover:text-primary h-4 w-4 transition-colors" />
                         {item.title}
                       </Link>
                     </TooltipTrigger>
@@ -185,7 +185,7 @@ const Navigation: FC = () => {
             ))}
           </ul>
         </nav>
-        <nav className="flex flex-1 items-center justify-end gap-1 lg:hidden xxs:hidden">
+        <nav className="xxs:hidden flex flex-1 items-center justify-end gap-1 lg:hidden">
           {navigationItems.map((item) => (
             <TooltipProvider key={item.href}>
               <Tooltip>
@@ -193,7 +193,7 @@ const Navigation: FC = () => {
                   <Link
                     href={item.href}
                     className={cn(
-                      "flex items-center justify-center rounded-lg p-2 transition-colors hover:bg-accent",
+                      "hover:bg-accent flex items-center justify-center rounded-lg p-2 transition-colors",
                       pathname === item.href
                         ? "bg-accent text-primary"
                         : "text-muted-foreground",

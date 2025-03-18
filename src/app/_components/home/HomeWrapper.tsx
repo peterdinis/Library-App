@@ -24,15 +24,15 @@ const Hero: FC = () => {
       variants={homepageVariants}
       initial="hidden"
       animate="visible"
-      className="container relative z-0 mx-auto px-4 py-8 sm:py-12 md:py-16 lg:py-20 xl:px-0"
+      className="relative z-0 container mx-auto px-4 py-8 sm:py-12 md:py-16 lg:py-20 xl:px-0"
     >
       <div className="flex flex-col-reverse gap-8 md:flex-row md:items-center md:gap-12">
         <div className="w-full space-y-4 md:w-3/5 md:space-y-6 lg:space-y-8">
-          <h1 className="text-heading-color text-center text-4xl font-black leading-tight tracking-tighter text-gray-900 dark:text-blue-50 sm:text-5xl md:text-left md:text-6xl lg:text-7xl xl:text-8xl">
+          <h1 className="text-heading-color text-center text-4xl leading-tight font-black tracking-tighter text-gray-900 sm:text-5xl md:text-left md:text-6xl lg:text-7xl xl:text-8xl dark:text-blue-50">
             SPŠT Knižnica
           </h1>
 
-          <h2 className="prose max-w-none text-center text-lg text-gray-700 dark:text-blue-50 sm:text-xl md:text-left lg:text-2xl">
+          <h2 className="prose max-w-none text-center text-lg text-gray-700 sm:text-xl md:text-left lg:text-2xl dark:text-blue-50">
             <q className="italic">
               Knihy sú jedinečne prenosné kúzlo - Stephen King
             </q>
