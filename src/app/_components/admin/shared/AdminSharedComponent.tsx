@@ -17,7 +17,7 @@ import Link from "next/link";
 import { type FC, ReactNode, useState } from "react";
 import { api } from "~/trpc/react";
 import ModeToggle from "../../shared/ModeToggle";
-import AdminProfileDropdown from "../AdminProfileDropdown";
+import ProfileDropdown from "../../auth/ProfileDropdown";
 
 type AdminSharedComponentProps = {
   showStats?: boolean;
@@ -149,7 +149,7 @@ const AdminSharedComponent: FC<AdminSharedComponentProps> = ({
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <span className="hidden text-sm font-medium sm:inline">
-                  <AdminProfileDropdown />
+                  <ProfileDropdown />
                 </span>
               </div>
               <ModeToggle />

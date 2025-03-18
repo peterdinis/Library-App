@@ -20,9 +20,9 @@ import { type FC, useState } from "react";
 import { Input } from "~/components/ui/input";
 import { api } from "~/trpc/react";
 import ModeToggle from "../../shared/ModeToggle";
-import AdminProfileDropdown from "../AdminProfileDropdown";
 import { AuthorsTable } from "./AuthorsTable";
 import { authorsColumns } from "./authorsColumns";
+import ProfileDropdown from "../../auth/ProfileDropdown";
 
 const AdminAuthors: FC = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -150,7 +150,7 @@ const AdminAuthors: FC = () => {
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <span className="hidden text-sm font-medium sm:inline">
-                  <AdminProfileDropdown />
+                  <ProfileDropdown/>
                 </span>
               </div>
               <ModeToggle />
