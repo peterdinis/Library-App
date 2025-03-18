@@ -74,10 +74,10 @@ const AllBooksWrapper = () => {
           <Button
             size={"lg"}
             onClick={() => setIsSidebarOpen(true)}
-            className="flex items-center gap-2 rounded-2xl px-4 py-3 shadow-xl backdrop-blur-xs transition-colors dark:bg-background"
+            className="flex items-center bg-sky-600 hover:bg-sky-700 gap-2 rounded-2xl px-4 py-3 shadow-xl backdrop-blur-xs transition-colors dark:bg-foreground"
           >
-            <SlidersHorizontal className="h-5 w-5 text-black dark:text-white" />
-            <span className="hidden text-black dark:text-white sm:inline">
+            <SlidersHorizontal className="h-5 w-5 text-white dark:text-black" />
+            <span className="hidden text-white dark:text-black sm:inline">
               Filtre
             </span>
           </Button>
