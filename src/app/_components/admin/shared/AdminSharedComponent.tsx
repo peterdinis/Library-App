@@ -17,7 +17,7 @@ import Link from "next/link";
 import { type FC, ReactNode, useState } from "react";
 import { api } from "~/trpc/react";
 import ModeToggle from "../../shared/ModeToggle";
-import AdminProfileDropdown from "../AdminProfileDropdown";
+import ProfileDropdown from "../../auth/ProfileDropdown";
 
 type AdminSharedComponentProps = {
   showStats?: boolean;
@@ -28,7 +28,6 @@ const AdminSharedComponent: FC<AdminSharedComponentProps> = ({
   showStats,
   children,
 }) => {
-  const [currentPage, setCurrentPage] = useState(1);
   const [activeTab, setActiveTab] = useState("dashboard");
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
@@ -45,7 +44,7 @@ const AdminSharedComponent: FC<AdminSharedComponentProps> = ({
 
   return (
     <div className="flex h-screen flex-col overflow-hidden lg:flex-row">
-      <div className="flex items-center justify-between bg-indigo-700 p-4 dark:bg-stone-900 lg:hidden">
+      <div className="flex items-center justify-between bg-indigo-700 p-4 lg:hidden dark:bg-stone-900">
         <div className="flex items-center gap-2">
           <BookOpen className="h-6 w-6 text-white" />
           <h1 className="text-lg font-bold text-white">Knižnica Admin</h1>
@@ -60,7 +59,7 @@ const AdminSharedComponent: FC<AdminSharedComponentProps> = ({
       </div>
 
       <div
-        className={`${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} fixed left-0 top-0 z-30 h-full w-64 transform bg-blue-800 p-6 text-white transition-transform duration-200 ease-in-out dark:bg-stone-900 lg:static lg:translate-x-0`}
+        className={`${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} fixed top-0 left-0 z-30 h-full w-64 transform bg-blue-800 p-6 text-white transition-transform duration-200 ease-in-out lg:static lg:translate-x-0 dark:bg-stone-900`}
       >
         <div className="mb-8 hidden items-center gap-2 lg:flex">
           <BookOpen className="h-8 w-8" />
@@ -135,13 +134,13 @@ const AdminSharedComponent: FC<AdminSharedComponentProps> = ({
 
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 z-20 bg-black bg-opacity-50 lg:hidden"
+          className="bg-opacity-50 fixed inset-0 z-20 bg-black lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
-      <div className="flex h-[calc(100vh-64px)] min-w-0 flex-1 flex-col bg-gray-50 dark:bg-stone-800 lg:h-screen">
-        <header className="shrink-0 border-b border-gray-200 bg-white px-4 py-4 dark:bg-stone-900 sm:px-6">
+      <div className="flex h-[calc(100vh-64px)] min-w-0 flex-1 flex-col bg-gray-50 lg:h-screen dark:bg-stone-800">
+        <header className="shrink-0 border-b border-gray-200 bg-white px-4 py-4 sm:px-6 dark:bg-stone-900">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex min-w-0 flex-1 items-center gap-4">
               <div className="relative max-w-xs flex-1" />
@@ -149,7 +148,7 @@ const AdminSharedComponent: FC<AdminSharedComponentProps> = ({
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <span className="hidden text-sm font-medium sm:inline">
-                  <AdminProfileDropdown />
+                  <ProfileDropdown />
                 </span>
               </div>
               <ModeToggle />
@@ -194,7 +193,7 @@ const AdminSharedComponent: FC<AdminSharedComponentProps> = ({
               ].map((stat, index) => (
                 <div
                   key={index}
-                  className="rounded-lg bg-white p-4 shadow-sm dark:bg-background sm:p-6"
+                  className="dark:bg-background rounded-lg bg-white p-4 shadow-sm sm:p-6"
                 >
                   <div className="flex items-center justify-between">
                     <div className="min-w-0">
@@ -205,9 +204,7 @@ const AdminSharedComponent: FC<AdminSharedComponentProps> = ({
                         {stat.value}
                       </p>
                     </div>
-                    <div
-                      className={`${stat.color} shrink-0 rounded-lg p-3`}
-                    />
+                    <div className={`${stat.color} shrink-0 rounded-lg p-3`} />
                   </div>
                 </div>
               ))}
