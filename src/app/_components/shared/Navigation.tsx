@@ -111,7 +111,7 @@ const Navigation: FC = () => {
                           href={item.href}
                           onClick={() => setIsOpen(false)}
                           className={cn(
-                            "group hover:bg-accent flex flex-col gap-1 rounded-lg px-3 py-3 transition-colors",
+                            "group hover:bg-accent flex flex-col text-xl gap-1 rounded-lg px-3 py-3 transition-colors",
                             pathname === item.href
                               ? "bg-accent"
                               : "transparent",
@@ -128,7 +128,7 @@ const Navigation: FC = () => {
                             />
                             <span
                               className={cn(
-                                "font-medium",
+                                "font-medium text-xl",
                                 pathname === item.href
                                   ? "text-primary"
                                   : "text-muted-foreground group-hover:text-primary",
