@@ -12,6 +12,7 @@ import {
 } from "~/components/ui/dialog";
 import { DialogHeader } from "~/components/ui/dialog";
 import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
 import { api } from "~/trpc/react";
 
 const QuickSearch: FC = () => {
@@ -46,6 +47,9 @@ const QuickSearch: FC = () => {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Rýchle vyhľadávanie Kníh</DialogTitle>
+          <Label className="mt-4">
+            Minimálny počet znakov pre vyhladavanie je 3
+          </Label>
         </DialogHeader>
         <div className="flex gap-2 py-4">
           <Input
