@@ -151,7 +151,7 @@ const Navigation: FC = () => {
           href="/"
           className="mr-4 flex items-center gap-2 transition-colors hover:text-primary sm:mr-6"
         >
-          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-primary-foreground sm:h-8 sm:w-8">
+          <div className="flex h-7 w-7 ml-5 items-center justify-center rounded-lg bg-primary text-primary-foreground sm:h-8 sm:w-8">
             <Book className="h-4 w-4" />
           </div>
           <span className="hidden font-bold xs:inline-block">
