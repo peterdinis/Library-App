@@ -28,7 +28,7 @@ const BookDetail: FC = () => {
   if (!book) return <p className="text-center">Book not found.</p>;
 
   return (
-    <div className="min-h-screen px-4 dark:bg-background">
+    <div className="dark:bg-background min-h-screen px-4">
       <main className="container mx-auto max-w-6xl py-12">
         <div className="grid gap-8 md:grid-cols-3">
           <div className="space-y-6">
@@ -55,7 +55,7 @@ const BookDetail: FC = () => {
 
           <div className="space-y-6 md:col-span-2">
             <div className="rounded-2xl bg-white p-6 shadow-xl transition-shadow duration-300 hover:shadow-2xl dark:bg-stone-800">
-              <h1 className="text-3xl font-bold leading-tight text-gray-900 dark:text-orange-500 sm:text-4xl">
+              <h1 className="text-3xl leading-tight font-bold text-gray-900 sm:text-4xl dark:text-orange-500">
                 {book.title}
               </h1>
               <div className="mt-4 grid gap-6 sm:grid-cols-2">
