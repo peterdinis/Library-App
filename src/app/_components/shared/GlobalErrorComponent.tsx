@@ -23,7 +23,7 @@ const GlobalErrorComponent: FC<GlobalErrorProps> = ({
         {message}
       </div>
       <div className="mt-5">
-        <button className="group relative inline-block text-sm font-medium text-[#FF6A3D] focus:outline-hidden focus:ring-3 active:text-orange-500">
+        <button className="group relative inline-block text-sm font-medium text-[#FF6A3D] focus:ring-3 focus:outline-hidden active:text-orange-500">
           <span className="absolute inset-0 translate-x-0.5 translate-y-0.5 bg-[#FF6A3D] transition-transform group-hover:translate-x-0 group-hover:translate-y-0"></span>
 
           <span className="relative block border border-current bg-[#1A2238] px-8 py-3">

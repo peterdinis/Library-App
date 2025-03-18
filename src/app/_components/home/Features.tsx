@@ -36,7 +36,7 @@ const Features: FC = () => {
               <Home className="h-7 w-7" />
               <h4
                 tabIndex={0}
-                className="pt-5 text-center text-lg font-medium leading-6 text-gray-800 focus:outline-hidden dark:text-blue-50"
+                className="pt-5 text-center text-lg leading-6 font-medium text-gray-800 focus:outline-hidden dark:text-blue-50"
               >
                 Doma Objednáš
               </h4>
@@ -50,7 +50,7 @@ const Features: FC = () => {
               <School2 className="h-7 w-7" />
               <h4
                 tabIndex={0}
-                className="pt-5 text-center text-lg font-medium leading-6 text-gray-800 focus:outline-hidden dark:text-blue-50"
+                className="pt-5 text-center text-lg leading-6 font-medium text-gray-800 focus:outline-hidden dark:text-blue-50"
               >
                 V škole vyzdhvineš
               </h4>
@@ -66,7 +66,7 @@ const Features: FC = () => {
               </span>
               <h4
                 tabIndex={0}
-                className="pt-5 text-center text-lg font-medium leading-6 text-gray-800 focus:outline-hidden dark:text-blue-50"
+                className="pt-5 text-center text-lg leading-6 font-medium text-gray-800 focus:outline-hidden dark:text-blue-50"
               >
                 Ľahké že ?
               </h4>

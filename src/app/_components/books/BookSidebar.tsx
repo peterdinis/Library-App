@@ -28,11 +28,13 @@ const BookSidebar: FC<BookSidebarProps> = ({
   const { data: genres } = api.genre.getAllGenres.useQuery();
   const { data: authors } = api.author.getAllAuthors.useQuery();
 
-  const [selectedCategory, setSelectedCategory] = useState<string | undefined>();
+  const [selectedCategory, setSelectedCategory] = useState<
+    string | undefined
+  >();
   const [selectedGenre, setSelectedGenre] = useState<string | undefined>();
   const [selectedAuthor, setSelectedAuthor] = useState<string | undefined>();
 
-  console.log(selectedAuthor, selectedGenre, selectedCategory)
+  console.log(selectedAuthor, selectedGenre, selectedCategory);
   const handleFilterChange = (filterType: string, value: string) => {
     setFilters({ [filterType]: value });
 
@@ -51,7 +53,7 @@ const BookSidebar: FC<BookSidebarProps> = ({
 
   return (
     <div
-      className={`fixed right-0 top-0 z-50 h-full w-80 transform bg-white shadow-2xl transition-transform duration-300 ease-in-out dark:bg-background ${
+      className={`dark:bg-background fixed top-0 right-0 z-50 h-full w-80 transform bg-white shadow-2xl transition-transform duration-300 ease-in-out ${
         isSidebarOpen ? "translate-x-0" : "translate-x-full"
       }`}
     >
