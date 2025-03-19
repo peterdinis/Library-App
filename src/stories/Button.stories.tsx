@@ -1,6 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { Button, buttonVariants } from "~/components/ui/button";
-import React from "react";
+import { Button} from "~/components/ui/button";
 
 const meta: Meta<typeof Button> = {
   title: "Components/Button",
@@ -24,7 +23,7 @@ type Story = StoryObj<typeof Button>;
 
 export const Default: Story = {
   args: {
-    children: "Button",
+    children: "This is a default button",
     variant: "default",
     size: "default",
   },
@@ -32,7 +31,7 @@ export const Default: Story = {
 
 export const Destructive: Story = {
   args: {
-    children: "Destructive",
+    children: "This is a destructive button",
     variant: "destructive",
     size: "default",
   },
@@ -40,7 +39,7 @@ export const Destructive: Story = {
 
 export const Outline: Story = {
   args: {
-    children: "Outline",
+    children: "This is an outline button",
     variant: "outline",
     size: "default",
   },
@@ -48,7 +47,7 @@ export const Outline: Story = {
 
 export const Large: Story = {
   args: {
-    children: "Large Button",
+    children: "This is a large button",
     variant: "default",
     size: "lg",
   },
@@ -56,7 +55,7 @@ export const Large: Story = {
 
 export const Small: Story = {
   args: {
-    children: "Small Button",
+    children: "This is a small button",
     variant: "default",
     size: "sm",
   },
@@ -64,7 +63,7 @@ export const Small: Story = {
 
 export const IconButton: Story = {
   args: {
-    children: "🔍",
+    children: "🔍 Search",
     variant: "default",
     size: "icon",
   },
