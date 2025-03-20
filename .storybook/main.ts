@@ -1,5 +1,4 @@
 import type { StorybookConfig } from '@storybook/nextjs';
-import "../src/styles/globals.css"
 
 const config: StorybookConfig = {
   "stories": [
