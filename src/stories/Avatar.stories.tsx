@@ -37,3 +37,12 @@ export const WithFallback: Story = {
     </Avatar>
   ),
 };
+
+export const WithFallbackNoRounded: Story = {
+    render: () => (
+        <Avatar className="rounded-none bg-gray-100">
+          <AvatarImage src="" alt="User Avatar" />
+          <AvatarFallback>AB</AvatarFallback>
+        </Avatar>
+      ),
+}
