@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { Button} from "~/components/ui/button";
+import { Button } from "~/components/ui/button";
 
 const meta: Meta<typeof Button> = {
   title: "Components/Button",
@@ -7,7 +7,14 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: "select",
-      options: ["default", "destructive", "outline", "secondary", "ghost", "link"],
+      options: [
+        "default",
+        "destructive",
+        "outline",
+        "secondary",
+        "ghost",
+        "link",
+      ],
     },
     size: {
       control: "select",

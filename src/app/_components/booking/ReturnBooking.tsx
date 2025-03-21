@@ -1,5 +1,3 @@
-"use client"
-
 import { motion } from "framer-motion";
 import { Calendar } from "lucide-react";
 import { Badge } from "~/components/ui/badge";
@@ -17,7 +15,8 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 import { Booking } from "@prisma/client";
 import { api } from "~/trpc/react";
-import { useToast } from "~/hooks/use-toast";
+
+// Typy
 
 type Book = {
   id: string;
@@ -59,17 +58,12 @@ function getStatusBadge(status: string) {
 export function BookGrid({ books, animate = true }: { books: BooksData; animate?: boolean }) {
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
-  const {toast} = useToast()
+
   const returnBookingMutation = api.booking.returnBooking.useMutation();
 
   const handleReturnBook = async () => {
     if (!selectedBook) return;
     await returnBookingMutation.mutateAsync({ bookingId: selectedBook.id, returnDate: new Date().toISOString() });
-    toast({
-      title: "Kniha bola vrátená",
-      duration: 2000,
-      className: "bg-green-700 text-white font-bold text-xl"
-    })
     setOpenDialog(false);
   };
 
