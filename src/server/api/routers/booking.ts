@@ -31,7 +31,9 @@ export const bookingRouter = createTRPCRouter({
         where: {
           userId: input.userId,
           AND: {
-            status: "RETURNED"
+            status: {
+              not: "RETURNED"
+            }
           }
         },
         include: {
