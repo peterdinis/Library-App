@@ -1,6 +1,19 @@
 import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuCheckboxItem, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent } from "~/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuCheckboxItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+} from "~/components/ui/dropdown-menu";
 import { Button } from "~/components/ui/button";
 export default {
   title: "Components/DropdownMenu",
@@ -31,7 +44,9 @@ export const WithCheckbox: StoryObj = {
         <Button variant="outline">Open Menu</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuCheckboxItem checked>Enable Notifications</DropdownMenuCheckboxItem>
+        <DropdownMenuCheckboxItem checked>
+          Enable Notifications
+        </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem>Dark Mode</DropdownMenuCheckboxItem>
       </DropdownMenuContent>
     </DropdownMenu>
