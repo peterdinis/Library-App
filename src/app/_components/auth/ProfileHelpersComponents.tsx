@@ -19,8 +19,6 @@ import { Booking } from "@prisma/client";
 import { api } from "~/trpc/react";
 import { useToast } from "~/hooks/use-toast";
 
-// Typy
-
 type Book = {
   id: string;
   title: string;
