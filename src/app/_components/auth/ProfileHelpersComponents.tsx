@@ -1,3 +1,5 @@
+"use client"
+
 import { motion } from "framer-motion";
 import { Calendar } from "lucide-react";
 import { Badge } from "~/components/ui/badge";
@@ -10,9 +12,14 @@ import {
   CardDescription,
   CardFooter,
 } from "~/components/ui/card";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "~/components/ui/dialog";
 import Image from "next/image";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Booking } from "@prisma/client";
+import { api } from "~/trpc/react";
+import { useToast } from "~/hooks/use-toast";
+
+// Typy
 
 type Book = {
   id: string;
@@ -51,123 +58,84 @@ function getStatusBadge(status: string) {
   }
 }
 
-export function Pagination({
-  currentPage,
-  totalPages,
-  onPageChange,
-}: {
-  currentPage: number;
-  totalPages: number;
-  onPageChange: (page: number) => void;
-}) {
-  return (
-    <div className="flex items-center justify-center gap-2">
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-      >
-        Predchádzajúca
-      </Button>
+export function BookGrid({ books, animate = true }: { books: BooksData; animate?: boolean }) {
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+  const {toast} = useToast()
+  const returnBookingMutation = api.booking.returnBooking.useMutation();
 
-      <div className="flex items-center gap-1">
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-          <Button
-            key={page}
-            variant={currentPage === page ? "default" : "outline"}
-            size="sm"
-            className="w-10"
-            onClick={() => onPageChange(page)}
-          >
-            {page}
-          </Button>
-        ))}
-      </div>
+  const handleReturnBook = async () => {
+    if (!selectedBook) return;
+    await returnBookingMutation.mutateAsync({ bookingId: selectedBook.id, returnDate: new Date().toISOString() });
+    toast({
+      title: "Kniha bola vrátená",
+      duration: 2000,
+      className: "bg-green-700 text-white font-bold text-xl"
+    })
+    setOpenDialog(false);
+  };
 
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-      >
-        Nasledujúca
-      </Button>
-    </div>
-  );
-}
-
-export function BookGrid({
-  books,
-  animate = true,
-}: {
-  books: BooksData;
-  animate?: boolean;
-}) {
   const mergedBooks = useMemo(() => {
     return books.bookings
       .map((booking) => {
         const book = books.books.find((b) => b.id === booking.bookId);
-        return book
-          ? { ...book, borrowDate: booking.borrowDate }
-          : null;
+        return book ? { ...book, borrowDate: booking.borrowDate } : null;
       })
       .filter(Boolean) as Book[];
   }, [books]);
 
   return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {mergedBooks.map((book, index) => (
-        <motion.div
-          key={book.id}
-          initial={animate ? { opacity: 0, y: 20 } : false}
-          animate={animate ? { opacity: 1, y: 0 } : false}
-          transition={{ delay: 0.1 * (index % 6), duration: 0.5 }}
-        >
-          <Card className="group overflow-hidden transition-all hover:shadow-md">
-            <CardHeader className="relative p-4">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.2 }}
-                className="bg-muted relative aspect-3/4 overflow-hidden rounded-md"
-              >
-                <Image
-                  width={60}
-                  height={60}
-                  src={book.coverUrl ?? ""}
-                  alt={book.title}
-                  priority={true}
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-              </motion.div>
-            </CardHeader>
-            <CardContent className="space-y-3 p-4">
-              <div className="space-y-2">
-                <CardTitle className="line-clamp-1">{book.title}</CardTitle>
-                <CardDescription className="flex items-center gap-2">
-                  {book.author}
-                </CardDescription>
-              </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-sm">
-                  <Calendar
-                    className={`h-4 w-4 ${getStatusColor(book.status)}`}
-                  />
-                  <span className={getStatusColor(book.status)}>
-                    {typeof book.borrowDate === "string"
-                      ? book.borrowDate
-                      : book.borrowDate.toISOString().split("T")[0]}
-                  </span>
+    <>
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {mergedBooks.map((book, index) => (
+          <motion.div
+            key={book.id}
+            initial={animate ? { opacity: 0, y: 20 } : false}
+            animate={animate ? { opacity: 1, y: 0 } : false}
+            transition={{ delay: 0.1 * (index % 6), duration: 0.5 }}
+          >
+            <Card className="group overflow-hidden transition-all hover:shadow-md">
+              <CardHeader className="relative p-4">
+                <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }} className="bg-muted relative aspect-3/4 overflow-hidden rounded-md">
+                  <Image width={60} height={60} src={book.coverUrl ?? ""} alt={book.title} priority={true} className="absolute inset-0 h-full w-full object-cover" />
+                </motion.div>
+              </CardHeader>
+              <CardContent className="space-y-3 p-4">
+                <div className="space-y-2">
+                  <CardTitle className="line-clamp-1">{book.title}</CardTitle>
+                  <CardDescription className="flex items-center gap-2">{book.author}</CardDescription>
                 </div>
-                {getStatusBadge(book.status)}
-              </div>
-            </CardContent>
-            <CardFooter className="mt-4">
-              <Button size={"lg"}>Vrátit knihu</Button>
-            </CardFooter>
-          </Card>
-        </motion.div>
-      ))}
-    </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-sm">
+                    <Calendar className={`h-4 w-4 ${getStatusColor(book.status)}`} />
+                    <span className={getStatusColor(book.status)}>
+                      {typeof book.borrowDate === "string" ? book.borrowDate : book.borrowDate.toISOString().split("T")[0]}
+                    </span>
+                  </div>
+                  {getStatusBadge(book.status)}
+                </div>
+              </CardContent>
+              <CardFooter className="mt-4">
+                <Button size="lg" onClick={() => { setSelectedBook(book); setOpenDialog(true); }}>Vrátit knihu</Button>
+              </CardFooter>
+            </Card>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Dialog na potvrdenie vrátenia knihy */}
+      <Dialog open={openDialog} onOpenChange={setOpenDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Potvrdiť vrátenie knihy</DialogTitle>
+          </DialogHeader>
+          <p>Naozaj chcete vrátiť knihu <strong>{selectedBook?.title}</strong>?</p>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setOpenDialog(false)}>Zrušiť</Button>
+            <Button onClick={handleReturnBook} disabled={returnBookingMutation.isPending}>Potvrdiť</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
