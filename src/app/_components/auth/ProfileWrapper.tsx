@@ -10,8 +10,6 @@ import { Loader2 } from "lucide-react";
 const ProfileWrapper: FC = () => {
   const { data: session } = useSession();
 
-  // TODO: Return book
-
   const {
     data: myBorrowedBooksData,
     isLoading,

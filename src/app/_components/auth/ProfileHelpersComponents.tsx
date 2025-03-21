@@ -11,7 +11,7 @@ import {
   CardFooter,
 } from "~/components/ui/card";
 import Image from "next/image";
-import { useMemo } from "react";
+import { ReactNode, useMemo } from "react";
 import { Booking } from "@prisma/client";
 
 type Book = {
@@ -21,11 +21,12 @@ type Book = {
   coverUrl?: string;
   dueDate: string;
   status: "overdue" | "soon" | "ok";
-  borrowDate: string;
+  borrowDate: string | Date;
 };
 
 export type BooksData = {
   books: Book[];
+  bookings: Booking[]
 };
 
 function getStatusColor(status: string) {
@@ -103,18 +104,20 @@ export function BookGrid({
   books: BooksData;
   animate?: boolean;
 }) {
-  const bookingInfo = useMemo(() => {
-    return books.books.map((item) => ({
-      id: item.id,
-      dueDate: item.dueDate,
-      status: item.status,
-      borrowedDate: item.borrowDate,
-    }));
+  const mergedBooks = useMemo(() => {
+    return books.bookings
+      .map((booking) => {
+        const book = books.books.find((b) => b.id === booking.bookId);
+        return book
+          ? { ...book, borrowDate: booking.borrowDate } // Pridanie borrowDate do knihy
+          : null;
+      })
+      .filter(Boolean) as Book[];
   }, [books]);
 
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {books.books.map((book, index) => (
+      {mergedBooks.map((book, index) => (
         <motion.div
           key={book.id}
           initial={animate ? { opacity: 0, y: 20 } : false}
@@ -131,7 +134,7 @@ export function BookGrid({
                 <Image
                   width={60}
                   height={60}
-                  src={book.coverUrl || "/placeholder.svg"}
+                  src={book.coverUrl ?? ""}
                   alt={book.title}
                   priority={true}
                   className="absolute inset-0 h-full w-full object-cover"
@@ -147,11 +150,11 @@ export function BookGrid({
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2 text-sm">
-                  <Calendar
-                    className={`h-4 w-4 ${getStatusColor(book.status)}`}
-                  />
+                  <Calendar className={`h-4 w-4 ${getStatusColor(book.status)}`} />
                   <span className={getStatusColor(book.status)}>
-                    {new Date(book.dueDate).toLocaleDateString()}
+                    {typeof book.borrowDate === "string"
+                      ? book.borrowDate
+                      : book.borrowDate.toISOString().split("T")[0]}
                   </span>
                 </div>
                 {getStatusBadge(book.status)}
