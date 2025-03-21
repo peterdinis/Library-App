@@ -30,6 +30,9 @@ export const bookingRouter = createTRPCRouter({
       const bookings = await db.booking.findMany({
         where: {
           userId: input.userId,
+          AND: {
+            status: "RETURNED"
+          }
         },
         include: {
           book: true,
