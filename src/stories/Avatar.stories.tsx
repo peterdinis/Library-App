@@ -21,13 +21,13 @@ export const Default: Story = {
 };
 
 export const NoRounded: Story = {
-    render: () => (
-        <Avatar className="rounded-none">
-          <AvatarImage src="https://i.pravatar.cc/150?img=3" alt="User Avatar" />
-          <AvatarFallback>JD</AvatarFallback>
-        </Avatar>
-      ),
-}
+  render: () => (
+    <Avatar className="rounded-none">
+      <AvatarImage src="https://i.pravatar.cc/150?img=3" alt="User Avatar" />
+      <AvatarFallback>JD</AvatarFallback>
+    </Avatar>
+  ),
+};
 
 export const WithFallback: Story = {
   render: () => (
@@ -39,10 +39,10 @@ export const WithFallback: Story = {
 };
 
 export const WithFallbackNoRounded: Story = {
-    render: () => (
-        <Avatar className="rounded-none bg-gray-100">
-          <AvatarImage src="" alt="User Avatar" />
-          <AvatarFallback>AB</AvatarFallback>
-        </Avatar>
-      ),
-}
+  render: () => (
+    <Avatar className="rounded-none bg-gray-100">
+      <AvatarImage src="" alt="User Avatar" />
+      <AvatarFallback>AB</AvatarFallback>
+    </Avatar>
+  ),
+};
