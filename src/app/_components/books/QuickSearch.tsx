@@ -46,7 +46,7 @@ const QuickSearch: FC = () => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Rýchle vyhľadávanie Kníh</DialogTitle>
+          <DialogTitle className="text-xl">Rýchle vyhľadávanie Kníh</DialogTitle>
           <Label className="mt-4">
             Minimálny počet znakov pre vyhladavanie je 3
           </Label>

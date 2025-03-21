@@ -170,8 +170,8 @@ const Navigation: FC = () => {
                         className={cn(
                           "group hover:bg-accent flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors",
                           pathname === item.href
-                            ? "bg-accent text-primary"
-                            : "text-muted-foreground",
+                            ? "bg-accent dark:text-white text-base text-black"
+                            : "text-base text-black dark:text-white",
                         )}
                       >
                         <item.icon className="group-hover:text-primary h-4 w-4 transition-colors" />
@@ -196,7 +196,7 @@ const Navigation: FC = () => {
                       "hover:bg-accent flex items-center justify-center rounded-lg p-2 transition-colors",
                       pathname === item.href
                         ? "bg-accent text-primary"
-                        : "text-muted-foreground",
+                        : "text-lg text-black",
                     )}
                   >
                     <item.icon className="h-5 w-5" />
