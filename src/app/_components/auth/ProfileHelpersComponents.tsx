@@ -11,7 +11,7 @@ import {
   CardFooter,
 } from "~/components/ui/card";
 import Image from "next/image";
-import { ReactNode, useMemo } from "react";
+import { useMemo } from "react";
 import { Booking } from "@prisma/client";
 
 type Book = {
@@ -109,7 +109,7 @@ export function BookGrid({
       .map((booking) => {
         const book = books.books.find((b) => b.id === booking.bookId);
         return book
-          ? { ...book, borrowDate: booking.borrowDate } // Pridanie borrowDate do knihy
+          ? { ...book, borrowDate: booking.borrowDate }
           : null;
       })
       .filter(Boolean) as Book[];
