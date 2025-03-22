@@ -44,7 +44,7 @@ export function BooksTable<TData, TValue>({
   const totalPages = table.getPageCount();
 
   return (
-    <div className="rounded-md border p-4">
+    <div className="rounded-md border dark:border-neutral-100 border-neutral-600 p-4">
       <Button variant={"default"}>
         <Link href="/admin/books/create">Pridať novú knihu</Link>
       </Button>
