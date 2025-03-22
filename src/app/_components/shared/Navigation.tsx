@@ -196,7 +196,7 @@ const Navigation: FC = () => {
                       "hover:bg-accent flex items-center justify-center rounded-lg p-2 transition-colors",
                       pathname === item.href
                         ? "bg-accent text-primary"
-                        : "text-lg text-black",
+                        : "text-lg text-black dark:text-white",
                     )}
                   >
                     <item.icon className="h-5 w-5" />
