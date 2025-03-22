@@ -9,12 +9,11 @@ import { isBefore, parseISO } from "date-fns";
 
 export const bookingRouter = createTRPCRouter({
   getAllBookings: protectedProcedure.query(async () => {
-    
     const allBookings = await db.booking.findMany({
       include: {
-        user: true
-      }
-    })
+        user: true,
+      },
+    });
 
     return allBookings;
   }),
