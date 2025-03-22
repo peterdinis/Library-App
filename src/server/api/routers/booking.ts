@@ -115,10 +115,16 @@ export const bookingRouter = createTRPCRouter({
     .input(
       z.object({
         bookingId: z.string(),
+        bookId: z.string(),
         returnDate: z.string().datetime(),
       }),
     )
     .mutation(async ({ input }) => {
+
+      const bookInfo = await db.book.findUnique({
+        where: { id: input.bookId },
+      });
+
       const booking = await db.booking.findUnique({
         where: { id: input.bookingId },
       });
@@ -137,16 +143,25 @@ export const bookingRouter = createTRPCRouter({
         where: { id: input.bookingId },
         data: {
           returnDate,
+          bookId: bookInfo!.id,
           status: "RETURNED",
         },
       });
 
       await db.book.update({
-        where: { id: booking.bookId },
+        where: { id: bookInfo!.id },
         data: {
+          isAvaible: true,
           availableCopies: { increment: 1 },
         },
       });
+
+      await db.booking.delete({
+        where: {
+          id: input.bookingId,
+          bookId: bookInfo!.id
+        }
+      })
 
       return updatedBooking;
     }),
