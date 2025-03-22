@@ -11,8 +11,6 @@ const AdminBooking: FC = () => {
   const { data, isLoading } = api.booking.getAllBookings.useQuery();
 
   if (isLoading) return <Loader2 className="h-8 w-8 animate-spin" />;
-
-  console.log("D", data);
   return (
     <AdminSharedComponent showStats={false}>
       <main className="flex-1 overflow-auto p-4 sm:p-6">
