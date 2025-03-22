@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion";
-import { Calendar } from "lucide-react";
+import { Calendar, Ghost } from "lucide-react";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import {
@@ -61,16 +61,16 @@ export function BookGrid({ books, animate = true }: { books: BooksData; animate?
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const {toast} = useToast()
   const returnBookingMutation = api.booking.returnBooking.useMutation();
-
   const handleReturnBook = async () => {
     if (!selectedBook) return;
-    await returnBookingMutation.mutateAsync({ bookingId: selectedBook.id, returnDate: new Date().toISOString() });
+    await returnBookingMutation.mutateAsync({ bookId: selectedBook.id, returnDate: new Date().toISOString() });
     toast({
       title: "Kniha bola vrátená",
       duration: 2000,
       className: "bg-green-700 text-white font-bold text-xl"
     })
     setOpenDialog(false);
+    window.location.reload()
   };
 
   const mergedBooks = useMemo(() => {
@@ -85,6 +85,11 @@ export function BookGrid({ books, animate = true }: { books: BooksData; animate?
   return (
     <>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {mergedBooks.length === 0 && (
+          <div className="flex justify-center mt-10 font-bold text-xl items-center">
+              <Ghost className="animate-bounce w-12 h-12" /> <span className="ml-3">Žiadne požičané knihy</span>
+          </div>
+        )}
         {mergedBooks.map((book, index) => (
           <motion.div
             key={book.id}
@@ -121,7 +126,6 @@ export function BookGrid({ books, animate = true }: { books: BooksData; animate?
         ))}
       </div>
 
-      {/* Dialog na potvrdenie vrátenia knihy */}
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <DialogContent>
           <DialogHeader>

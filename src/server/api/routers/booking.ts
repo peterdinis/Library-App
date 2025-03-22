@@ -114,7 +114,6 @@ export const bookingRouter = createTRPCRouter({
   returnBooking: publicProcedure
     .input(
       z.object({
-        bookingId: z.string(),
         bookId: z.string(),
         returnDate: z.string().datetime(),
       }),
@@ -125,8 +124,10 @@ export const bookingRouter = createTRPCRouter({
         where: { id: input.bookId },
       });
 
-      const booking = await db.booking.findUnique({
-        where: { id: input.bookingId },
+      const booking = await db.booking.findFirst({
+        where: {
+          bookId: input.bookId
+        }
       });
 
       if (!booking || booking.status === "RETURNED") {
@@ -140,7 +141,7 @@ export const bookingRouter = createTRPCRouter({
       }
 
       const updatedBooking = await db.booking.update({
-        where: { id: input.bookingId },
+        where: { id: booking.id},
         data: {
           returnDate,
           bookId: bookInfo!.id,
@@ -158,7 +159,7 @@ export const bookingRouter = createTRPCRouter({
 
       await db.booking.delete({
         where: {
-          id: input.bookingId,
+          id: booking.id,
           bookId: bookInfo!.id
         }
       })
