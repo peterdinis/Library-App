@@ -30,6 +30,11 @@ export const bookingRouter = createTRPCRouter({
       const bookings = await db.booking.findMany({
         where: {
           userId: input.userId,
+          AND: {
+            status: {
+              not: "RETURNED"
+            }
+          }
         },
         include: {
           book: true,
@@ -109,13 +114,20 @@ export const bookingRouter = createTRPCRouter({
   returnBooking: publicProcedure
     .input(
       z.object({
-        bookingId: z.string(),
+        bookId: z.string(),
         returnDate: z.string().datetime(),
       }),
     )
     .mutation(async ({ input }) => {
-      const booking = await db.booking.findUnique({
-        where: { id: input.bookingId },
+
+      const bookInfo = await db.book.findUnique({
+        where: { id: input.bookId },
+      });
+
+      const booking = await db.booking.findFirst({
+        where: {
+          bookId: input.bookId
+        }
       });
 
       if (!booking || booking.status === "RETURNED") {
@@ -129,19 +141,28 @@ export const bookingRouter = createTRPCRouter({
       }
 
       const updatedBooking = await db.booking.update({
-        where: { id: input.bookingId },
+        where: { id: booking.id},
         data: {
           returnDate,
+          bookId: bookInfo!.id,
           status: "RETURNED",
         },
       });
 
       await db.book.update({
-        where: { id: booking.bookId },
+        where: { id: bookInfo!.id },
         data: {
+          isAvaible: true,
           availableCopies: { increment: 1 },
         },
       });
+
+      await db.booking.delete({
+        where: {
+          id: booking.id,
+          bookId: bookInfo!.id
+        }
+      })
 
       return updatedBooking;
     }),
