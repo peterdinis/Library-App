@@ -73,19 +73,32 @@ export function BookGrid({
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const { toast } = useToast();
   const returnBookingMutation = api.booking.returnBooking.useMutation();
+  
   const handleReturnBook = async () => {
     if (!selectedBook) return;
-    await returnBookingMutation.mutateAsync({
-      bookId: selectedBook.id,
-      returnDate: new Date().toISOString(),
-    });
-    toast({
-      title: "Kniha bola vrátená",
-      duration: 2000,
-      className: "bg-green-700 text-white font-bold text-xl",
-    });
-    setOpenDialog(false);
-    window.location.reload();
+  
+    try {
+      await returnBookingMutation.mutateAsync({
+        bookId: selectedBook.id,
+        returnDate: new Date().toISOString(),
+      });
+  
+      toast({
+        title: "Kniha bola vrátená",
+        duration: 2000,
+        className: "bg-green-700 text-white font-bold text-xl",
+      });
+    } catch (error) {
+      toast({
+        title: "Chyba pri vracaní knihy",
+        description: "Skúste to znova.",
+        duration: 2000,
+        className: "bg-red-700 text-white font-bold text-xl",
+      });
+    } finally {
+      setOpenDialog(false);
+      setSelectedBook(null);
+    }
   };
 
   const mergedBooks = useMemo(() => {
