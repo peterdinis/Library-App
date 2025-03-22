@@ -41,9 +41,14 @@ const ProfileDropdown: FC = () => {
             <Link href={"/profile"}>Profil</Link>
           </DropdownMenuItem>
           {session?.user.role === "ADMIN" && (
-            <DropdownMenuItem>
-              <Link href={"/admin"}>Admin časť</Link>
-            </DropdownMenuItem>
+            <>
+              <DropdownMenuItem>
+                <Link href={"/admin"}>Admin časť</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href={"/"}>Návrat na knižnicu</Link>
+              </DropdownMenuItem>
+            </>
           )}
           <DropdownMenuItem onClick={logoutFromApp}>
             Odhlásenie

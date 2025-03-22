@@ -9,7 +9,13 @@ import { isBefore, parseISO } from "date-fns";
 
 export const bookingRouter = createTRPCRouter({
   getAllBookings: protectedProcedure.query(async () => {
-    return await db.booking.findMany();
+    const allBookings = await db.booking.findMany({
+      include: {
+        user: true,
+      },
+    });
+
+    return allBookings;
   }),
 
   getBookingDetail: publicProcedure
@@ -32,9 +38,9 @@ export const bookingRouter = createTRPCRouter({
           userId: input.userId,
           AND: {
             status: {
-              not: "RETURNED"
-            }
-          }
+              not: "RETURNED",
+            },
+          },
         },
         include: {
           book: true,
@@ -119,15 +125,14 @@ export const bookingRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input }) => {
-
       const bookInfo = await db.book.findUnique({
         where: { id: input.bookId },
       });
 
       const booking = await db.booking.findFirst({
         where: {
-          bookId: input.bookId
-        }
+          bookId: input.bookId,
+        },
       });
 
       if (!booking || booking.status === "RETURNED") {
@@ -141,7 +146,7 @@ export const bookingRouter = createTRPCRouter({
       }
 
       const updatedBooking = await db.booking.update({
-        where: { id: booking.id},
+        where: { id: booking.id },
         data: {
           returnDate,
           bookId: bookInfo!.id,
@@ -160,9 +165,9 @@ export const bookingRouter = createTRPCRouter({
       await db.booking.delete({
         where: {
           id: booking.id,
-          bookId: bookInfo!.id
-        }
-      })
+          bookId: bookInfo!.id,
+        },
+      });
 
       return updatedBooking;
     }),

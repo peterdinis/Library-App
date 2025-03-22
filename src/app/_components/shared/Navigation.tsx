@@ -170,7 +170,7 @@ const Navigation: FC = () => {
                         className={cn(
                           "group hover:bg-accent flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors",
                           pathname === item.href
-                            ? "bg-accent dark:text-white text-base text-black"
+                            ? "bg-accent text-base text-black dark:text-white"
                             : "text-base text-black dark:text-white",
                         )}
                       >
