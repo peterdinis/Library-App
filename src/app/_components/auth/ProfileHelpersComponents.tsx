@@ -31,7 +31,7 @@ type Book = {
   author: string;
   coverUrl?: string;
   dueDate: string;
-  status: "overdue" | "soon" | "ok";
+  status: "NOT_RETURED" | "BORROWED"
   borrowDate: string | Date;
 };
 
@@ -42,23 +42,24 @@ export type BooksData = {
 
 function getStatusColor(status: string) {
   switch (status) {
-    case "overdue":
+    case "NOT_RETURNED":
       return "text-red-500";
-    case "soon":
-      return "text-yellow-500";
-    default:
+    case "BORROWED":
       return "text-green-500";
+
+    default: ""
   }
 }
 
 function getStatusBadge(status: string) {
   switch (status) {
-    case "overdue":
+    case "NOT_RETURNED":
       return <Badge variant="destructive">Po termíne</Badge>;
-    case "soon":
-      return <Badge className="bg-yellow-500">Čoskoro vyprší</Badge>;
-    default:
+    case "BORROWED":
       return <Badge variant="secondary">V poriadku</Badge>;
+
+    default:
+      return ""
   }
 }
 
@@ -105,10 +106,12 @@ export function BookGrid({
     return books.bookings
       .map((booking) => {
         const book = books.books.find((b) => b.id === booking.bookId);
-        return book ? { ...book, borrowDate: booking.borrowDate } : null;
+        return book ? { ...book, status: booking.status, borrowDate: booking.borrowDate } : null;
       })
       .filter(Boolean) as Book[];
   }, [books]);
+
+  console.log("MB", mergedBooks)
 
   return (
     <>
