@@ -31,11 +31,3 @@ export const Large: Story = {
     height: 10,
   },
 };
-
-export const CustomColor: Story = {
-  args: {
-    background: "blue-500",
-    width: 8,
-    height: 8,
-  },
-};
