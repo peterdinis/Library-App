@@ -1,5 +1,7 @@
 "use client";
 
+import { Genre } from "@prisma/client";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import {
   type ColumnDef,
   flexRender,
@@ -7,7 +9,6 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import Link from "next/link";
-import { Button } from "~/components/ui/button";
 import {
   Pagination,
   PaginationContent,
@@ -23,6 +24,8 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
+import { GenresPDFDocument } from "./GenresPDFDocument";
+import { Button } from "~/components/ui/button";
 
 interface GenresTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -44,10 +47,19 @@ export function GenresTable<TData, TValue>({
   const totalPages = table.getPageCount();
 
   return (
-    <div className="rounded-md border p-4">
-      <Button>
-        <Link href="/admin/genres/create">Pridaj nový žáner</Link>
-      </Button>
+    <div className="rgounded-md border border-neutral-600 p-4 dark:border-neutral-100">
+      <div className="flex justify-between mb-4">
+        <Button>
+          <Link href="/admin/genres/create">Pridaj nový žáner</Link>
+        </Button>
+        <PDFDownloadLink
+          document={<GenresPDFDocument genres={data as Genre[]} />}
+          fileName="genres.pdf"
+          className="bg-blue-500 text-white px-4 py-2 rounded-md"
+        >
+          {({ loading }) => (loading ? "Generujem PDF..." : "Stiahni PDF")}
+        </PDFDownloadLink>
+      </div>
       <Table className="mt-6">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
