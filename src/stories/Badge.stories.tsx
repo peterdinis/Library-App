@@ -1,14 +1,14 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { Badge, badgeVariants } from "~/components/ui/badge";
-import React from "react";
+import { Badge} from "~/components/ui/badge";
 
 const meta: Meta<typeof Badge> = {
   title: "Components/Badge",
   component: Badge,
+  tags: ["autodocs"],
   argTypes: {
     variant: {
       control: "select",
-      options: ["default", "secondary", "destructive", "outline", "success"],
+      options: ["default", "secondary", "destructive", "outline", "success", "warning"],
     },
   },
 };
@@ -49,5 +49,12 @@ export const Success: Story = {
   args: {
     children: "Success Badge",
     variant: "success",
+  },
+};
+
+export const Warning: Story = {
+  args: {
+    children: "Warning Badge",
+    variant: "warning",
   },
 };

@@ -3,6 +3,7 @@ import Loader from "~/components/ui/loader";
 
 const meta: Meta<typeof Loader> = {
   title: "Components/Loader",
+  tags: ["autodocs"],
   component: Loader,
   argTypes: {
     background: { control: "text" },
@@ -28,13 +29,5 @@ export const Large: Story = {
     background: "gray-200",
     width: 10,
     height: 10,
-  },
-};
-
-export const CustomColor: Story = {
-  args: {
-    background: "blue-500",
-    width: 8,
-    height: 8,
   },
 };
