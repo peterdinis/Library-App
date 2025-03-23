@@ -4,6 +4,9 @@ import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { db } from "~/server/db";
 
 export const userRouter = createTRPCRouter({
+  getAllUsers: publicProcedure.query(async () => {
+    return await db.user.findMany()
+  }),
   register: publicProcedure
     .input(
       z.object({
