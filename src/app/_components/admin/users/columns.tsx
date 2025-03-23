@@ -5,8 +5,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 
 export type User = {
   id: string;
-  name: string;
-  lastName: string;
+  fullName: string;
   email: string;
   role: Role
 };
@@ -18,13 +17,8 @@ export const columns: ColumnDef<User>[] = [
   },
 
   {
-    accessorKey: "name",
-    header: "Meno"
-  },
-
-  {
-    accessorKey: "lastName",
-    header: "Priezvisko"
+    accessorKey: "fullName",
+    header: "Celé meno"
   },
 
   {
