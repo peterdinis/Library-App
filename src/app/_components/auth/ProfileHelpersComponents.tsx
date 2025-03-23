@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Calendar, Ghost } from "lucide-react";
+import { differenceInDays } from "date-fns";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import {
@@ -30,9 +31,9 @@ type Book = {
   title: string;
   author: string;
   coverUrl?: string;
-  dueDate: string;
-  status: "NOT_RETURED" | "BORROWED"
+  status: "NOT_RETURNED" | "BORROWED";
   borrowDate: string | Date;
+  dueDate: string | Date;
 };
 
 export type BooksData = {
@@ -40,26 +41,27 @@ export type BooksData = {
   bookings: Booking[];
 };
 
-function getStatusColor(status: string) {
-  switch (status) {
-    case "NOT_RETURNED":
-      return "text-red-500";
-    case "BORROWED":
-      return "text-green-500";
+function getStatusColor(dueDate: string | Date) {
+  const today = new Date();
+  const due = typeof dueDate === "string" ? new Date(dueDate) : dueDate;
+  const daysLeft = differenceInDays(due, today);
 
-    default: ""
-  }
+  if (daysLeft <= 0) return "text-red-500";
+  if (daysLeft <= 3) return "text-orange-500";
+  return "text-green-500";
 }
 
-function getStatusBadge(status: string) {
-  switch (status) {
-    case "NOT_RETURNED":
-      return <Badge variant="destructive">Po termíne</Badge>;
-    case "BORROWED":
-      return <Badge variant="secondary">V poriadku</Badge>;
+function getStatusBadge(dueDate: string | Date) {
+  const today = new Date();
+  const due = typeof dueDate === "string" ? new Date(dueDate) : dueDate;
+  const daysLeft = differenceInDays(due, today);
 
-    default:
-      return ""
+  if (daysLeft <= 0) {
+    return <Badge variant="destructive">Po termíne</Badge>;
+  } else if (daysLeft <= 3) {
+    return <Badge className="bg-orange-500 text-white">Blíži sa termín</Badge>;
+  } else {
+    return <Badge variant="secondary">V poriadku</Badge>;
   }
 }
 
@@ -74,16 +76,16 @@ export function BookGrid({
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const { toast } = useToast();
   const returnBookingMutation = api.booking.returnBooking.useMutation();
-  
+
   const handleReturnBook = async () => {
     if (!selectedBook) return;
-  
+
     try {
       await returnBookingMutation.mutateAsync({
         bookId: selectedBook.id,
         returnDate: new Date().toISOString(),
       });
-  
+
       toast({
         title: "Kniha bola vrátená",
         duration: 2000,
@@ -106,12 +108,17 @@ export function BookGrid({
     return books.bookings
       .map((booking) => {
         const book = books.books.find((b) => b.id === booking.bookId);
-        return book ? { ...book, status: booking.status, borrowDate: booking.borrowDate } : null;
+        return book
+          ? {
+              ...book,
+              status: booking.status,
+              dueDate: booking.dueDate,
+              borrowDate: booking.borrowDate,
+            }
+          : null;
       })
       .filter(Boolean) as Book[];
   }, [books]);
-
-  console.log("MB", mergedBooks)
 
   return (
     <>
@@ -156,15 +163,21 @@ export function BookGrid({
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-sm">
                     <Calendar
-                      className={`h-4 w-4 ${getStatusColor(book.status)}`}
+                      className={`h-4 w-4 ${getStatusColor(book.dueDate)}`}
                     />
-                    <span className={getStatusColor(book.status)}>
+                    <span className={getStatusColor(book.dueDate)}>
                       {typeof book.borrowDate === "string"
                         ? book.borrowDate
                         : book.borrowDate.toISOString().split("T")[0]}
                     </span>
+
+                    <span className={getStatusColor(book.dueDate)}>
+                      {typeof book.dueDate === "string"
+                        ? book.dueDate
+                        : book.dueDate.toISOString().split("T")[0]}
+                    </span>
                   </div>
-                  {getStatusBadge(book.status)}
+                  {getStatusBadge(book.dueDate)}
                 </div>
               </CardContent>
               <CardFooter className="mt-4">
