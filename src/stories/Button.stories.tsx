@@ -70,7 +70,7 @@ export const Small: Story = {
 
 export const IconButton: Story = {
   args: {
-    children: "🔍 Search",
+    children: "🔍",
     variant: "default",
     size: "icon",
   },
