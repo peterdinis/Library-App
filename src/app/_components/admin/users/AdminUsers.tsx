@@ -1,9 +1,9 @@
 "use client";
 
 import { FC } from "react";
-import { columns } from "../books/columns";
 import { UsersTable } from "./UsersTable";
 import AdminSharedComponent from "../shared/AdminSharedComponent";
+import { columns } from "./columns";
 
 const AdminUsers: FC = () => {
   return (

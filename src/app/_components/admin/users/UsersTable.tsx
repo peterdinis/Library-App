@@ -41,7 +41,7 @@ export function UsersTable<TData, TValue>({
   });
 
   return (
-    <div className="rounded-md border p-4">
+    <div className="rounded-md border border-neutral-600 p-4 dark:border-neutral-100">
       <Table className="mt-6">
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
