@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { Badge, badgeVariants } from "~/components/ui/badge";
-import React from "react";
+import { Badge} from "~/components/ui/badge";
 
 const meta: Meta<typeof Badge> = {
   title: "Components/Badge",
   component: Badge,
+  tags: ["autodocs"],
   argTypes: {
     variant: {
       control: "select",

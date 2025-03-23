@@ -3,6 +3,7 @@ import Loader from "~/components/ui/loader";
 
 const meta: Meta<typeof Loader> = {
   title: "Components/Loader",
+  tags: ["autodocs"],
   component: Loader,
   argTypes: {
     background: { control: "text" },

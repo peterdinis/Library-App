@@ -14,6 +14,7 @@ const meta: Meta<typeof Button> = {
         "secondary",
         "ghost",
         "link",
+        "warning"
       ],
     },
     size: {
@@ -64,6 +65,14 @@ export const Small: Story = {
   args: {
     children: "This is a small button",
     variant: "default",
+    size: "sm",
+  },
+};
+
+export const Warning: Story = {
+  args: {
+    children: "This is a warning button",
+    variant: "warning",
     size: "sm",
   },
 };
