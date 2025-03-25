@@ -1,6 +1,18 @@
 "use client";
 
-import type { ColumnDef } from "@tanstack/react-table";
+import { useState } from "react";
+import { ColumnDef } from "@tanstack/react-table";
+import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "~/components/ui/dialog";
+import { api } from "~/trpc/react";
 
 export type Author = {
   id: string;
@@ -15,5 +27,76 @@ export const authorsColumns: ColumnDef<Author>[] = [
   {
     accessorKey: "name",
     header: "Meno spisovateľa/ky",
+  },
+  {
+    id: "actions",
+    header: "Akcie",
+    cell: ({ row }) => {
+      const author = row.original;
+      const [openEdit, setOpenEdit] = useState(false);
+      const [openDelete, setOpenDelete] = useState(false);
+      const [newName, setNewName] = useState(author.name);
+
+      // tRPC Mutácie
+      const updateAuthor = api.author.updateAuthor.useMutation({
+        onSuccess: () => {
+          setOpenEdit(false);
+        },
+      });
+
+      const deleteAuthor = api.author.deleteAuthor.useMutation({
+        onSuccess: () => {
+          setOpenDelete(false);
+        },
+      });
+
+      return (
+        <div className="flex gap-2">
+          {/* Dialóg na úpravu */}
+          <Dialog open={openEdit} onOpenChange={setOpenEdit}>
+            <DialogTrigger asChild>
+              <Button variant="outline">Upraviť</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Upraviť autora</DialogTitle>
+                <DialogDescription>
+                  Upravte meno autora a potvrďte zmeny.
+                </DialogDescription>
+              </DialogHeader>
+              <Input value={newName} onChange={(e) => setNewName(e.target.value)} />
+              <Button
+                onClick={() => updateAuthor.mutate({ id: author.id, name: newName })}
+                disabled={updateAuthor.isPending}
+              >
+                Uložiť zmeny
+              </Button>
+            </DialogContent>
+          </Dialog>
+
+          {/* Dialóg na zmazanie */}
+          <Dialog open={openDelete} onOpenChange={setOpenDelete}>
+            <DialogTrigger asChild>
+              <Button variant="destructive">Zmazať</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Ste si istí?</DialogTitle>
+                <DialogDescription>
+                  Táto akcia je nezvratná. Autor bude odstránený.
+                </DialogDescription>
+              </DialogHeader>
+              <Button
+                variant="destructive"
+                onClick={() => deleteAuthor.mutate(author.id)}
+                disabled={deleteAuthor.isPending}
+              >
+                Potvrdiť vymazanie
+              </Button>
+            </DialogContent>
+          </Dialog>
+        </div>
+      );
+    },
   },
 ];
