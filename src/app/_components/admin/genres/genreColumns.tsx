@@ -1,6 +1,19 @@
 "use client";
 
-import type { ColumnDef } from "@tanstack/react-table";
+import { useState } from "react";
+import { ColumnDef } from "@tanstack/react-table";
+import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "~/components/ui/dialog";
+import { useToast } from "~/hooks/use-toast";
+import { api } from "~/trpc/react";
 
 export type Genre = {
   id: string;
@@ -15,5 +28,76 @@ export const genreColumns: ColumnDef<Genre>[] = [
   {
     accessorKey: "name",
     header: "Názov žánru",
+  },
+  {
+    id: "actions",
+    header: "Akcie",
+    cell: ({ row }) => {
+      const genre = row.original;
+      const [openEdit, setOpenEdit] = useState(false);
+      const [openDelete, setOpenDelete] = useState(false);
+      const [newName, setNewName] = useState(genre.name);
+      const {toast} = useToast()
+      // tRPC Mutácie
+      const updateGenre = api.genre.updateGenre.useMutation({
+        onSuccess: () => {
+          setOpenEdit(false);
+        },
+      });
+
+      const deleteGenre = api.genre.deleteGenre.useMutation({
+        onSuccess: () => {
+          setOpenDelete(false);
+        },
+      });
+
+      return (
+        <div className="flex gap-2">
+          {/* Dialog na úpravu */}
+          <Dialog open={openEdit} onOpenChange={setOpenEdit}>
+            <DialogTrigger asChild>
+              <Button variant="outline">Upraviť</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Upraviť žáner</DialogTitle>
+                <DialogDescription>
+                  Upravte názov žánru a potvrďte zmeny.
+                </DialogDescription>
+              </DialogHeader>
+              <Input value={newName} onChange={(e) => setNewName(e.target.value)} />
+              <Button
+                onClick={() => updateGenre.mutate({ id: genre.id, name: newName })}
+                disabled={updateGenre.isPending}
+              >
+                Uložiť zmeny
+              </Button>
+            </DialogContent>
+          </Dialog>
+
+          {/* Dialog na zmazanie */}
+          <Dialog open={openDelete} onOpenChange={setOpenDelete}>
+            <DialogTrigger asChild>
+              <Button variant="destructive">Zmazať</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Ste si istí?</DialogTitle>
+                <DialogDescription>
+                  Táto akcia je nezvratná. Žáner bude odstránený.
+                </DialogDescription>
+              </DialogHeader>
+              <Button
+                variant="destructive"
+                onClick={() => deleteGenre.mutate(genre.id)}
+                disabled={deleteGenre.isPending}
+              >
+                Potvrdiť vymazanie
+              </Button>
+            </DialogContent>
+          </Dialog>
+        </div>
+      );
+    },
   },
 ];
