@@ -19,6 +19,23 @@ export const authorRouter = createTRPCRouter({
       });
     }),
 
+  searchAuthors: publicProcedure
+    .input(
+      z.object({
+        query: z.string().min(1),
+      }),
+    )
+    .query(async ({ input }) => {
+      return await db.author.findMany({
+        where: {
+          name: {
+            contains: input.query,
+            mode: "insensitive",
+          },
+        },
+      });
+    }),
+
   createAuthor: protectedProcedure
     .input(
       z.object({

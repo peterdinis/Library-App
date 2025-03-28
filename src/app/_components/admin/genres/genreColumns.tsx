@@ -35,6 +35,7 @@ export const genreColumns: ColumnDef<Genre>[] = [
     cell: ({ row }) => {
       const genre = row.original;
       const [openEdit, setOpenEdit] = useState(false);
+      const [oepnSearchModal, setOpenSearchModal] = useState(false)
       const [openDelete, setOpenDelete] = useState(false);
       const [newName, setNewName] = useState(genre.name);
       const utils = api.useUtils();
@@ -65,9 +66,29 @@ export const genreColumns: ColumnDef<Genre>[] = [
       });
 
       return (
-        <div className="flex gap-2">
-          {/* Dialog na úpravu */}
+        <div className="flex gap-3">
           <Dialog open={openEdit} onOpenChange={setOpenEdit}>
+            <DialogTrigger asChild>
+              <Button variant="outline" className="bg-green-600 hover:bg-green-800">Vyhľadať žáner</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Upraviť žáner</DialogTitle>
+                <DialogDescription>
+                  Upravte názov žánru a potvrďte zmeny.
+                </DialogDescription>
+              </DialogHeader>
+              <Input value={newName} onChange={(e) => setNewName(e.target.value)} />
+              <Button
+                onClick={() => updateGenre.mutate({ id: genre.id, name: newName })}
+                disabled={updateGenre.isPending}
+              >
+                Uložiť zmeny
+              </Button>
+            </DialogContent>
+          </Dialog>
+
+          <Dialog open={oepnSearchModal} onOpenChange={setOpenSearchModal}>
             <DialogTrigger asChild>
               <Button variant="outline">Upraviť</Button>
             </DialogTrigger>

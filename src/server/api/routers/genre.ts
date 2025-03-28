@@ -16,6 +16,22 @@ export const genreRouter = createTRPCRouter({
       where: { id: input },
     });
   }),
+  searchGenres: publicProcedure
+    .input(
+      z.object({
+        query: z.string().min(1),
+      }),
+    )
+    .query(async ({ input }) => {
+      return await db.genre.findMany({
+        where: {
+          name: {
+            contains: input.query,
+            mode: "insensitive",
+          },
+        },
+      });
+    }),
   createGenre: protectedProcedure
     .input(
       z.object({
