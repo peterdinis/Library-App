@@ -37,17 +37,30 @@ export const genreColumns: ColumnDef<Genre>[] = [
       const [openEdit, setOpenEdit] = useState(false);
       const [openDelete, setOpenDelete] = useState(false);
       const [newName, setNewName] = useState(genre.name);
+      const utils = api.useUtils();
       const {toast} = useToast()
       // tRPC Mutácie
       const updateGenre = api.genre.updateGenre.useMutation({
         onSuccess: () => {
           setOpenEdit(false);
+          toast({
+            title: "Žáner bol upravený",
+            duration: 2000,
+            className: "bg-green-800 text-white font-bold text-xl"
+          })
+          utils.genre.invalidate()
         },
       });
 
       const deleteGenre = api.genre.deleteGenre.useMutation({
         onSuccess: () => {
           setOpenDelete(false);
+          toast({
+            title: "Žáner nebol upravený",
+            duration: 2000,
+            className: "bg-red-800 text-white font-bold text-xl"
+          })
+          utils.genre.invalidate()
         },
       });
 
@@ -75,7 +88,6 @@ export const genreColumns: ColumnDef<Genre>[] = [
             </DialogContent>
           </Dialog>
 
-          {/* Dialog na zmazanie */}
           <Dialog open={openDelete} onOpenChange={setOpenDelete}>
             <DialogTrigger asChild>
               <Button variant="destructive">Zmazať</Button>
