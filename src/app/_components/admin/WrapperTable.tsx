@@ -38,8 +38,6 @@ export function WrapperTable<TData, TValue>({
     manualPagination: true,
     pageCount: Math.ceil(data.length / 10),
   });
-
-  const currentPage = table.getState().pagination.pageIndex + 1;
   const totalPages = table.getPageCount();
 
   return (
