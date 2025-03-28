@@ -39,7 +39,7 @@ export const genreColumns: ColumnDef<Genre>[] = [
       const [newName, setNewName] = useState(genre.name);
       const utils = api.useUtils();
       const {toast} = useToast()
-      // tRPC Mutácie
+      
       const updateGenre = api.genre.updateGenre.useMutation({
         onSuccess: () => {
           setOpenEdit(false);
