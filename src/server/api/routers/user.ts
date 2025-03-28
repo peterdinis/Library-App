@@ -5,8 +5,36 @@ import { db } from "~/server/db";
 
 export const userRouter = createTRPCRouter({
   getAllUsers: publicProcedure.query(async () => {
-    return await db.user.findMany()
+    return await db.user.findMany();
   }),
+
+  searchUsers: publicProcedure
+    .input(
+      z.object({
+        query: z.string().min(1),
+      }),
+    )
+    .query(async ({ input }) => {
+      return await db.user.findMany({
+        where: {
+          OR: [
+            {
+              fullName: {
+                contains: input.query,
+                mode: "insensitive",
+              },
+            },
+            {
+              email: {
+                contains: input.query,
+                mode: "insensitive",
+              },
+            },
+          ],
+        },
+      });
+    }),
+
   register: publicProcedure
     .input(
       z.object({

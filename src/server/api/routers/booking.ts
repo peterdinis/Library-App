@@ -9,14 +9,47 @@ import { isBefore, parseISO } from "date-fns";
 
 export const bookingRouter = createTRPCRouter({
   getAllBookings: protectedProcedure.query(async () => {
-    const allBookings = await db.booking.findMany({
+    return await db.booking.findMany({
       include: {
         user: true,
       },
     });
-
-    return allBookings;
   }),
+
+  searchBookings: protectedProcedure
+    .input(
+      z.object({
+        query: z.string().min(1),
+      }),
+    )
+    .query(async ({ input }) => {
+      return await db.booking.findMany({
+        where: {
+          OR: [
+            {
+              user: {
+                fullName: {
+                  contains: input.query,
+                  mode: "insensitive",
+                },
+              },
+            },
+            {
+              book: {
+                title: {
+                  contains: input.query,
+                  mode: "insensitive",
+                },
+              },
+            },
+          ],
+        },
+        include: {
+          user: true,
+          book: true,
+        },
+      });
+    }),
 
   getBookingDetail: publicProcedure
     .input(z.string())

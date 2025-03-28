@@ -137,16 +137,6 @@ const AdminAuthors: FC = () => {
         {/* Header */}
         <header className="shrink-0 border-b border-gray-200 bg-white px-4 py-4 sm:px-6 dark:bg-stone-900">
           <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex min-w-0 flex-1 items-center gap-4">
-              <div className="relative max-w-xs flex-1">
-                <Search className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
-                <Input
-                  type="text"
-                  placeholder="Hľadať knihu..."
-                  className="w-full rounded-lg border border-gray-300 py-2 pr-4 pl-10 focus:ring-2 focus:ring-indigo-500 focus:outline-hidden"
-                />
-              </div>
-            </div>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <span className="hidden text-sm font-medium sm:inline">

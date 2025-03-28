@@ -19,6 +19,23 @@ export const categoryRouter = createTRPCRouter({
       });
     }),
 
+  searchCategories: publicProcedure
+    .input(
+      z.object({
+        query: z.string().min(1),
+      }),
+    )
+    .query(async ({ input }) => {
+      return await db.category.findMany({
+        where: {
+          name: {
+            contains: input.query,
+            mode: "insensitive",
+          },
+        },
+      });
+    }),
+
   createCategory: protectedProcedure
     .input(
       z.object({
