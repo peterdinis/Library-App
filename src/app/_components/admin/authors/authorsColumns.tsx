@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "~/components/ui/dialog";
+import { useToast } from "~/hooks/use-toast";
 import { api } from "~/trpc/react";
 
 export type Author = {
@@ -36,23 +37,35 @@ export const authorsColumns: ColumnDef<Author>[] = [
       const [openEdit, setOpenEdit] = useState(false);
       const [openDelete, setOpenDelete] = useState(false);
       const [newName, setNewName] = useState(author.name);
+      const utils = api.useUtils();
+      const {toast} = useToast()
 
-      // tRPC Mutácie
       const updateAuthor = api.author.updateAuthor.useMutation({
         onSuccess: () => {
           setOpenEdit(false);
+          toast({
+            title: "Spisovateľ/ka bol/a upravený/á",
+            duration: 2000,
+            className: "bg-green-800 text-white font-bold text-xl"
+          })
+          utils.author.invalidate()
         },
       });
 
       const deleteAuthor = api.author.deleteAuthor.useMutation({
         onSuccess: () => {
           setOpenDelete(false);
+          toast({
+            title: "Spisovateľ/ka nebol/a upravený/á",
+            duration: 2000,
+            className: "bg-red-800 text-white font-bold text-xl"
+          })
+          utils.author.invalidate()
         },
       });
 
       return (
         <div className="flex gap-2">
-          {/* Dialóg na úpravu */}
           <Dialog open={openEdit} onOpenChange={setOpenEdit}>
             <DialogTrigger asChild>
               <Button variant="outline">Upraviť</Button>
@@ -74,7 +87,6 @@ export const authorsColumns: ColumnDef<Author>[] = [
             </DialogContent>
           </Dialog>
 
-          {/* Dialóg na zmazanie */}
           <Dialog open={openDelete} onOpenChange={setOpenDelete}>
             <DialogTrigger asChild>
               <Button variant="destructive">Zmazať</Button>

@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "~/components/ui/dialog";
+import { useToast } from "~/hooks/use-toast";
 import { api } from "~/trpc/react";
 
 export type Category = {
@@ -36,17 +37,30 @@ export const categoryColumns: ColumnDef<Category>[] = [
       const [openEdit, setOpenEdit] = useState(false);
       const [openDelete, setOpenDelete] = useState(false);
       const [newName, setNewName] = useState(category.name);
+      const utils = api.useUtils();
+      const {toast} = useToast()
 
-      // tRPC Mutácie
       const updateCategory = api.category.updateCategory.useMutation({
         onSuccess: () => {
           setOpenEdit(false);
+          toast({
+            title: "Kategória bola úpravená",
+            duration: 2000,
+            className: "bg-green-800 text-white font-bold text-xl"
+          })
+          utils.category.invalidate()
         },
       });
 
       const deleteCategory = api.category.deleteCategory.useMutation({
         onSuccess: () => {
           setOpenDelete(false);
+          toast({
+            title: "Kategória nebola úpravená",
+            duration: 2000,
+            className: "bg-red-800 text-white font-bold text-xl"
+          })
+          utils.category.invalidate()
         },
       });
 
