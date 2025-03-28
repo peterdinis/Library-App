@@ -10,7 +10,7 @@ import {
   PaginationLink,
   PaginationNext,
 } from "~/components/ui/pagination";
-import { WrapperTable } from "./WrapperTable";
+import { AdminTable} from "./AdminTable";
 import useTeacher from "~/hooks/useTeacher";
 import useAdmin from "~/hooks/useAdmin";
 import { adminColumns } from "./adminColumns";
@@ -29,7 +29,7 @@ const AdminWrapper: FC = () => {
         <div className="border-b border-gray-200 p-4 sm:p-6">
           <h2 className="text-lg font-semibold">Posledné objednávky kníh</h2>
         </div>
-        <WrapperTable data={[]} columns={adminColumns} />
+        <AdminTable data={[]} columns={adminColumns} />
       </div>
 
       <div className="mt-14">
