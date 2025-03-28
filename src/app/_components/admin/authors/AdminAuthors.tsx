@@ -143,7 +143,7 @@ const AdminAuthors: FC = () => {
                 <Input
                   type="text"
                   placeholder="Hľadať knihu..."
-                  className="w-full rounded-lg border border-gray-300 py-2 pr-4 pl-10 focus:ring-2 focus:ring-indigo-500 focus:outline-hidden"
+                  className="w-full rounded-lg border border-gray-300 py-2 pr-4 pl-10 focus:ring-2 outline-none focus:ring-indigo-500 focus:outline-hidden"
                 />
               </div>
             </div>
