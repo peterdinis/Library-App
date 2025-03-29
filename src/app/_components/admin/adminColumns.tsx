@@ -11,7 +11,7 @@ export type Booking = {
   status: string;
 };
 
-export const wrapperColumns: ColumnDef<Booking>[] = [
+export const adminColumns: ColumnDef<Booking>[] = [
   {
     accessorKey: "id",
     header: "ID",

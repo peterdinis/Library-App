@@ -22,15 +22,15 @@ import {
   TableRow,
 } from "~/components/ui/table";
 
-interface WrapperTableProps<TData, TValue> {
+interface AdminTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function WrapperTable<TData, TValue>({
+export function AdminTable<TData, TValue>({
   columns,
   data,
-}: WrapperTableProps<TData, TValue>) {
+}: AdminTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
     columns,
@@ -38,8 +38,6 @@ export function WrapperTable<TData, TValue>({
     manualPagination: true,
     pageCount: Math.ceil(data.length / 10),
   });
-
-  const currentPage = table.getState().pagination.pageIndex + 1;
   const totalPages = table.getPageCount();
 
   return (
