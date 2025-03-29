@@ -39,7 +39,10 @@ const AdminSharedComponent: FC<AdminSharedComponentProps> = ({
     api.genre.getAllGenres.useQuery();
   const { data: authorsData, isLoading: authorLoading } =
     api.author.getAllAuthors.useQuery();
-  if (bookLoading || categoryLoading || genreLoading || authorLoading)
+  const {data: bookingData, isLoading: bookingLoading} = api.booking.getAllBookings.useQuery()
+  const {data: userData, isLoading: userDataLoading} = api.user.getAllUsers.useQuery();
+
+  if (bookLoading || categoryLoading || genreLoading || userDataLoading || authorLoading || bookingLoading)
     return <Loader2 className="h-8 w-8 animate-spin" />;
 
   return (
@@ -182,12 +185,12 @@ const AdminSharedComponent: FC<AdminSharedComponentProps> = ({
                 },
                 {
                   title: "Všetky objednávky",
-                  value: "123", // TODO: replace later
+                  value: bookingData?.length,
                   color: "bg-orange-500",
                 },
                 {
                   title: "Všetci používatelia",
-                  value: "123", // TODO: Replace later
+                  value: userData?.length,
                   color: "bg-fuchsia-500",
                 },
               ].map((stat, index) => (
