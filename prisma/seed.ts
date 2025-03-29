@@ -1,8 +1,11 @@
 import { faker } from "@faker-js/faker";
 import { db } from "~/server/db";
+import pino from "pino"
+
+const logger = pino({ level: 'info' })
 
 async function main() {
-  console.log("Seeding database...");
+  logger.info("Seeding database....")
 
   // Create Genres
   const genres = await Promise.all(
