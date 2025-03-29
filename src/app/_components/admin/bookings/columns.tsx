@@ -21,7 +21,7 @@ export type Booking = {
   borrowedDate: string;
 };
 
-export const columns: ColumnDef<Booking>[] = [
+export const bookingColumns: ColumnDef<Booking>[] = [
   {
     accessorKey: "bookName",
     header: "Názov knihy",

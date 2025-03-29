@@ -16,6 +16,7 @@ import useAdmin from "~/hooks/useAdmin";
 import { adminColumns } from "./adminColumns";
 import { api } from "~/trpc/react";
 import { Loader2 } from "lucide-react";
+import { bookingColumns } from "./bookings/columns";
 
 const AdminWrapper: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -34,7 +35,7 @@ const AdminWrapper: FC = () => {
         <div className="border-b border-gray-200 p-4 sm:p-6">
           <h2 className="text-lg font-semibold">Posledné objednávky kníh</h2>
         </div>
-        <AdminTable data={data as any} columns={adminColumns} />
+        <AdminTable data={data as any} columns={bookingColumns} />
       </div>
 
       <div className="mt-14">
