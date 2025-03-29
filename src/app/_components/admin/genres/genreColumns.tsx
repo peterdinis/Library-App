@@ -35,21 +35,21 @@ export const genreColumns: ColumnDef<Genre>[] = [
     cell: ({ row }) => {
       const genre = row.original;
       const [openEdit, setOpenEdit] = useState(false);
-      const [oepnSearchModal, setOpenSearchModal] = useState(false)
+      const [oepnSearchModal, setOpenSearchModal] = useState(false);
       const [openDelete, setOpenDelete] = useState(false);
       const [newName, setNewName] = useState(genre.name);
       const utils = api.useUtils();
-      const {toast} = useToast()
-      
+      const { toast } = useToast();
+
       const updateGenre = api.genre.updateGenre.useMutation({
         onSuccess: () => {
           setOpenEdit(false);
           toast({
             title: "Žáner bol upravený",
             duration: 2000,
-            className: "bg-green-800 text-white font-bold text-xl"
-          })
-          utils.genre.invalidate()
+            className: "bg-green-800 text-white font-bold text-xl",
+          });
+          utils.genre.invalidate();
         },
       });
 
@@ -59,9 +59,9 @@ export const genreColumns: ColumnDef<Genre>[] = [
           toast({
             title: "Žáner nebol upravený",
             duration: 2000,
-            className: "bg-red-800 text-white font-bold text-xl"
-          })
-          utils.genre.invalidate()
+            className: "bg-red-800 text-white font-bold text-xl",
+          });
+          utils.genre.invalidate();
         },
       });
 
@@ -69,7 +69,12 @@ export const genreColumns: ColumnDef<Genre>[] = [
         <div className="flex gap-3">
           <Dialog open={openEdit} onOpenChange={setOpenEdit}>
             <DialogTrigger asChild>
-              <Button variant="outline" className="bg-green-600 hover:bg-green-800">Vyhľadať žáner</Button>
+              <Button
+                variant="outline"
+                className="bg-green-600 hover:bg-green-800"
+              >
+                Vyhľadať žáner
+              </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
@@ -78,9 +83,14 @@ export const genreColumns: ColumnDef<Genre>[] = [
                   Upravte názov žánru a potvrďte zmeny.
                 </DialogDescription>
               </DialogHeader>
-              <Input value={newName} onChange={(e) => setNewName(e.target.value)} />
+              <Input
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+              />
               <Button
-                onClick={() => updateGenre.mutate({ id: genre.id, name: newName })}
+                onClick={() =>
+                  updateGenre.mutate({ id: genre.id, name: newName })
+                }
                 disabled={updateGenre.isPending}
               >
                 Uložiť zmeny
@@ -99,9 +109,14 @@ export const genreColumns: ColumnDef<Genre>[] = [
                   Upravte názov žánru a potvrďte zmeny.
                 </DialogDescription>
               </DialogHeader>
-              <Input value={newName} onChange={(e) => setNewName(e.target.value)} />
+              <Input
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+              />
               <Button
-                onClick={() => updateGenre.mutate({ id: genre.id, name: newName })}
+                onClick={() =>
+                  updateGenre.mutate({ id: genre.id, name: newName })
+                }
                 disabled={updateGenre.isPending}
               >
                 Uložiť zmeny

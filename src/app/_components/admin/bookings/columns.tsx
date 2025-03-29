@@ -2,15 +2,15 @@
 
 import type { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
-import { sk } from "date-fns/locale"; 
+import { sk } from "date-fns/locale";
 
 type Book = {
-  title: string
-}
+  title: string;
+};
 
 type User = {
-  email: string
-}
+  email: string;
+};
 
 export type Booking = {
   id: string;
@@ -25,12 +25,12 @@ export const bookingColumns: ColumnDef<Booking>[] = [
   {
     accessorKey: "bookName",
     header: "Názov knihy",
-    accessorFn: (row) => row.book?.title
+    accessorFn: (row) => row.book?.title,
   },
   {
     accessorKey: "userEmail",
     header: "Email osoby ktorá má požičanú knihu",
-    accessorFn: (row) => row.user?.email
+    accessorFn: (row) => row.user?.email,
   },
   {
     accessorKey: "status",

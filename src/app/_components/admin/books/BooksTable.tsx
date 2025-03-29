@@ -51,7 +51,9 @@ export function BooksTable<TData, TValue>({
   const totalPages = table.getPageCount();
 
   const handleDownloadPDF = async () => {
-    const blob = await pdf(<BooksPDFDocument books={data as Book[]} />).toBlob();
+    const blob = await pdf(
+      <BooksPDFDocument books={data as Book[]} />,
+    ).toBlob();
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;

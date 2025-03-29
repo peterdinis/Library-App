@@ -7,7 +7,7 @@ export type User = {
   id: string;
   fullName: string;
   email: string;
-  role: Role
+  role: Role;
 };
 
 export const columns: ColumnDef<User>[] = [
@@ -18,16 +18,16 @@ export const columns: ColumnDef<User>[] = [
 
   {
     accessorKey: "fullName",
-    header: "Celé meno"
+    header: "Celé meno",
   },
 
   {
     accessorKey: "email",
-    header: "Email"
+    header: "Email",
   },
 
   {
     accessorKey: "role",
-    header: "Rola"
-  }
+    header: "Rola",
+  },
 ];

@@ -1,13 +1,12 @@
 import { faker } from "@faker-js/faker";
 import { db } from "~/server/db";
-import pino from "pino"
+import pino from "pino";
 
-const logger = pino({ level: 'info' })
-const error = pino({ level: "error"});
-
+const logger = pino({ level: "info" });
+const error = pino({ level: "error" });
 
 async function main() {
-  logger.info("Seeding database....")
+  logger.info("Seeding database....");
 
   // Create Genres
   const genres = await Promise.all(
@@ -68,7 +67,7 @@ async function main() {
 
 main()
   .catch((e) => {
-    error.info("Failed to seed database")
+    error.info("Failed to seed database");
   })
   .finally(async () => {
     await db.$disconnect();

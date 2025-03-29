@@ -10,7 +10,7 @@ import {
   PaginationLink,
   PaginationNext,
 } from "~/components/ui/pagination";
-import { AdminTable} from "./AdminTable";
+import { AdminTable } from "./AdminTable";
 import useTeacher from "~/hooks/useTeacher";
 import useAdmin from "~/hooks/useAdmin";
 import { adminColumns } from "./adminColumns";
@@ -21,10 +21,10 @@ import { bookingColumns } from "./bookings/columns";
 const AdminWrapper: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const admin = useAdmin();
-  const {data, isLoading} = api.booking.getAllBookings.useQuery();
+  const { data, isLoading } = api.booking.getAllBookings.useQuery();
   const teacher = useTeacher();
 
-  if(isLoading) return <Loader2 className="w-8 h-8 animate-spin" />
+  if (isLoading) return <Loader2 className="h-8 w-8 animate-spin" />;
 
   if (!admin || !teacher) {
     window.location.replace("/");

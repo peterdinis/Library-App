@@ -48,14 +48,14 @@ export function GenresTable<TData, TValue>({
 
   return (
     <div className="rgounded-md border border-neutral-600 p-4 dark:border-neutral-100">
-      <div className="flex justify-between mb-4">
+      <div className="mb-4 flex justify-between">
         <Button>
           <Link href="/admin/genres/create">Pridaj nový žáner</Link>
         </Button>
         <PDFDownloadLink
           document={<GenresPDFDocument genres={data as Genre[]} />}
           fileName="genres.pdf"
-          className="bg-blue-500 text-white px-4 py-2 rounded-md"
+          className="rounded-md bg-blue-500 px-4 py-2 text-white"
         >
           {({ loading }) => (loading ? "Generujem PDF..." : "Stiahni PDF")}
         </PDFDownloadLink>
