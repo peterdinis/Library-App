@@ -12,6 +12,7 @@ export const bookingRouter = createTRPCRouter({
     return await db.booking.findMany({
       include: {
         user: true,
+        book: true
       },
     });
   }),
