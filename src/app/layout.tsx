@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     "študentská knižnica",
     "SPŠT Bardejov",
   ],
-  authors: [{ name: "Peter Dinis" }],
+  authors: [{ name: "Peter Dinis", url: "https://dinis-portfolio.vercel.app/" }],
   icons: [
     {
       rel: "icon",
