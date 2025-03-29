@@ -16,7 +16,6 @@ import useAdmin from "~/hooks/useAdmin";
 import { adminColumns } from "./adminColumns";
 import { api } from "~/trpc/react";
 import { Loader2 } from "lucide-react";
-import { Booking } from "./bookings/columns";
 
 const AdminWrapper: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
