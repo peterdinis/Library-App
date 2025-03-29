@@ -11,7 +11,8 @@ export const bookingRouter = createTRPCRouter({
   getAllBookings: protectedProcedure.query(async () => {
     return await db.booking.findMany({
       include: {
-        user: true,
+        book: { select: { title: true} },
+        user: { select: { email: true } },
       },
     });
   }),
