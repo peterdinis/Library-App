@@ -3,6 +3,8 @@ import { db } from "~/server/db";
 import pino from "pino"
 
 const logger = pino({ level: 'info' })
+const error = pino({ level: "error"});
+
 
 async function main() {
   logger.info("Seeding database....")
@@ -61,12 +63,12 @@ async function main() {
     ),
   );
 
-  console.log("Database seeded successfully!");
+  logger.info("Database seeded successfully!");
 }
 
 main()
   .catch((e) => {
-    console.error("Error seeding database:", e);
+    error.info("Failed to seed database")
   })
   .finally(async () => {
     await db.$disconnect();
