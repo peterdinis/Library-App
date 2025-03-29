@@ -14,11 +14,17 @@ import { AdminTable} from "./AdminTable";
 import useTeacher from "~/hooks/useTeacher";
 import useAdmin from "~/hooks/useAdmin";
 import { adminColumns } from "./adminColumns";
+import { api } from "~/trpc/react";
+import { Loader2 } from "lucide-react";
+import { Booking } from "./bookings/columns";
 
 const AdminWrapper: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const admin = useAdmin();
+  const {data, isLoading} = api.booking.getAllBookings.useQuery();
   const teacher = useTeacher();
+
+  if(isLoading) return <Loader2 className="w-8 h-8 animate-spin" />
 
   if (!admin || !teacher) {
     window.location.replace("/");
@@ -29,7 +35,7 @@ const AdminWrapper: FC = () => {
         <div className="border-b border-gray-200 p-4 sm:p-6">
           <h2 className="text-lg font-semibold">Posledné objednávky kníh</h2>
         </div>
-        <AdminTable data={[]} columns={adminColumns} />
+        <AdminTable data={data as any} columns={adminColumns} />
       </div>
 
       <div className="mt-14">
