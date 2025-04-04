@@ -52,7 +52,7 @@ export function CategoriesTable<TData, TValue>({
 
   const handleDownloadPDF = async () => {
     const blob = await pdf(
-      <CategoriesPDFDocument categories={data as Category[]} />
+      <CategoriesPDFDocument categories={data as Category[]} />,
     ).toBlob();
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");

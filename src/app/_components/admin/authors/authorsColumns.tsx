@@ -38,7 +38,7 @@ export const authorsColumns: ColumnDef<Author>[] = [
       const [openDelete, setOpenDelete] = useState(false);
       const [newName, setNewName] = useState(author.name);
       const utils = api.useUtils();
-      const {toast} = useToast()
+      const { toast } = useToast();
 
       const updateAuthor = api.author.updateAuthor.useMutation({
         onSuccess: () => {
@@ -46,9 +46,9 @@ export const authorsColumns: ColumnDef<Author>[] = [
           toast({
             title: "Spisovateľ/ka bol/a upravený/á",
             duration: 2000,
-            className: "bg-green-800 text-white font-bold text-xl"
-          })
-          utils.author.invalidate()
+            className: "bg-green-800 text-white font-bold text-xl",
+          });
+          utils.author.invalidate();
         },
       });
 
@@ -58,9 +58,9 @@ export const authorsColumns: ColumnDef<Author>[] = [
           toast({
             title: "Spisovateľ/ka nebol/a upravený/á",
             duration: 2000,
-            className: "bg-red-800 text-white font-bold text-xl"
-          })
-          utils.author.invalidate()
+            className: "bg-red-800 text-white font-bold text-xl",
+          });
+          utils.author.invalidate();
         },
       });
 
@@ -77,9 +77,14 @@ export const authorsColumns: ColumnDef<Author>[] = [
                   Upravte meno autora a potvrďte zmeny.
                 </DialogDescription>
               </DialogHeader>
-              <Input value={newName} onChange={(e) => setNewName(e.target.value)} />
+              <Input
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+              />
               <Button
-                onClick={() => updateAuthor.mutate({ id: author.id, name: newName })}
+                onClick={() =>
+                  updateAuthor.mutate({ id: author.id, name: newName })
+                }
                 disabled={updateAuthor.isPending}
               >
                 Uložiť zmeny

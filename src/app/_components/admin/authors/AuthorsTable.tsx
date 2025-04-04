@@ -52,7 +52,7 @@ export function AuthorsTable<TData, TValue>({
 
   const handleDownloadPDF = async () => {
     const blob = await pdf(
-      <AuthorsPDFDocument authors={data as any} />
+      <AuthorsPDFDocument authors={data as any} />,
     ).toBlob();
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");

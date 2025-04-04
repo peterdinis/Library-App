@@ -38,7 +38,7 @@ export const categoryColumns: ColumnDef<Category>[] = [
       const [openDelete, setOpenDelete] = useState(false);
       const [newName, setNewName] = useState(category.name);
       const utils = api.useUtils();
-      const {toast} = useToast()
+      const { toast } = useToast();
 
       const updateCategory = api.category.updateCategory.useMutation({
         onSuccess: () => {
@@ -46,9 +46,9 @@ export const categoryColumns: ColumnDef<Category>[] = [
           toast({
             title: "Kategória bola úpravená",
             duration: 2000,
-            className: "bg-green-800 text-white font-bold text-xl"
-          })
-          utils.category.invalidate()
+            className: "bg-green-800 text-white font-bold text-xl",
+          });
+          utils.category.invalidate();
         },
       });
 
@@ -58,9 +58,9 @@ export const categoryColumns: ColumnDef<Category>[] = [
           toast({
             title: "Kategória nebola úpravená",
             duration: 2000,
-            className: "bg-red-800 text-white font-bold text-xl"
-          })
-          utils.category.invalidate()
+            className: "bg-red-800 text-white font-bold text-xl",
+          });
+          utils.category.invalidate();
         },
       });
 
@@ -78,9 +78,14 @@ export const categoryColumns: ColumnDef<Category>[] = [
                   Upravte názov kategórie a potvrďte zmeny.
                 </DialogDescription>
               </DialogHeader>
-              <Input value={newName} onChange={(e) => setNewName(e.target.value)} />
+              <Input
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+              />
               <Button
-                onClick={() => updateCategory.mutate({ id: category.id, name: newName })}
+                onClick={() =>
+                  updateCategory.mutate({ id: category.id, name: newName })
+                }
                 disabled={updateCategory.isPending}
               >
                 Uložiť zmeny
