@@ -14,7 +14,7 @@ const meta: Meta<typeof Button> = {
         "secondary",
         "ghost",
         "link",
-        "warning"
+        "warning",
       ],
     },
     size: {

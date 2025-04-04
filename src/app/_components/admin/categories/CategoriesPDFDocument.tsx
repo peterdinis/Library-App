@@ -25,7 +25,8 @@ export function CategoriesPDFDocument({
         {categories.map((category, index) => (
           <View key={index} style={styles.section}>
             <Text>
-              {index + 1}. {category.name} - {category.description || "Bez popisu"}
+              {index + 1}. {category.name} -{" "}
+              {category.description || "Bez popisu"}
             </Text>
           </View>
         ))}

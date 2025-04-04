@@ -39,10 +39,19 @@ const AdminSharedComponent: FC<AdminSharedComponentProps> = ({
     api.genre.getAllGenres.useQuery();
   const { data: authorsData, isLoading: authorLoading } =
     api.author.getAllAuthors.useQuery();
-  const {data: bookingData, isLoading: bookingLoading} = api.booking.getAllBookings.useQuery()
-  const {data: userData, isLoading: userDataLoading} = api.user.getAllUsers.useQuery();
+  const { data: bookingData, isLoading: bookingLoading } =
+    api.booking.getAllBookings.useQuery();
+  const { data: userData, isLoading: userDataLoading } =
+    api.user.getAllUsers.useQuery();
 
-  if (bookLoading || categoryLoading || genreLoading || userDataLoading || authorLoading || bookingLoading)
+  if (
+    bookLoading ||
+    categoryLoading ||
+    genreLoading ||
+    userDataLoading ||
+    authorLoading ||
+    bookingLoading
+  )
     return <Loader2 className="h-8 w-8 animate-spin" />;
 
   return (

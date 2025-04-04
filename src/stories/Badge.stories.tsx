@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { Badge} from "~/components/ui/badge";
+import { Badge } from "~/components/ui/badge";
 
 const meta: Meta<typeof Badge> = {
   title: "Components/Badge",
@@ -8,7 +8,14 @@ const meta: Meta<typeof Badge> = {
   argTypes: {
     variant: {
       control: "select",
-      options: ["default", "secondary", "destructive", "outline", "success", "warning"],
+      options: [
+        "default",
+        "secondary",
+        "destructive",
+        "outline",
+        "success",
+        "warning",
+      ],
     },
   },
 };

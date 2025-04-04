@@ -1,4 +1,4 @@
-import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
 
 interface Genre {
   id: string;
@@ -12,8 +12,12 @@ interface GenresPDFDocumentProps {
 const styles = StyleSheet.create({
   page: { padding: 20 },
   section: { marginBottom: 10 },
-  header: { fontSize: 16, marginBottom: 10, fontWeight: 'bold' },
-  row: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 5 },
+  header: { fontSize: 16, marginBottom: 10, fontWeight: "bold" },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 5,
+  },
 });
 
 export function GenresPDFDocument({ genres }: GenresPDFDocumentProps) {
