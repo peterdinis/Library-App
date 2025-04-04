@@ -11,8 +11,8 @@ import {
   PaginationNext,
 } from "~/components/ui/pagination";
 import { AdminTable } from "./AdminTable";
-import useTeacher from "~/hooks/useTeacher";
-import useAdmin from "~/hooks/useAdmin";
+import useTeacher from "~/hooks/auth/useTeacher";
+import useAdmin from "~/hooks/auth/useAdmin";
 import { adminColumns } from "./adminColumns";
 import { api } from "~/trpc/react";
 import { Loader2 } from "lucide-react";
