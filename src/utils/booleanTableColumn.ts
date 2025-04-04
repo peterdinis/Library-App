@@ -1,2 +1,2 @@
-export const booleanColumnHelper: boolean = (value: boolean) =>
+export const booleanColumnHelper = (value: boolean): string =>
   value ? "Áno" : "Nie";

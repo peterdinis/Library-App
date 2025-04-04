@@ -151,6 +151,72 @@ export const bookingRouter = createTRPCRouter({
       return newBooking;
     }),
 
+  updateBooking: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        userId: z.string().optional(),
+        bookId: z.string().optional(),
+        className: z.string().optional(),
+        status: z.enum(["BORROWED", "RETURNED", "CANCELLED"]).optional(),
+        dueDate: z.string().datetime().optional(),
+        borrowDate: z.string().datetime().optional(),
+        returnDate: z.string().datetime().nullable().optional(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      const existing = await db.booking.findUnique({ where: { id: input.id } });
+
+      if (!existing) {
+        throw new Error("Booking not found.");
+      }
+
+      const {
+        id,
+        userId,
+        bookId,
+        className,
+        status,
+        dueDate,
+        borrowDate,
+        returnDate,
+      } = input;
+
+      const updated = await db.booking.update({
+        where: { id },
+        data: {
+          userId,
+          bookId,
+          className,
+          dueDate: dueDate ? parseISO(dueDate) : undefined,
+          borrowDate: borrowDate ? parseISO(borrowDate) : undefined,
+          returnDate: returnDate ? parseISO(returnDate) : undefined,
+        },
+      });
+
+      return updated;
+    }),
+
+  deleteBooking: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      const booking = await db.booking.findUnique({
+        where: { id: input.id },
+      });
+
+      if (!booking) {
+        throw new Error("Booking not found.");
+      }
+
+      return await db.booking.delete({
+        where: { id: input.id },
+      });
+    }),
+
   returnBooking: publicProcedure
     .input(
       z.object({
