@@ -56,7 +56,9 @@ export const adminRouter = createTRPCRouter({
           }),
           db.booking.findMany({
             where: {
-              OR: [{ className: { contains: searchQuery, mode: "insensitive" } }],
+              OR: [
+                { className: { contains: searchQuery, mode: "insensitive" } },
+              ],
             },
             select: {
               id: true,
