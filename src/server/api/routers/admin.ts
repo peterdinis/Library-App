@@ -1,12 +1,6 @@
-import { Author, Book, Booking, Category, Genre, User } from "@prisma/client";
 import { z } from "zod";
-import { esClient } from "~/lib/elasticsearch";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-
-type ElasticsearchHit<T> = {
-  _id: string;
-  _source: T;
-};
+import { db } from "~/server/db";
 
 export const adminRouter = createTRPCRouter({
   searchAll: publicProcedure
@@ -14,70 +8,91 @@ export const adminRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       const { query } = input;
 
-      const [userRes, bookRes, authorRes, bookingRes, genreRes, categoryRes] = await Promise.all([
-        esClient.search({
-          index: "users",
-          query: {
-            multi_match: {
-              query,
-              fields: ["fullName", "email", "role", "status"],
+      const searchQuery = query.trim().toLowerCase();
+
+      // Use limit and select only necessary fields
+      const [userRes, bookRes, authorRes, bookingRes, genreRes, categoryRes] =
+        await Promise.all([
+          db.user.findMany({
+            where: {
+              OR: [
+                { fullName: { contains: searchQuery, mode: "insensitive" } },
+                { email: { contains: searchQuery, mode: "insensitive" } },
+              ],
             },
-          },
-        }),
-        esClient.search({
-          index: "books",
-          query: {
-            multi_match: {
-              query,
-              fields: ["title", "description", "summary", "rating"],
+            select: {
+              id: true,
+              fullName: true,
+              email: true,
             },
-          },
-        }),
-        esClient.search({
-          index: "authors",
-          query: {
-            multi_match: {
-              query,
-              fields: ["name", "bio"],
+            take: 10, // limit to avoid returning too many users
+          }),
+          db.book.findMany({
+            where: {
+              OR: [
+                { title: { contains: searchQuery, mode: "insensitive" } },
+                { description: { contains: searchQuery, mode: "insensitive" } },
+                { summary: { contains: searchQuery, mode: "insensitive" } },
+              ],
             },
-          },
-        }),
-        esClient.search({
-          index: "bookings",
-          query: {
-            multi_match: {
-              query,
-              fields: ["className", "status"],
+            select: {
+              id: true,
+              title: true,
             },
-          },
-        }),
-        esClient.search({
-          index: "genres",
-          query: {
-            multi_match: {
-              query,
-              fields: ["name"],
+            take: 10,
+          }),
+          db.author.findMany({
+            where: {
+              OR: [
+                { name: { contains: searchQuery, mode: "insensitive" } },
+                { bio: { contains: searchQuery, mode: "insensitive" } },
+              ],
             },
-          },
-        }),
-        esClient.search({
-          index: "categories",
-          query: {
-            multi_match: {
-              query,
-              fields: ["name"],
+            select: {
+              id: true,
+              name: true,
             },
-          },
-        }),
-      ]);
+            take: 10,
+          }),
+          db.booking.findMany({
+            where: {
+              OR: [{ className: { contains: searchQuery, mode: "insensitive" } }],
+            },
+            select: {
+              id: true,
+              className: true,
+            },
+            take: 10,
+          }),
+          db.genre.findMany({
+            where: {
+              name: { contains: searchQuery, mode: "insensitive" },
+            },
+            select: {
+              id: true,
+              name: true,
+            },
+            take: 10,
+          }),
+          db.category.findMany({
+            where: {
+              name: { contains: searchQuery, mode: "insensitive" },
+            },
+            select: {
+              id: true,
+              name: true,
+            },
+            take: 10,
+          }),
+        ]);
 
       return {
-        users: (userRes.hits.hits as ElasticsearchHit<User>[]).map(hit => ({ id: hit._id, ...hit._source })),
-        books: (bookRes.hits.hits as ElasticsearchHit<Book>[]).map(hit => ({ id: hit._id, ...hit._source })),
-        authors: (authorRes.hits.hits as ElasticsearchHit<Author>[]).map(hit => ({ id: hit._id, ...hit._source })),
-        bookings: (bookingRes.hits.hits as ElasticsearchHit<Booking>[]).map(hit => ({ id: hit._id, ...hit._source })),
-        genres: (genreRes.hits.hits as ElasticsearchHit<Genre>[]).map(hit => ({ id: hit._id, ...hit._source })),
-        categories: (categoryRes.hits.hits as ElasticsearchHit<Category>[]).map(hit => ({ id: hit._id, ...hit._source })),
+        users: userRes,
+        books: bookRes,
+        authors: authorRes,
+        bookings: bookingRes,
+        genres: genreRes,
+        categories: categoryRes,
       };
     }),
 });

@@ -2,7 +2,7 @@
 
 import { Frown, Loader2, Search } from "lucide-react";
 import Link from "next/link";
-import { type ChangeEvent, type FC, useEffect, useState } from "react";
+import { type ChangeEvent, type FC, useState } from "react";
 import { Button } from "~/components/ui/button";
 import {
   Dialog,
@@ -22,12 +22,11 @@ const AdminQuickSearch: FC = () => {
   const searchMutation = api.admin.searchAll.useMutation();
 
   const handleSearchInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value as any;
+    const value = e.target.value;
     setSearchQuery(value);
 
-    // Spusti mutation len ak je dĺžka > 2 znaky
     if (value.length > 2) {
-      searchMutation.mutate(value);
+      searchMutation.mutate({ query: value });
     }
   };
 
@@ -49,7 +48,7 @@ const AdminQuickSearch: FC = () => {
           <Search className="h-4 w-4" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px] max-h-[80vh] overflow-y-auto">
+      <DialogContent className="max-h-[80vh] overflow-y-auto sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle className="text-xl">
             Rýchle vyhľadávanie v Adminovi
@@ -70,7 +69,7 @@ const AdminQuickSearch: FC = () => {
         <div className="space-y-6 py-4">
           {isPending && <Loader2 className="animate-spin" />}
           {isError && !isPending && (
-            <p className="mt-4 text-2xl font-bold text-red-600 flex items-center gap-2">
+            <p className="mt-4 flex items-center gap-2 text-2xl font-bold text-red-600">
               <Frown /> Nastala chyba na strane aplikácie
             </p>
           )}
@@ -81,7 +80,7 @@ const AdminQuickSearch: FC = () => {
                 items.length > 0 ? (
                   <div key={type}>
                     <h3 className="text-lg font-bold capitalize">{type}</h3>
-                    <ul className="space-y-2 mt-2">
+                    <ul className="mt-2 space-y-2">
                       {items.map((item: any) => (
                         <li
                           key={item.id}
@@ -103,7 +102,7 @@ const AdminQuickSearch: FC = () => {
                       ))}
                     </ul>
                   </div>
-                ) : null
+                ) : null,
               )}
             </>
           )}

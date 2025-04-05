@@ -5,11 +5,25 @@ import { format } from "date-fns";
 import { sk } from "date-fns/locale";
 import { useState } from "react";
 import { Pencil, Trash2 } from "lucide-react";
-import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, DialogHeader, DialogFooter } from "~/components/ui/dialog";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+  DialogHeader,
+  DialogFooter,
+} from "~/components/ui/dialog";
 import { Button } from "~/components/ui/button";
-import { FormField, Form, FormItem, FormLabel, FormControl } from "~/components/ui/form";
+import {
+  FormField,
+  Form,
+  FormItem,
+  FormLabel,
+  FormControl,
+} from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
-import { useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 type Book = {
   title: string;
@@ -66,14 +80,14 @@ export const bookingColumns: ColumnDef<Booking>[] = [
       const booking = row.original;
       const [openEdit, setOpenEdit] = useState(false);
       const [openDelete, setOpenDelete] = useState(false);
-      const form = useForm()
+      const form = useForm();
       return (
         <div className="flex items-center gap-2">
           {/* Edit Dialog */}
           <Dialog open={openEdit} onOpenChange={setOpenEdit}>
             <DialogTrigger asChild>
               <Button size="icon" variant="outline">
-                <Pencil className="w-4 h-4" />
+                <Pencil className="h-4 w-4" />
               </Button>
             </DialogTrigger>
             <DialogContent>
@@ -86,68 +100,96 @@ export const bookingColumns: ColumnDef<Booking>[] = [
               <div className="space-y-2">
                 <Form {...form}>
                   {/* Kniha */}
-                  <FormField control={form.control} name="book" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Kniha</FormLabel>
-                      <FormControl>
-                        <Input value={booking.book?.title ?? "-"} readOnly />
-                      </FormControl>
-                    </FormItem>
-                  )} />
+                  <FormField
+                    control={form.control}
+                    name="book"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Kniha</FormLabel>
+                        <FormControl>
+                          <Input value={booking.book?.title ?? "-"} readOnly />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
 
                   {/* Email */}
-                  <FormField control={form.control} name="email" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input value={booking.user?.email ?? "-"} readOnly />
-                      </FormControl>
-                    </FormItem>
-                  )} />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input value={booking.user?.email ?? "-"} readOnly />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
 
                   {/* Stav */}
-                  <FormField control={form.control} name="status" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Stav</FormLabel>
-                      <FormControl>
-                        <Input value={booking.status} readOnly />
-                      </FormControl>
-                    </FormItem>
-                  )} />
+                  <FormField
+                    control={form.control}
+                    name="status"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Stav</FormLabel>
+                        <FormControl>
+                          <Input value={booking.status} readOnly />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
 
                   {/* Požičané od */}
-                  <FormField control={form.control} name="borrowedDate" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Požičané od</FormLabel>
-                      <FormControl>
-                        <Input
-                          value={
-                            booking.borrowedDate
-                              ? format(new Date(booking.borrowedDate), "dd.MM.yyyy", { locale: sk })
-                              : "-"
-                          }
-                          readOnly
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )} />
+                  <FormField
+                    control={form.control}
+                    name="borrowedDate"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Požičané od</FormLabel>
+                        <FormControl>
+                          <Input
+                            value={
+                              booking.borrowedDate
+                                ? format(
+                                    new Date(booking.borrowedDate),
+                                    "dd.MM.yyyy",
+                                    { locale: sk },
+                                  )
+                                : "-"
+                            }
+                            readOnly
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
 
                   {/* Požičané do */}
-                  <FormField control={form.control} name="dueDate" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Požičané do</FormLabel>
-                      <FormControl>
-                        <Input
-                          value={
-                            booking.dueDate
-                              ? format(new Date(booking.dueDate), "dd.MM.yyyy", { locale: sk })
-                              : "-"
-                          }
-                          readOnly
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )} />
+                  <FormField
+                    control={form.control}
+                    name="dueDate"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Požičané do</FormLabel>
+                        <FormControl>
+                          <Input
+                            value={
+                              booking.dueDate
+                                ? format(
+                                    new Date(booking.dueDate),
+                                    "dd.MM.yyyy",
+                                    { locale: sk },
+                                  )
+                                : "-"
+                            }
+                            readOnly
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
                 </Form>
               </div>
               <DialogFooter>
@@ -160,7 +202,7 @@ export const bookingColumns: ColumnDef<Booking>[] = [
           <Dialog open={openDelete} onOpenChange={setOpenDelete}>
             <DialogTrigger asChild>
               <Button size="icon" variant="destructive">
-                <Trash2 className="w-4 h-4" />
+                <Trash2 className="h-4 w-4" />
               </Button>
             </DialogTrigger>
             <DialogContent>
