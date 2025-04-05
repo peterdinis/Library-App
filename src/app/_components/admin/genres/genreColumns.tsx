@@ -67,7 +67,6 @@ export const genreColumns: ColumnDef<Genre>[] = [
 
       return (
         <div className="flex gap-3">
-
           <Dialog open={oepnSearchModal} onOpenChange={setOpenSearchModal}>
             <DialogTrigger asChild>
               <Button variant="outline">Upraviť</Button>
