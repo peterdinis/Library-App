@@ -1,12 +1,6 @@
-import { Author, Book, Booking, Category, Genre, User } from "@prisma/client";
 import { z } from "zod";
-import { esClient } from "~/lib/elasticsearch";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-
-type ElasticsearchHit<T> = {
-  _id: string;
-  _source: T;
-};
+import { db } from "~/server/db";
 
 export const adminRouter = createTRPCRouter({
   searchAll: publicProcedure
@@ -14,70 +8,57 @@ export const adminRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       const { query } = input;
 
-      const [userRes, bookRes, authorRes, bookingRes, genreRes, categoryRes] = await Promise.all([
-        esClient.search({
-          index: "users",
-          query: {
-            multi_match: {
-              query,
-              fields: ["fullName", "email", "role", "status"],
+      const [userRes, bookRes, authorRes, bookingRes, genreRes, categoryRes] =
+        await Promise.all([
+          db.user.findMany({
+            where: {
+              OR: [
+                { fullName: { contains: query, mode: "insensitive" } },
+                { email: { contains: query, mode: "insensitive" } },
+              ],
             },
-          },
-        }),
-        esClient.search({
-          index: "books",
-          query: {
-            multi_match: {
-              query,
-              fields: ["title", "description", "summary", "rating"],
+          }),
+          db.book.findMany({
+            where: {
+              OR: [
+                { title: { contains: query, mode: "insensitive" } },
+                { description: { contains: query, mode: "insensitive" } },
+                { summary: { contains: query, mode: "insensitive" } },
+              ],
             },
-          },
-        }),
-        esClient.search({
-          index: "authors",
-          query: {
-            multi_match: {
-              query,
-              fields: ["name", "bio"],
+          }),
+          db.author.findMany({
+            where: {
+              OR: [
+                { name: { contains: query, mode: "insensitive" } },
+                { bio: { contains: query, mode: "insensitive" } },
+              ],
             },
-          },
-        }),
-        esClient.search({
-          index: "bookings",
-          query: {
-            multi_match: {
-              query,
-              fields: ["className", "status"],
+          }),
+          db.booking.findMany({
+            where: {
+              OR: [{ className: { contains: query, mode: "insensitive" } }],
             },
-          },
-        }),
-        esClient.search({
-          index: "genres",
-          query: {
-            multi_match: {
-              query,
-              fields: ["name"],
+          }),
+          db.genre.findMany({
+            where: {
+              name: { contains: query, mode: "insensitive" },
             },
-          },
-        }),
-        esClient.search({
-          index: "categories",
-          query: {
-            multi_match: {
-              query,
-              fields: ["name"],
+          }),
+          db.category.findMany({
+            where: {
+              name: { contains: query, mode: "insensitive" },
             },
-          },
-        }),
-      ]);
+          }),
+        ]);
 
       return {
-        users: (userRes.hits.hits as ElasticsearchHit<User>[]).map(hit => ({ id: hit._id, ...hit._source })),
-        books: (bookRes.hits.hits as ElasticsearchHit<Book>[]).map(hit => ({ id: hit._id, ...hit._source })),
-        authors: (authorRes.hits.hits as ElasticsearchHit<Author>[]).map(hit => ({ id: hit._id, ...hit._source })),
-        bookings: (bookingRes.hits.hits as ElasticsearchHit<Booking>[]).map(hit => ({ id: hit._id, ...hit._source })),
-        genres: (genreRes.hits.hits as ElasticsearchHit<Genre>[]).map(hit => ({ id: hit._id, ...hit._source })),
-        categories: (categoryRes.hits.hits as ElasticsearchHit<Category>[]).map(hit => ({ id: hit._id, ...hit._source })),
+        users: userRes,
+        books: bookRes,
+        authors: authorRes,
+        bookings: bookingRes,
+        genres: genreRes,
+        categories: categoryRes,
       };
     }),
 });
