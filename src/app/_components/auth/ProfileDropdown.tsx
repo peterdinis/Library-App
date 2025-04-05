@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { useToast } from "~/hooks/use-toast";
+import { useToast } from "~/hooks/shared/use-toast";
 
 const ProfileDropdown: FC = () => {
   const { toast } = useToast();
