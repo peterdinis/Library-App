@@ -21,7 +21,7 @@ import {
 } from "~/components/ui/tooltip";
 import { cn } from "~/lib/utils";
 import ProfileDropdown from "../auth/ProfileDropdown";
-import QuickSearch from "../books/QuickSearch";
+import QuickSearch from "./QuickSearch";
 import ModeToggle from "./ModeToggle";
 import { useSession } from "next-auth/react";
 
