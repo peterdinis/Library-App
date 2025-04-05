@@ -38,18 +38,27 @@ model User {
   createdAt        DateTime   @default(now())
   updatedAt        DateTime   @updatedAt()
   bookings         Booking[] 
+
+  // Full-text search index with a default value
+  searchIndex      String     @default("") @db.VarChar(255) 
 }
 
 model Genre {
   id    String @id @unique @default(uuid())
   name  String @unique
   books Book[]
+
+  // Full-text search index with a default value
+  searchIndex  String  @default("") @db.VarChar(255)
 }
 
 model Category {
   id    String @id @unique @default(uuid())
   name  String @unique
   books Book[]
+
+  // Full-text search index with a default value
+  searchIndex  String  @default("") @db.VarChar(255)
 }
 
 model Author {
@@ -57,6 +66,9 @@ model Author {
   name  String  @unique
   bio   String?
   books Book[]
+
+  // Full-text search index with a default value
+  searchIndex  String  @default("") @db.VarChar(255)
 }
 
 model Book {
@@ -81,6 +93,9 @@ model Book {
 
   authorId   String
   author     Author   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  // Full-text search index with a default value
+  searchIndex   String   @default("") @db.VarChar(255)
 }
 
 model Booking {
