@@ -23,13 +23,6 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import { pdf } from "@react-pdf/renderer";
-import { AuthorsPDFDocument } from "../categories/AuthorsPDFDocument";
-
-interface Author {
-  name: string;
-  bio?: string;
-}
 
 interface AuthorsTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -49,29 +42,11 @@ export function AuthorsTable<TData, TValue>({
   });
 
   const totalPages = table.getPageCount();
-
-  const handleDownloadPDF = async () => {
-    const blob = await pdf(
-      <AuthorsPDFDocument authors={data as any} />,
-    ).toBlob();
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "authors.pdf";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  };
-
   return (
     <div className="rounded-md border border-neutral-600 p-4 dark:border-neutral-100">
       <div className="flex gap-4">
         <Button variant="default">
           <Link href="/admin/authors/create">Vytvor nového spisovateľa</Link>
-        </Button>
-        <Button variant="outline" onClick={handleDownloadPDF}>
-          Stiahnuť PDF
         </Button>
       </div>
       <Table className="mt-6">
