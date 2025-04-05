@@ -8,47 +8,81 @@ export const adminRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       const { query } = input;
 
+      const searchQuery = query.trim().toLowerCase();
+
+      // Use limit and select only necessary fields
       const [userRes, bookRes, authorRes, bookingRes, genreRes, categoryRes] =
         await Promise.all([
           db.user.findMany({
             where: {
               OR: [
-                { fullName: { contains: query, mode: "insensitive" } },
-                { email: { contains: query, mode: "insensitive" } },
+                { fullName: { contains: searchQuery, mode: "insensitive" } },
+                { email: { contains: searchQuery, mode: "insensitive" } },
               ],
             },
+            select: {
+              id: true,
+              fullName: true,
+              email: true,
+            },
+            take: 10, // limit to avoid returning too many users
           }),
           db.book.findMany({
             where: {
               OR: [
-                { title: { contains: query, mode: "insensitive" } },
-                { description: { contains: query, mode: "insensitive" } },
-                { summary: { contains: query, mode: "insensitive" } },
+                { title: { contains: searchQuery, mode: "insensitive" } },
+                { description: { contains: searchQuery, mode: "insensitive" } },
+                { summary: { contains: searchQuery, mode: "insensitive" } },
               ],
             },
+            select: {
+              id: true,
+              title: true,
+            },
+            take: 10,
           }),
           db.author.findMany({
             where: {
               OR: [
-                { name: { contains: query, mode: "insensitive" } },
-                { bio: { contains: query, mode: "insensitive" } },
+                { name: { contains: searchQuery, mode: "insensitive" } },
+                { bio: { contains: searchQuery, mode: "insensitive" } },
               ],
             },
+            select: {
+              id: true,
+              name: true,
+            },
+            take: 10,
           }),
           db.booking.findMany({
             where: {
-              OR: [{ className: { contains: query, mode: "insensitive" } }],
+              OR: [{ className: { contains: searchQuery, mode: "insensitive" } }],
             },
+            select: {
+              id: true,
+              className: true,
+            },
+            take: 10,
           }),
           db.genre.findMany({
             where: {
-              name: { contains: query, mode: "insensitive" },
+              name: { contains: searchQuery, mode: "insensitive" },
             },
+            select: {
+              id: true,
+              name: true,
+            },
+            take: 10,
           }),
           db.category.findMany({
             where: {
-              name: { contains: query, mode: "insensitive" },
+              name: { contains: searchQuery, mode: "insensitive" },
             },
+            select: {
+              id: true,
+              name: true,
+            },
+            take: 10,
           }),
         ]);
 
