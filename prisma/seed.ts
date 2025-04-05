@@ -10,7 +10,7 @@ async function main() {
 
   // Create Genres
   const genres = await Promise.all(
-    Array.from({ length: 5 }).map(() =>
+    Array.from({ length: 30 }).map(() =>
       db.genre.create({
         data: {
           name: faker.music.genre(),
@@ -21,7 +21,7 @@ async function main() {
 
   // Create Categories
   const categories = await Promise.all(
-    Array.from({ length: 5 }).map(() =>
+    Array.from({ length: 30 }).map(() =>
       db.category.create({
         data: {
           name: faker.commerce.department(),
@@ -32,7 +32,7 @@ async function main() {
 
   // Create Authors
   const authors = await Promise.all(
-    Array.from({ length: 5 }).map(() =>
+    Array.from({ length: 30 }).map(() =>
       db.author.create({
         data: {
           name: faker.person.fullName(),

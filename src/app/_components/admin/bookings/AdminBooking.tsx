@@ -10,8 +10,6 @@ import { Booking, bookingColumns } from "./columns";
 const AdminBooking: FC = () => {
   const { data, isLoading } = api.booking.getAllBookings.useQuery();
 
-  console.log("D", data);
-
   if (isLoading) return <Loader2 className="h-8 w-8 animate-spin" />;
   return (
     <AdminSharedComponent showStats={false}>

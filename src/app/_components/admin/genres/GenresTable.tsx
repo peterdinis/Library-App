@@ -1,7 +1,5 @@
 "use client";
 
-import { Genre } from "@prisma/client";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 import {
   type ColumnDef,
   flexRender,
@@ -24,7 +22,6 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import { GenresPDFDocument } from "./GenresPDFDocument";
 import { Button } from "~/components/ui/button";
 
 interface GenresTableProps<TData, TValue> {
@@ -52,13 +49,6 @@ export function GenresTable<TData, TValue>({
         <Button>
           <Link href="/admin/genres/create">Pridaj nový žáner</Link>
         </Button>
-        <PDFDownloadLink
-          document={<GenresPDFDocument genres={data as Genre[]} />}
-          fileName="genres.pdf"
-          className="rounded-md bg-blue-500 px-4 py-2 text-white"
-        >
-          {({ loading }) => (loading ? "Generujem PDF..." : "Stiahni PDF")}
-        </PDFDownloadLink>
       </div>
       <Table className="mt-6">
         <TableHeader>
