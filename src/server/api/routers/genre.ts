@@ -7,53 +7,64 @@ import {
 import { db } from "~/server/db";
 
 export const genreRouter = createTRPCRouter({
-  getAllGenres: publicProcedure.query(async () => {
-    return await db.genre.findMany();
-  }),
+  getAllGenres: publicProcedure.query(() =>
+    db.genre.findMany({
+      select: {
+        id: true,
+        name: true,
+      },
+    })
+  ),
 
-  getGenreDetail: publicProcedure.input(z.string()).query(async ({ input }) => {
-    return await db.genre.findUnique({
-      where: { id: input },
-    });
-  }),
+  getGenreDetail: publicProcedure
+    .input(z.string())
+    .query(({ input }) =>
+      db.genre.findUnique({
+        where: { id: input },
+        select: {
+          id: true,
+          name: true,
+        },
+      })
+    ),
+
   searchGenres: publicProcedure
-    .input(
-      z.object({
-        query: z.string().min(1),
-      }),
-    )
-    .query(async ({ input }) => {
-      return await db.genre.findMany({
+    .input(z.object({ query: z.string().min(1) }))
+    .query(({ input }) =>
+      db.genre.findMany({
         where: {
           name: {
             contains: input.query,
             mode: "insensitive",
           },
         },
-      });
-    }),
+        select: {
+          id: true,
+          name: true,
+        },
+      })
+    ),
+
   createGenre: protectedProcedure
-    .input(
-      z.object({
-        name: z.string(),
-      }),
-    )
-    .mutation(async ({ input }) => {
-      return await db.genre.create({ data: input });
-    }),
+    .input(z.object({ name: z.string() }))
+    .mutation(({ input }) => db.genre.create({ data: input })),
+
   updateGenre: protectedProcedure
     .input(
       z.object({
         id: z.string(),
         name: z.string().optional(),
-      }),
+      })
     )
-    .mutation(async ({ input }) => {
-      return await db.genre.update({ where: { id: input.id }, data: input });
+    .mutation(({ input }) => {
+      const { id, ...data } = input;
+      return db.genre.update({
+        where: { id },
+        data,
+      });
     }),
+
   deleteGenre: protectedProcedure
     .input(z.string())
-    .mutation(async ({ input }) => {
-      return await db.genre.delete({ where: { id: input } });
-    }),
+    .mutation(({ input }) => db.genre.delete({ where: { id: input } })),
 });
