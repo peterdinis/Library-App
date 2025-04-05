@@ -4,6 +4,7 @@ import {
   BarChart3,
   BookMarked,
   BookOpen,
+  BookText,
   ChartColumnStacked,
   Library,
   Loader2,
@@ -38,6 +39,8 @@ const AdminSharedComponent: FC<AdminSharedComponentProps> = ({
     api.genre.getAllGenres.useQuery();
   const { data: authorsData, isLoading: authorLoading } =
     api.author.getAllAuthors.useQuery();
+  const { data: bookingData, isLoading: bookingLoading } =
+    api.booking.getAllBookings.useQuery();
   const { data: userData, isLoading: userDataLoading } =
     api.user.getAllUsers.useQuery();
 
@@ -46,7 +49,8 @@ const AdminSharedComponent: FC<AdminSharedComponentProps> = ({
     categoryLoading ||
     genreLoading ||
     userDataLoading ||
-    authorLoading
+    authorLoading ||
+    bookingLoading
   )
     return <Loader2 className="h-8 w-8 animate-spin" />;
 
@@ -181,6 +185,11 @@ const AdminSharedComponent: FC<AdminSharedComponentProps> = ({
                   title: "Všetky spisovateľia/ky",
                   value: authorsData?.length,
                   color: "bg-red-500",
+                },
+                {
+                  title: "Všetky objednávky",
+                  value: bookingData?.length,
+                  color: "bg-orange-500",
                 },
                 {
                   title: "Všetci používatelia",
