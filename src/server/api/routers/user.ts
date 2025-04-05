@@ -71,4 +71,26 @@ export const userRouter = createTRPCRouter({
         userId: newUser.id,
       };
     }),
+
+    deleteUserById: publicProcedure
+  .input(
+    z.object({
+      id: z.string().uuid("Invalid user ID"),
+    }),
+  )
+  .mutation(async ({ input }) => {
+    const user = await db.user.findUnique({
+      where: { id: input.id },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    await db.user.delete({
+      where: { id: input.id },
+    });
+
+    return { message: "User deleted successfully" };
+  }),
 });

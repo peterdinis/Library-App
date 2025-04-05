@@ -12,8 +12,8 @@ import {
   DialogTitle,
   DialogDescription,
 } from "~/components/ui/dialog";
-import { useToast } from "~/hooks/use-toast";
 import { api } from "~/trpc/react";
+import { useToast } from "~/hooks/shared/use-toast";
 
 export type Author = {
   id: string;
