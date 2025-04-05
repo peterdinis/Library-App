@@ -4,7 +4,6 @@ import {
   BarChart3,
   BookMarked,
   BookOpen,
-  BookText,
   ChartColumnStacked,
   Library,
   Loader2,
@@ -18,6 +17,7 @@ import { type FC, ReactNode, useState } from "react";
 import { api } from "~/trpc/react";
 import ModeToggle from "../../shared/ModeToggle";
 import ProfileDropdown from "../../auth/ProfileDropdown";
+import AdminQuickSearch from "./AdminQuickSearch";
 
 type AdminSharedComponentProps = {
   showStats?: boolean;
@@ -116,12 +116,6 @@ const AdminSharedComponent: FC<AdminSharedComponentProps> = ({
               label: "Žánre",
               link: "/admin/genres",
             },
-            {
-              id: "borrowedBooks",
-              icon: BookText,
-              label: "Všetky objednávky",
-              link: "/admin/booking",
-            },
           ].map((item) => (
             <button
               key={item.id}
@@ -159,6 +153,7 @@ const AdminSharedComponent: FC<AdminSharedComponentProps> = ({
             </div>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
+                <AdminQuickSearch />
                 <span className="hidden text-sm font-medium sm:inline">
                   <ProfileDropdown />
                 </span>
