@@ -7,59 +7,66 @@ import {
 import { db } from "~/server/db";
 
 export const categoryRouter = createTRPCRouter({
-  getAllCategories: publicProcedure.query(async () => {
-    return await db.category.findMany();
-  }),
+  getAllCategories: publicProcedure.query(() =>
+    db.category.findMany({
+      select: {
+        id: true,
+        name: true,
+      },
+    })
+  ),
 
   getCategoryDetail: publicProcedure
     .input(z.string())
-    .query(async ({ input }) => {
-      return await db.category.findUnique({
+    .query(({ input }) =>
+      db.category.findUnique({
         where: { id: input },
-      });
-    }),
+        select: {
+          id: true,
+          name: true,
+        },
+      })
+    ),
 
   searchCategories: publicProcedure
-    .input(
-      z.object({
-        query: z.string().min(1),
-      }),
-    )
-    .query(async ({ input }) => {
-      return await db.category.findMany({
+    .input(z.object({ query: z.string().min(1) }))
+    .query(({ input }) =>
+      db.category.findMany({
         where: {
           name: {
             contains: input.query,
             mode: "insensitive",
           },
         },
-      });
-    }),
+        select: {
+          id: true,
+          name: true,
+        },
+      })
+    ),
 
   createCategory: protectedProcedure
-    .input(
-      z.object({
-        name: z.string(),
-      }),
-    )
-    .mutation(async ({ input }) => {
-      return await db.category.create({ data: input });
-    }),
+    .input(z.object({ name: z.string() }))
+    .mutation(({ input }) => db.category.create({ data: input })),
 
   updateCategory: protectedProcedure
     .input(
       z.object({
         id: z.string(),
         name: z.string().optional(),
-      }),
+      })
     )
-    .mutation(async ({ input }) => {
-      return await db.category.update({ where: { id: input.id }, data: input });
+    .mutation(({ input }) => {
+      const { id, ...data } = input;
+      return db.category.update({
+        where: { id },
+        data,
+      });
     }),
 
   deleteCategory: protectedProcedure
     .input(z.string())
-    .mutation(async ({ input }) => {
-      return await db.category.delete({ where: { id: input } });
-    }),
+    .mutation(({ input }) =>
+      db.category.delete({ where: { id: input } })
+    ),
 });

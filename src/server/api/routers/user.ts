@@ -2,20 +2,28 @@ import bcrypt from "bcrypt";
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { db } from "~/server/db";
+import { TRPCError } from "@trpc/server";
 
 export const userRouter = createTRPCRouter({
-  getAllUsers: publicProcedure.query(async () => {
-    return await db.user.findMany();
-  }),
+  getAllUsers: publicProcedure.query(() =>
+    db.user.findMany({
+      select: {
+        id: true,
+        fullName: true,
+        email: true,
+        createdAt: true,
+      },
+    })
+  ),
 
   searchUsers: publicProcedure
     .input(
       z.object({
         query: z.string().min(1),
-      }),
+      })
     )
-    .query(async ({ input }) => {
-      return await db.user.findMany({
+    .query(({ input }) =>
+      db.user.findMany({
         where: {
           OR: [
             {
@@ -32,28 +40,35 @@ export const userRouter = createTRPCRouter({
             },
           ],
         },
-      });
-    }),
+        select: {
+          id: true,
+          fullName: true,
+          email: true,
+        },
+      })
+    ),
 
   register: publicProcedure
     .input(
       z.object({
         fullName: z.string().min(1, "Full name is required"),
         email: z.string().email("Invalid email address"),
-        password: z
-          .string()
-          .min(6, "Password must be at least 6 characters long"),
-      }),
+        password: z.string().min(6, "Password must be at least 6 characters long"),
+      })
     )
     .mutation(async ({ input }) => {
       const { fullName, email, password } = input;
 
       const existingUser = await db.user.findUnique({
         where: { email },
+        select: { id: true },
       });
 
       if (existingUser) {
-        throw new Error("Email is already registered");
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: "Email is already registered",
+        });
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -64,6 +79,9 @@ export const userRouter = createTRPCRouter({
           email,
           password: hashedPassword,
         },
+        select: {
+          id: true,
+        },
       });
 
       return {
@@ -72,25 +90,29 @@ export const userRouter = createTRPCRouter({
       };
     }),
 
-    deleteUserById: publicProcedure
-  .input(
-    z.object({
-      id: z.string().uuid("Invalid user ID"),
+  deleteUserById: publicProcedure
+    .input(
+      z.object({
+        id: z.string().uuid("Invalid user ID"),
+      })
+    )
+    .mutation(async ({ input }) => {
+      const user = await db.user.findUnique({
+        where: { id: input.id },
+        select: { id: true },
+      });
+
+      if (!user) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "User not found",
+        });
+      }
+
+      await db.user.delete({
+        where: { id: input.id },
+      });
+
+      return { message: "User deleted successfully" };
     }),
-  )
-  .mutation(async ({ input }) => {
-    const user = await db.user.findUnique({
-      where: { id: input.id },
-    });
-
-    if (!user) {
-      throw new Error("User not found");
-    }
-
-    await db.user.delete({
-      where: { id: input.id },
-    });
-
-    return { message: "User deleted successfully" };
-  }),
 });

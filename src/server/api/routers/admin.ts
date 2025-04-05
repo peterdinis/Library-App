@@ -9,8 +9,18 @@ export const adminRouter = createTRPCRouter({
       const { query } = input;
 
       const searchQuery = query.trim().toLowerCase();
+      
+      if (!searchQuery || searchQuery.length < 2) {
+        return {
+          users: [],
+          books: [],
+          authors: [],
+          bookings: [],
+          genres: [],
+          categories: [],
+        };
+      }
 
-      // Use limit and select only necessary fields
       const [userRes, bookRes, authorRes, bookingRes, genreRes, categoryRes] =
         await Promise.all([
           db.user.findMany({
@@ -25,7 +35,7 @@ export const adminRouter = createTRPCRouter({
               fullName: true,
               email: true,
             },
-            take: 10, // limit to avoid returning too many users
+            take: 10,
           }),
           db.book.findMany({
             where: {
@@ -56,9 +66,7 @@ export const adminRouter = createTRPCRouter({
           }),
           db.booking.findMany({
             where: {
-              OR: [
-                { className: { contains: searchQuery, mode: "insensitive" } },
-              ],
+              className: { contains: searchQuery, mode: "insensitive" },
             },
             select: {
               id: true,

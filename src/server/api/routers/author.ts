@@ -7,15 +7,28 @@ import {
 import { db } from "~/server/db";
 
 export const authorRouter = createTRPCRouter({
-  getAllAuthors: publicProcedure.query(async () => {
-    return await db.author.findMany();
+  getAllAuthors: publicProcedure.query(() => {
+    return db.author.findMany({
+      select: {
+        id: true,
+        name: true,
+      },
+      orderBy: {
+        name: "asc",
+      },
+    });
   }),
 
   getAuthorDetail: publicProcedure
     .input(z.string())
-    .query(async ({ input }) => {
-      return await db.author.findUnique({
+    .query(({ input }) => {
+      return db.author.findUnique({
         where: { id: input },
+        select: {
+          id: true,
+          name: true,
+          bio: true,
+        },
       });
     }),
 
@@ -25,13 +38,24 @@ export const authorRouter = createTRPCRouter({
         query: z.string().min(1),
       }),
     )
-    .query(async ({ input }) => {
-      return await db.author.findMany({
+    .query(({ input }) => {
+      const trimmedQuery = input.query.trim();
+      if (trimmedQuery.length < 2) return [];
+
+      return db.author.findMany({
         where: {
           name: {
-            contains: input.query,
+            contains: trimmedQuery,
             mode: "insensitive",
           },
+        },
+        select: {
+          id: true,
+          name: true,
+        },
+        take: 10,
+        orderBy: {
+          name: "asc",
         },
       });
     }),
@@ -43,8 +67,14 @@ export const authorRouter = createTRPCRouter({
         bio: z.string().optional(),
       }),
     )
-    .mutation(async ({ input }) => {
-      return await db.author.create({ data: input });
+    .mutation(({ input }) => {
+      return db.author.create({
+        data: input,
+        select: {
+          id: true,
+          name: true,
+        },
+      });
     }),
 
   updateAuthor: protectedProcedure
@@ -55,13 +85,26 @@ export const authorRouter = createTRPCRouter({
         bio: z.string().optional(),
       }),
     )
-    .mutation(async ({ input }) => {
-      return await db.author.update({ where: { id: input.id }, data: input });
+    .mutation(({ input }) => {
+      const { id, ...data } = input;
+      return db.author.update({
+        where: { id },
+        data,
+        select: {
+          id: true,
+          name: true,
+        },
+      });
     }),
 
   deleteAuthor: protectedProcedure
     .input(z.string())
-    .mutation(async ({ input }) => {
-      return await db.author.delete({ where: { id: input } });
+    .mutation(({ input }) => {
+      return db.author.delete({
+        where: { id: input },
+        select: {
+          id: true,
+        },
+      });
     }),
 });
