@@ -7,8 +7,7 @@ import { useState } from "react";
 import { Pencil, Trash2 } from "lucide-react";
 import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription, DialogHeader, DialogFooter } from "~/components/ui/dialog";
 import { Button } from "~/components/ui/button";
-import { Form } from "react-hook-form";
-import { FormField, FormItem, FormLabel, FormControl } from "~/components/ui/form";
+import { FormField, Form, FormItem, FormLabel, FormControl } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { useForm} from "react-hook-form";
 
@@ -85,7 +84,7 @@ export const bookingColumns: ColumnDef<Booking>[] = [
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-2">
-                <Form>
+                <Form {...form}>
                   {/* Kniha */}
                   <FormField control={form.control} name="book" render={({ field }) => (
                     <FormItem>
