@@ -7,26 +7,61 @@ import {
 import { db } from "~/server/db";
 
 export const bookRouter = createTRPCRouter({
-  getAllBooks: protectedProcedure.query(async () => {
-    return await db.book.findMany();
-  }),
-
-  getBookDetail: publicProcedure.input(z.string()).query(async ({ input }) => {
-    return await db.book.findUnique({
-      where: { id: input },
+  getAllBooks: protectedProcedure.query(() => {
+    return db.book.findMany({
+      select: {
+        id: true,
+        title: true,
+        rating: true,
+        coverUrl: true,
+      },
+      orderBy: { title: "asc" },
     });
   }),
 
-  quickSearchBook: publicProcedure
+  getBookDetail: publicProcedure
     .input(z.string())
-    .query(async ({ input }) => {
-      const lowercaseInput = input.toLowerCase();
-      return await db.book.findMany({
-        where: {
-          title: {
-            contains: lowercaseInput,
+    .query(({ input }) => {
+      return db.book.findUnique({
+        where: { id: input },
+        select: {
+          id: true,
+          title: true,
+          rating: true,
+          coverUrl: true,
+          description: true,
+          totalCopies: true,
+          availableCopies: true,
+          summary: true,
+          author: {
+            select: { id: true, name: true },
+          },
+          genre: {
+            select: { id: true, name: true },
+          },
+          category: {
+            select: { id: true, name: true },
           },
         },
+      });
+    }),
+
+  quickSearchBook: publicProcedure
+    .input(z.string())
+    .query(({ input }) => {
+      return db.book.findMany({
+        where: {
+          title: {
+            contains: input.trim(),
+            mode: "insensitive",
+          },
+        },
+        select: {
+          id: true,
+          title: true,
+        },
+        orderBy: { title: "asc" },
+        take: 10,
       });
     }),
 
@@ -50,14 +85,21 @@ export const bookRouter = createTRPCRouter({
         ...(authorId && { authorId }),
       };
 
-      const books = await db.book.findMany({
-        where: filters,
-        skip,
-        take: pageSize,
-        orderBy: { title: "asc" },
-      });
-
-      const totalBooks = await db.book.count({ where: filters });
+      const [books, totalBooks] = await Promise.all([
+        db.book.findMany({
+          where: filters,
+          skip,
+          take: pageSize,
+          orderBy: { title: "asc" },
+          select: {
+            id: true,
+            title: true,
+            rating: true,
+            coverUrl: true,
+          },
+        }),
+        db.book.count({ where: filters }),
+      ]);
 
       return {
         books,
@@ -84,8 +126,8 @@ export const bookRouter = createTRPCRouter({
         authorId: z.string(),
       }),
     )
-    .mutation(async ({ input }) => {
-      return await db.book.create({
+    .mutation(({ input }) => {
+      return db.book.create({
         data: {
           title: input.title,
           rating: input.rating,
@@ -97,6 +139,10 @@ export const bookRouter = createTRPCRouter({
           genre: { connect: { id: input.genreId } },
           category: { connect: { id: input.categoryId } },
           author: { connect: { id: input.authorId } },
+        },
+        select: {
+          id: true,
+          title: true,
         },
       });
     }),
@@ -119,32 +165,34 @@ export const bookRouter = createTRPCRouter({
         authorId: z.string().optional(),
       }),
     )
-    .mutation(async ({ input }) => {
-      const { id, ...updateData } = input;
-      const updatedData = Object.fromEntries(
-        Object.entries(updateData).filter(([_, v]) => v !== undefined),
-      );
+    .mutation(({ input }) => {
+      const { id, genreId, categoryId, authorId, ...rest } = input;
+      const updateData: any = {
+        ...Object.fromEntries(Object.entries(rest).filter(([_, v]) => v !== undefined)),
+      };
 
-      return await db.book.update({
+      if (genreId) updateData.genre = { connect: { id: genreId } };
+      if (categoryId) updateData.category = { connect: { id: categoryId } };
+      if (authorId) updateData.author = { connect: { id: authorId } };
+
+      return db.book.update({
         where: { id },
-        data: {
-          ...updatedData,
-          genre: updateData.genreId
-            ? { connect: { id: updateData.genreId } }
-            : undefined,
-          category: updateData.categoryId
-            ? { connect: { id: updateData.categoryId } }
-            : undefined,
-          author: updateData.authorId
-            ? { connect: { id: updateData.authorId } }
-            : undefined,
+        data: updateData,
+        select: {
+          id: true,
+          title: true,
         },
       });
     }),
 
   deleteBook: protectedProcedure
     .input(z.string())
-    .mutation(async ({ input }) => {
-      return await db.book.delete({ where: { id: input } });
+    .mutation(({ input }) => {
+      return db.book.delete({
+        where: { id: input },
+        select: {
+          id: true,
+        },
+      });
     }),
 });
