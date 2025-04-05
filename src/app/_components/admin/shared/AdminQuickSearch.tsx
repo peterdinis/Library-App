@@ -55,7 +55,7 @@ const AdminQuickSearch: FC = () => {
         </DialogHeader>
         <div className="flex gap-2 py-4">
           <Input
-            placeholder="Hľadaj knihu"
+            placeholder="Hľadaj..."
             className="flex-1"
             value={searchQuery}
             onChange={handleSearchInputChange}
