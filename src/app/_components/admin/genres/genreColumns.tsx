@@ -12,8 +12,8 @@ import {
   DialogTitle,
   DialogDescription,
 } from "~/components/ui/dialog";
-import { useToast } from "~/hooks/use-toast";
 import { api } from "~/trpc/react";
+import { useToast } from "~/hooks/shared/use-toast";
 
 export type Genre = {
   id: string;
@@ -67,36 +67,6 @@ export const genreColumns: ColumnDef<Genre>[] = [
 
       return (
         <div className="flex gap-3">
-          <Dialog open={openEdit} onOpenChange={setOpenEdit}>
-            <DialogTrigger asChild>
-              <Button
-                variant="outline"
-                className="bg-green-600 hover:bg-green-800"
-              >
-                Vyhľadať žáner
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Upraviť žáner</DialogTitle>
-                <DialogDescription>
-                  Upravte názov žánru a potvrďte zmeny.
-                </DialogDescription>
-              </DialogHeader>
-              <Input
-                value={newName}
-                onChange={(e) => setNewName(e.target.value)}
-              />
-              <Button
-                onClick={() =>
-                  updateGenre.mutate({ id: genre.id, name: newName })
-                }
-                disabled={updateGenre.isPending}
-              >
-                Uložiť zmeny
-              </Button>
-            </DialogContent>
-          </Dialog>
 
           <Dialog open={oepnSearchModal} onOpenChange={setOpenSearchModal}>
             <DialogTrigger asChild>
