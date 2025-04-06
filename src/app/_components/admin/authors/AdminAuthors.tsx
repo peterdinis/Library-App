@@ -73,12 +73,6 @@ const AdminAuthors: FC = () => {
               link: "/admin/books",
             },
             {
-              id: "members",
-              icon: Users,
-              label: "Všetci používatelia",
-              link: "/admin/users",
-            },
-            {
               id: "categories",
               icon: ChartColumnStacked,
               label: "Kategórie",

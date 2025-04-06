@@ -17,14 +17,21 @@ import { adminColumns } from "./adminColumns";
 import { api } from "~/trpc/react";
 import { Loader2 } from "lucide-react";
 import { bookingColumns } from "./bookings/columns";
+import { UsersTable } from "./users/UsersTable";
+import { User } from "@prisma/client";
+import { userColumns } from "./users/columns";
 
 const AdminWrapper: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const admin = useAdmin();
   const { data, isLoading } = api.booking.getAllBookings.useQuery();
+  const { data: usersData, isLoading: userLoading } =
+    api.user.getAllUsers.useQuery();
+
   const teacher = useTeacher();
 
-  if (isLoading) return <Loader2 className="h-8 w-8 animate-spin" />;
+  if (isLoading || userLoading)
+    return <Loader2 className="h-8 w-8 animate-spin" />;
 
   if (!admin || !teacher) {
     window.location.replace("/");
@@ -36,6 +43,14 @@ const AdminWrapper: FC = () => {
           <h2 className="text-lg font-semibold">Posledné objednávky kníh</h2>
         </div>
         <AdminTable data={data as any} columns={bookingColumns} />
+      </div>
+      <div className="dark:bg-background mt-8 overflow-hidden rounded-lg bg-white shadow-sm">
+        <div className="border-b border-gray-200 p-4 sm:p-6">
+          <h2 className="text-lg font-semibold">
+            Nový prihlasení používatelia
+          </h2>
+        </div>
+        <UsersTable data={usersData as any} columns={userColumns} />
       </div>
 
       <div className="mt-14">

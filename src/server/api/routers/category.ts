@@ -13,20 +13,18 @@ export const categoryRouter = createTRPCRouter({
         id: true,
         name: true,
       },
-    })
+    }),
   ),
 
-  getCategoryDetail: publicProcedure
-    .input(z.string())
-    .query(({ input }) =>
-      db.category.findUnique({
-        where: { id: input },
-        select: {
-          id: true,
-          name: true,
-        },
-      })
-    ),
+  getCategoryDetail: publicProcedure.input(z.string()).query(({ input }) =>
+    db.category.findUnique({
+      where: { id: input },
+      select: {
+        id: true,
+        name: true,
+      },
+    }),
+  ),
 
   searchCategories: publicProcedure
     .input(z.object({ query: z.string().min(1) }))
@@ -42,7 +40,7 @@ export const categoryRouter = createTRPCRouter({
           id: true,
           name: true,
         },
-      })
+      }),
     ),
 
   createCategory: protectedProcedure
@@ -54,7 +52,7 @@ export const categoryRouter = createTRPCRouter({
       z.object({
         id: z.string(),
         name: z.string().optional(),
-      })
+      }),
     )
     .mutation(({ input }) => {
       const { id, ...data } = input;
@@ -66,7 +64,5 @@ export const categoryRouter = createTRPCRouter({
 
   deleteCategory: protectedProcedure
     .input(z.string())
-    .mutation(({ input }) =>
-      db.category.delete({ where: { id: input } })
-    ),
+    .mutation(({ input }) => db.category.delete({ where: { id: input } })),
 });

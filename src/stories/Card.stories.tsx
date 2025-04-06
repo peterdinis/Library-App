@@ -1,6 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "~/components/ui/card";
-
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "~/components/ui/card";
 
 const meta: Meta = {
   title: "Components/Card",
@@ -28,7 +34,7 @@ export const Default: Story = {
         </p>
       </CardContent>
       <CardFooter>
-        <button className="ml-auto rounded-md bg-primary px-4 py-2 text-white hover:bg-primary/90">
+        <button className="bg-primary hover:bg-primary/90 ml-auto rounded-md px-4 py-2 text-white">
           Action
         </button>
       </CardFooter>

@@ -111,7 +111,7 @@ export const columns: ColumnDef<Book>[] = [
                 <div>
                   <label className="block text-sm font-medium">Názov</label>
                   <input
-                    className="w-full border rounded px-3 py-2 mt-1"
+                    className="mt-1 w-full rounded border px-3 py-2"
                     value={formData.title}
                     onChange={(e) =>
                       setFormData({ ...formData, title: e.target.value })
@@ -119,10 +119,12 @@ export const columns: ColumnDef<Book>[] = [
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium">Hodnotenie</label>
+                  <label className="block text-sm font-medium">
+                    Hodnotenie
+                  </label>
                   <input
                     type="number"
-                    className="w-full border rounded px-3 py-2 mt-1"
+                    className="mt-1 w-full rounded border px-3 py-2"
                     value={formData.rating}
                     onChange={(e) =>
                       setFormData({
@@ -136,10 +138,12 @@ export const columns: ColumnDef<Book>[] = [
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium">Dostupné kópie</label>
+                  <label className="block text-sm font-medium">
+                    Dostupné kópie
+                  </label>
                   <input
                     type="number"
-                    className="w-full border rounded px-3 py-2 mt-1"
+                    className="mt-1 w-full rounded border px-3 py-2"
                     value={formData.availableCopies}
                     onChange={(e) =>
                       setFormData({
