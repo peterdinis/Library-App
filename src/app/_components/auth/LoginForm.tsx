@@ -3,9 +3,9 @@
 import { Book, Lock, Mail, Eye, EyeOff } from "lucide-react";
 import { useState, type FC, FormEvent } from "react";
 import { Button } from "~/components/ui/button";
-import { useToast } from "~/hooks/use-toast";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useToast } from "~/hooks/shared/use-toast";
 
 const LoginForm: FC = () => {
   const [showPassword, setShowPassword] = useState(false);

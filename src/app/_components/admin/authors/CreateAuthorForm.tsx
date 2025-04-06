@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
-import { useToast } from "~/hooks/use-toast";
+import { useToast } from "~/hooks/shared/use-toast";
 import { api } from "~/trpc/react";
 
 const authorSchema = z.object({

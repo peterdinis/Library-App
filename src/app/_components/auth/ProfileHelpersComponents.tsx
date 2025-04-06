@@ -24,7 +24,7 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 import { Booking } from "@prisma/client";
 import { api } from "~/trpc/react";
-import { useToast } from "~/hooks/use-toast";
+import { useToast } from "~/hooks/shared/use-toast";
 
 type Book = {
   id: string;

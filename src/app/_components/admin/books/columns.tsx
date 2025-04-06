@@ -14,7 +14,7 @@ import {
   DialogFooter,
 } from "~/components/ui/dialog";
 import { api } from "~/trpc/react";
-import { toast, useToast } from "~/hooks/shared/use-toast";
+import { useToast } from "~/hooks/shared/use-toast";
 
 export type Book = {
   id: string;
