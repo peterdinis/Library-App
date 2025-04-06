@@ -58,6 +58,7 @@ export const authConfig = {
       },
     }),
   ],
+  debug: true,
   pages: {
     signIn: "/sign-in",
   },
