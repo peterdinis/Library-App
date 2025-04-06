@@ -150,7 +150,6 @@ export const bookingColumns: ColumnDef<Booking>[] = [
                         <FormLabel>Požičané od</FormLabel>
                         <FormControl>
                           <Input
-                            type="date"
                             value={
                               booking.borrowedDate
                                 ? format(
@@ -176,7 +175,6 @@ export const bookingColumns: ColumnDef<Booking>[] = [
                         <FormLabel>Požičané do</FormLabel>
                         <FormControl>
                           <Input
-                          type="date"
                             value={
                               booking.dueDate
                                 ? format(
