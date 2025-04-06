@@ -12,7 +12,7 @@ import {
 } from "~/components/ui/popover";
 import { api } from "~/trpc/react";
 import type { RegisterFormInputs } from "./Auth.interface";
-import { useToast } from "~/hooks/use-toast";
+import { useToast } from "~/hooks/shared/use-toast";
 
 const RegisterForm: FC = () => {
   const {
