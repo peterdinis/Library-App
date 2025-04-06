@@ -51,15 +51,15 @@ export const userColumns: ColumnDef<User>[] = [
       const deleteUser = api.user.deleteUserById.useMutation({
         onSuccess: async () => {
           toast({
-            title: "Používateľ úspešne zmazaný"
-          })
+            title: "Používateľ úspešne zmazaný",
+          });
           await utils.user.getAllUsers.invalidate();
           setOpen(false);
         },
         onError: (err) => {
           toast({
-            title: "Chyba pri mazání používateľa"
-          })
+            title: "Chyba pri mazání používateľa",
+          });
         },
       });
 
@@ -78,14 +78,19 @@ export const userColumns: ColumnDef<User>[] = [
             <DialogHeader>
               <DialogTitle>Si si istý?</DialogTitle>
               <DialogDescription>
-                Tento krok nenávratne odstráni používateľa <strong>{user.fullName}</strong>.
+                Tento krok nenávratne odstráni používateľa{" "}
+                <strong>{user.fullName}</strong>.
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>
               <Button variant="ghost" onClick={() => setOpen(false)}>
                 Zrušiť
               </Button>
-              <Button variant="destructive" onClick={handleDelete} disabled={deleteUser.isPending}>
+              <Button
+                variant="destructive"
+                onClick={handleDelete}
+                disabled={deleteUser.isPending}
+              >
                 {deleteUser.isPending ? "Mazanie..." : "Zmazať"}
               </Button>
             </DialogFooter>

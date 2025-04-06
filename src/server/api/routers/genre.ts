@@ -13,20 +13,18 @@ export const genreRouter = createTRPCRouter({
         id: true,
         name: true,
       },
-    })
+    }),
   ),
 
-  getGenreDetail: publicProcedure
-    .input(z.string())
-    .query(({ input }) =>
-      db.genre.findUnique({
-        where: { id: input },
-        select: {
-          id: true,
-          name: true,
-        },
-      })
-    ),
+  getGenreDetail: publicProcedure.input(z.string()).query(({ input }) =>
+    db.genre.findUnique({
+      where: { id: input },
+      select: {
+        id: true,
+        name: true,
+      },
+    }),
+  ),
 
   searchGenres: publicProcedure
     .input(z.object({ query: z.string().min(1) }))
@@ -42,7 +40,7 @@ export const genreRouter = createTRPCRouter({
           id: true,
           name: true,
         },
-      })
+      }),
     ),
 
   createGenre: protectedProcedure
@@ -54,7 +52,7 @@ export const genreRouter = createTRPCRouter({
       z.object({
         id: z.string(),
         name: z.string().optional(),
-      })
+      }),
     )
     .mutation(({ input }) => {
       const { id, ...data } = input;
