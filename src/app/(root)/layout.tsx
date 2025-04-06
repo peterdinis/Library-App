@@ -52,12 +52,10 @@ const Layout = async ({ children }: { children: ReactNode }) => {
         disableTransitionOnChange
       >
         <Navigation />
-        <SessionProvider>
-          <div>
-            {children}
-            <Toaster />
-            <ScrollToTop />
-          </div>
+        <SessionProvider refetchOnWindowFocus={false}>
+          {children}
+          <Toaster />
+          <ScrollToTop />
         </SessionProvider>
       </ThemeProvider>
     </main>

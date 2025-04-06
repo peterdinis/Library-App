@@ -30,6 +30,7 @@ export const bookRouter = createTRPCRouter({
         description: true,
         totalCopies: true,
         availableCopies: true,
+        isAvaible: true,
         summary: true,
         author: {
           select: { id: true, name: true },
