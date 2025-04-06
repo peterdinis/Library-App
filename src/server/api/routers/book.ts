@@ -19,51 +19,47 @@ export const bookRouter = createTRPCRouter({
     });
   }),
 
-  getBookDetail: publicProcedure
-    .input(z.string())
-    .query(({ input }) => {
-      return db.book.findUnique({
-        where: { id: input },
-        select: {
-          id: true,
-          title: true,
-          rating: true,
-          coverUrl: true,
-          description: true,
-          totalCopies: true,
-          availableCopies: true,
-          summary: true,
-          author: {
-            select: { id: true, name: true },
-          },
-          genre: {
-            select: { id: true, name: true },
-          },
-          category: {
-            select: { id: true, name: true },
-          },
+  getBookDetail: publicProcedure.input(z.string()).query(({ input }) => {
+    return db.book.findUnique({
+      where: { id: input },
+      select: {
+        id: true,
+        title: true,
+        rating: true,
+        coverUrl: true,
+        description: true,
+        totalCopies: true,
+        availableCopies: true,
+        summary: true,
+        author: {
+          select: { id: true, name: true },
         },
-      });
-    }),
+        genre: {
+          select: { id: true, name: true },
+        },
+        category: {
+          select: { id: true, name: true },
+        },
+      },
+    });
+  }),
 
-  quickSearchBook: publicProcedure
-    .input(z.string())
-    .query(({ input }) => {
-      return db.book.findMany({
-        where: {
-          title: {
-            contains: input.trim(),
-            mode: "insensitive",
-          },
+  quickSearchBook: publicProcedure.input(z.string()).query(({ input }) => {
+    return db.book.findMany({
+      where: {
+        title: {
+          contains: input.trim(),
+          mode: "insensitive",
         },
-        select: {
-          id: true,
-          title: true,
-        },
-        orderBy: { title: "asc" },
-        take: 10,
-      });
-    }),
+      },
+      select: {
+        id: true,
+        title: true,
+      },
+      orderBy: { title: "asc" },
+      take: 10,
+    });
+  }),
 
   getPaginatedBooks: publicProcedure
     .input(
@@ -168,7 +164,9 @@ export const bookRouter = createTRPCRouter({
     .mutation(({ input }) => {
       const { id, genreId, categoryId, authorId, ...rest } = input;
       const updateData: any = {
-        ...Object.fromEntries(Object.entries(rest).filter(([_, v]) => v !== undefined)),
+        ...Object.fromEntries(
+          Object.entries(rest).filter(([_, v]) => v !== undefined),
+        ),
       };
 
       if (genreId) updateData.genre = { connect: { id: genreId } };
@@ -185,14 +183,12 @@ export const bookRouter = createTRPCRouter({
       });
     }),
 
-  deleteBook: protectedProcedure
-    .input(z.string())
-    .mutation(({ input }) => {
-      return db.book.delete({
-        where: { id: input },
-        select: {
-          id: true,
-        },
-      });
-    }),
+  deleteBook: protectedProcedure.input(z.string()).mutation(({ input }) => {
+    return db.book.delete({
+      where: { id: input },
+      select: {
+        id: true,
+      },
+    });
+  }),
 });

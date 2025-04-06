@@ -1,6 +1,14 @@
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectLabel, SelectItem, SelectSeparator } from "@radix-ui/react-select";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectGroup,
+  SelectLabel,
+  SelectItem,
+  SelectSeparator,
+} from "@radix-ui/react-select";
 import type { Meta, StoryObj } from "@storybook/react";
-
 
 const meta: Meta = {
   title: "Components/Select",

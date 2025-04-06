@@ -19,18 +19,16 @@ export const authorRouter = createTRPCRouter({
     });
   }),
 
-  getAuthorDetail: publicProcedure
-    .input(z.string())
-    .query(({ input }) => {
-      return db.author.findUnique({
-        where: { id: input },
-        select: {
-          id: true,
-          name: true,
-          bio: true,
-        },
-      });
-    }),
+  getAuthorDetail: publicProcedure.input(z.string()).query(({ input }) => {
+    return db.author.findUnique({
+      where: { id: input },
+      select: {
+        id: true,
+        name: true,
+        bio: true,
+      },
+    });
+  }),
 
   searchAuthors: publicProcedure
     .input(
@@ -97,14 +95,12 @@ export const authorRouter = createTRPCRouter({
       });
     }),
 
-  deleteAuthor: protectedProcedure
-    .input(z.string())
-    .mutation(({ input }) => {
-      return db.author.delete({
-        where: { id: input },
-        select: {
-          id: true,
-        },
-      });
-    }),
+  deleteAuthor: protectedProcedure.input(z.string()).mutation(({ input }) => {
+    return db.author.delete({
+      where: { id: input },
+      select: {
+        id: true,
+      },
+    });
+  }),
 });

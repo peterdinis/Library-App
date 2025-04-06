@@ -107,7 +107,7 @@ export const bookingColumns: ColumnDef<Booking>[] = [
                       <FormItem>
                         <FormLabel>Kniha</FormLabel>
                         <FormControl>
-                          <Input value={booking.book?.title ?? "-"} readOnly />
+                          <Input value={booking.book?.title ?? "-"} />
                         </FormControl>
                       </FormItem>
                     )}
@@ -121,7 +121,7 @@ export const bookingColumns: ColumnDef<Booking>[] = [
                       <FormItem>
                         <FormLabel>Email</FormLabel>
                         <FormControl>
-                          <Input value={booking.user?.email ?? "-"} readOnly />
+                          <Input value={booking.user?.email ?? "-"} />
                         </FormControl>
                       </FormItem>
                     )}
@@ -135,7 +135,7 @@ export const bookingColumns: ColumnDef<Booking>[] = [
                       <FormItem>
                         <FormLabel>Stav</FormLabel>
                         <FormControl>
-                          <Input value={booking.status} readOnly />
+                          <Input value={booking.status} />
                         </FormControl>
                       </FormItem>
                     )}
@@ -159,7 +159,6 @@ export const bookingColumns: ColumnDef<Booking>[] = [
                                   )
                                 : "-"
                             }
-                            readOnly
                           />
                         </FormControl>
                       </FormItem>
@@ -184,7 +183,6 @@ export const bookingColumns: ColumnDef<Booking>[] = [
                                   )
                                 : "-"
                             }
-                            readOnly
                           />
                         </FormControl>
                       </FormItem>

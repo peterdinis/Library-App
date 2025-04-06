@@ -9,7 +9,7 @@ export const adminRouter = createTRPCRouter({
       const { query } = input;
 
       const searchQuery = query.trim().toLowerCase();
-      
+
       if (!searchQuery || searchQuery.length < 2) {
         return {
           users: [],

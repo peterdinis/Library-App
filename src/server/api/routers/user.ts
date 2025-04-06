@@ -13,14 +13,14 @@ export const userRouter = createTRPCRouter({
         email: true,
         createdAt: true,
       },
-    })
+    }),
   ),
 
   searchUsers: publicProcedure
     .input(
       z.object({
         query: z.string().min(1),
-      })
+      }),
     )
     .query(({ input }) =>
       db.user.findMany({
@@ -45,7 +45,7 @@ export const userRouter = createTRPCRouter({
           fullName: true,
           email: true,
         },
-      })
+      }),
     ),
 
   register: publicProcedure
@@ -53,8 +53,10 @@ export const userRouter = createTRPCRouter({
       z.object({
         fullName: z.string().min(1, "Full name is required"),
         email: z.string().email("Invalid email address"),
-        password: z.string().min(6, "Password must be at least 6 characters long"),
-      })
+        password: z
+          .string()
+          .min(6, "Password must be at least 6 characters long"),
+      }),
     )
     .mutation(async ({ input }) => {
       const { fullName, email, password } = input;
@@ -94,7 +96,7 @@ export const userRouter = createTRPCRouter({
     .input(
       z.object({
         id: z.string().uuid("Invalid user ID"),
-      })
+      }),
     )
     .mutation(async ({ input }) => {
       const user = await db.user.findUnique({
