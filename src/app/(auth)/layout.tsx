@@ -52,7 +52,7 @@ const AuthLayout = async ({ children }: { children: ReactNode }) => {
         disableTransitionOnChange
       >
         <Navigation />
-        <SessionProvider>
+        <SessionProvider refetchOnWindowFocus={false}>
           <div>
             {children}
             <Toaster />
