@@ -12,7 +12,7 @@ import GenresSelect from "./GenresSelect";
 import CategoriesSelect from "./CategoriesSelect";
 import Navigation from "../../shared/Navigation";
 import { Loader2 } from "lucide-react";
-import { UploadButton } from "~/lib/uploadthing";
+import { UploadButton } from "~/lib/uploadthing/uploadthing";
 import AuthorsSelect from "./AuthorsSelect";
 import AppEditor from "../../shared/AppEditor";
 import { EditorState } from "react-draft-wysiwyg";

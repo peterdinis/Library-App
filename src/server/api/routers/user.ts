@@ -3,6 +3,9 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { db } from "~/server/db";
 import { TRPCError } from "@trpc/server";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+import ratelimit from "~/lib/upstash/ratelimit";
 
 export const userRouter = createTRPCRouter({
   getAllUsers: publicProcedure.query(() =>
@@ -60,6 +63,11 @@ export const userRouter = createTRPCRouter({
     )
     .mutation(async ({ input }) => {
       const { fullName, email, password } = input;
+
+      const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1";
+      const { success } = await ratelimit.limit(ip);
+
+      if (!success) return redirect("/too-fast");
 
       const existingUser = await db.user.findUnique({
         where: { email },

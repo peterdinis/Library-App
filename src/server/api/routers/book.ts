@@ -1,4 +1,7 @@
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import { z } from "zod";
+import ratelimit from "~/lib/upstash/ratelimit";
 import {
   createTRPCRouter,
   protectedProcedure,
@@ -123,7 +126,12 @@ export const bookRouter = createTRPCRouter({
         authorId: z.string(),
       }),
     )
-    .mutation(({ input }) => {
+    .mutation(async ({ input }) => {
+      const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1";
+      const { success } = await ratelimit.limit(ip);
+
+      if (!success) return redirect("/too-fast");
+
       return db.book.create({
         data: {
           title: input.title,

@@ -2,12 +2,12 @@ import { Client as WorkflowClient } from "@upstash/workflow";
 import { Client as QStashClient, resend } from "@upstash/qstash";
 
 export const workflowClient = new WorkflowClient({
-  baseUrl: config.env.upstash.qstashUrl,
-  token: config.env.upstash.qstashToken,
+  baseUrl: process.env.QSTASH_URL,
+  token: process.env.QSTASH_TOKEN,
 });
 
 const qstashClient = new QStashClient({
-  token: config.env.upstash.qstashToken,
+  token: process.env.QSTASH_TOKEN
 });
 
 export const sendEmail = async ({
@@ -22,10 +22,10 @@ export const sendEmail = async ({
   await qstashClient.publishJSON({
     api: {
       name: "email",
-      provider: resend({ token: config.env.resendToken }),
+      provider: resend({ token: process.env.RESEND_TOKEN }),
     },
     body: {
-      from: "JS Mastery <contact@adrianjsmastery.com>",
+      from: "pdinis1@gmail.com",
       to: [email],
       subject,
       html: message,

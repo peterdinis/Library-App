@@ -15,11 +15,9 @@ const Loader: FC<LoaderProps> = ({
   width,
 }: LoaderProps) => {
   return (
-    <>
-      <Loader2
-        className={`animate-spin w-${width} h-${height} bg-${background}`}
-      />
-    </>
+    <Loader2
+      className={`animate-spin w-${width} h-${height} bg-${background}`}
+    />
   );
 };
 

@@ -19,7 +19,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
-import { cn } from "~/lib/utils";
+import { cn } from "~/lib/helpers/utils";
 import ProfileDropdown from "../auth/ProfileDropdown";
 import QuickSearch from "./QuickSearch";
 import ModeToggle from "./ModeToggle";
