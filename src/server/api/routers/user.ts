@@ -64,10 +64,10 @@ export const userRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       const { fullName, email, password } = input;
 
-      const ip = ((await headers()).get("x-forwarded-for")) || "127.0.0.1";
-      const {success} = await ratelimit.limit(ip)
+      const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1";
+      const { success } = await ratelimit.limit(ip);
 
-      if(!success) return redirect("/too-fast");
+      if (!success) return redirect("/too-fast");
 
       const existingUser = await db.user.findUnique({
         where: { email },
