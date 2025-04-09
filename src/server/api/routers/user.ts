@@ -4,8 +4,8 @@ import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { db } from "~/server/db";
 import { TRPCError } from "@trpc/server";
 import { headers } from "next/headers";
-import ratelimit from "~/lib/ratelimit";
 import { redirect } from "next/navigation";
+import ratelimit from "~/lib/upstash/ratelimit";
 
 export const userRouter = createTRPCRouter({
   getAllUsers: publicProcedure.query(() =>
