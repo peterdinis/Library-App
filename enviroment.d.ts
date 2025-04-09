@@ -8,6 +8,7 @@ declare global {
             REDIS_TOKEN: string 
             QSTASH_URL: string;
             QSTASH_TOKEN: string;
+            RESEND_TOKEN: string;
             QSTASH_CURRENT_SIGNING_KEY: string;
             QSTASH_NEXT_SIGNING_KEY: string;
         }
