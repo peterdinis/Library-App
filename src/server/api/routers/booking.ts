@@ -79,6 +79,13 @@ export const bookingRouter = createTRPCRouter({
         },
       });
 
+      if (!input.userId) {
+        return {
+          books: [],
+          bookings: [],
+        };
+      }
+
       if (!bookings || bookings.length === 0) {
         return {
           books: [],

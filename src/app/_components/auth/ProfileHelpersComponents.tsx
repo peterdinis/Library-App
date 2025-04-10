@@ -105,7 +105,7 @@ export function BookGrid({
   };
 
   const mergedBooks = useMemo(() => {
-    return books.bookings
+    return books && books.bookings
       .map((booking) => {
         const book = books.books.find((b) => b.id === booking.bookId);
         return book
@@ -123,13 +123,13 @@ export function BookGrid({
   return (
     <>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {mergedBooks.length === 0 && (
+        {mergedBooks && mergedBooks.length === 0 && (
           <div className="mt-10 flex items-center justify-center text-xl font-bold">
             <Ghost className="h-12 w-12 animate-bounce" />{" "}
             <span className="ml-3">Žiadne požičané knihy</span>
           </div>
         )}
-        {mergedBooks.map((book, index) => (
+        {mergedBooks && mergedBooks.map((book, index) => (
           <motion.div
             key={book.id}
             initial={animate ? { opacity: 0, y: 20 } : false}

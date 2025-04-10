@@ -14,9 +14,16 @@ const ProfileWrapper: FC = () => {
     data: myBorrowedBooksData,
     isLoading,
     isError,
-  } = api.booking.getAllUsersBookings.useQuery({
-    userId: session?.user.id!,
-  });
+  } = api.booking.getAllUsersBookings.useQuery(
+    {
+      userId: session?.user.id ?? "", // alebo úplne vynechať
+    },
+    {
+      enabled: !!session?.user.id, // ⚠️ dotaz sa nespustí, kým nie je ID dostupné
+    }
+  );
+
+  console.log("D", myBorrowedBooksData)
 
   if (isLoading) {
     return <Loader2 className="h-8 w-8 animate-spin" />;
