@@ -2,10 +2,10 @@ import router from "next/router";
 import { z } from "zod";
 import { sendEmail } from "~/lib/upstash/workflow";
 import {
-    createTRPCRouter,
-    protectedProcedure,
-    publicProcedure,
-  } from "~/server/api/trpc";
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 import { db } from "~/server/db";
 
 const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
@@ -67,7 +67,7 @@ export const workflowRouter = createTRPCRouter({
       z.object({
         email: z.string().email(),
         fullName: z.string(),
-      })
+      }),
     )
     .mutation(async ({ input }) => {
       const { email, fullName } = input;

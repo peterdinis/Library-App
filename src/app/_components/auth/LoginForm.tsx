@@ -6,6 +6,7 @@ import { Button } from "~/components/ui/button";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useToast } from "~/hooks/shared/use-toast";
+import { api } from "~/trpc/react";
 
 const LoginForm: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,6 +14,7 @@ const LoginForm: FC = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
+  const workflowTrigger = api.workflow.trigger.useMutation();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -29,6 +31,11 @@ const LoginForm: FC = () => {
         title: "Prihlásenie bolo úspešné",
         duration: 2000,
         className: "bg-green-800 text-white font-bold text-xl",
+      });
+
+      workflowTrigger.mutate({
+        email: email,
+        fullName: ""
       });
       window.location.replace("/profile");
     } else {

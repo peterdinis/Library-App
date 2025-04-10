@@ -7,7 +7,7 @@ export const workflowClient = new WorkflowClient({
 });
 
 const qstashClient = new QStashClient({
-  token: process.env.QSTASH_TOKEN
+  token: process.env.QSTASH_TOKEN,
 });
 
 export const sendEmail = async ({
