@@ -77,7 +77,7 @@ export const userRouter = createTRPCRouter({
       if (existingUser) {
         throw new TRPCError({
           code: "CONFLICT",
-          message: "Email is already registered",
+          message: "Email is already registered", // Throw error when email exists
         });
       }
 
