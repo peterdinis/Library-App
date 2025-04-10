@@ -6,6 +6,7 @@ import { Button } from "~/components/ui/button";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useToast } from "~/hooks/shared/use-toast";
+import { api } from "~/trpc/react";
 
 const LoginForm: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,6 +14,7 @@ const LoginForm: FC = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
+  const onBoardingWorkflow = api.workflow.trigger.useMutation();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -30,6 +32,10 @@ const LoginForm: FC = () => {
         duration: 2000,
         className: "bg-green-800 text-white font-bold text-xl",
       });
+      onBoardingWorkflow.mutate({
+        email,
+        fullName: ""
+      })
       window.location.replace("/profile");
     } else {
       toast({
@@ -102,7 +108,7 @@ const LoginForm: FC = () => {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 dark:text-gray-300"
+                className="absolute inset-y-0 right-0 flex items-center cursor-pointer pr-3 text-gray-500 dark:text-gray-300"
               >
                 {showPassword ? (
                   <EyeOff className="h-5 w-5" />
