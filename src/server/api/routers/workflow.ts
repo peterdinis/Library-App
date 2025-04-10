@@ -1,9 +1,7 @@
-import router from "next/router";
 import { z } from "zod";
 import { sendEmail } from "~/lib/upstash/workflow";
 import {
   createTRPCRouter,
-  protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
 import { db } from "~/server/db";
