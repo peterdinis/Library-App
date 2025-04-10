@@ -40,7 +40,7 @@ const RegisterForm: FC = () => {
 
   return (
     <div className="flex items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-lg dark:bg-zinc-900">
+      <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-8 shadow-lg dark:bg-background">
         <div className="text-center">
           <div className="flex justify-center">
             <Book className="h-12 w-12 text-indigo-600" />

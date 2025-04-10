@@ -43,7 +43,7 @@ const LoginForm: FC = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-6 dark:bg-zinc-900">
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-6 dark:bg-background">
       <div className="w-full max-w-md space-y-6 rounded-xl bg-white p-8 shadow-lg dark:bg-zinc-800">
         <div className="text-center">
           <div className="flex justify-center">
