@@ -70,10 +70,8 @@ export const bookingRouter = createTRPCRouter({
       const bookings = await db.booking.findMany({
         where: {
           userId: input.userId,
-          AND: {
-            status: {
-              not: "RETURNED",
-            },
+          status: {
+            not: "RETURNED",
           },
         },
         include: {
@@ -81,7 +79,14 @@ export const bookingRouter = createTRPCRouter({
         },
       });
 
-      const books = bookings.flatMap((booking) => booking.book);
+      if (!bookings || bookings.length === 0 || !input.userId) {
+        return {
+          books: [],
+          bookings: [],
+        };
+      }
+
+      const books = bookings.map((booking) => booking.book);
 
       return {
         books,

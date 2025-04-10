@@ -14,11 +14,18 @@ const ProfileWrapper: FC = () => {
     data: myBorrowedBooksData,
     isLoading,
     isError,
-  } = api.booking.getAllUsersBookings.useQuery({
-    userId: session?.user.id!,
-  });
+  } = api.booking.getAllUsersBookings.useQuery(
+    {
+      userId: session?.user.id ?? "",
+    },
+    {
+      enabled: !!session?.user.id,
+    }
+  );
 
-  if (isLoading) {
+  console.log("D", myBorrowedBooksData)
+
+  if (isLoading || myBorrowedBooksData === undefined) {
     return <Loader2 className="h-8 w-8 animate-spin" />;
   }
 
