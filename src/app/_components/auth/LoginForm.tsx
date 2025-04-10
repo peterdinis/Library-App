@@ -108,7 +108,7 @@ const LoginForm: FC = () => {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 dark:text-gray-300"
+                className="absolute inset-y-0 right-0 flex items-center cursor-pointer pr-3 text-gray-500 dark:text-gray-300"
               >
                 {showPassword ? (
                   <EyeOff className="h-5 w-5" />

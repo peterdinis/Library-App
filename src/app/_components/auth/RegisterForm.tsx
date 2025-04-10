@@ -136,7 +136,7 @@ const RegisterForm: FC = () => {
                 <button
                   type="button"
                   onClick={togglePasswordVisibility}
-                  className="absolute inset-y-0 right-0 flex items-center pr-3"
+                  className="absolute inset-y-0 right-0 cursor-pointer flex items-center pr-3"
                 >
                   {showPassword ? (
                     <EyeOff className="h-5 w-5 text-gray-400" />
