@@ -60,7 +60,7 @@ export const bookingRouter = createTRPCRouter({
       });
     }),
 
-  getAllUsersBookings: publicProcedure
+    getAllUsersBookings: publicProcedure
     .input(
       z.object({
         userId: z.string(),
@@ -70,19 +70,25 @@ export const bookingRouter = createTRPCRouter({
       const bookings = await db.booking.findMany({
         where: {
           userId: input.userId,
-          AND: {
-            status: {
-              not: "RETURNED",
-            },
+          status: {
+            not: "RETURNED",
           },
         },
         include: {
           book: true,
         },
       });
-
-      const books = bookings.flatMap((booking) => booking.book);
-
+  
+      if (!bookings || bookings.length === 0) {
+        return {
+          books: [],
+          bookings: [],
+        };
+      }
+  
+      // book nie je pole, takže flatMap by zlyhal — použijeme map
+      const books = bookings.map((booking) => booking.book);
+  
       return {
         books,
         bookings,
