@@ -5,11 +5,7 @@ import { Book, Lock, Mail, User, Eye, EyeOff } from "lucide-react";
 import type { FC } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "~/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "~/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
 import { api } from "~/trpc/react";
 import type { RegisterFormInputs } from "./Auth.interface";
 import { useToast } from "~/hooks/shared/use-toast";
@@ -29,13 +25,24 @@ const RegisterForm: FC = () => {
     setShowPassword((prev) => !prev);
   };
 
-  const onSubmit = (data: RegisterFormInputs) => {
-    registerMutation.mutate(data);
-    toast({
-      title: "Registrácia bola úspešná. Počkajte kým Vám admin schváli účet",
-      duration: 2000,
-      className: "bg-orange-700 text-white font-bold text-xl",
-    });
+  const onSubmit = async (data: RegisterFormInputs) => {
+    try {
+      await registerMutation.mutateAsync(data);
+      toast({
+        title: "Registrácia bola úspešná. Počkajte kým Vám admin schváli účet",
+        duration: 2000,
+        className: "bg-orange-700 text-white font-bold text-xl",
+      });
+    } catch (error: any) {
+      if (error.message === "Email is already registered") {
+        toast({
+          title: "Tento email už je zaregistrovaný",
+          description: "Použite iný email na registráciu.",
+          duration: 3000,
+          className: "bg-red-600 text-white font-bold text-xl",
+        });
+      }
+    }
   };
 
   return (

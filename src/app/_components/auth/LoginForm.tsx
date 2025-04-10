@@ -6,7 +6,6 @@ import { Button } from "~/components/ui/button";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useToast } from "~/hooks/shared/use-toast";
-import { api } from "~/trpc/react";
 
 const LoginForm: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,37 +13,37 @@ const LoginForm: FC = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
-  const workflowTrigger = api.workflow.trigger.useMutation();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
-
+  
     const result = await signIn("credentials", {
       redirect: false,
       email,
       password,
     });
-
+  
     if (!result?.error) {
       toast({
         title: "Prihlásenie bolo úspešné",
         duration: 2000,
         className: "bg-green-800 text-white font-bold text-xl",
       });
-
-      workflowTrigger.mutate({
-        email: email,
-        fullName: ""
-      });
       window.location.replace("/profile");
     } else {
-      setError(result.error);
+      toast({
+        title: "Prihlásenie zlyhalo",
+        description: "Skontrolujte prosím email a heslo.",
+        duration: 3000,
+        className: "bg-red-600 text-white font-semibold text-base",
+      });
+      setError("Nesprávny email alebo heslo");
     }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-6 dark:bg-zinc-900">
+    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-6 dark:bg-background">
       <div className="w-full max-w-md space-y-6 rounded-xl bg-white p-8 shadow-lg dark:bg-zinc-800">
         <div className="text-center">
           <div className="flex justify-center">
