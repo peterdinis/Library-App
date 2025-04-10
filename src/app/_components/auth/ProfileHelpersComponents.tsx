@@ -105,7 +105,9 @@ export function BookGrid({
   };
 
   const mergedBooks = useMemo(() => {
-    return books && books.bookings
+    if (!books || !books.bookings || !books.books) return [];
+    
+    return books.bookings
       .map((booking) => {
         const book = books.books.find((b) => b.id === booking.bookId);
         return book

@@ -16,16 +16,16 @@ const ProfileWrapper: FC = () => {
     isError,
   } = api.booking.getAllUsersBookings.useQuery(
     {
-      userId: session?.user.id ?? "", // alebo úplne vynechať
+      userId: session?.user.id ?? "",
     },
     {
-      enabled: !!session?.user.id, // ⚠️ dotaz sa nespustí, kým nie je ID dostupné
+      enabled: !!session?.user.id,
     }
   );
 
   console.log("D", myBorrowedBooksData)
 
-  if (isLoading) {
+  if (isLoading || myBorrowedBooksData === undefined) {
     return <Loader2 className="h-8 w-8 animate-spin" />;
   }
 
