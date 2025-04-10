@@ -60,7 +60,7 @@ export const bookingRouter = createTRPCRouter({
       });
     }),
 
-    getAllUsersBookings: publicProcedure
+  getAllUsersBookings: publicProcedure
     .input(
       z.object({
         userId: z.string(),
@@ -78,17 +78,16 @@ export const bookingRouter = createTRPCRouter({
           book: true,
         },
       });
-  
+
       if (!bookings || bookings.length === 0) {
         return {
           books: [],
           bookings: [],
         };
       }
-  
-      // book nie je pole, takže flatMap by zlyhal — použijeme map
+
       const books = bookings.map((booking) => booking.book);
-  
+
       return {
         books,
         bookings,
