@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { sendEmail } from "~/lib/upstash/workflow";
+import { sendEmail } from "~/lib/mails/mailer";
 import {
   createTRPCRouter,
   publicProcedure,
