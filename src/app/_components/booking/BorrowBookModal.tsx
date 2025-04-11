@@ -31,6 +31,10 @@ const BorrowBookModal: FC<BorrowBookModalProps> = ({ bookId }) => {
   const [toDate, setToDate] = useState<Date | undefined>();
   const [open, setOpen] = useState(false);
 
+   const {
+      data: book,
+    } = api.book.getBookDetail.useQuery(bookId, { enabled: !!bookId});
+
   const handleSubmit = async () => {
     if (!name || !className || !fromDate || !toDate) {
       toast({
