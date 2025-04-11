@@ -19,7 +19,7 @@ export async function sendEmail({
   message: string;
 }) {
   await transport.sendMail({
-    from: '"Platform Team" <noreply@example.com>',
+    from: '"SPŠT Knižnica" <noreply@example.com>',
     to: email,
     subject,
     text: message,
