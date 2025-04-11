@@ -48,6 +48,9 @@ const BorrowBookModal: FC<BorrowBookModalProps> = ({ bookId }) => {
         });
       },
     });
+   const {
+      data: book,
+    } = api.book.getBookDetail.useQuery(bookId, { enabled: !!bookId});
 
   const handleSubmit = async () => {
     if (!name || !className || !fromDate || !toDate) {
@@ -76,7 +79,7 @@ const BorrowBookModal: FC<BorrowBookModalProps> = ({ bookId }) => {
       borrowedBookEmailInfo.mutate({
         email: session.user.email!,
         dueDate: toDate.toISOString(),
-        bookTitle: bookId,
+        bookTitle: book?.title
       })
 
       toast({
