@@ -79,7 +79,7 @@ const BorrowBookModal: FC<BorrowBookModalProps> = ({ bookId }) => {
       borrowedBookEmailInfo.mutate({
         email: session.user.email!,
         dueDate: toDate.toISOString(),
-        bookTitle: book?.title
+        bookTitle: book?.title!
       })
 
       toast({
