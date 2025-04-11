@@ -20,10 +20,10 @@ const ProfileWrapper: FC = () => {
     },
     {
       enabled: !!session?.user.id,
-    }
+    },
   );
 
-  console.log("D", myBorrowedBooksData)
+  console.log("D", myBorrowedBooksData);
 
   if (isLoading || myBorrowedBooksData === undefined) {
     return <Loader2 className="h-8 w-8 animate-spin" />;

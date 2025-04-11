@@ -31,9 +31,26 @@ const BorrowBookModal: FC<BorrowBookModalProps> = ({ bookId }) => {
   const [toDate, setToDate] = useState<Date | undefined>();
   const [open, setOpen] = useState(false);
 
-   const {
-      data: book,
-    } = api.book.getBookDetail.useQuery(bookId, { enabled: !!bookId});
+  const borrowedBookEmailInfo = api.email.sendAfterBorrowed.useMutation({
+    onSuccess: () => {
+      toast({
+        title: "Požičanie knihy bolo úšpené. Na email váš prišla objednávka",
+        duration: 3000,
+        className: "bg-green-600 text-white font-semibold text-base",
+      });
+    },
+
+    onError: () => {
+      toast({
+        title: "Požičat knihu sa nepodarilo.",
+        duration: 3000,
+        className: "bg-red-600 text-white font-semibold text-base",
+      });
+    },
+  });
+  const { data: book } = api.book.getBookDetail.useQuery(bookId, {
+    enabled: !!bookId,
+  });
 
   const handleSubmit = async () => {
     if (!name || !className || !fromDate || !toDate) {
@@ -58,6 +75,11 @@ const BorrowBookModal: FC<BorrowBookModalProps> = ({ bookId }) => {
         bookId,
         dueDate: toDate.toISOString(),
         className,
+      });
+      borrowedBookEmailInfo.mutate({
+        email: session.user.email!,
+        dueDate: toDate.toISOString(),
+        bookTitle: book?.title!,
       });
 
       toast({

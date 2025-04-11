@@ -7,6 +7,7 @@ import { genreRouter } from "./routers/genre";
 import { userRouter } from "./routers/user";
 import { adminRouter } from "./routers/admin";
 import { workflowRouter } from "./routers/workflow";
+import { emailRouter } from "./routers/email";
 
 export const appRouter = createTRPCRouter({
   book: bookRouter,
@@ -17,6 +18,7 @@ export const appRouter = createTRPCRouter({
   user: userRouter,
   booking: bookingRouter,
   admin: adminRouter,
+  email: emailRouter,
 });
 
 export type AppRouter = typeof appRouter;

@@ -26,6 +26,7 @@ import { Booking } from "@prisma/client";
 import { api } from "~/trpc/react";
 import { useToast } from "~/hooks/shared/use-toast";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 type Book = {
   id: string;
@@ -76,8 +77,26 @@ export function BookGrid({
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const { toast } = useToast();
-  const router = useRouter()
+  const router = useRouter();
   const returnBookingMutation = api.booking.returnBooking.useMutation();
+  const { data: session } = useSession();
+  const returnBookingEmailInfo = api.email.sendAfterReturned.useMutation({
+    onSuccess: () => {
+      toast({
+        title: "Email o vratení knihy bol odoslaný",
+        duration: 3000,
+        className: "bg-green-600 text-white font-semibold text-base",
+      });
+    },
+
+    onError: () => {
+      toast({
+        title: "Email o vratení knihy nebol odoslaný",
+        duration: 3000,
+        className: "bg-red-600 text-white font-semibold text-base",
+      });
+    },
+  });
 
   const handleReturnBook = async () => {
     if (!selectedBook) return;
@@ -88,12 +107,17 @@ export function BookGrid({
         returnDate: new Date().toISOString(),
       });
 
+      returnBookingEmailInfo.mutate({
+        bookTitle: selectedBook.title,
+        email: session?.user.email!,
+      });
+
       toast({
         title: "Kniha bola vrátená",
         duration: 2000,
         className: "bg-green-700 text-white font-bold text-xl",
       });
-      router.refresh()
+      router.refresh();
     } catch (error) {
       toast({
         title: "Chyba pri vracaní knihy",
@@ -109,7 +133,7 @@ export function BookGrid({
 
   const mergedBooks = useMemo(() => {
     if (!books || !books.bookings || !books.books) return [];
-    
+
     return books.bookings
       .map((booking) => {
         const book = books.books.find((b) => b.id === booking.bookId);
@@ -134,71 +158,72 @@ export function BookGrid({
             <span className="ml-3">Žiadne požičané knihy</span>
           </div>
         )}
-        {mergedBooks && mergedBooks.map((book, index) => (
-          <motion.div
-            key={book.id}
-            initial={animate ? { opacity: 0, y: 20 } : false}
-            animate={animate ? { opacity: 1, y: 0 } : false}
-            transition={{ delay: 0.1 * (index % 6), duration: 0.5 }}
-          >
-            <Card className="group overflow-hidden transition-all hover:shadow-md">
-              <CardHeader className="relative p-4">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.2 }}
-                  className="bg-muted relative aspect-3/4 overflow-hidden rounded-md"
-                >
-                  <Image
-                    width={60}
-                    height={60}
-                    src={book.coverUrl ?? ""}
-                    alt={book.title}
-                    priority={true}
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                </motion.div>
-              </CardHeader>
-              <CardContent className="space-y-3 p-4">
-                <div className="space-y-2">
-                  <CardTitle className="line-clamp-1">{book.title}</CardTitle>
-                  <CardDescription className="flex items-center gap-2">
-                    {book.author}
-                  </CardDescription>
-                </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-sm">
-                    <Calendar
-                      className={`h-4 w-4 ${getStatusColor(book.dueDate)}`}
+        {mergedBooks &&
+          mergedBooks.map((book, index) => (
+            <motion.div
+              key={book.id}
+              initial={animate ? { opacity: 0, y: 20 } : false}
+              animate={animate ? { opacity: 1, y: 0 } : false}
+              transition={{ delay: 0.1 * (index % 6), duration: 0.5 }}
+            >
+              <Card className="group overflow-hidden transition-all hover:shadow-md">
+                <CardHeader className="relative p-4">
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.2 }}
+                    className="bg-muted relative aspect-3/4 overflow-hidden rounded-md"
+                  >
+                    <Image
+                      width={60}
+                      height={60}
+                      src={book.coverUrl ?? ""}
+                      alt={book.title}
+                      priority={true}
+                      className="absolute inset-0 h-full w-full object-cover"
                     />
-                    <span className={getStatusColor(book.dueDate)}>
-                      {typeof book.borrowDate === "string"
-                        ? book.borrowDate
-                        : book.borrowDate.toISOString().split("T")[0]}
-                    </span>
-
-                    <span className={getStatusColor(book.dueDate)}>
-                      {typeof book.dueDate === "string"
-                        ? book.dueDate
-                        : book.dueDate.toISOString().split("T")[0]}
-                    </span>
+                  </motion.div>
+                </CardHeader>
+                <CardContent className="space-y-3 p-4">
+                  <div className="space-y-2">
+                    <CardTitle className="line-clamp-1">{book.title}</CardTitle>
+                    <CardDescription className="flex items-center gap-2">
+                      {book.author}
+                    </CardDescription>
                   </div>
-                  {getStatusBadge(book.dueDate)}
-                </div>
-              </CardContent>
-              <CardFooter className="mt-4">
-                <Button
-                  size="lg"
-                  onClick={() => {
-                    setSelectedBook(book);
-                    setOpenDialog(true);
-                  }}
-                >
-                  Vrátit knihu
-                </Button>
-              </CardFooter>
-            </Card>
-          </motion.div>
-        ))}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-sm">
+                      <Calendar
+                        className={`h-4 w-4 ${getStatusColor(book.dueDate)}`}
+                      />
+                      <span className={getStatusColor(book.dueDate)}>
+                        {typeof book.borrowDate === "string"
+                          ? book.borrowDate
+                          : book.borrowDate.toISOString().split("T")[0]}
+                      </span>
+
+                      <span className={getStatusColor(book.dueDate)}>
+                        {typeof book.dueDate === "string"
+                          ? book.dueDate
+                          : book.dueDate.toISOString().split("T")[0]}
+                      </span>
+                    </div>
+                    {getStatusBadge(book.dueDate)}
+                  </div>
+                </CardContent>
+                <CardFooter className="mt-4">
+                  <Button
+                    size="lg"
+                    onClick={() => {
+                      setSelectedBook(book);
+                      setOpenDialog(true);
+                    }}
+                  >
+                    Vrátit knihu
+                  </Button>
+                </CardFooter>
+              </Card>
+            </motion.div>
+          ))}
       </div>
 
       <Dialog open={openDialog} onOpenChange={setOpenDialog}>

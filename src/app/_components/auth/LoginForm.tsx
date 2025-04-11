@@ -6,7 +6,6 @@ import { Button } from "~/components/ui/button";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useToast } from "~/hooks/shared/use-toast";
-import { api } from "~/trpc/react";
 
 const LoginForm: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,21 +13,6 @@ const LoginForm: FC = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
-
-  const onBoardingWorkflow = api.workflow.trigger.useMutation({
-    onSuccess: () => {
-      window.location.replace("/profile");
-    },
-
-    onError: () => {
-      toast({
-        title: "Prihlásenie zlyhalo",
-        description: "Skontrolujte prosím email a heslo.",
-        duration: 3000,
-        className: "bg-red-600 text-white font-semibold text-base",
-      });
-    }
-  });
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -46,7 +30,6 @@ const LoginForm: FC = () => {
         duration: 2000,
         className: "bg-green-800 text-white font-bold text-xl",
       });
-      onBoardingWorkflow.mutate({ email });
     } else {
       toast({
         title: "Prihlásenie zlyhalo",
@@ -59,7 +42,7 @@ const LoginForm: FC = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 p-6 dark:bg-background">
+    <div className="dark:bg-background flex min-h-screen items-center justify-center bg-gray-100 p-6">
       <div className="w-full max-w-md space-y-6 rounded-xl bg-white p-8 shadow-lg dark:bg-zinc-800">
         <div className="text-center">
           <div className="flex justify-center">
@@ -118,7 +101,7 @@ const LoginForm: FC = () => {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 flex items-center cursor-pointer pr-3 text-gray-500 dark:text-gray-300"
+                className="absolute inset-y-0 right-0 flex cursor-pointer items-center pr-3 text-gray-500 dark:text-gray-300"
               >
                 {showPassword ? (
                   <EyeOff className="h-5 w-5" />

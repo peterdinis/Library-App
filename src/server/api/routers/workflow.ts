@@ -1,9 +1,6 @@
 import { z } from "zod";
 import { sendEmail } from "~/lib/mails/mailer";
-import {
-  createTRPCRouter,
-  publicProcedure,
-} from "~/server/api/trpc";
+import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { db } from "~/server/db";
 
 const ONE_DAY_IN_MS = 24 * 60 * 60 * 1000;
@@ -69,14 +66,18 @@ async function startUserEngagementWorkflow(email: string) {
       const state = await getUserState(email);
 
       if (state === "non-active") {
-        console.log(`[startWorkflow] User ${email} is non-active, sending re-engagement email`);
+        console.log(
+          `[startWorkflow] User ${email} is non-active, sending re-engagement email`,
+        );
         await sendEmail({
           email,
           subject: "Are you still there?",
           message: `Hey ${email}, we miss you!`,
         });
       } else if (state === "active") {
-        console.log(`[startWorkflow] User ${email} is active, sending welcome back email`);
+        console.log(
+          `[startWorkflow] User ${email} is active, sending welcome back email`,
+        );
         await sendEmail({
           email,
           subject: "Welcome back!",
@@ -85,7 +86,9 @@ async function startUserEngagementWorkflow(email: string) {
       }
 
       cycles++;
-      console.log(`[startWorkflow] Waiting 30 days before next cycle for ${email}...`);
+      console.log(
+        `[startWorkflow] Waiting 30 days before next cycle for ${email}...`,
+      );
       await new Promise((res) => setTimeout(res, THIRTY_DAYS_IN_MS));
     }
 
@@ -112,7 +115,9 @@ export const workflowRouter = createTRPCRouter({
 
         startUserEngagementWorkflow(email)
           .then(() => console.log(`[trigger] Workflow started for ${email}`))
-          .catch((err) => console.error(`[trigger] Workflow error for ${email}:`, err));
+          .catch((err) =>
+            console.error(`[trigger] Workflow error for ${email}:`, err),
+          );
 
         return { message: "Workflow initiated." };
       } catch (error) {
