@@ -32,25 +32,25 @@ const BorrowBookModal: FC<BorrowBookModalProps> = ({ bookId }) => {
   const [open, setOpen] = useState(false);
 
   const borrowedBookEmailInfo = api.email.sendAfterBorrowed.useMutation({
-      onSuccess: () => {
-        toast({
-          title: "Požičanie knihy bolo úšpené. Na email váš prišla objednávka",
-          duration: 3000,
-          className: "bg-green-600 text-white font-semibold text-base",
-        });
-      },
-  
-      onError: () => {
-        toast({
-          title: "Požičat knihu sa nepodarilo.",
-          duration: 3000,
-          className: "bg-red-600 text-white font-semibold text-base",
-        });
-      },
-    });
-   const {
-      data: book,
-    } = api.book.getBookDetail.useQuery(bookId, { enabled: !!bookId});
+    onSuccess: () => {
+      toast({
+        title: "Požičanie knihy bolo úšpené. Na email váš prišla objednávka",
+        duration: 3000,
+        className: "bg-green-600 text-white font-semibold text-base",
+      });
+    },
+
+    onError: () => {
+      toast({
+        title: "Požičat knihu sa nepodarilo.",
+        duration: 3000,
+        className: "bg-red-600 text-white font-semibold text-base",
+      });
+    },
+  });
+  const { data: book } = api.book.getBookDetail.useQuery(bookId, {
+    enabled: !!bookId,
+  });
 
   const handleSubmit = async () => {
     if (!name || !className || !fromDate || !toDate) {
@@ -58,7 +58,7 @@ const BorrowBookModal: FC<BorrowBookModalProps> = ({ bookId }) => {
         title: "Vyplň všetky polia!",
         className: "bg-red-800 text-white font-bold",
       });
-      return; 
+      return;
     }
 
     if (!session?.user?.id) {
@@ -79,8 +79,8 @@ const BorrowBookModal: FC<BorrowBookModalProps> = ({ bookId }) => {
       borrowedBookEmailInfo.mutate({
         email: session.user.email!,
         dueDate: toDate.toISOString(),
-        bookTitle: book?.title!
-      })
+        bookTitle: book?.title!,
+      });
 
       toast({
         title: "Kniha bola úspešne požičaná!",

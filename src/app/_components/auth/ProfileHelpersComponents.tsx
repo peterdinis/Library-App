@@ -26,6 +26,7 @@ import { Booking } from "@prisma/client";
 import { api } from "~/trpc/react";
 import { useToast } from "~/hooks/shared/use-toast";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 type Book = {
   id: string;
@@ -78,6 +79,24 @@ export function BookGrid({
   const { toast } = useToast();
   const router = useRouter();
   const returnBookingMutation = api.booking.returnBooking.useMutation();
+  const { data: session } = useSession();
+  const returnBookingEmailInfo = api.email.sendAfterReturned.useMutation({
+    onSuccess: () => {
+      toast({
+        title: "Email o vratení knihy bol odoslaný",
+        duration: 3000,
+        className: "bg-green-600 text-white font-semibold text-base",
+      });
+    },
+
+    onError: () => {
+      toast({
+        title: "Email o vratení knihy nebol odoslaný",
+        duration: 3000,
+        className: "bg-red-600 text-white font-semibold text-base",
+      });
+    },
+  });
 
   const handleReturnBook = async () => {
     if (!selectedBook) return;
@@ -86,6 +105,11 @@ export function BookGrid({
       await returnBookingMutation.mutateAsync({
         bookId: selectedBook.id,
         returnDate: new Date().toISOString(),
+      });
+
+      returnBookingEmailInfo.mutate({
+        bookTitle: selectedBook.title,
+        email: session?.user.email!,
       });
 
       toast({
