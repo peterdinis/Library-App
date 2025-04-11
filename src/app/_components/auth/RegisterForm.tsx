@@ -25,9 +25,25 @@ const RegisterForm: FC = () => {
     setShowPassword((prev) => !prev);
   };
 
+  const onBoardingWorkflow = api.workflow.trigger.useMutation({
+      onSuccess: () => {
+        window.location.replace("/profile");
+      },
+  
+      onError: () => {
+        toast({
+          title: "Prihlásenie zlyhalo",
+          description: "Skontrolujte prosím email a heslo.",
+          duration: 3000,
+          className: "bg-red-600 text-white font-semibold text-base",
+        });
+      }
+    });
+
   const onSubmit = async (data: RegisterFormInputs) => {
     try {
       await registerMutation.mutateAsync(data);
+      await onBoardingWorkflow.mutate({ email: data.email });
       toast({
         title: "Registrácia bola úspešná. Počkajte kým Vám admin schváli účet",
         duration: 2000,
