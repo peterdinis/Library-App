@@ -5,7 +5,11 @@ import { Book, Lock, Mail, User, Eye, EyeOff } from "lucide-react";
 import type { FC } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "~/components/ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "~/components/ui/popover";
 import { api } from "~/trpc/react";
 import type { RegisterFormInputs } from "./Auth.interface";
 import { useToast } from "~/hooks/shared/use-toast";
@@ -26,19 +30,19 @@ const RegisterForm: FC = () => {
   };
 
   const onBoardingWorkflow = api.workflow.trigger.useMutation({
-      onSuccess: () => {
-        window.location.replace("/profile");
-      },
-  
-      onError: () => {
-        toast({
-          title: "Prihlásenie zlyhalo",
-          description: "Skontrolujte prosím email a heslo.",
-          duration: 3000,
-          className: "bg-red-600 text-white font-semibold text-base",
-        });
-      }
-    });
+    onSuccess: () => {
+      window.location.replace("/profile");
+    },
+
+    onError: () => {
+      toast({
+        title: "Prihlásenie zlyhalo",
+        description: "Skontrolujte prosím email a heslo.",
+        duration: 3000,
+        className: "bg-red-600 text-white font-semibold text-base",
+      });
+    },
+  });
 
   const onSubmit = async (data: RegisterFormInputs) => {
     try {
@@ -152,7 +156,7 @@ const RegisterForm: FC = () => {
                 <button
                   type="button"
                   onClick={togglePasswordVisibility}
-                  className="absolute inset-y-0 right-0 cursor-pointer flex items-center pr-3"
+                  className="absolute inset-y-0 right-0 flex cursor-pointer items-center pr-3"
                 >
                   {showPassword ? (
                     <EyeOff className="h-5 w-5 text-gray-400" />

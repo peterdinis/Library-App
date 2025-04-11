@@ -79,7 +79,7 @@ export const bookingRouter = createTRPCRouter({
         },
       });
 
-      if (!bookings || bookings.length === 0 || !input.userId) {
+      if (!bookings || bookings.length === 0 || !input.userId) {
         return {
           books: [],
           bookings: [],
