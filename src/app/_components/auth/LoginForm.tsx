@@ -14,30 +14,39 @@ const LoginForm: FC = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
-  const onBoardingWorkflow = api.workflow.trigger.useMutation();
+
+  const onBoardingWorkflow = api.workflow.trigger.useMutation({
+    onSuccess: () => {
+      window.location.replace("/profile");
+    },
+
+    onError: () => {
+      toast({
+        title: "Prihlásenie zlyhalo",
+        description: "Skontrolujte prosím email a heslo.",
+        duration: 3000,
+        className: "bg-red-600 text-white font-semibold text-base",
+      });
+    }
+  });
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
-  
+
     const result = await signIn("credentials", {
       redirect: false,
       email,
       password,
     });
-  
+
     if (!result?.error) {
       toast({
         title: "Prihlásenie bolo úspešné",
         duration: 2000,
         className: "bg-green-800 text-white font-bold text-xl",
       });
-      const foo = onBoardingWorkflow.mutate({
-        email,
-      })
-
-      console.log("FFFFF", foo)
-      //window.location.replace("/profile");
+      onBoardingWorkflow.mutate({ email });
     } else {
       toast({
         title: "Prihlásenie zlyhalo",
