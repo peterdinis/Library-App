@@ -4,12 +4,6 @@ import { useState } from "react";
 import { Book, Lock, Mail, User, Eye, EyeOff } from "lucide-react";
 import type { FC } from "react";
 import { useForm } from "react-hook-form";
-import { Button } from "~/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "~/components/ui/popover";
 import { api } from "~/trpc/react";
 import type { RegisterFormInputs } from "./Auth.interface";
 import { useToast } from "~/hooks/shared/use-toast";
@@ -49,10 +43,11 @@ const RegisterForm: FC = () => {
       await registerMutation.mutateAsync(data);
       onBoardingWorkflow.mutate({ email: data.email });
       toast({
-        title: "Registrácia bola úspešná. Počkajte kým Vám admin schváli účet",
+        title: "Registrácia bola úspešná.",
         duration: 2000,
         className: "bg-orange-700 text-white font-bold text-xl",
       });
+      window.location.replace("/sign-in")
     } catch (error: any) {
       if (error.message === "Email is already registered") {
         toast({
@@ -172,22 +167,6 @@ const RegisterForm: FC = () => {
               </div>
             </div>
           </div>
-
-          <div className="text-center">
-            <Button size="lg" variant="default" type="submit">
-              Registrácia
-            </Button>
-          </div>
-          <Popover>
-            <PopoverTrigger>Ako prebieha registrácia?</PopoverTrigger>
-            <PopoverContent className="rounded-lg bg-white p-4 shadow-lg dark:bg-stone-900">
-              <ul className="list-inside list-decimal space-y-2 text-gray-700 dark:text-sky-200">
-                <li>Zaregistrujte sa.</li>
-                <li>Admin potvrdí váš účet.</li>
-                <li>Po potvrdení e-mailom sa môžete prihlásiť do knižnice.</li>
-              </ul>
-            </PopoverContent>
-          </Popover>
         </form>
       </div>
     </div>
