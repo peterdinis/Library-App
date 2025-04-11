@@ -32,10 +32,12 @@ const LoginForm: FC = () => {
         duration: 2000,
         className: "bg-green-800 text-white font-bold text-xl",
       });
-      onBoardingWorkflow.mutate({
+      const foo = onBoardingWorkflow.mutate({
         email,
       })
-      window.location.replace("/profile");
+
+      console.log("FFFFF", foo)
+      //window.location.replace("/profile");
     } else {
       toast({
         title: "Prihlásenie zlyhalo",
