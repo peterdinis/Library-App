@@ -43,7 +43,7 @@ const RegisterForm: FC = () => {
   const onSubmit = async (data: RegisterFormInputs) => {
     try {
       await registerMutation.mutateAsync(data);
-      await onBoardingWorkflow.mutate({ email: data.email });
+      onBoardingWorkflow.mutate({ email: data.email });
       toast({
         title: "Registrácia bola úspešná. Počkajte kým Vám admin schváli účet",
         duration: 2000,
