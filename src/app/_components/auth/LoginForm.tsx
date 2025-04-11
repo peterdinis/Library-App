@@ -15,7 +15,7 @@ const LoginForm: FC = () => {
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
   const onBoardingWorkflow = api.workflow.trigger.useMutation();
-
+  
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);

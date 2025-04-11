@@ -25,6 +25,7 @@ import { useMemo, useState } from "react";
 import { Booking } from "@prisma/client";
 import { api } from "~/trpc/react";
 import { useToast } from "~/hooks/shared/use-toast";
+import { useRouter } from "next/navigation";
 
 type Book = {
   id: string;
@@ -75,6 +76,7 @@ export function BookGrid({
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
   const { toast } = useToast();
+  const router = useRouter()
   const returnBookingMutation = api.booking.returnBooking.useMutation();
 
   const handleReturnBook = async () => {
@@ -91,6 +93,7 @@ export function BookGrid({
         duration: 2000,
         className: "bg-green-700 text-white font-bold text-xl",
       });
+      router.refresh()
     } catch (error) {
       toast({
         title: "Chyba pri vracaní knihy",
