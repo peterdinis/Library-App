@@ -34,7 +34,6 @@ const LoginForm: FC = () => {
       });
       onBoardingWorkflow.mutate({
         email,
-        fullName: email
       })
       window.location.replace("/profile");
     } else {
