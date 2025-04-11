@@ -58,7 +58,7 @@ const BorrowBookModal: FC<BorrowBookModalProps> = ({ bookId }) => {
         title: "Vyplň všetky polia!",
         className: "bg-red-800 text-white font-bold",
       });
-      return;
+      return; 
     }
 
     if (!session?.user?.id) {
