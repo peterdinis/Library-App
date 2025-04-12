@@ -22,7 +22,6 @@ const CreateGenreForm: FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
     reset,
   } = useForm<GenreFormValues>({
     resolver: zodResolver(genreSchema),

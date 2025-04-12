@@ -93,7 +93,6 @@ export const columns: ColumnDef<Book>[] = [
 
       return (
         <div className="flex items-center gap-2">
-          {/* Update Dialog */}
           <Dialog open={editOpen} onOpenChange={setEditOpen}>
             <DialogTrigger asChild>
               <Button variant="outline" size="sm">
@@ -163,8 +162,6 @@ export const columns: ColumnDef<Book>[] = [
               </DialogFooter>
             </DialogContent>
           </Dialog>
-
-          {/* Delete Dialog */}
           <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
             <DialogTrigger asChild>
               <Button variant="destructive" size="sm">

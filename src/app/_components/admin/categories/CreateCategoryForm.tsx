@@ -21,7 +21,6 @@ const CreateCategoryForm: FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
     reset,
   } = useForm<CategoryFormValues>({
     resolver: zodResolver(categorySchema),

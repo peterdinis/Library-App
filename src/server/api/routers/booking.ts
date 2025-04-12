@@ -181,7 +181,6 @@ export const bookingRouter = createTRPCRouter({
         userId,
         bookId,
         className,
-        status,
         dueDate,
         borrowDate,
         returnDate,
