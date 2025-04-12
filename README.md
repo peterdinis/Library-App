@@ -6,7 +6,7 @@ Tento projekt je webová aplikácia pre správu školskej knižnice na **Stredne
 
 ## 🧭 Funkcionalita
 
-- ✅ Prihlásenie žiakov a učiteľov cez školské účty
+- ✅ Prihlásenie žiakov a učiteľov
 - 📖 Vyhľadávanie a prezeranie kníh
 - 📥 Požičiavanie a 📤 vracanie kníh
 - 🛠️ Admin rozhranie pre:

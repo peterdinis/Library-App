@@ -47,7 +47,7 @@ const RegisterForm: FC = () => {
         duration: 2000,
         className: "bg-orange-700 text-white font-bold text-xl",
       });
-      window.location.replace("/sign-in")
+      window.location.replace("/sign-in");
     } catch (error: any) {
       if (error.message === "Email is already registered") {
         toast({
