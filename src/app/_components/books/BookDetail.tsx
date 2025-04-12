@@ -42,7 +42,7 @@ const BookDetail: FC = () => {
                 className="h-auto w-full rounded-lg object-cover shadow-md"
               />
             </div>
-            <div className="rounded-xl p-6 text-center shadow-lg transition-all duration-300 dark:bg-stone-800">
+            <div className="rounded-xl p-6 text-center shadow-lg transition-all duration-300 dark:bg-stone-950">
               <span
                 className={`text-lg font-semibold ${
                   book.isAvaible ? "text-emerald-700" : "text-rose-700"
@@ -54,7 +54,7 @@ const BookDetail: FC = () => {
           </div>
 
           <div className="space-y-6 md:col-span-2">
-            <div className="rounded-2xl bg-white p-6 shadow-xl transition-shadow duration-300 hover:shadow-2xl dark:bg-stone-800">
+            <div className="rounded-2xl bg-white p-6 shadow-xl transition-shadow duration-300 hover:shadow-2xl dark:bg-stone-950">
               <h1 className="text-3xl leading-tight font-bold text-gray-900 sm:text-4xl dark:text-orange-500">
                 {book.title}
               </h1>
@@ -90,7 +90,7 @@ const BookDetail: FC = () => {
               </div>
 
               <div className="prose mt-6 max-w-none">
-                <h3 className="text-2xl font-semibold text-gray-800 dark:text-sky-50">
+                <h3 className="text-2xl font-semibold text-gray-950 dark:text-sky-50">
                   Krátke info o knihe
                 </h3>
                 <p className="text-lg leading-relaxed text-gray-600 dark:text-sky-50">
