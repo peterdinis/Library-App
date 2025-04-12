@@ -1,5 +1,3 @@
-"use client";
-
 import { Role } from "@prisma/client";
 import type { ColumnDef } from "@tanstack/react-table";
 import { useState } from "react";
@@ -45,57 +43,133 @@ export const userColumns: ColumnDef<User>[] = [
     header: "Akcie",
     cell: ({ row }) => {
       const user = row.original;
-      const [open, setOpen] = useState(false);
+      const [openDelete, setOpenDelete] = useState(false);
+      const [openRole, setOpenRole] = useState(false);
 
       const utils = api.useUtils();
+
       const deleteUser = api.user.deleteUserById.useMutation({
         onSuccess: async () => {
-          toast({
-            title: "Používateľ úspešne zmazaný",
-          });
+          toast({ title: "Používateľ úspešne zmazaný" });
           await utils.user.getAllUsers.invalidate();
-          setOpen(false);
+          setOpenDelete(false);
         },
-        onError: (err) => {
-          toast({
-            title: "Chyba pri mazání používateľa",
-          });
+        onError: () => {
+          toast({ title: "Chyba pri mazání používateľa" });
         },
       });
 
-      const handleDelete = () => {
-        deleteUser.mutate({ id: user.id });
-      };
+      const grantAdmin = api.admin.setAdminRole.useMutation({
+        onSuccess: async () => {
+          toast({ title: "Admin práva boli pridané" });
+          await utils.user.getAllUsers.invalidate();
+          setOpenRole(false);
+        },
+        onError: () => {
+          toast({ title: "Nepodarilo sa pridať admin práva" });
+        },
+      });
+
+      const revokeAdmin = api.admin.removeAdminRole.useMutation({
+        onSuccess: async () => {
+          toast({ title: "Admin práva boli odobraté" });
+          await utils.user.getAllUsers.invalidate();
+          setOpenRole(false);
+        },
+        onError: () => {
+          toast({ title: "Nepodarilo sa odobrať admin práva" });
+        },
+      });
+
+      const handleDelete = () => deleteUser.mutate({ id: user.id });
+      const handleMakeAdmin = () => grantAdmin.mutate({ userId: user.id });
+      const handleRemoveAdmin = () => revokeAdmin.mutate({ userId: user.id });
 
       return (
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            <Button variant="destructive" size="sm">
-              Zmazať
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Si si istý?</DialogTitle>
-              <DialogDescription>
-                Tento krok nenávratne odstráni používateľa{" "}
-                <strong>{user.fullName}</strong>.
-              </DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
-              <Button variant="ghost" onClick={() => setOpen(false)}>
-                Zrušiť
+        <div className="flex gap-2">
+          <Dialog open={openDelete} onOpenChange={setOpenDelete}>
+            <DialogTrigger asChild>
+              <Button variant="destructive" size="sm">
+                Zmazať
               </Button>
-              <Button
-                variant="destructive"
-                onClick={handleDelete}
-                disabled={deleteUser.isPending}
-              >
-                {deleteUser.isPending ? "Mazanie..." : "Zmazať"}
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Si si istý?</DialogTitle>
+                <DialogDescription>
+                  Tento krok nenávratne odstráni používateľa{" "}
+                  <strong>{user.fullName}</strong>.
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter>
+                <Button variant="ghost" onClick={() => setOpenDelete(false)}>
+                  Zrušiť
+                </Button>
+                <Button
+                  variant="destructive"
+                  onClick={handleDelete}
+                  disabled={deleteUser.isPending}
+                >
+                  {deleteUser.isPending ? "Mazanie..." : "Zmazať"}
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+
+          {user.role === "TEACHER" && (
+            <Dialog open={openRole} onOpenChange={setOpenRole}>
+              <DialogTrigger asChild>
+                <Button size="sm">Urobiť adminom</Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Potvrdenie</DialogTitle>
+                  <DialogDescription>
+                    Chceš nastaviť používateľovi <strong>{user.fullName}</strong> rolu <strong>ADMIN</strong>?
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                  <Button variant="ghost" onClick={() => setOpenRole(false)}>
+                    Zrušiť
+                  </Button>
+                  <Button onClick={handleMakeAdmin} disabled={grantAdmin.isPending}>
+                    {grantAdmin.isPending ? "Nastavovanie..." : "Nastaviť ako admin"}
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          )}
+
+          {user.role === "ADMIN" && (
+            <Dialog open={openRole} onOpenChange={setOpenRole}>
+              <DialogTrigger asChild>
+                <Button size="sm" variant="outline">
+                  Odobrať admin práva
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Potvrdenie</DialogTitle>
+                  <DialogDescription>
+                    Chceš odobrať používateľovi <strong>{user.fullName}</strong> rolu <strong>ADMIN</strong>?
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                  <Button variant="ghost" onClick={() => setOpenRole(false)}>
+                    Zrušiť
+                  </Button>
+                  <Button
+                    variant="destructive"
+                    onClick={handleRemoveAdmin}
+                    disabled={revokeAdmin.isPending}
+                  >
+                    {revokeAdmin.isPending ? "Prebieha..." : "Odobrať admin práva"}
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          )}
+        </div>
       );
     },
   },

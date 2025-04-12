@@ -34,6 +34,7 @@ export const adminRouter = createTRPCRouter({
               id: true,
               fullName: true,
               email: true,
+              role: true,
             },
             take: 10,
           }),
@@ -103,6 +104,62 @@ export const adminRouter = createTRPCRouter({
         bookings: bookingRes,
         genres: genreRes,
         categories: categoryRes,
+      };
+    }),
+
+  setAdminRole: publicProcedure
+    .input(z.object({ userId: z.string() }))
+    .mutation(async ({ input }) => {
+      const user = await db.user.findUnique({ where: { id: input.userId } });
+
+      if (!user) {
+        throw new Error("Používateľ neexistuje.");
+      }
+
+      if (user.role !== "TEACHER") {
+        throw new Error("Iba používateľ s rolou TEACHER môže byť povýšený na ADMIN.");
+      }
+
+      const updatedUser = await db.user.update({
+        where: { id: input.userId },
+        data: { role: "ADMIN" },
+      });
+
+      return {
+        message: "Rola bola úspešne zmenená na ADMIN.",
+        user: {
+          id: updatedUser.id,
+          fullName: updatedUser.fullName,
+          role: updatedUser.role,
+        },
+      };
+    }),
+
+  removeAdminRole: publicProcedure
+    .input(z.object({ userId: z.string() }))
+    .mutation(async ({ input }) => {
+      const user = await db.user.findUnique({ where: { id: input.userId } });
+
+      if (!user) {
+        throw new Error("Používateľ neexistuje.");
+      }
+
+      if (user.role !== "ADMIN") {
+        throw new Error("Iba používateľ s rolou ADMIN môže byť znížený na TEACHER.");
+      }
+
+      const updatedUser = await db.user.update({
+        where: { id: input.userId },
+        data: { role: "TEACHER" },
+      });
+
+      return {
+        message: "Rola ADMIN bola odstránená a zmenená na TEACHER.",
+        user: {
+          id: updatedUser.id,
+          fullName: updatedUser.fullName,
+          role: updatedUser.role,
+        },
       };
     }),
 });
