@@ -166,4 +166,40 @@ export const adminRouter = createTRPCRouter({
         },
       };
     }),
+
+  setTeacherRole: publicProcedure
+    .input(z.object({ userId: z.string() }))
+    .mutation(async ({ input }) => {
+      const user = await db.user.findUnique({ where: { id: input.userId } });
+
+      if (!user) {
+        throw new Error("Používateľ neexistuje.");
+      }
+
+      // Ak už má TEACHER, nič netreba robiť
+      if (user.role === "TEACHER") {
+        return {
+          message: "Používateľ už má rolu TEACHER.",
+          user: {
+            id: user.id,
+            fullName: user.fullName,
+            role: user.role,
+          },
+        };
+      }
+
+      const updatedUser = await db.user.update({
+        where: { id: input.userId },
+        data: { role: "TEACHER" },
+      });
+
+      return {
+        message: "Používateľovi bola nastavená rola TEACHER.",
+        user: {
+          id: updatedUser.id,
+          fullName: updatedUser.fullName,
+          role: updatedUser.role,
+        },
+      };
+    }),
 });
