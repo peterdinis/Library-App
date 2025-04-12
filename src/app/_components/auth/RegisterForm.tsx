@@ -167,6 +167,12 @@ const RegisterForm: FC = () => {
               </div>
             </div>
           </div>
+          <button
+            type="submit"
+            className="w-full rounded-lg bg-background px-4 py-3 text-white font-bold dark:bg-stone-900 transition-colors duration-200"
+          >
+            Registrovať sa
+          </button>
         </form>
       </div>
     </div>
