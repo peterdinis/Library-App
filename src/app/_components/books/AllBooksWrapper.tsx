@@ -1,6 +1,6 @@
 "use client";
 
-import { Ghost, Loader2, SlidersHorizontal } from "lucide-react";
+import { Ghost, SlidersHorizontal } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -19,6 +19,7 @@ import { api } from "~/trpc/react";
 import BookSearch from "./BookSearch";
 import BookSidebar from "./BookSidebar";
 import BooksHeader from "./BooksHeader";
+import Loader from "~/components/ui/loader";
 
 const AllBooksWrapper = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -84,7 +85,7 @@ const AllBooksWrapper = () => {
         </div>
 
         {isLoading ? (
-          <Loader2 className="h-8 w-8 animate-spin" />
+          <Loader width={8} height={8} />
         ) : books!.length > 0 ? (
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {books!.map((book) => (
