@@ -124,7 +124,7 @@ export const userColumns: ColumnDef<User>[] = [
                   onClick={handleDelete}
                   disabled={deleteUser.isPending}
                 >
-                  {deleteUser.isPending ? <Loader /> : "Zmazať"}
+                  {deleteUser.isPending ? <Loader height={8} width={8} /> : "Zmazať"}
                 </Button>
               </DialogFooter>
             </DialogContent>
@@ -153,7 +153,7 @@ export const userColumns: ColumnDef<User>[] = [
                     disabled={grantAdmin.isPending}
                   >
                     {grantAdmin.isPending
-                      ?  <Loader />
+                      ?  <Loader height={8} width={8} />
                       : "Nastaviť ako admin"}
                   </Button>
                 </DialogFooter>
@@ -186,7 +186,7 @@ export const userColumns: ColumnDef<User>[] = [
                     disabled={revokeAdmin.isPending}
                   >
                     {revokeAdmin.isPending
-                      ? <Loader />
+                      ? <Loader height={8} width={8} />
                       : "Odobrať admin práva"}
                   </Button>
                 </DialogFooter>
@@ -217,7 +217,7 @@ export const userColumns: ColumnDef<User>[] = [
                     onClick={handleSetTeacher}
                     disabled={setTeacher.isPending}
                   >
-                    {setTeacher.isPending ? <Loader />: "Nastaviť ako TEACHER"}
+                    {setTeacher.isPending ? <Loader height={8} width={8} />: "Nastaviť ako TEACHER"}
                   </Button>
                 </DialogFooter>
               </DialogContent>
