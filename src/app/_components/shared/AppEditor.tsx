@@ -6,8 +6,8 @@ import { Control, Controller, FieldValues } from "react-hook-form";
 import { Dispatch, FC, SetStateAction } from "react";
 import { EditorState, convertToRaw, convertFromRaw } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { Loader2 } from "lucide-react";
 import { useTheme } from "next-themes";
+import Loader from "~/components/ui/loader";
 
 const Editor = dynamic(
   () => import("react-draft-wysiwyg").then((mod) => mod.Editor),
@@ -156,7 +156,7 @@ const AppEditor: FC<AppEditorProps<FieldValues>> = ({
   const editorClass = theme === "dark" ? "editor-dark" : "editor-light";
 
   return (
-    <Suspense fallback={<Loader2 className="h-8 w-8 animate-spin" />}>
+    <Suspense fallback={<Loader width={8} height={8} />}>
       {control ? (
         <Controller
           name={name}

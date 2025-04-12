@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
+import Loader from "~/components/ui/loader";
 import { useToast } from "~/hooks/shared/use-toast";
 import { api } from "~/trpc/react";
 
@@ -67,7 +68,7 @@ const CreateGenreForm: FC = () => {
           disabled={createNewGenreMut.isPending}
         >
           {createNewGenreMut.isPending ? (
-            <Loader2 className="h-8 w-8 animate-spin" />
+            <Loader width={8} height={8} />
           ) : (
             "Vytvoriť žáner"
           )}

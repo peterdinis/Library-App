@@ -13,6 +13,7 @@ import {
 import { DialogHeader } from "~/components/ui/dialog";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import Loader from "~/components/ui/loader";
 import { api } from "~/trpc/react";
 
 const QuickSearch: FC = () => {
@@ -62,7 +63,7 @@ const QuickSearch: FC = () => {
           />
         </div>
         <div className="py-4">
-          {isLoading && <Loader2 className="animate-spin" />}
+          {isLoading && <Loader width={8} height={8} />}
           {isError && !isLoading && (
             <p className="mt-4 text-2xl font-bold text-red-600">
               <Frown /> Nastala chyba na strane applikácie

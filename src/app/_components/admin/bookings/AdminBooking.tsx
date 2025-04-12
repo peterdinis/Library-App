@@ -3,14 +3,14 @@
 import { FC } from "react";
 import AdminSharedComponent from "../shared/AdminSharedComponent";
 import { api } from "~/trpc/react";
-import { Loader2 } from "lucide-react";
 import { BookingTable } from "./BookingsTable";
 import { Booking, bookingColumns } from "./columns";
+import Loader from "~/components/ui/loader";
 
 const AdminBooking: FC = () => {
   const { data, isLoading } = api.booking.getAllBookings.useQuery();
 
-  if (isLoading) return <Loader2 className="h-8 w-8 animate-spin" />;
+  if (isLoading) return <Loader width={8} height={8} />
   return (
     <AdminSharedComponent showStats={false}>
       <main className="flex-1 overflow-auto p-4 sm:p-6">

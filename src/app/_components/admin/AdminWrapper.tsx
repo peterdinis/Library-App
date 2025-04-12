@@ -13,13 +13,12 @@ import {
 import { AdminTable } from "./AdminTable";
 import useTeacher from "~/hooks/auth/useTeacher";
 import useAdmin from "~/hooks/auth/useAdmin";
-import { adminColumns } from "./adminColumns";
 import { api } from "~/trpc/react";
-import { Loader2 } from "lucide-react";
 import { bookingColumns } from "./bookings/columns";
 import { UsersTable } from "./users/UsersTable";
 import { User } from "@prisma/client";
 import { userColumns } from "./users/columns";
+import Loader from "~/components/ui/loader";
 
 const AdminWrapper: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,7 +32,7 @@ const AdminWrapper: FC = () => {
   const teacher = useTeacher();
 
   if (isLoading || userLoading)
-    return <Loader2 className="h-8 w-8 animate-spin" />;
+    return <Loader width={8} height={8} />
 
   if (!admin || !teacher) {
     window.location.replace("/");

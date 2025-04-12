@@ -8,10 +8,7 @@ import {
   BookText,
   ChartColumnStacked,
   Library,
-  Loader2,
   Menu,
-  Search,
-  Users,
   Users2,
   X,
 } from "lucide-react";
@@ -23,6 +20,7 @@ import ModeToggle from "../../shared/ModeToggle";
 import { AuthorsTable } from "./AuthorsTable";
 import { authorsColumns } from "./authorsColumns";
 import ProfileDropdown from "../../auth/ProfileDropdown";
+import Loader from "~/components/ui/loader";
 
 const AdminAuthors: FC = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
@@ -30,7 +28,7 @@ const AdminAuthors: FC = () => {
   const { data, isLoading } = api.author.getAllAuthors.useQuery();
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
 
-  if (isLoading) return <Loader2 className="h-8 w-8 animate-spin" />;
+  if (isLoading) return <Loader width={8} height={8} />
 
   return (
     <div className="flex h-screen flex-col overflow-hidden lg:flex-row">

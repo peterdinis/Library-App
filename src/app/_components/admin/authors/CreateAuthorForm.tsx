@@ -1,13 +1,13 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import type { FC } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
+import Loader from "~/components/ui/loader";
 import { useToast } from "~/hooks/shared/use-toast";
 import { api } from "~/trpc/react";
 
@@ -69,7 +69,7 @@ const CreateGenreForm: FC = () => {
           disabled={createAuthorMut.isPending}
         >
           {createAuthorMut.isPending ? (
-            <Loader2 className="h-8 w-8 animate-spin" />
+            <Loader width={8} height={8} />
           ) : (
             "Vytvoriť spisovateľa"
           )}

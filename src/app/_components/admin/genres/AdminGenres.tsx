@@ -1,17 +1,17 @@
 "use client";
 
 import type { Genre } from "@prisma/client";
-import { Loader2 } from "lucide-react";
 import { type FC } from "react";
 import { api } from "~/trpc/react";
 import { GenresTable } from "./GenresTable";
 import { genreColumns } from "./genreColumns";
 import AdminSharedComponent from "../shared/AdminSharedComponent";
+import Loader from "~/components/ui/loader";
 
 const AdminGenres: FC = () => {
   const { data, isLoading } = api.genre.getAllGenres.useQuery();
 
-  if (isLoading) return <Loader2 className="h-8 w-8 animate-spin" />;
+  if (isLoading) return <Loader width={8} height={8} />
 
   return (
     <AdminSharedComponent showStats={false}>

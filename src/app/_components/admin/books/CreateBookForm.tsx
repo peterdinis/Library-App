@@ -11,12 +11,12 @@ import { Input } from "~/components/ui/input";
 import GenresSelect from "./GenresSelect";
 import CategoriesSelect from "./CategoriesSelect";
 import Navigation from "../../shared/Navigation";
-import { Loader2 } from "lucide-react";
 import { UploadButton } from "~/lib/uploadthing/uploadthing";
 import AuthorsSelect from "./AuthorsSelect";
 import AppEditor from "../../shared/AppEditor";
 import { EditorState } from "react-draft-wysiwyg";
 import { convertToRaw } from "draft-js";
+import Loader from "~/components/ui/loader";
 
 const bookSchema = z.object({
   title: z.string().min(1, "Názov knihy je povinný"),
@@ -206,7 +206,7 @@ const CreateBookForm = () => {
 
         <Button type="submit" disabled={isPending} className="w-full">
           {isPending ? (
-            <Loader2 className="h-5 w-5 animate-spin" />
+            <Loader width={8} height={8} />
           ) : (
             "Vytvoriť knihu"
           )}
