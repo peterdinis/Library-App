@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { type QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { loggerLink, unstable_httpBatchStreamLink } from "@trpc/client";
@@ -42,11 +42,16 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
   const [trpcClient] = useState(() =>
     api.createClient({
       links: [
-        loggerLink({
-          enabled: (op) =>
-            process.env.NODE_ENV === "development" ||
-            (op.direction === "down" && op.result instanceof Error),
-        }),
+        // Conditionally enable loggerLink only in development
+        ...(process.env.NODE_ENV === "development"
+          ? [
+              loggerLink({
+                enabled: (op) =>
+                  process.env.NODE_ENV === "development" ||
+                  (op.direction === "down" && op.result instanceof Error),
+              }),
+            ]
+          : []),
         unstable_httpBatchStreamLink({
           transformer: SuperJSON,
           url: getBaseUrl() + "/api/trpc",
