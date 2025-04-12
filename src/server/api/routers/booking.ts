@@ -176,15 +176,8 @@ export const bookingRouter = createTRPCRouter({
         throw new Error("Booking not found.");
       }
 
-      const {
-        id,
-        userId,
-        bookId,
-        className,
-        dueDate,
-        borrowDate,
-        returnDate,
-      } = input;
+      const { id, userId, bookId, className, dueDate, borrowDate, returnDate } =
+        input;
 
       const updated = await db.booking.update({
         where: { id },

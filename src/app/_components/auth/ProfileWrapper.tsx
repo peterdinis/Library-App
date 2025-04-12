@@ -25,7 +25,7 @@ const ProfileWrapper: FC = () => {
   );
 
   if (isLoading || myBorrowedBooksData === undefined) {
-    return <Loader width={8} height={8} />
+    return <Loader width={8} height={8} />;
   }
 
   if (isError)

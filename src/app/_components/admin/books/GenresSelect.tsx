@@ -21,7 +21,7 @@ const GenresSelect: FC<GenresSelectProps> = ({
 }: GenresSelectProps) => {
   const { data, isLoading } = api.genre.getAllGenres.useQuery();
 
-  if (isLoading) return <Loader width={8} height={8} />
+  if (isLoading) return <Loader width={8} height={8} />;
 
   return (
     <>

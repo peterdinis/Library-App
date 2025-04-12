@@ -124,7 +124,11 @@ export const userColumns: ColumnDef<User>[] = [
                   onClick={handleDelete}
                   disabled={deleteUser.isPending}
                 >
-                  {deleteUser.isPending ? <Loader height={8} width={8} /> : "Zmazať"}
+                  {deleteUser.isPending ? (
+                    <Loader height={8} width={8} />
+                  ) : (
+                    "Zmazať"
+                  )}
                 </Button>
               </DialogFooter>
             </DialogContent>
@@ -152,9 +156,11 @@ export const userColumns: ColumnDef<User>[] = [
                     onClick={handleMakeAdmin}
                     disabled={grantAdmin.isPending}
                   >
-                    {grantAdmin.isPending
-                      ?  <Loader height={8} width={8} />
-                      : "Nastaviť ako admin"}
+                    {grantAdmin.isPending ? (
+                      <Loader height={8} width={8} />
+                    ) : (
+                      "Nastaviť ako admin"
+                    )}
                   </Button>
                 </DialogFooter>
               </DialogContent>
@@ -185,9 +191,11 @@ export const userColumns: ColumnDef<User>[] = [
                     onClick={handleRemoveAdmin}
                     disabled={revokeAdmin.isPending}
                   >
-                    {revokeAdmin.isPending
-                      ? <Loader height={8} width={8} />
-                      : "Odobrať admin práva"}
+                    {revokeAdmin.isPending ? (
+                      <Loader height={8} width={8} />
+                    ) : (
+                      "Odobrať admin práva"
+                    )}
                   </Button>
                 </DialogFooter>
               </DialogContent>
@@ -205,8 +213,8 @@ export const userColumns: ColumnDef<User>[] = [
                 <DialogHeader>
                   <DialogTitle>Potvrdenie</DialogTitle>
                   <DialogDescription>
-                    Chceš používateľovi <strong>{user.fullName}</strong> nastaviť rolu{" "}
-                    <strong>TEACHER</strong>?
+                    Chceš používateľovi <strong>{user.fullName}</strong>{" "}
+                    nastaviť rolu <strong>TEACHER</strong>?
                   </DialogDescription>
                 </DialogHeader>
                 <DialogFooter>
@@ -217,7 +225,11 @@ export const userColumns: ColumnDef<User>[] = [
                     onClick={handleSetTeacher}
                     disabled={setTeacher.isPending}
                   >
-                    {setTeacher.isPending ? <Loader height={8} width={8} />: "Nastaviť ako TEACHER"}
+                    {setTeacher.isPending ? (
+                      <Loader height={8} width={8} />
+                    ) : (
+                      "Nastaviť ako TEACHER"
+                    )}
                   </Button>
                 </DialogFooter>
               </DialogContent>

@@ -10,7 +10,7 @@ import Loader from "~/components/ui/loader";
 const AdminBooking: FC = () => {
   const { data, isLoading } = api.booking.getAllBookings.useQuery();
 
-  if (isLoading) return <Loader width={8} height={8} />
+  if (isLoading) return <Loader width={8} height={8} />;
   return (
     <AdminSharedComponent showStats={false}>
       <main className="flex-1 overflow-auto p-4 sm:p-6">

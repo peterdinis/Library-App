@@ -28,7 +28,7 @@ const AdminAuthors: FC = () => {
   const { data, isLoading } = api.author.getAllAuthors.useQuery();
   const toggleSidebar = () => setSidebarOpen(!isSidebarOpen);
 
-  if (isLoading) return <Loader width={8} height={8} />
+  if (isLoading) return <Loader width={8} height={8} />;
 
   return (
     <div className="flex h-screen flex-col overflow-hidden lg:flex-row">
@@ -132,7 +132,7 @@ const AdminAuthors: FC = () => {
             </div>
           </div>
         </header>
-        
+
         <main className="flex-1 overflow-auto p-4 sm:p-6">
           <h1 className="text-center text-5xl font-bold">
             Všetci spisovatelia

@@ -19,7 +19,7 @@ interface AuthorSelectProps {
 const AuthorsSelect: FC<AuthorSelectProps> = ({ onSelect }) => {
   const { data, isLoading } = api.author.getAllAuthors.useQuery();
 
-  if (isLoading) return <Loader width={8} height={8} />
+  if (isLoading) return <Loader width={8} height={8} />;
 
   return (
     <>

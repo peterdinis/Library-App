@@ -205,11 +205,7 @@ const CreateBookForm = () => {
         </div>
 
         <Button type="submit" disabled={isPending} className="w-full">
-          {isPending ? (
-            <Loader width={8} height={8} />
-          ) : (
-            "Vytvoriť knihu"
-          )}
+          {isPending ? <Loader width={8} height={8} /> : "Vytvoriť knihu"}
         </Button>
       </form>
     </>

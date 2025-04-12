@@ -18,11 +18,7 @@ const authorSchema = z.object({
 type AuthorFormValues = z.infer<typeof authorSchema>;
 
 const CreateGenreForm: FC = () => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-  } = useForm<AuthorFormValues>({
+  const { register, handleSubmit, reset } = useForm<AuthorFormValues>({
     resolver: zodResolver(authorSchema),
   });
 

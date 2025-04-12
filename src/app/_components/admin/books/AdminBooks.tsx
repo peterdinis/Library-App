@@ -11,7 +11,7 @@ import Loader from "~/components/ui/loader";
 const AdminBooks: FC = () => {
   const { data, isLoading } = api.book.getAllBooks.useQuery();
 
-  if (isLoading) return <Loader width={8} height={8} />
+  if (isLoading) return <Loader width={8} height={8} />;
 
   return (
     <AdminSharedComponent showStats={false}>

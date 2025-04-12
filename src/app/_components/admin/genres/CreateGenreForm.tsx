@@ -19,11 +19,7 @@ const genreSchema = z.object({
 type GenreFormValues = z.infer<typeof genreSchema>;
 
 const CreateGenreForm: FC = () => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-  } = useForm<GenreFormValues>({
+  const { register, handleSubmit, reset } = useForm<GenreFormValues>({
     resolver: zodResolver(genreSchema),
   });
 

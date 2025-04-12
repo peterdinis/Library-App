@@ -18,11 +18,7 @@ const categorySchema = z.object({
 type CategoryFormValues = z.infer<typeof categorySchema>;
 
 const CreateCategoryForm: FC = () => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-  } = useForm<CategoryFormValues>({
+  const { register, handleSubmit, reset } = useForm<CategoryFormValues>({
     resolver: zodResolver(categorySchema),
   });
 

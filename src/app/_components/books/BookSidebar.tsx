@@ -34,7 +34,6 @@ const BookSidebar: FC<BookSidebarProps> = ({
   const [selectedGenre, setSelectedGenre] = useState<string | undefined>();
   const [selectedAuthor, setSelectedAuthor] = useState<string | undefined>();
 
-  console.log(selectedAuthor, selectedGenre, selectedCategory);
   const handleFilterChange = (filterType: string, value: string) => {
     setFilters({ [filterType]: value });
 

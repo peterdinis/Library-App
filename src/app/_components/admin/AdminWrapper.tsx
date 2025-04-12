@@ -27,12 +27,9 @@ const AdminWrapper: FC = () => {
   const { data: usersData, isLoading: userLoading } =
     api.user.getAllUsers.useQuery();
 
-  console.log("usersData", usersData);
-
   const teacher = useTeacher();
 
-  if (isLoading || userLoading)
-    return <Loader width={8} height={8} />
+  if (isLoading || userLoading) return <Loader width={8} height={8} />;
 
   if (!admin || !teacher) {
     window.location.replace("/");

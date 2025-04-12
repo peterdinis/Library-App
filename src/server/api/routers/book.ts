@@ -60,7 +60,7 @@ export const bookRouter = createTRPCRouter({
         id: true,
         title: true,
         coverUrl: true,
-        isAvaible: true
+        isAvaible: true,
       },
       orderBy: { title: "asc" },
       take: 10,

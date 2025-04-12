@@ -19,7 +19,7 @@ interface CategorySelectProps {
 const CategoriesSelect: FC<CategorySelectProps> = ({ onSelect }) => {
   const { data, isLoading } = api.category.getAllCategories.useQuery();
 
-  if (isLoading) return <Loader width={8} height={8} />
+  if (isLoading) return <Loader width={8} height={8} />;
 
   return (
     <>
