@@ -59,6 +59,8 @@ export const bookRouter = createTRPCRouter({
       select: {
         id: true,
         title: true,
+        coverUrl: true,
+        isAvaible: true
       },
       orderBy: { title: "asc" },
       take: 10,
@@ -94,6 +96,7 @@ export const bookRouter = createTRPCRouter({
           select: {
             id: true,
             title: true,
+            isAvaible: true,
             rating: true,
             coverUrl: true,
           },
