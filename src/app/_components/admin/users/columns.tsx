@@ -11,6 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
+import Loader from "~/components/ui/loader";
 import { toast } from "~/hooks/shared/use-toast";
 import { api } from "~/trpc/react";
 
@@ -123,7 +124,7 @@ export const userColumns: ColumnDef<User>[] = [
                   onClick={handleDelete}
                   disabled={deleteUser.isPending}
                 >
-                  {deleteUser.isPending ? "Mazanie..." : "Zmazať"}
+                  {deleteUser.isPending ? <Loader /> : "Zmazať"}
                 </Button>
               </DialogFooter>
             </DialogContent>
@@ -152,7 +153,7 @@ export const userColumns: ColumnDef<User>[] = [
                     disabled={grantAdmin.isPending}
                   >
                     {grantAdmin.isPending
-                      ? "Nastavovanie..."
+                      ?  <Loader />
                       : "Nastaviť ako admin"}
                   </Button>
                 </DialogFooter>
@@ -185,7 +186,7 @@ export const userColumns: ColumnDef<User>[] = [
                     disabled={revokeAdmin.isPending}
                   >
                     {revokeAdmin.isPending
-                      ? "Prebieha..."
+                      ? <Loader />
                       : "Odobrať admin práva"}
                   </Button>
                 </DialogFooter>
@@ -216,7 +217,7 @@ export const userColumns: ColumnDef<User>[] = [
                     onClick={handleSetTeacher}
                     disabled={setTeacher.isPending}
                   >
-                    {setTeacher.isPending ? "Nastavovanie..." : "Nastaviť ako TEACHER"}
+                    {setTeacher.isPending ? <Loader />: "Nastaviť ako TEACHER"}
                   </Button>
                 </DialogFooter>
               </DialogContent>
