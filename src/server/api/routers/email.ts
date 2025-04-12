@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { format, parseISO } from "date-fns";
 import { sendEmail } from "~/lib/mails/mailer";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 
@@ -8,17 +9,18 @@ export const emailRouter = createTRPCRouter({
       z.object({
         email: z.string().email(),
         bookTitle: z.string(),
-        dueDate: z.string(), // napr. "2025-04-20"
+        dueDate: z.string(),
       }),
     )
     .mutation(async ({ input }) => {
       const subject = "Požičanie knihy";
-      const message = `Dobrý deň,\n\nkniha "${input.bookTitle}" bola úspešne požičaná.\nTermín vrátenia: ${input.dueDate}.\n\nĎakujeme, SPŠT Knižnica.`;
+      const formattedDueDate = format(parseISO(input.dueDate), "d.M.yyyy");
+
+      const message = `Dobrý deň,\n\nkniha "${input.bookTitle}" bola úspešne požičaná.\nTermín vrátenia: ${formattedDueDate}.\n\nĎakujeme, SPŠT Knižnica.`;
 
       await sendEmail({ email: input.email, subject, message });
     }),
 
-  // ✅ Email po vrátení knihy
   sendAfterReturned: publicProcedure
     .input(
       z.object({

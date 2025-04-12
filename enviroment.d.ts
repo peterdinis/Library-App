@@ -11,6 +11,8 @@ declare global {
       RESEND_TOKEN: string;
       QSTASH_CURRENT_SIGNING_KEY: string;
       QSTASH_NEXT_SIGNING_KEY: string;
+      NODEMAILER_USER: string;
+      NODEMAILER_PASS: string;
     }
   }
 }
