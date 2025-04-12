@@ -83,7 +83,6 @@ export const bookingColumns: ColumnDef<Booking>[] = [
       const form = useForm();
       return (
         <div className="flex items-center gap-2">
-          {/* Edit Dialog */}
           <Dialog open={openEdit} onOpenChange={setOpenEdit}>
             <DialogTrigger asChild>
               <Button size="icon" variant="outline">
@@ -99,7 +98,6 @@ export const bookingColumns: ColumnDef<Booking>[] = [
               </DialogHeader>
               <div className="space-y-2">
                 <Form {...form}>
-                  {/* Kniha */}
                   <FormField
                     control={form.control}
                     name="book"
@@ -112,8 +110,6 @@ export const bookingColumns: ColumnDef<Booking>[] = [
                       </FormItem>
                     )}
                   />
-
-                  {/* Email */}
                   <FormField
                     control={form.control}
                     name="email"
@@ -126,8 +122,6 @@ export const bookingColumns: ColumnDef<Booking>[] = [
                       </FormItem>
                     )}
                   />
-
-                  {/* Stav */}
                   <FormField
                     control={form.control}
                     name="status"
@@ -140,8 +134,6 @@ export const bookingColumns: ColumnDef<Booking>[] = [
                       </FormItem>
                     )}
                   />
-
-                  {/* Požičané od */}
                   <FormField
                     control={form.control}
                     name="borrowedDate"
@@ -164,8 +156,6 @@ export const bookingColumns: ColumnDef<Booking>[] = [
                       </FormItem>
                     )}
                   />
-
-                  {/* Požičané do */}
                   <FormField
                     control={form.control}
                     name="dueDate"
@@ -195,8 +185,6 @@ export const bookingColumns: ColumnDef<Booking>[] = [
               </DialogFooter>
             </DialogContent>
           </Dialog>
-
-          {/* Delete Dialog */}
           <Dialog open={openDelete} onOpenChange={setOpenDelete}>
             <DialogTrigger asChild>
               <Button size="icon" variant="destructive">
@@ -217,7 +205,6 @@ export const bookingColumns: ColumnDef<Booking>[] = [
                 <Button
                   variant="destructive"
                   onClick={() => {
-                    // Tu môžeš volať svoje delete API
                     console.log("Zmazaná objednávka", booking.id);
                     setOpenDelete(false);
                   }}

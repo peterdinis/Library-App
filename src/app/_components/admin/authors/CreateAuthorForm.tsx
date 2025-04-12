@@ -21,7 +21,6 @@ const CreateGenreForm: FC = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
     reset,
   } = useForm<AuthorFormValues>({
     resolver: zodResolver(authorSchema),
