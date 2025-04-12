@@ -117,7 +117,9 @@ export const adminRouter = createTRPCRouter({
       }
 
       if (user.role !== "TEACHER") {
-        throw new Error("Iba používateľ s rolou TEACHER môže byť povýšený na ADMIN.");
+        throw new Error(
+          "Iba používateľ s rolou TEACHER môže byť povýšený na ADMIN.",
+        );
       }
 
       const updatedUser = await db.user.update({
@@ -145,7 +147,9 @@ export const adminRouter = createTRPCRouter({
       }
 
       if (user.role !== "ADMIN") {
-        throw new Error("Iba používateľ s rolou ADMIN môže byť znížený na TEACHER.");
+        throw new Error(
+          "Iba používateľ s rolou ADMIN môže byť znížený na TEACHER.",
+        );
       }
 
       const updatedUser = await db.user.update({
