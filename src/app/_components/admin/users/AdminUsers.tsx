@@ -3,15 +3,13 @@
 import { FC } from "react";
 import { UsersTable } from "./UsersTable";
 import AdminSharedComponent from "../shared/AdminSharedComponent";
-import { columns } from "./columns";
 import { api } from "~/trpc/react";
 import { Loader2 } from "lucide-react";
 import { User } from "@prisma/client";
+import { userColumns } from "./columns";
 
 const AdminUsers: FC = () => {
   const { data, isLoading } = api.user.getAllUsers.useQuery();
-
-  console.log("D", data);
 
   if (isLoading) return <Loader2 className="h-8 w-8 animate-spin" />;
   return (
@@ -21,7 +19,7 @@ const AdminUsers: FC = () => {
           Všetci používatelia učitelia / študenti
         </h1>
         <div className="mt-4">
-          <UsersTable columns={columns} data={data as unknown as User[]} />
+          <UsersTable columns={userColumns} data={data as unknown as User[]} />
         </div>
       </main>
     </AdminSharedComponent>
