@@ -28,6 +28,8 @@ const AdminWrapper: FC = () => {
   const { data: usersData, isLoading: userLoading } =
     api.user.getAllUsers.useQuery();
 
+  console.log("usersData", usersData)
+
   const teacher = useTeacher();
 
   if (isLoading || userLoading)
