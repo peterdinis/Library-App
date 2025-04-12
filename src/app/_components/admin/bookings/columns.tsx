@@ -24,6 +24,8 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { useForm } from "react-hook-form";
+import { api } from "~/trpc/react";
+import { toast } from "sonner";
 
 type Book = {
   title: string;
@@ -41,6 +43,17 @@ export type Booking = {
   dueDate: string;
   borrowedDate: string;
 };
+
+const utils = api.useUtils();
+const deleteBooking = api.booking.deleteBooking.useMutation({
+  onSuccess: () => {
+    toast.success("Objednávka bola úspešne zmazaná.");
+    utils.booking.getAllBookings.invalidate(); // alebo refetch tvojej bookings query
+  },
+  onError: () => {
+    toast.error("Nepodarilo sa zmazať objednávku.");
+  },
+});
 
 export const bookingColumns: ColumnDef<Booking>[] = [
   {
@@ -205,7 +218,7 @@ export const bookingColumns: ColumnDef<Booking>[] = [
                 <Button
                   variant="destructive"
                   onClick={() => {
-                    console.log("Zmazaná objednávka", booking.id);
+                    deleteBooking.mutate({ id: booking.id });
                     setOpenDelete(false);
                   }}
                 >
