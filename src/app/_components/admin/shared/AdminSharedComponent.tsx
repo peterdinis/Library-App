@@ -18,6 +18,7 @@ import { api } from "~/trpc/react";
 import ModeToggle from "../../shared/ModeToggle";
 import ProfileDropdown from "../../auth/ProfileDropdown";
 import AdminQuickSearch from "./AdminQuickSearch";
+import Loader from "~/components/ui/loader";
 
 type AdminSharedComponentProps = {
   showStats?: boolean;
@@ -52,7 +53,7 @@ const AdminSharedComponent: FC<AdminSharedComponentProps> = ({
     authorLoading ||
     bookingLoading
   )
-    return <Loader2 className="h-8 w-8 animate-spin" />;
+    return <Loader width={8} height={8} />;
 
   return (
     <div className="flex h-screen flex-col overflow-hidden lg:flex-row">

@@ -1,6 +1,6 @@
 "use client";
 
-import { Frown, Loader2, Search } from "lucide-react";
+import { Frown, Search } from "lucide-react";
 import Link from "next/link";
 import { type ChangeEvent, type FC, useState } from "react";
 import { Button } from "~/components/ui/button";
@@ -13,6 +13,7 @@ import {
 } from "~/components/ui/dialog";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import Loader from "~/components/ui/loader";
 import { api } from "~/trpc/react";
 
 const AdminQuickSearch: FC = () => {
@@ -67,7 +68,7 @@ const AdminQuickSearch: FC = () => {
         </div>
 
         <div className="space-y-6 py-4">
-          {isPending && <Loader2 className="animate-spin" />}
+          {isPending && <Loader width={8} height={8} />}
           {isError && !isPending && (
             <p className="mt-4 flex items-center gap-2 text-2xl font-bold text-red-600">
               <Frown /> Nastala chyba na strane aplikácie

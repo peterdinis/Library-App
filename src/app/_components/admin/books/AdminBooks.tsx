@@ -1,17 +1,17 @@
 "use client";
 
-import { Loader2 } from "lucide-react";
 import { FC } from "react";
 import { api } from "~/trpc/react";
 import { columns } from "./columns";
 import { Book } from "@prisma/client";
 import { BooksTable } from "./BooksTable";
 import AdminSharedComponent from "../shared/AdminSharedComponent";
+import Loader from "~/components/ui/loader";
 
 const AdminBooks: FC = () => {
   const { data, isLoading } = api.book.getAllBooks.useQuery();
 
-  if (isLoading) return <Loader2 className="h-8 w-8 animate-spin" />;
+  if (isLoading) return <Loader width={8} height={8} />
 
   return (
     <AdminSharedComponent showStats={false}>

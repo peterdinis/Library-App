@@ -6,6 +6,7 @@ import { BookGrid, BooksData } from "./ProfileHelpersComponents";
 import { useSession } from "next-auth/react";
 import { api } from "~/trpc/react";
 import { Loader2 } from "lucide-react";
+import Loader from "~/components/ui/loader";
 
 const ProfileWrapper: FC = () => {
   const { data: session } = useSession();
@@ -23,10 +24,8 @@ const ProfileWrapper: FC = () => {
     },
   );
 
-  console.log("D", myBorrowedBooksData);
-
   if (isLoading || myBorrowedBooksData === undefined) {
-    return <Loader2 className="h-8 w-8 animate-spin" />;
+    return <Loader width={8} height={8} />
   }
 
   if (isError)

@@ -8,9 +8,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { Loader2 } from "lucide-react";
 import { FC } from "react";
 import { api } from "~/trpc/react";
+import Loader from "~/components/ui/loader";
 
 interface AuthorSelectProps {
   onSelect: (value: string) => void;
@@ -19,7 +19,7 @@ interface AuthorSelectProps {
 const AuthorsSelect: FC<AuthorSelectProps> = ({ onSelect }) => {
   const { data, isLoading } = api.author.getAllAuthors.useQuery();
 
-  if (isLoading) return <Loader2 className="h-8 w-8 animate-spin" />;
+  if (isLoading) return <Loader width={8} height={8} />
 
   return (
     <>

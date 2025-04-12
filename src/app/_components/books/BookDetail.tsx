@@ -1,6 +1,6 @@
 "use client";
 
-import { Book, Calendar, Loader2 } from "lucide-react";
+import { Book, Calendar} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -10,6 +10,7 @@ import { Label } from "~/components/ui/label";
 import { api } from "~/trpc/react";
 import BorrowBookModal from "../booking/BorrowBookModal";
 import { useSession } from "next-auth/react";
+import Loader from "~/components/ui/loader";
 
 const BookDetail: FC = () => {
   const { id } = useParams();
@@ -20,7 +21,7 @@ const BookDetail: FC = () => {
     error,
   } = api.book.getBookDetail.useQuery(bookID, { enabled: !!id });
   const { data: session } = useSession();
-  if (isLoading) return <Loader2 className="mx-auto h-8 w-8 animate-spin" />;
+  if (isLoading) return <Loader width={8} height={8} />;
   if (error)
     return (
       <p className="text-center text-red-500">Error loading book details.</p>
