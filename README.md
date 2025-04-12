@@ -1,29 +1,30 @@
-# Create T3 App
+# 📚 Školská Knižnica – SPŠT Bardejov
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Tento projekt je webová aplikácia pre správu školskej knižnice na **Strednej priemyselnej škole technickej v Bardejove**, postavená na [T3 Stacku](https://create.t3.gg/).
 
-## What's next? How do I make an app with this?
+---
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## 🧭 Funkcionalita
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- ✅ Prihlásenie žiakov a učiteľov cez školské účty
+- 📖 Vyhľadávanie a prezeranie kníh
+- 📥 Požičiavanie a 📤 vracanie kníh
+- 🛠️ Admin rozhranie pre:
+  - Správu kníh a dostupnosti
+  - Správu používateľov
+  - Kontrolu výpožičiek
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+---
 
-## Learn More
+## ⚙️ Použité technológie
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+Projekt využíva moderný **T3 Stack**:
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+- [Next.js](https://nextjs.org) – React framework
+- [NextAuth.js](https://next-auth.js.org) – Autentifikácia
+- [Prisma](https://prisma.io) – ORM pre databázu
+- [Drizzle](https://orm.drizzle.team) – Alternatívne ORM
+- [Tailwind CSS](https://tailwindcss.com) – Štýlovanie pomocou utility tried
+- [tRPC](https://trpc.io) – Typovo bezpečné API
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+---
