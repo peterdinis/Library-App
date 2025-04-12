@@ -81,6 +81,19 @@ export const userColumns: ColumnDef<User>[] = [
         },
       });
 
+      const setTeacher = api.admin.setTeacherRole.useMutation({
+        onSuccess: async () => {
+          toast({ title: "Rola TEACHER bola nastavená" });
+          await utils.user.getAllUsers.invalidate();
+          setOpenRole(false);
+        },
+        onError: () => {
+          toast({ title: "Nepodarilo sa nastaviť rolu TEACHER" });
+        },
+      });
+
+      const handleSetTeacher = () => setTeacher.mutate({ userId: user.id });
+
       const handleDelete = () => deleteUser.mutate({ id: user.id });
       const handleMakeAdmin = () => grantAdmin.mutate({ userId: user.id });
       const handleRemoveAdmin = () => revokeAdmin.mutate({ userId: user.id });
@@ -174,6 +187,36 @@ export const userColumns: ColumnDef<User>[] = [
                     {revokeAdmin.isPending
                       ? "Prebieha..."
                       : "Odobrať admin práva"}
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          )}
+
+          {user.role !== "TEACHER" && user.role !== "ADMIN" && (
+            <Dialog open={openRole} onOpenChange={setOpenRole}>
+              <DialogTrigger asChild>
+                <Button size="sm" variant="secondary">
+                  Nastaviť ako učiteľa
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Potvrdenie</DialogTitle>
+                  <DialogDescription>
+                    Chceš používateľovi <strong>{user.fullName}</strong> nastaviť rolu{" "}
+                    <strong>TEACHER</strong>?
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter>
+                  <Button variant="ghost" onClick={() => setOpenRole(false)}>
+                    Zrušiť
+                  </Button>
+                  <Button
+                    onClick={handleSetTeacher}
+                    disabled={setTeacher.isPending}
+                  >
+                    {setTeacher.isPending ? "Nastavovanie..." : "Nastaviť ako TEACHER"}
                   </Button>
                 </DialogFooter>
               </DialogContent>
