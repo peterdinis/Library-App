@@ -24,6 +24,8 @@ const LoginForm: FC = () => {
       password,
     });
 
+    window.location.replace("/profile")
+
     if (!result?.error) {
       toast({
         title: "Prihlásenie bolo úspešné",
