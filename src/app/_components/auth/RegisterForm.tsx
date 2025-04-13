@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { api } from "~/trpc/react";
 import type { RegisterFormInputs } from "./Auth.interface";
 import { useToast } from "~/hooks/shared/use-toast";
+import { Button } from "~/components/ui/button";
 
 const RegisterForm: FC = () => {
   const {
@@ -23,29 +24,14 @@ const RegisterForm: FC = () => {
     setShowPassword((prev) => !prev);
   };
 
-  const onBoardingWorkflow = api.workflow.trigger.useMutation({
-    onSuccess: () => {
-      window.location.replace("/profile");
-    },
-
-    onError: () => {
-      toast({
-        title: "Prihlásenie zlyhalo",
-        description: "Skontrolujte prosím email a heslo.",
-        duration: 3000,
-        className: "bg-red-600 text-white font-semibold text-base",
-      });
-    },
-  });
-
   const onSubmit = async (data: RegisterFormInputs) => {
     try {
       await registerMutation.mutateAsync(data);
-      onBoardingWorkflow.mutate({ email: data.email });
+      // onBoardingWorkflow.mutate({ email: data.email });
       toast({
         title: "Registrácia bola úspešná.",
         duration: 2000,
-        className: "bg-orange-700 text-white font-bold text-xl",
+        className: "bg-green-700 text-white font-bold text-xl",
       });
       window.location.replace("/sign-in");
     } catch (error: any) {
@@ -167,12 +153,14 @@ const RegisterForm: FC = () => {
               </div>
             </div>
           </div>
-          <button
-            type="submit"
-            className="bg-background w-full rounded-lg px-4 py-3 font-bold text-white transition-colors duration-200 dark:bg-stone-900"
-          >
-            Registrovať sa
-          </button>
+          <Button
+              type="submit"
+              size="lg"
+              variant="default"
+              className="w-full"
+            >
+              Registrácia
+            </Button>
         </form>
       </div>
     </div>
