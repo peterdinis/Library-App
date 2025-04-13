@@ -11,6 +11,7 @@ import type { AppRouter } from "~/server/api/root";
 import { createQueryClient } from "./query-client";
 
 let clientQueryClientSingleton: QueryClient | undefined = undefined;
+
 const getQueryClient = () => {
   if (typeof window === "undefined") {
     // Server: always make a new query client
@@ -42,16 +43,11 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
   const [trpcClient] = useState(() =>
     api.createClient({
       links: [
-        // Conditionally enable loggerLink only in development
-        ...(process.env.NODE_ENV === "development"
-          ? [
-              loggerLink({
-                enabled: (op) =>
-                  process.env.NODE_ENV === "development" ||
-                  (op.direction === "down" && op.result instanceof Error),
-              }),
-            ]
-          : []),
+        loggerLink({
+          enabled: (op) =>
+            process.env.NODE_ENV === "development" ||
+            (op.direction === "down" && op.result instanceof Error),
+        }),
         unstable_httpBatchStreamLink({
           transformer: SuperJSON,
           url: getBaseUrl() + "/api/trpc",
@@ -62,7 +58,7 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
           },
         }),
       ],
-    }),
+    })
   );
 
   return (
