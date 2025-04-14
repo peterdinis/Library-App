@@ -15,9 +15,7 @@
     "postinstall": "prisma generate",
     "seed": "tsx prisma/seed.ts",
     "preview": "next build && next start",
-    "start": "next start",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "start": "next start"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.8.0",
