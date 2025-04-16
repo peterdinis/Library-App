@@ -2,7 +2,7 @@
 
 import { X } from "lucide-react";
 import { FC, useState } from "react";
-import { useFilterStore } from "~/app/_store/bookSidebarStore";
+import { useBookSidebarStore } from "~/app/_store/bookSidebarStore";
 import { Button } from "~/components/ui/button";
 import { Label } from "~/components/ui/label";
 import {
@@ -23,7 +23,7 @@ const BookSidebar: FC<BookSidebarProps> = ({
   isSidebarOpen,
   setIsSidebarOpen,
 }) => {
-  const { setFilters, clearFilters } = useFilterStore();
+  const { setFilters, clearFilters } = useBookSidebarStore();
   const { data: categories } = api.category.getAllCategories.useQuery();
   const { data: genres } = api.genre.getAllGenres.useQuery();
   const { data: authors } = api.author.getAllAuthors.useQuery();

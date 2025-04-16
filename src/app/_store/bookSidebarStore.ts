@@ -1,18 +1,18 @@
 import { create } from "zustand";
 
-interface FilterState {
+interface BookSidebarStoreInterface {
   selectedCategory?: string;
   selectedGenre?: string;
   selectedAuthor?: string;
   categoryId?: string;
   genreId?: string;
   authorId?: string;
-  setFilters: (filters: Partial<FilterState>) => void;
+  setFilters: (filters: Partial<BookSidebarStoreInterface>) => void;
   clearFilters: () => void;
-  filters: () => Partial<FilterState>;
+  filters: () => Partial<BookSidebarStoreInterface>;
 }
 
-export const useFilterStore = create<FilterState>((set, get) => ({
+export const useBookSidebarStore = create<BookSidebarStoreInterface>((set, get) => ({
   selectedCategory: undefined,
   selectedGenre: undefined,
   selectedAuthor: undefined,
