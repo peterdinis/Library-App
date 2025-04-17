@@ -153,14 +153,9 @@ const RegisterForm: FC = () => {
               </div>
             </div>
           </div>
-          <Button
-              type="submit"
-              size="lg"
-              variant="default"
-              className="w-full"
-            >
-              Registrácia
-            </Button>
+          <Button type="submit" size="lg" variant="default" className="w-full">
+            Registrácia
+          </Button>
         </form>
       </div>
     </div>

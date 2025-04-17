@@ -24,7 +24,7 @@ const LoginForm: FC = () => {
       password,
     });
 
-    window.location.replace("/profile")
+    window.location.replace("/profile");
 
     if (!result?.error) {
       toast({

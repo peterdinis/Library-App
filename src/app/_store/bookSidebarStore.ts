@@ -12,22 +12,24 @@ interface BookSidebarStoreInterface {
   filters: () => Partial<BookSidebarStoreInterface>;
 }
 
-export const useBookSidebarStore = create<BookSidebarStoreInterface>((set, get) => ({
-  selectedCategory: undefined,
-  selectedGenre: undefined,
-  selectedAuthor: undefined,
+export const useBookSidebarStore = create<BookSidebarStoreInterface>(
+  (set, get) => ({
+    selectedCategory: undefined,
+    selectedGenre: undefined,
+    selectedAuthor: undefined,
 
-  setFilters: (filters) => set((state) => ({ ...state, ...filters })),
+    setFilters: (filters) => set((state) => ({ ...state, ...filters })),
 
-  clearFilters: () =>
-    set({
-      selectedCategory: undefined,
-      selectedGenre: undefined,
-      selectedAuthor: undefined,
-      categoryId: undefined,
-      genreId: undefined,
-      authorId: undefined,
-    }),
+    clearFilters: () =>
+      set({
+        selectedCategory: undefined,
+        selectedGenre: undefined,
+        selectedAuthor: undefined,
+        categoryId: undefined,
+        genreId: undefined,
+        authorId: undefined,
+      }),
 
-  filters: () => get(),
-}));
+    filters: () => get(),
+  }),
+);
