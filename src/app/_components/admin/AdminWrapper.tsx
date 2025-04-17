@@ -16,7 +16,6 @@ import useAdmin from "~/hooks/auth/useAdmin";
 import { api } from "~/trpc/react";
 import { bookingColumns } from "./bookings/columns";
 import { UsersTable } from "./users/UsersTable";
-import { User } from "@prisma/client";
 import { userColumns } from "./users/columns";
 import Loader from "~/components/ui/loader";
 

@@ -14,7 +14,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { type FC, useState } from "react";
-import { Input } from "~/components/ui/input";
 import { api } from "~/trpc/react";
 import ModeToggle from "../../shared/ModeToggle";
 import { AuthorsTable } from "./AuthorsTable";

@@ -6,9 +6,7 @@ import {
   BookOpen,
   ChartColumnStacked,
   Library,
-  Loader2,
   Menu,
-  Users,
   Users2,
   X,
 } from "lucide-react";

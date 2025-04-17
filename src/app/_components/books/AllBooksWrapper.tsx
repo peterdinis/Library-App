@@ -4,7 +4,6 @@ import { Ghost, SlidersHorizontal } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { useFilterStore } from "~/app/_store/bookSidebarStore";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
 import {
@@ -20,12 +19,13 @@ import BookSearch from "./BookSearch";
 import BookSidebar from "./BookSidebar";
 import BooksHeader from "./BooksHeader";
 import Loader from "~/components/ui/loader";
+import { useBookSidebarStore } from "~/app/_store/bookSidebarStore";
 
 const AllBooksWrapper = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const filters = useFilterStore((state) => state.filters());
+  const filters = useBookSidebarStore((state) => state.filters());
   const { data: searchResults, isLoading: isSearching } =
     api.book.quickSearchBook.useQuery(searchQuery, {
       enabled: searchQuery.length > 0,

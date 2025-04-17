@@ -5,7 +5,6 @@ import { type FC } from "react";
 import { BookGrid, BooksData } from "./ProfileHelpersComponents";
 import { useSession } from "next-auth/react";
 import { api } from "~/trpc/react";
-import { Loader2 } from "lucide-react";
 import Loader from "~/components/ui/loader";
 
 const ProfileWrapper: FC = () => {
