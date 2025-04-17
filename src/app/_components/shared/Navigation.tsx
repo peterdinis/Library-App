@@ -1,6 +1,5 @@
 "use client";
 
-import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Book, Home, Info } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -24,6 +23,7 @@ import ProfileDropdown from "../auth/ProfileDropdown";
 import QuickSearch from "./QuickSearch";
 import ModeToggle from "./ModeToggle";
 import { useSession } from "next-auth/react";
+import { ScrollArea } from "~/components/ui/scroll-area";
 
 const navigationItems = [
   {
@@ -53,7 +53,8 @@ const Navigation: FC = () => {
 
   return (
     <header className="bg-background/95 supports-backdrop-filter:bg-background/60 sticky top-0 z-50 w-full border-b backdrop-blur-sm">
-      <div className="container flex h-14 items-center lg:h-16">
+      <div className="container flex h-14 items-center justify-between lg:h-16">
+        {/* Mobile Menu */}
         <Sheet open={isOpen} onOpenChange={setIsOpen}>
           <SheetTrigger asChild>
             <Button
@@ -112,9 +113,7 @@ const Navigation: FC = () => {
                           onClick={() => setIsOpen(false)}
                           className={cn(
                             "group hover:bg-accent flex flex-col gap-1 rounded-lg px-3 py-3 text-xl transition-colors",
-                            pathname === item.href
-                              ? "bg-accent"
-                              : "transparent",
+                            pathname === item.href ? "bg-accent" : "transparent",
                           )}
                         >
                           <div className="flex items-center gap-3">
@@ -147,18 +146,20 @@ const Navigation: FC = () => {
             </ScrollArea>
           </SheetContent>
         </Sheet>
+
+        {/* Logo */}
         <Link
           href="/"
-          className="hover:text-primary mr-4 flex items-center gap-2 transition-colors sm:mr-6"
+          className="hover:text-primary flex items-center gap-2 transition-colors"
         >
-          <div className="bg-primary text-primary-foreground ml-5 flex h-7 w-7 items-center justify-center rounded-lg sm:h-8 sm:w-8">
+          <div className="bg-primary text-primary-foreground ml-2 flex h-7 w-7 items-center justify-center rounded-lg sm:h-8 sm:w-8">
             <Book className="h-4 w-4" />
           </div>
-          <span className="xs:inline-block hidden font-bold">
-            Školská knižnica
-          </span>
+          <span className="hidden font-bold sm:inline-block">Školská knižnica</span>
         </Link>
-        <nav className="hidden flex-1 lg:block">
+
+        {/* Desktop Navigation */}
+        <nav className="hidden flex-1 justify-center lg:flex">
           <ul className="flex gap-1">
             {navigationItems.map((item) => (
               <li key={item.href}>
@@ -185,6 +186,8 @@ const Navigation: FC = () => {
             ))}
           </ul>
         </nav>
+
+        {/* Mobile Bottom Navigation (Optional if you want) */}
         <nav className="xxs:hidden flex flex-1 items-center justify-end gap-1 lg:hidden">
           {navigationItems.map((item) => (
             <TooltipProvider key={item.href}>
@@ -208,7 +211,9 @@ const Navigation: FC = () => {
             </TooltipProvider>
           ))}
         </nav>
-        <div className="flex items-center gap-1">
+
+        {/* Right Controls */}
+        <div className="ml-auto flex items-center gap-1">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -217,6 +222,7 @@ const Navigation: FC = () => {
               <TooltipContent>Vyhľadať knihu</TooltipContent>
             </Tooltip>
           </TooltipProvider>
+
           {session?.user ? (
             <TooltipProvider>
               <Tooltip>
@@ -227,10 +233,11 @@ const Navigation: FC = () => {
               </Tooltip>
             </TooltipProvider>
           ) : (
-            <Button variant={"link"}>
+            <Button variant="link" asChild>
               <Link href="/sign-in">Prihlásiť sa</Link>
             </Button>
           )}
+
           <div className="ml-3">
             <ModeToggle />
           </div>

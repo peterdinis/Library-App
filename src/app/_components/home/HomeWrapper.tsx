@@ -28,7 +28,7 @@ const Hero: FC = () => {
     >
       <div className="flex flex-col-reverse gap-8 md:flex-row md:items-center md:gap-12">
         <div className="w-full space-y-4 md:w-3/5 md:space-y-6 lg:space-y-8">
-          <h1 className="text-heading-color text-center text-4xl leading-tight font-black tracking-tighter text-gray-900 sm:text-5xl md:text-left md:text-6xl lg:text-7xl xl:text-8xl dark:text-blue-50">
+          <h1 className="break-words text-heading-color text-center text-4xl leading-tight font-black tracking-tighter text-gray-900 sm:text-5xl md:text-left md:text-6xl lg:text-7xl xl:text-8xl dark:text-blue-50">
             SPŠT Knižnica
           </h1>
 
@@ -39,31 +39,21 @@ const Hero: FC = () => {
           </h2>
 
           <div className="flex flex-col justify-center gap-4 sm:flex-row md:justify-start">
-            <Button
-              id="bookBtn"
-              size="lg"
-              variant="default"
-              className="w-full sm:w-auto"
-            >
-              <Link href="/books" className="w-full">
-                Zobraziť všekty knihy
-              </Link>
-            </Button>
-            <Button
-              id="schollBtn"
-              size="lg"
-              variant="secondary"
-              className="w-full sm:w-auto"
-            >
-              <Link href="https://www.spsbj.sk/" className="w-full">
+            <Link href="/books" className="w-full sm:w-auto">
+              <Button id="bookBtn" size="lg" variant="default" className="w-full">
+                Zobraziť všetky knihy
+              </Button>
+            </Link>
+            <Link href="https://www.spsbj.sk/" className="w-full sm:w-auto" target="_blank" rel="noopener noreferrer">
+              <Button id="schollBtn" size="lg" variant="secondary" className="w-full">
                 Školská stránka
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </div>
         </div>
 
         <div className="w-full md:w-2/5">
-          <div className="relative mx-auto aspect-square w-full max-w-[500px] overflow-hidden rounded-2xl">
+          <div className="relative mx-auto aspect-square w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-[500px] overflow-hidden rounded-2xl">
             <Image
               src={schollImage || "/placeholder.svg"}
               alt="Scholl homepage"

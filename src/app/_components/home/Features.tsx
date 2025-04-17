@@ -23,52 +23,45 @@ const Features: FC = () => {
           <motion.div
             tabIndex={0}
             aria-label="group of cards"
-            className="flex flex-wrap items-center justify-center focus:outline-hidden sm:justify-between"
+            className="flex flex-wrap justify-center gap-y-4 sm:justify-between"
             initial="hidden"
             animate="visible"
           >
             <motion.div
               tabIndex={0}
               aria-label="card 1"
-              className="flex flex-col items-center px-6 py-6 focus:outline-hidden sm:w-1/2 md:w-1/4 md:py-0"
+              className="w-full sm:w-1/2 md:w-1/4 px-6 py-6 flex flex-col items-center"
               variants={servicesVariant}
             >
               <Home className="h-7 w-7" />
-              <h4
-                tabIndex={0}
-                className="pt-5 text-center text-lg leading-6 font-medium text-gray-800 focus:outline-hidden dark:text-blue-50"
-              >
+              <h4 className="pt-5 text-center text-lg font-medium text-gray-800 dark:text-blue-50">
                 Doma Objednáš
               </h4>
             </motion.div>
+
             <motion.div
               tabIndex={0}
               aria-label="card 2"
-              className="flex flex-col items-center px-6 py-6 focus:outline-hidden sm:w-1/2 md:w-1/4 md:py-0"
+              className="w-full sm:w-1/2 md:w-1/4 px-6 py-6 flex flex-col items-center"
               variants={servicesVariant}
             >
               <School2 className="h-7 w-7" />
-              <h4
-                tabIndex={0}
-                className="pt-5 text-center text-lg leading-6 font-medium text-gray-800 focus:outline-hidden dark:text-blue-50"
-              >
-                V škole vyzdhvineš
+              <h4 className="pt-5 text-center text-lg font-medium text-gray-800 dark:text-blue-50">
+                V škole vyzdvihneš
               </h4>
             </motion.div>
+
             <motion.div
               tabIndex={0}
               aria-label="card 3"
-              className="flex flex-col items-center px-6 py-6 focus:outline-hidden sm:w-1/2 md:w-1/4 md:py-0"
+              className="w-full sm:w-1/2 md:w-1/4 px-6 py-6 flex flex-col items-center"
               variants={servicesVariant}
             >
               <span role="img" aria-label="eyes" className="text-2xl">
                 👀
               </span>
-              <h4
-                tabIndex={0}
-                className="pt-5 text-center text-lg leading-6 font-medium text-gray-800 focus:outline-hidden dark:text-blue-50"
-              >
-                Ľahké že ?
+              <h4 className="pt-5 text-center text-lg font-medium text-gray-800 dark:text-blue-50">
+                Ľahké že?
               </h4>
             </motion.div>
           </motion.div>
