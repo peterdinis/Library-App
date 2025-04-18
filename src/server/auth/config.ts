@@ -58,7 +58,7 @@ export const authConfig = {
       },
     }),
   ],
-  debug: true,
+  secret: process.env.AUTH_SECRET,
   pages: {
     signIn: "/sign-in",
   },
