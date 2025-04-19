@@ -18,6 +18,7 @@ const RegisterForm: FC = () => {
   const { toast } = useToast();
 
   const registerMutation = api.user.register.useMutation();
+  const sendRegisterEmail = api.email.sendAfterRegister.useMutation();
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -27,7 +28,10 @@ const RegisterForm: FC = () => {
   const onSubmit = async (data: RegisterFormInputs) => {
     try {
       await registerMutation.mutateAsync(data);
-      // onBoardingWorkflow.mutate({ email: data.email });
+      sendRegisterEmail.mutate({ 
+          email: data.email,
+          fullName: data.fullName
+       });
       toast({
         title: "Registrácia bola úspešná.",
         duration: 2000,

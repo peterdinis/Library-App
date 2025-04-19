@@ -6,12 +6,10 @@ import { categoryRouter } from "./routers/category";
 import { genreRouter } from "./routers/genre";
 import { userRouter } from "./routers/user";
 import { adminRouter } from "./routers/admin";
-import { workflowRouter } from "./routers/workflow";
 import { emailRouter } from "./routers/email";
 
 export const appRouter = createTRPCRouter({
   book: bookRouter,
-  workflow: workflowRouter,
   category: categoryRouter,
   author: authorRouter,
   genre: genreRouter,

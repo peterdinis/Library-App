@@ -13,6 +13,8 @@ declare global {
       QSTASH_NEXT_SIGNING_KEY: string;
       NODEMAILER_USER: string;
       NODEMAILER_PASS: string;
+      NODEMAILER_HOST: string;
+      NODEMAILER_PORT: number;
     }
   }
 }

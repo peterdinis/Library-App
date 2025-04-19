@@ -34,4 +34,18 @@ export const emailRouter = createTRPCRouter({
 
       await sendEmail({ email: input.email, subject, message });
     }),
+
+  sendAfterRegister: publicProcedure
+    .input(
+      z.object({
+        email: z.string().email(),
+        fullName: z.string(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      const subject = "Registrácia do knižničného systému";
+      const message = `Dobrý deň ${input.fullName},\n\nvitajte v knižničnom systéme SPŠT. Vaša registrácia prebehla úspešne.\n\nĎakujeme, SPŠT Knižnica.`;
+
+      await sendEmail({ email: input.email, subject, message });
+    }),
 });
