@@ -113,7 +113,9 @@ const Navigation: FC = () => {
                           onClick={() => setIsOpen(false)}
                           className={cn(
                             "group hover:bg-accent flex flex-col gap-1 rounded-lg px-3 py-3 text-xl transition-colors",
-                            pathname === item.href ? "bg-accent" : "transparent",
+                            pathname === item.href
+                              ? "bg-accent"
+                              : "transparent",
                           )}
                         >
                           <div className="flex items-center gap-3">
@@ -155,7 +157,9 @@ const Navigation: FC = () => {
           <div className="bg-primary text-primary-foreground ml-2 flex h-7 w-7 items-center justify-center rounded-lg sm:h-8 sm:w-8">
             <Book className="h-4 w-4" />
           </div>
-          <span className="hidden font-bold sm:inline-block">Školská knižnica</span>
+          <span className="hidden font-bold sm:inline-block">
+            Školská knižnica
+          </span>
         </Link>
 
         {/* Desktop Navigation */}

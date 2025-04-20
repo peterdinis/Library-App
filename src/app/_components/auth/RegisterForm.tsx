@@ -28,10 +28,10 @@ const RegisterForm: FC = () => {
   const onSubmit = async (data: RegisterFormInputs) => {
     try {
       await registerMutation.mutateAsync(data);
-      sendRegisterEmail.mutate({ 
-          email: data.email,
-          fullName: data.fullName
-       });
+      sendRegisterEmail.mutate({
+        email: data.email,
+        fullName: data.fullName,
+      });
       toast({
         title: "Registrácia bola úspešná.",
         duration: 2000,

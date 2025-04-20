@@ -30,7 +30,7 @@ const Features: FC = () => {
             <motion.div
               tabIndex={0}
               aria-label="card 1"
-              className="w-full sm:w-1/2 md:w-1/4 px-6 py-6 flex flex-col items-center"
+              className="flex w-full flex-col items-center px-6 py-6 sm:w-1/2 md:w-1/4"
               variants={servicesVariant}
             >
               <Home className="h-7 w-7" />
@@ -42,7 +42,7 @@ const Features: FC = () => {
             <motion.div
               tabIndex={0}
               aria-label="card 2"
-              className="w-full sm:w-1/2 md:w-1/4 px-6 py-6 flex flex-col items-center"
+              className="flex w-full flex-col items-center px-6 py-6 sm:w-1/2 md:w-1/4"
               variants={servicesVariant}
             >
               <School2 className="h-7 w-7" />
@@ -54,7 +54,7 @@ const Features: FC = () => {
             <motion.div
               tabIndex={0}
               aria-label="card 3"
-              className="w-full sm:w-1/2 md:w-1/4 px-6 py-6 flex flex-col items-center"
+              className="flex w-full flex-col items-center px-6 py-6 sm:w-1/2 md:w-1/4"
               variants={servicesVariant}
             >
               <span role="img" aria-label="eyes" className="text-2xl">

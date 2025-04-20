@@ -25,7 +25,7 @@ import {
 import { Input } from "~/components/ui/input";
 import { useForm } from "react-hook-form";
 import { api } from "~/trpc/react";
-import { toast } from "sonner";
+import { useToast } from "~/hooks/shared/use-toast";
 
 type Book = {
   title: string;
@@ -44,14 +44,24 @@ export type Booking = {
   borrowedDate: string;
 };
 
+const { toast } = useToast();
+
 const utils = api.useUtils();
 const deleteBooking = api.booking.deleteBooking.useMutation({
   onSuccess: () => {
-    toast.success("Objednávka bola úspešne zmazaná.");
-    utils.booking.getAllBookings.invalidate(); // alebo refetch tvojej bookings query
+    toast({
+      title: "Podarilo sa zmazať objednávku",
+      className: "bg-green-800 text-white font-bold text-xl",
+      duration: 2000,
+    });
+    utils.booking.getAllBookings.invalidate();
   },
   onError: () => {
-    toast.error("Nepodarilo sa zmazať objednávku.");
+    toast({
+      title: "Nepodarilo sa zmazať objednávku",
+      className: "bg-red-800 text-white font-bold text-xl",
+      duration: 2000,
+    });
   },
 });
 
