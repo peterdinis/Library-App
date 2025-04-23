@@ -13,7 +13,6 @@ export function useCopyToClipboard(): [CopiedValue, CopyFn] {
   const copy: CopyFn = useCallback(
     async (text) => {
       if (!navigator?.clipboard) {
-        console.warn("Clipboard not supported");
         return false;
       }
 

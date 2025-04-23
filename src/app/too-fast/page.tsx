@@ -12,20 +12,18 @@ const TooFastPage: NextPage = () => {
         </div>
 
         <h1 className="mb-4 text-center text-3xl font-bold text-gray-900">
-          Too Many Requests
+          Príliš veľa požiadaviek
         </h1>
 
         <div className="space-y-4">
           <p className="text-center text-gray-600">
-            You've made too many requests in a short period. Please wait a
-            moment before trying again.
+            Odoslali ste príliš veľa požiadaviek v krátkom čase. Prosím,
+            počkajte chvíľu a skúste to znova.
           </p>
 
           <div className="flex items-center justify-center space-x-2 text-gray-500">
             <Clock3 className="h-5 w-5 animate-pulse" />
-            <span className="text-sm">
-              Please try again in a few seconds...
-            </span>
+            <span className="text-sm">Skúste to prosím o pár sekúnd...</span>
           </div>
 
           <div className="h-2 w-full overflow-hidden rounded-full bg-gray-200">
